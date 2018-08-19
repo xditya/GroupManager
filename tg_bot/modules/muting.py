@@ -215,7 +215,7 @@ def nomedia(bot: Bot, update: Update, args: List[str]) -> str:
                                      can_add_web_page_previews=False)
             message.reply_text("Resticted!")
             keyboard = []
-            reply = "{} is restricted from sending multimedia and links!".format(mention_html(member.user.id, member.user.first_name))
+            reply = "{} is restricted from sending multimedia!".format(mention_html(member.user.id, member.user.first_name))
             message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
             return "<b>{}:</b>" \
                    "\n#RESTRICTED" \
@@ -260,7 +260,7 @@ def media(bot: Bot, update: Update, args: List[str]) -> str:
                                      can_add_web_page_previews=True)
             message.reply_text("Unrestricted!")
             keyboard = []
-            reply = "Yep, {} can send multimedia and links again!".format(mention_html(member.user.id, member.user.first_name))
+            reply = "Yep, {} can send multimedia again!".format(mention_html(member.user.id, member.user.first_name))
             message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
             return "<b>{}:</b>" \
                    "\n#UNRESTRICTED" \
