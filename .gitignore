@@ -1,6 +1,8 @@
 tg_bot/config.py
 *.pyc
 .idea/
+logfile
+backups/
 .project
 .pydevproject
 .directory

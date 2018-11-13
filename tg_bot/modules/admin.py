@@ -8,12 +8,13 @@ from telegram.ext import CommandHandler, Filters
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from tg_bot import dispatcher
+from tg_bot import dispatcher, updater
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import bot_admin, can_promote, user_admin, can_pin
 from tg_bot.modules.helper_funcs.extraction import extract_user
 from tg_bot.modules.log_channel import loggable
-
+from tg_bot.modules.sql import admin_sql as sql
+from tg_bot.modules.translations.strings import tld
 
 @run_async
 @bot_admin
@@ -189,25 +190,48 @@ def invite(bot: Bot, update: Update):
 
 @run_async
 def adminlist(bot: Bot, update: Update):
+    chat = update.effective_chat  # type: Optional[Chat]
     administrators = update.effective_chat.get_administrators()
-    text = "Admins in *{}*:".format(update.effective_chat.title or "this chat")
+    text = tld(chat.id, "Admins in") + " *{}*:".format(update.effective_chat.title or "this chat")
     for admin in administrators:
         user = admin.user
-        name = "[{}](tg://user?id={})".format(user.first_name + (user.last_name or ""), user.id)
-        if user.username:
-            name = escape_markdown("@" + user.username)
-        text += "\n - {}".format(name)
+        status = admin.status
+        if status == "creator":
+            name = "[{}](tg://user?id={})".format(user.first_name + (user.last_name or ""), user.id) + tld(chat.id, " (Creator)")
+        else:
+            name = "[{}](tg://user?id={})".format(user.first_name + (user.last_name or ""), user.id)
+        text += "\n• {}".format(name)
 
     update.effective_message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
 
 
-def __chat_settings__(chat_id, user_id):
-    return "You are *admin*: `{}`".format(
-        dispatcher.bot.get_chat_member(chat_id, user_id).status in ("administrator", "creator"))
+@user_admin
+@run_async
+def reaction(bot: Bot, update: Update, args: List[str]) -> str:
+    chat = update.effective_chat  # type: Optional[Chat]
+    if len(args) >= 1:
+        var = args[0]
+        print(var)
+        if (var == "False"):
+            sql.set_command_reaction(chat.id, False)
+            update.effective_message.reply_text("Disabled reaction on admin commands for users")
+        elif(var == "True"):
+            sql.set_command_reaction(chat.id, True)
+            update.effective_message.reply_text("Enabled reaction on admin commands for users")
+        else:
+            update.effective_message.reply_text("Please enter True or False!", parse_mode=ParseMode.MARKDOWN)
+    else:
+        update.effective_message.reply_text("Please enter True or False!", parse_mode=ParseMode.MARKDOWN)
+
+
+@run_async
+def log(bot: Bot, update: Update):
+    update.effective_message.reply_text(updater.dispatcher)
+        
 
 
 __help__ = """
- - /adminlist: list of admins in the chat
+ - /adminlist | /admins: list of admins in the chat
 
 *Admin only:*
  - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.
@@ -227,7 +251,11 @@ INVITE_HANDLER = CommandHandler("invitelink", invite, filters=Filters.group)
 PROMOTE_HANDLER = CommandHandler("promote", promote, pass_args=True, filters=Filters.group)
 DEMOTE_HANDLER = CommandHandler("demote", demote, pass_args=True, filters=Filters.group)
 
-ADMINLIST_HANDLER = DisableAbleCommandHandler("adminlist", adminlist, filters=Filters.group)
+REACT_HANDLER = CommandHandler("reaction", reaction, pass_args=True, filters=Filters.group)
+
+ADMINLIST_HANDLER = DisableAbleCommandHandler(["adminlist", "admins"], adminlist, filters=Filters.group)
+
+LOG_HANDLER = CommandHandler("log1", log)
 
 dispatcher.add_handler(PIN_HANDLER)
 dispatcher.add_handler(UNPIN_HANDLER)
@@ -235,3 +263,5 @@ dispatcher.add_handler(INVITE_HANDLER)
 dispatcher.add_handler(PROMOTE_HANDLER)
 dispatcher.add_handler(DEMOTE_HANDLER)
 dispatcher.add_handler(ADMINLIST_HANDLER)
+dispatcher.add_handler(REACT_HANDLER)
+dispatcher.add_handler(LOG_HANDLER)

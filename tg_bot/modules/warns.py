@@ -135,6 +135,11 @@ def warn_user(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id, reason = extract_user_and_text(message, args)
 
+    if not reason:
+        reason = " - "
+
+    print(reason)
+
     if user_id:
         if message.reply_to_message and message.reply_to_message.from_user.id == user_id:
             return warn(message.reply_to_message.from_user, chat, reason, message.reply_to_message, warner)
@@ -179,21 +184,21 @@ def warns(bot: Bot, update: Update, args: List[str]):
     user_id = extract_user(message, args) or update.effective_user.id
     result = sql.get_warns(user_id, chat.id)
 
+    P = 1
+
     if result and result[0] != 0:
         num_warns, reasons = result
         limit, soft_warn = sql.get_warn_setting(chat.id)
 
-        if reasons:
-            text = "This user has {}/{} warnings, for the following reasons:".format(num_warns, limit)
-            for reason in reasons:
-                text += "\n - {}".format(reason)
+        text = "This user has {}/{} warnings, for the following reasons:".format(num_warns, limit)
+        for reason in reasons:
+            text += "\n {}. `{}`".format(P, reason)
+            P = P + 1
 
-            msgs = split_message(text)
-            for msg in msgs:
-                update.effective_message.reply_text(msg)
-        else:
-            update.effective_message.reply_text(
-                "User has {}/{} warnings, but no reasons for any of them.".format(num_warns, limit))
+        msgs = split_message(text)
+        for msg in msgs:
+            update.effective_message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
+
     else:
         update.effective_message.reply_text("This user hasn't got any warnings!")
 

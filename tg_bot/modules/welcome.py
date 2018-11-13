@@ -1,15 +1,16 @@
-import html
+import html, time
+import re
 from typing import Optional, List
 
-from telegram import Message, Chat, Update, Bot, User
-from telegram import ParseMode, InlineKeyboardMarkup
+from telegram import Message, Chat, Update, Bot, User, CallbackQuery
+from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import BadRequest
-from telegram.ext import MessageHandler, Filters, CommandHandler, run_async
+from telegram.ext import MessageHandler, Filters, CommandHandler, run_async, CallbackQueryHandler
 from telegram.utils.helpers import mention_markdown, mention_html, escape_markdown
 
 import tg_bot.modules.sql.welcome_sql as sql
 from tg_bot import dispatcher, OWNER_ID, LOGGER
-from tg_bot.modules.helper_funcs.chat_status import user_admin
+from tg_bot.modules.helper_funcs.chat_status import user_admin, is_user_ban_protected
 from tg_bot.modules.helper_funcs.misc import build_keyboard, revert_buttons
 from tg_bot.modules.helper_funcs.msg_types import get_welcome_type
 from tg_bot.modules.helper_funcs.string_handling import markdown_parser, \
@@ -92,7 +93,7 @@ def new_member(bot: Bot, update: Update):
 
             # Don't welcome yourself
             elif new_mem.id == bot.id:
-                continue
+                update.effective_message.reply_text("Thanks for adding me!")
 
             else:
                 # If welcome message is media, send with appropriate function
@@ -130,6 +131,27 @@ def new_member(bot: Bot, update: Update):
                 sent = send(update, res, keyboard,
                             sql.DEFAULT_WELCOME.format(first=first_name))  # type: Optional[Message]
 
+                #Clean service welcome
+                if sql.clean_service(chat.id) == True:
+                    bot.delete_message(chat.id, update.message.message_id)
+
+                #If user ban protected don't apply security on him
+                if is_user_ban_protected(chat, new_mem.id, chat.get_member(new_mem.id)):
+                    continue
+
+                #Security soft mode
+                if sql.welcome_security(chat.id) == "soft":
+                    bot.restrict_chat_member(chat.id, new_mem.id, can_send_messages=True, can_send_media_messages=False, can_send_other_messages=False, can_add_web_page_previews=False, until_date=(int(time.time() + 24 * 60 * 60)))
+
+                #Add "I'm not bot button if enabled hard security"
+                if sql.welcome_security(chat.id) == "hard":
+                    update.effective_message.reply_text("Hi {}, click on button below for been unmuted.".format(new_mem.first_name), 
+                         reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="I'm not a bot!", 
+                         callback_data="check_bot_({})".format(new_mem.id)) ]]))
+
+                    #bot.restrict_chat_member(chat.id, new_mem.id, can_send_messages=False, can_send_media_messages=False, can_send_other_messages=False, can_add_web_page_previews=False)))
+
+
         prev_welc = sql.get_clean_pref(chat.id)
         if prev_welc:
             try:
@@ -140,6 +162,22 @@ def new_member(bot: Bot, update: Update):
             if sent:
                 sql.set_clean_welcome(chat.id, sent.message_id)
 
+
+@run_async
+def check_bot_button(bot: Bot, update: Update):
+    user = update.effective_user  # type: Optional[User]
+    query = update.callback_query  # type: Optional[CallbackQuery]
+    #bot.restrict_chat_member(chat.id, new_mem.id, can_send_messages=True, can_send_media_messages=True, can_send_other_messages=True, can_add_web_page_previews=True)))
+    match = re.match(r"check_bot_\((.+?)\)", query.data)
+    user_id = int(match.group(1))
+    print(match, user.id, user_id)
+    if user_id == user.id:
+        print("YES")
+        query.answer(text="Unmuted!")
+    else:
+        print("NO")
+        query.answer(text="You not a new user!")
+    #TODO need kick users after 2 hours and remove message 
 
 @run_async
 def left_member(bot: Bot, update: Update):
@@ -428,6 +466,51 @@ def welcome_help(bot: Bot, update: Update):
     update.effective_message.reply_text(WELC_HELP_TXT, parse_mode=ParseMode.MARKDOWN)
 
 
+@run_async
+@user_admin
+def security(bot: Bot, update: Update, args: List[str]) -> str:
+    chat = update.effective_chat  # type: Optional[Chat]
+    if len(args) >= 1:
+        var = args[0]
+        print(var)
+        if (var == "no" or var == "off"):
+            sql.set_welcome_security(chat.id, False)
+            update.effective_message.reply_text("Disabled welcome security")
+        elif(var == "soft"):
+            sql.set_welcome_security(chat.id, "soft")
+            update.effective_message.reply_text("I will restrict user to send media for 24 hours")
+        elif(var == "hard"):
+            sql.set_welcome_security(chat.id, "hard")
+            update.effective_message.reply_text("I will mute user when he don't click on button")
+        else:
+            update.effective_message.reply_text("Please enter `off`/`no`/`soft`/`hard`!", parse_mode=ParseMode.MARKDOWN)
+    else:
+        status = sql.welcome_security(chat.id)
+        update.effective_message.reply_text(status)
+
+
+@run_async
+@user_admin
+def cleanservice(bot: Bot, update: Update, args: List[str]) -> str:
+    chat = update.effective_chat  # type: Optional[Chat]
+    if chat.type != chat.PRIVATE:
+        if len(args) >= 1:
+            var = args[0]
+            print(var)
+            if (var == "no" or var == "off"):
+                sql.set_clean_service(chat.id, False)
+                update.effective_message.reply_text("I leave service messages")
+            elif(var == "yes" or var == "on"):
+                sql.set_clean_service(chat.id, True)
+                update.effective_message.reply_text("I will clean service messages")
+            else:
+                update.effective_message.reply_text("Please enter yes or no!", parse_mode=ParseMode.MARKDOWN)
+        else:
+            update.effective_message.reply_text("Please enter yes or no!", parse_mode=ParseMode.MARKDOWN)
+    else:
+        update.effective_message.reply_text("Please enter yes or no in your group!", parse_mode=ParseMode.MARKDOWN)
+
+
 # TODO: get welcome data from group butler snap
 # def __import_data__(chat_id, data):
 #     welcome = data.get('info', {}).get('rules')
@@ -464,9 +547,12 @@ __help__ = """
  - /resetwelcome: reset to the default welcome message.
  - /resetgoodbye: reset to the default goodbye message.
  - /cleanwelcome <on/off>: On new member, try to delete the previous welcome message to avoid spamming the chat.
+ - /cleanservice <on/off/yes/no>: deletes all service message; those are the annoying "x joined the group" you see when people join.
+ - /welcomesecurity <off/soft/hard>: soft - restrict user send media files for 24 hours, hard - restict user send messages while him don't click on button \"I'm not bot\"
 
  - /welcomehelp: view more formatting information for custom welcome/goodbye messages.
 """.format(WELC_HELP_TXT)
+
 
 __mod_name__ = "Welcomes/Goodbyes"
 
@@ -481,6 +567,11 @@ RESET_GOODBYE = CommandHandler("resetgoodbye", reset_goodbye, filters=Filters.gr
 CLEAN_WELCOME = CommandHandler("cleanwelcome", clean_welcome, pass_args=True, filters=Filters.group)
 WELCOME_HELP = CommandHandler("welcomehelp", welcome_help)
 
+SECURITY_HANDLER = CommandHandler("welcomesecurity", security, pass_args=True, filters=Filters.group)
+CLEAN_SERVICE_HANDLER = CommandHandler("cleanservice", cleanservice, pass_args=True, filters=Filters.group)
+
+help_callback_handler = CallbackQueryHandler(check_bot_button, pattern=r"check_bot_")
+
 dispatcher.add_handler(NEW_MEM_HANDLER)
 dispatcher.add_handler(LEFT_MEM_HANDLER)
 dispatcher.add_handler(WELC_PREF_HANDLER)
@@ -491,3 +582,7 @@ dispatcher.add_handler(RESET_WELCOME)
 dispatcher.add_handler(RESET_GOODBYE)
 dispatcher.add_handler(CLEAN_WELCOME)
 dispatcher.add_handler(WELCOME_HELP)
+dispatcher.add_handler(SECURITY_HANDLER)
+dispatcher.add_handler(CLEAN_SERVICE_HANDLER)
+
+dispatcher.add_handler(help_callback_handler)
