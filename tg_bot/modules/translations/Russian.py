@@ -1,4 +1,3 @@
-from tg_bot import dispatcher, ALLOW_EXCL
 RussianStrings = {
 
 #Connections
@@ -9,7 +8,7 @@ RussianStrings = {
     "Connection failed!": "Подключение не удалось!",
     "Connections to this chat not allowed!": "Подключение к этому чату не разрешено!",
     "Write chat ID to connect!": "Напишите ID чата для подключения",
-    "Usage limited to PMs only!": "Использование ограничего в личных сообщениях только!",More s
+    "Usage limited to PMs only!": "Использование ограничего в личных сообщениях только!",
 
 #Multi
     "Invalid Chat ID provided!": "ID чата недействительный!", #Connections
@@ -51,7 +50,10 @@ RussianStrings = {
  - /lang: Смена языка бота
  - /settings: Показать текущие настройки модулей
    {}
-   """.format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nВсе команды могут начинатся с `/` или `!`.\n")
+   """,
+
+
+"\nAll commands can either be used with `/` or `!`.\n": "\nВсе коммнды могут начинатся с `/` или `!`\n"
 
     #Module helps
 }

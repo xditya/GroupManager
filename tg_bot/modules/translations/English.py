@@ -1,4 +1,3 @@
-from tg_bot import dispatcher, ALLOW_EXCL
 EnglishStrings = {
     "send-start": """Hi {}, my name {}! If you have any questions on how to use me, read /help - and then head to @NotAvaibleYet.
 
@@ -26,5 +25,9 @@ Main commands available:
    - in PM: will send you your settings for all supported modules.
    - in a group: will redirect you to pm, with all that chat's settings.
    {}
-   """.format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll commands can either be used with `/` or `!`.\n")
+   """,
+
+    "send-group-settings": """Hi there! There are quite a few settings for *{}* - go ahead and pick what
+you're interested in."""
+
 }

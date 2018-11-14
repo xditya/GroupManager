@@ -4,7 +4,7 @@ import sys
 
 import telegram.ext as tg
 
-print("pKara Telegram Bot")
+print("tg_bot")
 print("Starting...")
 
 # enable logging
