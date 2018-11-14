@@ -46,19 +46,17 @@ def connect_chat(bot, update, args):
                 connect_chat = int(args[0])
             except ValueError:
                 update.effective_message.reply_text("Invalid Chat ID provided!")
-            #if bot.get_chat_member(connect_chat, update.effective_message.from_user.id).status in ('administrator', 'creator', 'member'):
-            if bot.get_chat_member(connect_chat, update.effective_message.from_user.id).status in ('administrator', 'creator'):
-                #if sql.allow_connect_to_chat(chat.id) == True:
+            if (bot.get_chat_member(connect_chat, update.effective_message.from_user.id).status in ('administrator', 'creator') or 
+                                                     (sql.allow_connect_to_chat(connect_chat) == True) and 
+                                                     bot.get_chat_member(connect_chat, update.effective_message.from_user.id).status in ('member')):
                 connection_status = sql.connect(update.effective_message.from_user.id, connect_chat)
                 if connection_status:
-                    chat_name = dispatcher.bot.getChat(connected(chat, user.id)).title
+                    chat_name = dispatcher.bot.getChat(connected(bot, update, chat, user.id, need_admin=False)).title
                     update.effective_message.reply_text("Successfully connected to *{}*".format(chat_name), parse_mode=ParseMode.MARKDOWN)
                 else:
                     update.effective_message.reply_text("Connection failed!")
-                #else:
-                    #update.effective_message.reply_text("Connections to this chat not allowed!")
             else:
-                update.effective_message.reply_text("You are not a participant of the given chat, Go away!")
+                update.effective_message.reply_text("Connections to this chat not allowed!")
         else:
             update.effective_message.reply_text("Gimme a chat to connect to!")
 
