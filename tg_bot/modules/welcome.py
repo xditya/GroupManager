@@ -91,7 +91,7 @@ def new_member(bot: Bot, update: Update):
                 update.effective_message.reply_text("Master is in the houseeee, let's get this party started!")
                 continue
 
-            # Don't welcome yourself
+            # Give start information when add bot to group
             elif new_mem.id == bot.id:
                 update.effective_message.reply_text("Thanks for adding me!")
 

@@ -2,14 +2,17 @@ from io import BytesIO
 from time import sleep
 from typing import Optional
 
+from typing import Optional, List
 from telegram import TelegramError, Chat, Message
 from telegram import Update, Bot
+from telegram import ParseMode
 from telegram.error import BadRequest
 from telegram.ext import MessageHandler, Filters, CommandHandler
 from telegram.ext.dispatcher import run_async
 
 import tg_bot.modules.sql.users_sql as sql
-from tg_bot import dispatcher, OWNER_ID, LOGGER
+from tg_bot import dispatcher, OWNER_ID, LOGGER, SUDO_USERS, SUPPORT_USERS
+from telegram.utils.helpers import escape_markdown
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 
 USERS_GROUP = 4
@@ -89,14 +92,59 @@ def log_user(bot: Bot, update: Update):
 @run_async
 def chats(bot: Bot, update: Update):
     all_chats = sql.get_all_chats() or []
-    chatfile = 'List of chats.\n'
+    chatfile = 'List of chats.\n0. Chat name | Chat ID | Members count | Invitelink\n'
+    P = 1
     for chat in all_chats:
-        chatfile += "{} - ({})\n".format(chat.chat_name, chat.chat_id)
+        curr_chat = bot.getChat(chat.chat_id)
+        bot_member = curr_chat.get_member(bot.id)
+        chat_members = curr_chat.get_members_count(bot.id)
+        if bot_member.can_invite_users:
+            invitelink = bot.exportChatInviteLink(chat.chat_id)
+        else:
+            invitelink = "0"
+        chatfile += "{}. {} | {} | {} | {}\n".format(P, chat.chat_name, chat.chat_id, chat_members, invitelink)
+        P = P + 1
 
     with BytesIO(str.encode(chatfile)) as output:
         output.name = "chatlist.txt"
         update.effective_message.reply_document(document=output, filename="chatlist.txt",
                                                 caption="Here is the list of chats in my database.")
+
+
+@run_async
+def snipe(bot: Bot, update: Update, args: List[str]):
+    try:
+        chat_id = str(args[0])
+        del args[0]
+    except TypeError as excp:
+        update.effective_message.reply_text("Please give me a chat to echo to!")
+    to_send = " ".join(args)
+    if len(to_send) >= 2:
+        try:
+            bot.sendMessage(int(chat_id), str(to_send))
+        except TelegramError:
+            LOGGER.warning("Couldn't send to group %s", str(chat_id))
+            update.effective_message.reply_text("Couldn't send the message. Perhaps I'm not part of that group?")
+
+
+@run_async
+def slist(bot: Bot, update: Update):
+    text1 = "My sudo users are:"
+    for user_id in SUDO_USERS:
+        user = bot.get_chat(user_id)
+        name = "[{}](tg://user?id={})".format(user.first_name + (user.last_name or ""), user.id)
+        if user.username:
+            name = escape_markdown("@" + user.username)
+        text1 += "\n - {}".format(name)
+    text2 = "My support users are:"
+    for user_id in SUPPORT_USERS:
+        user = bot.get_chat(user_id)
+        name = "[{}](tg://user?id={})".format(user.first_name + (user.last_name or ""), user.id)
+        if user.username:
+            name = escape_markdown("@" + user.username)
+        text2 += "\n - {}".format(name)
+    update.effective_message.reply_text(text1 + "\n", parse_mode=ParseMode.MARKDOWN)
+    update.effective_message.reply_text(text2 + "\n", parse_mode=ParseMode.MARKDOWN)
 
 
 def __user_info__(user_id):
@@ -126,6 +174,12 @@ BROADCAST_HANDLER = CommandHandler("broadcast", broadcast, filters=Filters.user(
 USER_HANDLER = MessageHandler(Filters.all & Filters.group, log_user)
 CHATLIST_HANDLER = CommandHandler("chatlist", chats, filters=CustomFilters.sudo_filter)
 
+SNIPE_HANDLER = CommandHandler("snipe", snipe, pass_args=True, filters=CustomFilters.sudo_filter)
+SLIST_HANDLER = CommandHandler("slist", slist, filters=Filters.user(OWNER_ID))
+
 dispatcher.add_handler(USER_HANDLER, USERS_GROUP)
 dispatcher.add_handler(BROADCAST_HANDLER)
 dispatcher.add_handler(CHATLIST_HANDLER)
+
+dispatcher.add_handler(SNIPE_HANDLER)
+dispatcher.add_handler(SLIST_HANDLER)
