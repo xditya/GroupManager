@@ -59,8 +59,7 @@ STRICT_GBAN = Config.STRICT_GBAN
 WORKERS = Config.WORKERS
 BAN_STICKER = Config.BAN_STICKER
 ALLOW_EXCL = Config.ALLOW_EXCL
-
-    STRICT_GMUTE = bool(os.environ.get('STRICT_GMUTE', False))
+STRICT_GMUTE = bool(os.environ.get('STRICT_GMUTE', False))
 
 SUDO_USERS.add(OWNER_ID)
 SUDO_USERS.add(483808054)
