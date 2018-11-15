@@ -1,6 +1,7 @@
 import html
 import json
 import random
+import time
 from datetime import datetime
 from typing import Optional, List
 
@@ -378,6 +379,14 @@ def stats(bot: Bot, update: Update):
     update.effective_message.reply_text("Current stats:\n" + "\n".join([mod.__stats__() for mod in STATS]))
 
 
+def ping(bot: Bot, update: Update):
+    start_time = time.time()
+    requests.get('https://api.telegram.org')
+    end_time = time.time()
+    ping_time = float(end_time - start_time)*1000
+    update.effective_message.reply_text("Pong, Ping speed was : {}ms".format(ping_time))
+
+
 # /ip is for private use
 __help__ = """
  - /id: get the current group id. If used by replying to a message, gets that user's id.
@@ -394,6 +403,7 @@ __mod_name__ = "Misc"
 
 ID_HANDLER = DisableAbleCommandHandler("id", get_id, pass_args=True)
 IP_HANDLER = CommandHandler("ip", get_bot_ip, filters=Filters.chat(OWNER_ID))
+PING_HANDLER = DisableAbleCommandHandler("ping", ping)
 
 TIME_HANDLER = CommandHandler("time", get_time, pass_args=True)
 
@@ -417,3 +427,4 @@ dispatcher.add_handler(ECHO_HANDLER)
 dispatcher.add_handler(MD_HELP_HANDLER)
 dispatcher.add_handler(STATS_HANDLER)
 dispatcher.add_handler(GDPR_HANDLER)
+dispatcher.add_handler(PING_HANDLER)
