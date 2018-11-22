@@ -17,7 +17,7 @@ from tg_bot import dispatcher, updater, TOKEN, WEBHOOK, OWNER_ID, DONATION_LINK,
 from tg_bot.modules import ALL_MODULES
 from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
-from tg_bot.modules.translations.strings import tld
+from tg_bot.modules.translations.strings import tld, tld_help
 
 DONATE_STRING = """Heya, glad to hear you want to donate!
 It took lots of work for [my creator](t.me/SonOfLars) to get me to where I am now, and every donation helps \
@@ -172,13 +172,17 @@ def help_button(bot: Bot, update: Update):
     try:
         if mod_match:
             module = mod_match.group(1)
+            mod_name = tld(chat.id, HELPABLE[module].__mod_name__)
+            help_txt = tld_help(chat.id, HELPABLE[module].__mod_name__)
 
-            text = tld(chat.id, "Here is the help for the ") + tld(chat.id, HELPABLE[module].__mod_name__) + tld(chat.id, " module:\n")\
-                   + tld(chat.id, HELPABLE[module]).__help__
+            if help_txt == False:
+                help_txt = HELPABLE[module].__help__
+
+            text = tld(chat.id, "Here is the help for the *{}* module:\n{}").format(mod_name, help_txt)
             query.message.reply_text(text=text,
                                      parse_mode=ParseMode.MARKDOWN,
                                      reply_markup=InlineKeyboardMarkup(
-                                         [[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
+                                         [[InlineKeyboardButton(text=tld(chat.id, "Back"), callback_data="help_back")]]))
 
         elif prev_match:
             curr_page = int(prev_match.group(1))
@@ -231,9 +235,14 @@ def get_help(bot: Bot, update: Update):
 
     elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
         module = args[1].lower()
-        text = "Here is the available help for the *{}* module:\n".format(HELPABLE[module].__mod_name__) \
-               + HELPABLE[module].__help__
-        send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
+        mod_name = tld(chat.id, HELPABLE[module].__mod_name__)
+        help_txt = tld_help(chat.id, HELPABLE[module].__mod_name__)
+
+        if help_txt == False:
+            help_txt = HELPABLE[module].__help__
+
+        text = tld(chat.id, "Here is the help for the *{}* module:\n{}").format(mod_name, help_txt)
+        send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text=tld(chat.id, "Back"), callback_data="help_back")]]))
 
     else:
         send_help(chat.id, tld(chat.id, "send-help").format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else tld(chat.id, "\nAll commands can either be used with `/` or `!`.\n")))

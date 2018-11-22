@@ -55,7 +55,7 @@ def connect_chat(bot, update, args):
                 connection_status = sql.connect(update.effective_message.from_user.id, connect_chat)
                 if connection_status:
                     chat_name = dispatcher.bot.getChat(connected(bot, update, chat, user.id, need_admin=False)).title
-                    update.effective_message.reply_text(tld(chat.id, "Successfully connected to *{}*".format(chat_name), parse_mode=ParseMode.MARKDOWN))
+                    update.effective_message.reply_text(tld(chat.id, "Successfully connected to *{}*").format(chat_name), parse_mode=ParseMode.MARKDOWN)
                 else:
                     update.effective_message.reply_text(tld(chat.id, "Connection failed!"))
             else:
@@ -103,8 +103,10 @@ def connected(bot, update, chat, user_id, need_admin=True):
 
 
 __help__ = """
-You can connect to remote chat for see and edit notes
-Connections:
+Actions are available with connected groups:
+ • View and edit notes
+ • More in future!
+
  - /connection <chatid>: Connect to remote chat for see and edit notes
  - /disconnect: Disconnect from chat
  - /allowconnect on/yes/off/no: Allow connect users to group

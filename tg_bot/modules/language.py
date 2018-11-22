@@ -14,7 +14,7 @@ def locale(bot, update, args):
     if len(args) > 0:
         locale = args[0].lower()
         if locale in list_locales:
-            if locale in  ('en', 'ru'):
+            if locale in  ('en', 'ru', 'uk'):
                 switch_to_locale(chat.id, locale)
                 update.message.reply_text(tld(chat.id, 'Switched to {} successfully!').format(list_locales[locale]))
             else:
@@ -34,7 +34,7 @@ def locale(bot, update, args):
 def locale_button(bot, update):
     chat = update.effective_chat
     query = update.callback_query
-    lang_match = re.findall(r"en|ru", query.data)
+    lang_match = re.findall(r"en|ru|uk", query.data)
     if lang_match:
         if lang_match[0]:
             switch_to_locale(chat.id, lang_match[0])
@@ -47,11 +47,21 @@ def locale_button(bot, update):
                                                 [[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
                                                                            
     else:
-        query.message.reply_text(tld(chat.id, "*Select language*"), parse_mode=ParseMode.MARKDOWN,
-                                                reply_markup=InlineKeyboardMarkup(
-                                            [[InlineKeyboardButton("English 🇺🇸", callback_data="set_lang_en"),
-                                            InlineKeyboardButton("Russian 🇷🇺", callback_data="set_lang_ru")]] + [[
-                                                InlineKeyboardButton("Back", callback_data="help_back")]]))
+        try: 
+            LANGUAGE = prev_locale(chat.id)
+            locale = LANGUAGE.locale_name
+            curr_lang = list_locales[locale]
+        except:
+            curr_lang = "English"
+
+        text = "*Select language* (beta)\n"
+        text += "Current language : `{}`".format(curr_lang) 
+        query.message.reply_text(text, parse_mode=ParseMode.MARKDOWN,
+                                                reply_markup=InlineKeyboardMarkup([[
+                                             InlineKeyboardButton("English 🇺🇸", callback_data="set_lang_en")]] + [[
+                                             InlineKeyboardButton("Russian 🇷🇺", callback_data="set_lang_ru"), 
+                                             InlineKeyboardButton("Ukranian 🇺🇦", callback_data="set_lang_uk")]] + [[
+                                             InlineKeyboardButton("Back", callback_data="help_back")]]))
 
     print(lang_match)
     query.message.delete()

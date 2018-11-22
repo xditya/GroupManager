@@ -435,31 +435,6 @@ def clean_welcome(bot: Bot, update: Update, args: List[str]) -> str:
         return ""
 
 
-WELC_HELP_TXT = "Your group's welcome/goodbye messages can be personalised in multiple ways. If you want the messages" \
-                " to be individually generated, like the default welcome message is, you can use *these* variables:\n" \
-                " - `{{first}}`: this represents the user's *first* name\n" \
-                " - `{{last}}`: this represents the user's *last* name. Defaults to *first name* if user has no " \
-                "last name.\n" \
-                " - `{{fullname}}`: this represents the user's *full* name. Defaults to *first name* if user has no " \
-                "last name.\n" \
-                " - `{{username}}`: this represents the user's *username*. Defaults to a *mention* of the user's " \
-                "first name if has no username.\n" \
-                " - `{{mention}}`: this simply *mentions* a user - tagging them with their first name.\n" \
-                " - `{{id}}`: this represents the user's *id*\n" \
-                " - `{{count}}`: this represents the user's *member number*.\n" \
-                " - `{{chatname}}`: this represents the *current chat name*.\n" \
-                "\nEach variable MUST be surrounded by `{{}}` to be replaced.\n" \
-                "Welcome messages also support markdown, so you can make any elements bold/italic/code/links. " \
-                "Buttons are also supported, so you can make your welcomes look awesome with some nice intro " \
-                "buttons.\n" \
-                "To create a button linking to your rules, use this: `[Rules](buttonurl://t.me/{}?start=group_id)`. " \
-                "Simply replace `group_id` with your group's id, which can be obtained via /id, and you're good to " \
-                "go. Note that group ids are usually preceded by a `-` sign; this is required, so please don't " \
-                "remove it.\n" \
-                "If you're feeling fun, you can even set images/gifs/videos/voice messages as the welcome message by " \
-                "replying to the desired media, and calling /setwelcome.".format(dispatcher.bot.username)
-
-
 @run_async
 @user_admin
 def welcome_help(bot: Bot, update: Update):
@@ -535,7 +510,25 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
-{}
+Your group's welcome/goodbye messages can be personalised in multiple ways. If you want the messages \
+to be individually generated, like the default welcome message is, you can use *these* variables:
+ - `{{first}}`: this represents the user's *first* name
+ - `{{last}}`: this represents the user's *last* name. Defaults to *first name* if user has no last name.
+ - `{{fullname}}`: this represents the user's *full* name. Defaults to *first name* if user has no last name.
+ - `{{username}}`: this represents the user's *username*. Defaults to a *mention* of the user's first name if has no username.
+ - `{{mention}}`: this simply *mentions* a user - tagging them with their first name.
+ - `{{id}}`: this represents the user's *id*.
+ - `{{count}}`: this represents the user's *member number*.
+ - `{{chatname}}`: this represents the *current chat name*.
+Each variable MUST be surrounded by `{{}}` to be replaced.
+Welcome messages also support markdown, so you can make any elements bold/italic/code/links. \
+Buttons are also supported, so you can make your welcomes look awesome with some nice intro \
+buttons. To create a button linking to your rules, use this: `[Rules](buttonurl://t.me/{}?start=group_id)`. \
+Simply replace `group_id` with your group's id, which can be obtained via /id, and you're good to \
+go. Note that group ids are usually preceded by a `-` sign; this is required, so please don't \
+remove it. \
+If you're feeling fun, you can even set images/gifs/videos/voice messages as the welcome message by \
+replying to the desired media, and calling /setwelcome.
 
 *Admin only:*
  - /welcome <on/off>: enable/disable welcome messages.
@@ -549,9 +542,7 @@ __help__ = """
  - /cleanwelcome <on/off>: On new member, try to delete the previous welcome message to avoid spamming the chat.
  - /cleanservice <on/off/yes/no>: deletes all service message; those are the annoying "x joined the group" you see when people join.
  - /welcomesecurity <off/soft/hard>: soft - restrict user send media files for 24 hours, hard - restict user send messages while him don't click on button \"I'm not bot\"
-
- - /welcomehelp: view more formatting information for custom welcome/goodbye messages.
-""".format(WELC_HELP_TXT)
+""".format(dispatcher.bot.username)
 
 
 __mod_name__ = "Welcomes/Goodbyes"
@@ -565,7 +556,6 @@ SET_GOODBYE = CommandHandler("setgoodbye", set_goodbye, filters=Filters.group)
 RESET_WELCOME = CommandHandler("resetwelcome", reset_welcome, filters=Filters.group)
 RESET_GOODBYE = CommandHandler("resetgoodbye", reset_goodbye, filters=Filters.group)
 CLEAN_WELCOME = CommandHandler("cleanwelcome", clean_welcome, pass_args=True, filters=Filters.group)
-WELCOME_HELP = CommandHandler("welcomehelp", welcome_help)
 
 SECURITY_HANDLER = CommandHandler("welcomesecurity", security, pass_args=True, filters=Filters.group)
 CLEAN_SERVICE_HANDLER = CommandHandler("cleanservice", cleanservice, pass_args=True, filters=Filters.group)
@@ -581,7 +571,6 @@ dispatcher.add_handler(SET_GOODBYE)
 dispatcher.add_handler(RESET_WELCOME)
 dispatcher.add_handler(RESET_GOODBYE)
 dispatcher.add_handler(CLEAN_WELCOME)
-dispatcher.add_handler(WELCOME_HELP)
 dispatcher.add_handler(SECURITY_HANDLER)
 dispatcher.add_handler(CLEAN_SERVICE_HANDLER)
 
