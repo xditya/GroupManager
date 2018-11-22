@@ -148,8 +148,8 @@ def new_member(bot: Bot, update: Update):
                     update.effective_message.reply_text("Hi {}, click on button below for been unmuted.".format(new_mem.first_name), 
                          reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="I'm not a bot!", 
                          callback_data="check_bot_({})".format(new_mem.id)) ]]))
-
-                    #bot.restrict_chat_member(chat.id, new_mem.id, can_send_messages=False, can_send_media_messages=False, can_send_other_messages=False, can_add_web_page_previews=False)))
+                    #Mute user
+                    bot.restrict_chat_member(chat.id, new_mem.id, can_send_messages=False, can_send_media_messages=False, can_send_other_messages=False, can_add_web_page_previews=False)
 
 
         prev_welc = sql.get_clean_pref(chat.id)
@@ -165,15 +165,21 @@ def new_member(bot: Bot, update: Update):
 
 @run_async
 def check_bot_button(bot: Bot, update: Update):
+    chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     query = update.callback_query  # type: Optional[CallbackQuery]
     #bot.restrict_chat_member(chat.id, new_mem.id, can_send_messages=True, can_send_media_messages=True, can_send_other_messages=True, can_add_web_page_previews=True)))
     match = re.match(r"check_bot_\((.+?)\)", query.data)
     user_id = int(match.group(1))
+    message = update.effective_message  # type: Optional[Message]
+    print(message)
     print(match, user.id, user_id)
     if user_id == user.id:
         print("YES")
         query.answer(text="Unmuted!")
+        #Unmute user
+        bot.restrict_chat_member(chat.id, user.id, can_send_messages=True, can_send_media_messages=True, can_send_other_messages=True, can_add_web_page_previews=True)
+        bot.deleteMessage(chat.id, message.message_id)
     else:
         print("NO")
         query.answer(text="You not a new user!")
@@ -433,12 +439,6 @@ def clean_welcome(bot: Bot, update: Update, args: List[str]) -> str:
         # idek what you're writing, say yes or no
         update.effective_message.reply_text("I understand 'on/yes' or 'off/no' only!")
         return ""
-
-
-@run_async
-@user_admin
-def welcome_help(bot: Bot, update: Update):
-    update.effective_message.reply_text(WELC_HELP_TXT, parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
