@@ -11,7 +11,7 @@ from telegram import ParseMode
 from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from tg_bot import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER
+from tg_bot import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, MAPS_API
 from tg_bot.__main__ import GDPR
 from tg_bot.__main__ import STATS, USER_INFO
 from tg_bot.modules.disable import DisableAbleCommandHandler
@@ -279,10 +279,11 @@ def get_time(bot: Bot, update: Update, args: List[str]):
         bot.send_sticker(update.effective_chat.id, BAN_STICKER)
         return
 
-    res = requests.get(GMAPS_LOC, params=dict(address=location))
+    res = requests.get(GMAPS_LOC, params=dict(address=location, key=MAPS_API))
 
     if res.status_code == 200:
         loc = json.loads(res.text)
+        print(loc)
         if loc.get('status') == 'OK':
             lat = loc['results'][0]['geometry']['location']['lat']
             long = loc['results'][0]['geometry']['location']['lng']
@@ -305,7 +306,8 @@ def get_time(bot: Bot, update: Update, args: List[str]):
                 location = country
 
             timenow = int(datetime.utcnow().timestamp())
-            res = requests.get(GMAPS_TIME, params=dict(location="{},{}".format(lat, long), timestamp=timenow))
+            res = requests.get(GMAPS_TIME, params=dict(location="{},{}".format(lat, long), timestamp=timenow, key=MAPS_API))
+
             if res.status_code == 200:
                 offset = json.loads(res.text)['dstOffset']
                 timestamp = json.loads(res.text)['rawOffset']
