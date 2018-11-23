@@ -41,6 +41,7 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
 
         elif member.can_send_messages is None or member.can_send_messages:
             bot.restrict_chat_member(chat.id, user_id, can_send_messages=False)
+            message.reply_text("Muted!")
             keyboard = []
             reply = "{} is muted!".format(mention_html(member.user.id, member.user.first_name))
             message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
@@ -86,6 +87,7 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
                                      can_send_other_messages=True,
                                      can_add_web_page_previews=True)
             keyboard = []
+            message.reply_text("Unmuted!")
             reply = "Yep, {} can start talking again!".format(mention_html(member.user.id, member.user.first_name))
             message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
             return "<b>{}:</b>" \
@@ -211,6 +213,7 @@ def nomedia(bot: Bot, update: Update, args: List[str]) -> str:
                                      can_send_media_messages=False,
                                      can_send_other_messages=False,
                                      can_add_web_page_previews=False)
+            message.reply_text("Resticted!")
             keyboard = []
             reply = "{} is restricted from sending multimedia and links!".format(mention_html(member.user.id, member.user.first_name))
             message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
@@ -255,6 +258,7 @@ def media(bot: Bot, update: Update, args: List[str]) -> str:
                                      can_send_media_messages=True,
                                      can_send_other_messages=True,
                                      can_add_web_page_previews=True)
+            message.reply_text("Unrestricted!")
             keyboard = []
             reply = "Yep, {} can send multimedia and links again!".format(mention_html(member.user.id, member.user.first_name))
             message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
