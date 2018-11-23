@@ -15,6 +15,11 @@ announcements.
 
 Alternatively, [find me on telegram](https://t.me/SonOfLars)! (Keep all support questions in the support chat, where more people can help you.)
 
+##Thanks to
+
+* 1mavarik1
+* FFBot
+
 ## Starting the bot.
 
 Once you've setup your database and your configuration (see below) is complete, simply run:
