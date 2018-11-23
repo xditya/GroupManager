@@ -105,9 +105,11 @@ def connected(bot, update, chat, user_id, need_admin=True):
 __help__ = """
 Actions are available with connected groups:
  • View and edit notes
+ • View and edit filters
+ • View and edit blacklists
  • More in future!
 
- - /connection <chatid>: Connect to remote chat for see and edit notes
+ - /connection <chatid>: Connect to remote chat
  - /disconnect: Disconnect from chat
  - /allowconnect on/yes/off/no: Allow connect users to group
 """

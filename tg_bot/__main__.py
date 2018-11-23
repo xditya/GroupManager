@@ -127,10 +127,6 @@ def start(bot: Bot, update: Update, args: List[str]):
     else:
         update.effective_message.reply_text("Yo, whadup?")
 
-    update.effective_message.reply_text(tld(chat.id, "test"), parse_mode=ParseMode.MARKDOWN,
-                                            reply_markup=ReplyKeyboardMarkup([[KeyboardButton("/help - Bot Help"), KeyboardButton("/donate - Donate")],
-                                             [KeyboardButton("/notes - Notes"), KeyboardButton("/connect - Connect to chat")]]))
-
 
 # for test purposes
 def error_callback(bot, update, error):
