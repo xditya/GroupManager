@@ -6,6 +6,7 @@ from telegram.error import BadRequest
 from telegram.ext import CommandHandler, Filters
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import mention_html
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, User, CallbackQuery
 
 from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.helper_funcs.chat_status import bot_admin, user_admin, is_user_admin, can_restrict
@@ -41,6 +42,9 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
         elif member.can_send_messages is None or member.can_send_messages:
             bot.restrict_chat_member(chat.id, user_id, can_send_messages=False)
             message.reply_text("Muted!")
+            keyboard = []
+            reply = "{} is muted!".format(mention_html(member.user.id, member.user.first_name))
+            message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
             return "<b>{}:</b>" \
                    "\n#MUTE" \
                    "\n<b>Admin:</b> {}" \
@@ -72,29 +76,27 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
 
     member = chat.get_member(int(user_id))
 
-    if member:
-        if is_user_admin(chat, user_id, member=member):
-            message.reply_text("This is an admin, what do you expect me to do?")
-            return ""
-
-        elif member.status != 'kicked' and member.status != 'left':
-            if member.can_send_messages and member.can_send_media_messages \
-                    and member.can_send_other_messages and member.can_add_web_page_previews:
-                message.reply_text("This user already has the right to speak.")
-                return ""
-            else:
-                bot.restrict_chat_member(chat.id, int(user_id),
-                                         can_send_messages=True,
-                                         can_send_media_messages=True,
-                                         can_send_other_messages=True,
-                                         can_add_web_page_previews=True)
-                message.reply_text("Unmuted!")
-                return "<b>{}:</b>" \
-                       "\n#UNMUTE" \
-                       "\n<b>Admin:</b> {}" \
-                       "\n<b>User:</b> {}".format(html.escape(chat.title),
-                                                  mention_html(user.id, user.first_name),
-                                                  mention_html(member.user.id, member.user.first_name))
+    if member.status != 'kicked' and member.status != 'left':
+        if member.can_send_messages and member.can_send_media_messages \
+                and member.can_send_other_messages and member.can_add_web_page_previews:
+            message.reply_text("This user already has the right to speak.")
+        else:
+            bot.restrict_chat_member(chat.id, int(user_id),
+                                     can_send_messages=True,
+                                     can_send_media_messages=True,
+                                     can_send_other_messages=True,
+                                     can_add_web_page_previews=True)
+            message.reply_text("Unmuted!")
+            keyboard = []
+            reply = "Yep, {} can start talking again!".format(mention_html(member.user.id, member.user.first_name))
+            message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
+            return "<b>{}:</b>" \
+                   "\n#UNMUTE" \
+                   "\n<b>• Admin:</b> {}" \
+                   "\n<b>• User:</b> {}" \
+                   "\n<b>• ID:</b> <code>{}</code>".format(html.escape(chat.title),
+                                                           mention_html(user.id, user.first_name),
+                                                           mention_html(member.user.id, member.user.first_name), user_id)
     else:
         message.reply_text("This user isn't even in the chat, unmuting them won't make them talk more than they "
                            "already do!")
