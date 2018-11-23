@@ -6,6 +6,8 @@ from telegram.ext import run_async
 from tg_bot import dispatcher, updater, API_WEATHER
 from tg_bot.modules.disable import DisableAbleCommandHandler
 
+from tg_bot.modules.sql.translation import prev_locale
+
 @run_async
 def weather(bot, update, args):
     if len(args) == 0:
@@ -19,7 +21,10 @@ def weather(bot, update, args):
         return
 
     try:
-        owm = pyowm.OWM(API_WEATHER)
+        chat = update.effective_chat  # type: Optional[Chat]
+        LANGUAGE = prev_locale(chat.id).locale_name
+        print(LANGUAGE)
+        owm = pyowm.OWM(API_WEATHER, language=LANGUAGE)
         observation = owm.weather_at_place(location)
         getloc = observation.get_location()
         thelocation = getloc.get_name()
@@ -33,25 +38,29 @@ def weather(bot, update, args):
         # Weather symbols
         status = ""
         status_now = theweather.get_weather_code()
-        if status_now < 232: # Rain storm
+        print(status_now)
+        if status_now == 232: # Rain storm
             status += "⛈️ "
-        elif status_now < 321: # Drizzle
+        elif status_now == 321: # Drizzle
             status += "🌧️ "
-        elif status_now < 504: # Light rain
+        elif status_now == 504: # Light rain
             status += "🌦️ "
-        elif status_now < 531: # Cloudy rain
-             status += "⛈️ "
-        elif status_now < 622: # Snow
+        elif status_now == 531: # Cloudy rain
+            status += "⛈️ "
+        elif status_now == 622: # Snow
             status += "🌨️ "
-        elif status_now < 781: # Atmosphere
+        elif status_now == 781: # Atmosphere
             status += "🌪️ "
-        elif status_now < 800: # Bright
+        elif status_now == 800: # Bright
             status += "🌤️ "
-        elif status_now < 801: # A little cloudy
-             status += "⛅️ "
-        elif status_now < 804: # Cloudy
-             status += "☁️ "
-        status += theweather._detailed_status
+        elif status_now == 801: # A little cloudy
+            status += "⛅️ "
+        elif status_now == 804: # Cloudy
+            status += "☁️ "
+
+        print(status)
+
+        status = status + theweather._detailed_status
                         
 
         update.message.reply_text("Today in {} is being {}, around {}°C.\n".format(thelocation,
