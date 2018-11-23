@@ -54,12 +54,12 @@ RUN_STRINGS = (
 SLAP_TEMPLATES = (
     "{user1} {hits} {user2} {itemp}.",
     "{user1} {hits} в лицо {user2} {itemp}.",
-    "{user1} {throws} {item} в {user2}.",
-    "{user1} берёт {item} и {throws} им {user2} в лицо.",
+    "{user1} {throws} {itemr} в {user2}.",
+    "{user1} берёт {item} и {throws} им в лицо {user2}.",
     "{user1} запускает {itemr} в направлении {user2}.",
     "{user1} начинает безобидно хлопать {user2} {itemp}.",
     "{user1} придавливает {user2} и несколько раз {hits} его {itemp}.",
-    "{user1} хвататет {item} и {hits} {user2}",
+    "{user1} хвататет {itemr} и {hits} {user2}",
     "{user1} привязывает {user2} к стулу и {throws} {itemr} в него.",
     "{user1} дружески подтолкнул {user2}, чтобы тот научился плавать в лаве."
 )
