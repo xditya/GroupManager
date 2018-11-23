@@ -323,6 +323,30 @@ def echo(bot: Bot, update: Update):
         message.reply_text(args[1], quote=False)
     message.delete()
 
+@run_async
+def stickerid(bot: Bot, update: Update):
+    msg = update.effective_message
+    if msg.reply_to_message and msg.reply_to_message.sticker:
+        update.effective_message.reply_text("Sticker ID:\n```" + 
+                                            escape_markdown(msg.reply_to_message.sticker.file_id) + "```",
+                                            parse_mode=ParseMode.MARKDOWN)
+    else:
+        update.effective_message.reply_text("Please reply to a sticker to get its ID.")
+
+
+@run_async
+def getsticker(bot: Bot, update: Update):
+    msg = update.effective_message
+    chat_id = update.effective_chat.id
+    if msg.reply_to_message and msg.reply_to_message.sticker:
+        file_id = msg.reply_to_message.sticker.file_id
+        newFile = bot.get_file(file_id)
+        newFile.download('sticker.png')
+        bot.sendDocument(chat_id, document=open('sticker.png', 'rb'))
+        
+    else:
+        update.effective_message.reply_text("Please reply to a sticker for me to upload its PNG.")
+
 
 @run_async
 def gdpr(bot: Bot, update: Update):
@@ -395,6 +419,8 @@ __help__ = """
  - /time <place>: gives the local time at the given place.
  - /info: get information about a user.
  - /gdpr: deletes your information from the bot's database. Private chats only.
+ - /stickerid: reply to a sticker to me to tell you its file ID.
+ - /getsticker: reply to a sticker to me to upload its raw PNG file.
 
  - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
 """
