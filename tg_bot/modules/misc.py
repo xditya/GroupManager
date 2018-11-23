@@ -2,6 +2,8 @@ import html
 import json
 import random
 import time
+import pyowm
+from pyowm import timeutils, exceptions
 from datetime import datetime
 from typing import Optional, List
 
@@ -11,12 +13,14 @@ from telegram import ParseMode
 from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from tg_bot import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, MAPS_API
+from tg_bot import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, MAPS_API, API_WEATHER
 from tg_bot.__main__ import GDPR
 from tg_bot.__main__ import STATS, USER_INFO
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.extraction import extract_user
 from tg_bot.modules.helper_funcs.filters import CustomFilters
+
+from tg_bot.modules.sql.translation import prev_locale
 
 RUN_STRINGS = (
     "Where do you think you're going?",
@@ -351,6 +355,72 @@ def getsticker(bot: Bot, update: Update):
 
 
 @run_async
+def weather(bot, update, args):
+    if len(args) == 0:
+        update.effective_message.reply_text("Write a location to check the weather.")
+        return
+
+    location = " ".join(args)
+    if location.lower() == bot.first_name.lower():
+        update.effective_message.reply_text("I will keep an eye on both happy and sad times!")
+        bot.send_sticker(update.effective_chat.id, BAN_STICKER)
+        return
+
+    try:
+        chat = update.effective_chat  # type: Optional[Chat]
+        LANGUAGE = prev_locale(chat.id)
+        try:
+            LANGUAGE = LANGUAGE.locale_name
+        except:
+            LANGUAGE = "en"
+        print(LANGUAGE)
+        owm = pyowm.OWM(API_WEATHER, language=LANGUAGE)
+        observation = owm.weather_at_place(location)
+        getloc = observation.get_location()
+        thelocation = getloc.get_name()
+        if thelocation == None:
+            thelocation = "Unknown"
+        theweather = observation.get_weather()
+        temperature = theweather.get_temperature(unit='celsius').get('temp')
+        if temperature == None:
+            temperature = "Unknown"
+
+        # Weather symbols
+        status = ""
+        status_now = theweather.get_weather_code()
+        print(status_now)
+        if status_now == 232: # Rain storm
+            status += "⛈️ "
+        elif status_now == 321: # Drizzle
+            status += "🌧️ "
+        elif status_now == 504: # Light rain
+            status += "🌦️ "
+        elif status_now == 531: # Cloudy rain
+            status += "⛈️ "
+        elif status_now == 622: # Snow
+            status += "🌨️ "
+        elif status_now == 781: # Atmosphere
+            status += "🌪️ "
+        elif status_now == 800: # Bright
+            status += "🌤️ "
+        elif status_now == 801: # A little cloudy
+            status += "⛅️ "
+        elif status_now == 804: # Cloudy
+            status += "☁️ "
+
+        print(status)
+
+        status = status + theweather._detailed_status
+                        
+
+        update.message.reply_text("Today in {} is being {}, around {}°C.\n".format(thelocation,
+                status, temperature))
+
+    except:
+        update.effective_message.reply_text("Sorry, location not found.")
+
+
+@run_async
 def gdpr(bot: Bot, update: Update):
     update.effective_message.reply_text("Deleting identifiable data...")
     for mod in GDPR:
@@ -419,6 +489,7 @@ __help__ = """
  - /runs: reply a random string from an array of replies.
  - /slap: slap a user, or get slapped if not a reply.
  - /time <place>: gives the local time at the given place.
+ - /weather <city>: get weather info in a particular place.
  - /info: get information about a user.
  - /gdpr: deletes your information from the bot's database. Private chats only.
  - /stickerid: reply to a sticker to me to tell you its file ID.
@@ -445,6 +516,12 @@ MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.
 STATS_HANDLER = CommandHandler("stats", stats, filters=CustomFilters.sudo_filter)
 GDPR_HANDLER = CommandHandler("gdpr", gdpr, filters=Filters.private)
 
+GDPR_HANDLER = CommandHandler("gdpr", gdpr)
+
+WEATHER_HANDLER = DisableAbleCommandHandler("weather", weather, pass_args=True)
+STICKER_HANDLER = DisableAbleCommandHandler("stickerid", stickerid)
+STICKERID_HANDLER = DisableAbleCommandHandler("getsticker", getsticker)
+
 dispatcher.add_handler(ID_HANDLER)
 dispatcher.add_handler(IP_HANDLER)
 dispatcher.add_handler(TIME_HANDLER)
@@ -456,3 +533,6 @@ dispatcher.add_handler(MD_HELP_HANDLER)
 dispatcher.add_handler(STATS_HANDLER)
 dispatcher.add_handler(GDPR_HANDLER)
 dispatcher.add_handler(PING_HANDLER)
+dispatcher.add_handler(WEATHER_HANDLER)
+dispatcher.add_handler(STICKER_HANDLER)
+dispatcher.add_handler(STICKERID_HANDLER)
