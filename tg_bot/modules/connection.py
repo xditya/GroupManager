@@ -15,6 +15,8 @@ from tg_bot.modules.helper_funcs.string_handling import extract_time
 
 from tg_bot.modules.translations.strings import tld
 
+from tg_bot.modules.keyboard import keyboard
+
 @user_admin
 @run_async
 def allow_connections(bot: Bot, update: Update, args: List[str]) -> str:
@@ -56,12 +58,50 @@ def connect_chat(bot, update, args):
                 if connection_status:
                     chat_name = dispatcher.bot.getChat(connected(bot, update, chat, user.id, need_admin=False)).title
                     update.effective_message.reply_text(tld(chat.id, "Successfully connected to *{}*").format(chat_name), parse_mode=ParseMode.MARKDOWN)
+
+                    #Add chat to connection history
+                    history = sql.get_history(user.id)
+                    if history:
+                        #Vars
+                        if history.chat_id1:
+                            history1 = int(history.chat_id1)
+                        if history.chat_id2:
+                            history2 = int(history.chat_id2)
+                        if history.chat_id3:
+                            history3 = int(history.chat_id3)
+                        if history.updated:
+                            number = history.updated
+
+                        if number == 1 and connect_chat != history2 and connect_chat != history3:
+                            history1 = connect_chat
+                            number = 2
+                        elif number == 2 and connect_chat != history1 and connect_chat != history3:
+                            history2 = connect_chat
+                            number = 3
+                        elif number >= 3 and connect_chat != history2 and connect_chat != history1:
+                            history3 = connect_chat
+                            number = 1
+                        else:
+                            print("Error")
+                    
+                        print(history.updated)
+                        print(number)
+
+                        sql.add_history(user.id, history1, history2, history3, number)
+                        print(history.user_id, history.chat_id1, history.chat_id2, history.chat_id3, history.updated)
+                    else:
+                        sql.add_history(user.id, connect_chat, "0", "0", 2)
+                    #Rebuild user's keyboard
+                    keyboard(bot, update)
+                    
                 else:
                     update.effective_message.reply_text(tld(chat.id, "Connection failed!"))
             else:
                 update.effective_message.reply_text(tld(chat.id, "Connections to this chat not allowed!"))
         else:
             update.effective_message.reply_text(tld(chat.id, "Write chat ID to connect!"))
+            history = sql.get_history(user.id)
+            print(history.user_id, history.chat_id1, history.chat_id2, history.chat_id3, history.updated)
 
     else:
         update.effective_message.reply_text(tld(chat.id, "Usage limited to PMs only!"))
@@ -71,7 +111,9 @@ def disconnect_chat(bot, update):
     if update.effective_chat.type == 'private':
         disconnection_status = sql.disconnect(update.effective_message.from_user.id)
         if disconnection_status:
-           sql.disconnected_chat = update.effective_message.reply_text("Disconnected from chat!")
+            sql.disconnected_chat = update.effective_message.reply_text("Disconnected from chat!")
+            #Rebuild user's keyboard
+            keyboard(bot, update)
         else:
            update.effective_message.reply_text("Disconnection unsuccessfull!")
     else:
