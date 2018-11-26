@@ -29,22 +29,42 @@ class Connection(BASE):
 
 
 class ConnectionHistory(BASE):
-    __tablename__ = "connection_history"
+    __tablename__ = "connection_history5"
     user_id = Column(Integer, primary_key=True)
     chat_id1 = Column(String(14))
     chat_id2 = Column(String(14))
     chat_id3 = Column(String(14))
-    def __init__(self, user_id, chat_id1, chat_id2, chat_id3):
+    updated = Column(Integer)
+    def __init__(self, user_id, chat_id1, chat_id2, chat_id3, updated):
         self.user_id = user_id
         self.chat_id1 = str(chat_id1) #Ensure String
         self.chat_id2 = str(chat_id2) #Ensure String
         self.chat_id3 = str(chat_id3) #Ensure String
+        self.updated = updated
 
 ChatAccessConnectionSettings.__table__.create(checkfirst=True)
 Connection.__table__.create(checkfirst=True)
+ConnectionHistory.__table__.create(checkfirst=True)
 
 CHAT_ACCESS_LOCK = threading.RLock()
 CONNECTION_INSERTION_LOCK = threading.RLock()
+HISTORY_LOCK = threading.RLock()
+
+
+def add_history(user_id, chat_id1, chat_id2, chat_id3, updated):
+    with HISTORY_LOCK:
+        prev = SESSION.query(ConnectionHistory).get((int(user_id)))
+        if prev:
+            SESSION.delete(prev)
+        history = ConnectionHistory(user_id, chat_id1, chat_id2, chat_id3, updated)
+        SESSION.add(history)
+        SESSION.commit()
+
+def get_history(user_id):
+    try:
+        return SESSION.query(ConnectionHistory).get(str(user_id))
+    finally:
+        SESSION.close()
 
 
 def allow_connect_to_chat(chat_id: Union[str, int]) -> bool:

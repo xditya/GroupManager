@@ -302,12 +302,15 @@ def weather(bot, update, args):
         elif status_now == 804: # Cloudy
             status += "☁️ "
 
+        print(getloc, observation)
         print(status)
+        #print(status.formatted_address)
+        
 
         status = status + theweather._detailed_status
                         
 
-        update.message.reply_text("Today in {} is being {}, around {}°C.\n".format(thelocation,
+        update.message.reply_text(tld(chat.id, "Today in {} is being {}, around {}°C.\n").format(thelocation,
                 status, temperature))
 
     except:
