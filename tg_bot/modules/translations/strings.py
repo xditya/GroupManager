@@ -1,6 +1,7 @@
 from tg_bot.modules.sql.translation import prev_locale
 from tg_bot.modules.translations.English import EnglishStrings
 from tg_bot.modules.translations.Russian import RussianStrings
+from tg_bot.modules.translations.Ukraine import UkrainianStrings
 
 def tld(chat_id, t, show_none=True):
     LANGUAGE = prev_locale(chat_id)
@@ -9,6 +10,8 @@ def tld(chat_id, t, show_none=True):
         LOCALE = LANGUAGE.locale_name
         if LOCALE in ('ru') and t in RussianStrings:
            return RussianStrings[t]
+        elif LOCALE in ('uk') and t in UkrainianStrings:
+            return UkrainianStrings[t]
         else:
             if t in EnglishStrings:
                 return EnglishStrings[t]
@@ -34,6 +37,8 @@ def tld_help(chat_id, t):
 
         if LOCALE in ('ru') and t in RussianStrings:
             return RussianStrings[t]
+        elif LOCALE in ('uk') and t in UkrainianStrings:
+            return UkrainianStrings[t]
         else:
             return False
     else:
