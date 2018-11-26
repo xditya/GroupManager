@@ -5,7 +5,7 @@ from tg_bot.modules.translations.Ukraine import UkrainianStrings
 
 def tld(chat_id, t, show_none=True):
     LANGUAGE = prev_locale(chat_id)
-    print(t)
+    print(chat_id, t)
     if LANGUAGE:
         LOCALE = LANGUAGE.locale_name
         if LOCALE in ('ru') and t in RussianStrings:
@@ -27,7 +27,7 @@ def tld(chat_id, t, show_none=True):
 
 def tld_help(chat_id, t):
     LANGUAGE = prev_locale(chat_id)
-    print("tld_help ", t)
+    print("tld_help ", chat_id, t)
     if LANGUAGE:
         LOCALE = LANGUAGE.locale_name
 

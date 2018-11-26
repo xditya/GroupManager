@@ -149,6 +149,8 @@ Actions are available with connected groups:
  • View and edit notes
  • View and edit filters
  • View and edit blacklists
+ • Promote/demote users
+ • See adminlist, see invitelink
  • More in future!
 
  - /connection <chatid>: Connect to remote chat

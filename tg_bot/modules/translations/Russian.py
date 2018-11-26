@@ -197,8 +197,28 @@ RussianStrings = {
 "ITEMR-K": ITEMSR_RU,
 "Today in {} is being {}, around {}°C.\n": "Сегодня в {} {}, примерно {}°C.\n",
 
+#Admin
+"How am I meant to promote someone that's already an admin?": "Как я должна назначить кого-то, кто уже является администратором?",
+"I can't promote myself! Get an admin to do it for me.": "Я не могу назначить себя! Получите администратора, чтобы сделать это для меня.",
+"Successfully promoted in *{}*!": "Успешно назначен в *{}*!",
+
+"This person CREATED the chat, how would I demote them?": "Этот человек СОЗДАЛ чат, как я могу его понизить?",
+"Can't demote what wasn't promoted!": "Как я могу понизить того кто не является админом?",
+"I can't demote myself!": "Я не могу понизить себя!",
+"Successfully demoted in *{}*!": "Успешно понижен в *{}*!",
+"Could not demote. I might not be admin, or the admin status was appointed by another user, so I can't act upon them!": 
+"Не могу понизить. Возможно, я не администратор, или статус администратора был назначен другим пользователем, поэтому я не могу понизить его!",
+
+"I don't have access to the invite link, try changing my permissions!": "У меня нет доступа к ссылке приглашения, попробуйте изменить мои права!",
+"I can only give you invite links for supergroups and channels, sorry!": "Я могу дать ссылку для супергрупп и каналов!",
+
+"Admins in": "Админы в",
+"this chat": "этом чате",
+" (Creator)": " (Создатель)",
+
 #Multi
     "Invalid Chat ID provided!": "ID чата недействительный!", #Connections
+    "You don't seem to be referring to a user.": "Кажется, вы не обращаетесь к пользователю.", #Admin
 
 #__main__
     #Module names
@@ -312,6 +332,8 @@ RussianStrings = {
  • Просмотр и редактирование заметок.
  • Просмотр и редактирование фильтров.
  • Просмотр и редактирование черного списка.
+ • Назначать/понижать пользователей.
+ • Просмотр списка админов, просмотр ссылки-приглашения.
  • Больше в будущем!
 
  - /connection <chatid>: Подключится к группе.
