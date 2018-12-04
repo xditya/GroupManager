@@ -21,7 +21,6 @@ from tg_bot.modules.helper_funcs.extraction import extract_user
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 
 from tg_bot.modules.sql.translation import prev_locale
-#from tg_bot.modules.translations.English import SLAP_FORMAT
 
 from tg_bot.modules.translations.strings import tld
 
@@ -31,7 +30,8 @@ GMAPS_TIME = "https://maps.googleapis.com/maps/api/timezone/json"
 
 @run_async
 def runs(bot: Bot, update: Update):
-    update.effective_message.reply_text(random.choice(RUN_STRINGS))
+    chat = update.effective_chat  # type: Optional[Chat]
+    update.effective_message.reply_text(random.choice(tld(chat.id, "RUNS-K")))
 
 
 @run_async
@@ -88,12 +88,13 @@ def get_bot_ip(bot: Bot, update: Update):
 @run_async
 def get_id(bot: Bot, update: Update, args: List[str]):
     user_id = extract_user(update.effective_message, args)
+    chat = update.effective_chat  # type: Optional[Chat]
     if user_id:
         if update.effective_message.reply_to_message and update.effective_message.reply_to_message.forward_from:
             user1 = update.effective_message.reply_to_message.from_user
             user2 = update.effective_message.reply_to_message.forward_from
-            update.effective_message.reply_text(
-                "The original sender, {}, has an ID of `{}`.\nThe forwarder, {}, has an ID of `{}`.".format(
+            update.effective_message.reply_text(tld(chat.id,
+                "The original sender, {}, has an ID of `{}`.\nThe forwarder, {}, has an ID of `{}`.").format(
                     escape_markdown(user2.first_name),
                     user2.id,
                     escape_markdown(user1.first_name),
@@ -101,16 +102,16 @@ def get_id(bot: Bot, update: Update, args: List[str]):
                 parse_mode=ParseMode.MARKDOWN)
         else:
             user = bot.get_chat(user_id)
-            update.effective_message.reply_text("{}'s id is `{}`.".format(escape_markdown(user.first_name), user.id),
+            update.effective_message.reply_text(tld(chat.id, "{}'s id is `{}`.").format(escape_markdown(user.first_name), user.id),
                                                 parse_mode=ParseMode.MARKDOWN)
     else:
         chat = update.effective_chat  # type: Optional[Chat]
         if chat.type == "private":
-            update.effective_message.reply_text("Your id is `{}`.".format(chat.id),
+            update.effective_message.reply_text(tld(chat.id, "Your id is `{}`.").format(chat.id),
                                                 parse_mode=ParseMode.MARKDOWN)
 
         else:
-            update.effective_message.reply_text("This group's id is `{}`.".format(chat.id),
+            update.effective_message.reply_text(tld(chat.id, "This group's id is `{}`.").format(chat.id),
                                                 parse_mode=ParseMode.MARKDOWN)
 
 
@@ -118,6 +119,7 @@ def get_id(bot: Bot, update: Update, args: List[str]):
 def info(bot: Bot, update: Update, args: List[str]):
     msg = update.effective_message  # type: Optional[Message]
     user_id = extract_user(update.effective_message, args)
+    chat = update.effective_chat  # type: Optional[Chat]
 
     if user_id:
         user = bot.get_chat(user_id)
@@ -128,41 +130,41 @@ def info(bot: Bot, update: Update, args: List[str]):
     elif not msg.reply_to_message and (not args or (
             len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
         [MessageEntity.TEXT_MENTION]))):
-        msg.reply_text("I can't extract a user from this.")
+        msg.reply_text(tld(chat.id, "I can't extract a user from this."))
         return
 
     else:
         return
 
-    text = "<b>User info</b>:" \
-           "\nID: <code>{}</code>" \
-           "\nFirst Name: {}".format(user.id, html.escape(user.first_name))
+    text =  tld(chat.id, "<b>User info</b>:")
+    text += "\nID: <code>{}</code>".format(user.id)
+    text += tld(chat.id, "\nFirst Name: {}").format(html.escape(user.first_name))
 
     if user.last_name:
-        text += "\nLast Name: {}".format(html.escape(user.last_name))
+        text += tld(chat.id, "\nLast Name: {}").format(html.escape(user.last_name))
 
     if user.username:
-        text += "\nUsername: @{}".format(html.escape(user.username))
+        text += tld(chat.id, "\nUsername: @{}").format(html.escape(user.username))
 
-    text += "\nPermanent user link: {}".format(mention_html(user.id, "link"))
+    text += tld(chat.id, "\nPermanent user link: {}").format(mention_html(user.id, "link"))
 
     if user.id == OWNER_ID:
-        text += "\n\nThis person is my owner - I would never do anything against them!"
+        text += tld(chat.id, "\n\nThis person is my owner - I would never do anything against them!")
     else:
         if user.id in SUDO_USERS:
-            text += "\nThis person is one of my sudo users! " \
-                    "Nearly as powerful as my owner - so watch it."
+            text += tld(chat.id, "\nThis person is one of my sudo users! " \
+            "Nearly as powerful as my owner - so watch it.")
         else:
             if user.id in SUPPORT_USERS:
-                text += "\nThis person is one of my support users! " \
-                        "Not quite a sudo user, but can still gban you off the map."
+                text += tld(chat.id, "\nThis person is one of my support users! " \
+                        "Not quite a sudo user, but can still gban you off the map.")
 
             if user.id in WHITELIST_USERS:
-                text += "\nThis person has been whitelisted! " \
-                        "That means I'm not allowed to ban/kick them."
+                text += tld(chat.id, "\nThis person has been whitelisted! " \
+                        "That means I'm not allowed to ban/kick them.")
 
     for mod in USER_INFO:
-        mod_info = mod.__user_info__(user.id).strip()
+        mod_info = mod.__user_info__(user.id, chat.id).strip()
         if mod_info:
             text += "\n\n" + mod_info
 
@@ -171,10 +173,11 @@ def info(bot: Bot, update: Update, args: List[str]):
 
 @run_async
 def get_time(bot: Bot, update: Update, args: List[str]):
+    chat = update.effective_chat  # type: Optional[Chat]
     location = " ".join(args)
     if location.lower() == bot.first_name.lower():
-        update.effective_message.reply_text("Its always banhammer time for me!")
-        bot.send_sticker(update.effective_chat.id, BAN_STICKER)
+        update.effective_message.reply_text(tld(chat.id, "Its always banhammer time for me!"))
+        bot.send_sticker(chat.id, BAN_STICKER)
         return
 
     res = requests.get(GMAPS_LOC, params=dict(address=location, key=MAPS_API))
@@ -210,18 +213,18 @@ def get_time(bot: Bot, update: Update, args: List[str]):
                 offset = json.loads(res.text)['dstOffset']
                 timestamp = json.loads(res.text)['rawOffset']
                 time_there = datetime.fromtimestamp(timenow + timestamp + offset).strftime("%H:%M:%S on %A %d %B")
-                update.message.reply_text("It's {} in {}".format(time_there, location))
+                update.message.reply_text(tld(chat.id, "It's {} in {}").format(time_there, location))
 
 
 @run_async
 def echo(bot: Bot, update: Update):
-    args = update.effective_message.text.split(None, 1)
     message = update.effective_message
+    message.delete()
+    args = update.effective_message.text.split(None, 1)
     if message.reply_to_message:
         message.reply_to_message.reply_text(args[1])
     else:
         message.reply_text(args[1], quote=False)
-    message.delete()
 
 @run_async
 def stickerid(bot: Bot, update: Update):
@@ -231,7 +234,7 @@ def stickerid(bot: Bot, update: Update):
                                             escape_markdown(msg.reply_to_message.sticker.file_id) + "```",
                                             parse_mode=ParseMode.MARKDOWN)
     else:
-        update.effective_message.reply_text("Please reply to a sticker to get its ID.")
+        update.effective_message.reply_text(tld(update.effective_chat, "Please reply to a sticker to get its ID."))
 
 
 @run_async
@@ -245,23 +248,23 @@ def getsticker(bot: Bot, update: Update):
         bot.sendDocument(chat_id, document=open('sticker.png', 'rb'))
         
     else:
-        update.effective_message.reply_text("Please reply to a sticker for me to upload its PNG.")
+        update.effective_message.reply_text(tld(chat_id, "Please reply to a sticker for me to upload its PNG."))
 
 
 @run_async
 def weather(bot, update, args):
+    chat = update.effective_chat  # type: Optional[Chat]
     if len(args) == 0:
-        update.effective_message.reply_text("Write a location to check the weather.")
+        update.effective_message.reply_text(tld(chat.id, "Write a location to check the weather."))
         return
 
     location = " ".join(args)
     if location.lower() == bot.first_name.lower():
-        update.effective_message.reply_text("I will keep an eye on both happy and sad times!")
-        bot.send_sticker(update.effective_chat.id, BAN_STICKER)
+        update.effective_message.reply_text(tld(chat.id, "I will keep an eye on both happy and sad times!"))
+        bot.send_sticker(chat.id, BAN_STICKER)
         return
 
     try:
-        chat = update.effective_chat  # type: Optional[Chat]
         LANGUAGE = prev_locale(chat.id)
         try:
             LANGUAGE = LANGUAGE.locale_name
@@ -314,57 +317,26 @@ def weather(bot, update, args):
                 status, temperature))
 
     except:
-        update.effective_message.reply_text("Sorry, location not found.")
+        update.effective_message.reply_text(tld(chat.id, "Sorry, location not found."))
 
 
 @run_async
 def gdpr(bot: Bot, update: Update):
-    update.effective_message.reply_text("Deleting identifiable data...")
+    update.effective_message.reply_text(tld(update.effective_chat.id, "Deleting identifiable data..."))
     for mod in GDPR:
         mod.__gdpr__(update.effective_user.id)
 
-    update.effective_message.reply_text("Your personal data has been deleted.\n\nNote that this will not unban "
-                                        "you from any chats, as that is telegram data, not Marie data. "
-                                        "Flooding, warns, and gbans are also preserved, as of "
-                                        "[this](https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-erasure/), "
-                                        "which clearly states that the right to erasure does not apply "
-                                        "\"for the performance of a task carried out in the public interest\", as is "
-                                        "the case for the aforementioned pieces of data.",
-                                        parse_mode=ParseMode.MARKDOWN)
-
-
-MARKDOWN_HELP = """
-Markdown is a very powerful formatting tool supported by telegram. {} has some enhancements, to make sure that \
-saved messages are correctly parsed, and to allow you to create buttons.
-
-- <code>_italic_</code>: wrapping text with '_' will produce italic text
-- <code>*bold*</code>: wrapping text with '*' will produce bold text
-- <code>`code`</code>: wrapping text with '`' will produce monospaced text, also known as 'code'
-- <code>[sometext](someURL)</code>: this will create a link - the message will just show <code>sometext</code>, \
-and tapping on it will open the page at <code>someURL</code>.
-EG: <code>[test](example.com)</code>
-
-- <code>[buttontext](buttonurl:someURL)</code>: this is a special enhancement to allow users to have telegram \
-buttons in their markdown. <code>buttontext</code> will be what is displayed on the button, and <code>someurl</code> \
-will be the url which is opened.
-EG: <code>[This is a button](buttonurl:example.com)</code>
-
-If you want multiple buttons on the same line, use :same, as such:
-<code>[one](buttonurl://example.com)
-[two](buttonurl://google.com:same)</code>
-This will create two buttons on a single line, instead of one button per line.
-
-Keep in mind that your message <b>MUST</b> contain some text other than just a button!
-""".format(dispatcher.bot.first_name)
+    update.effective_message.reply_text(tld(update.effective_chat.id, "send_gdpr"), parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
 def markdown_help(bot: Bot, update: Update):
-    update.effective_message.reply_text(MARKDOWN_HELP, parse_mode=ParseMode.HTML)
-    update.effective_message.reply_text("Try forwarding the following message to me, and you'll see!")
-    update.effective_message.reply_text("/save test This is a markdown test. _italics_, *bold*, `code`, "
+    chat = update.effective_chat  # type: Optional[Chat]
+    update.effective_message.reply_text(tld(chat.id, "MARKDOWN_HELP-K"), parse_mode=ParseMode.HTML)
+    update.effective_message.reply_text(tld(chat.id, "Try forwarding the following message to me, and you'll see!"))
+    update.effective_message.reply_text(tld(chat.id, "/save test This is a markdown test. _italics_, *bold*, `code`, "
                                         "[URL](example.com) [button](buttonurl:github.com) "
-                                        "[button2](buttonurl://google.com:same)")
+                                        "[button2](buttonurl://google.com:same)"))
 
 
 @run_async
@@ -401,7 +373,7 @@ ID_HANDLER = DisableAbleCommandHandler("id", get_id, pass_args=True)
 IP_HANDLER = CommandHandler("ip", get_bot_ip, filters=Filters.chat(OWNER_ID))
 PING_HANDLER = DisableAbleCommandHandler("ping", ping)
 
-TIME_HANDLER = CommandHandler("time", get_time, pass_args=True)
+TIME_HANDLER = DisableAbleCommandHandler("time", get_time, pass_args=True)
 
 RUNS_HANDLER = DisableAbleCommandHandler("runs", runs)
 SLAP_HANDLER = DisableAbleCommandHandler("slap", slap, pass_args=True)
@@ -412,8 +384,6 @@ MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.
 
 STATS_HANDLER = CommandHandler("stats", stats, filters=CustomFilters.sudo_filter)
 GDPR_HANDLER = CommandHandler("gdpr", gdpr, filters=Filters.private)
-
-GDPR_HANDLER = CommandHandler("gdpr", gdpr)
 
 WEATHER_HANDLER = DisableAbleCommandHandler("weather", weather, pass_args=True)
 STICKER_HANDLER = DisableAbleCommandHandler("stickerid", stickerid)

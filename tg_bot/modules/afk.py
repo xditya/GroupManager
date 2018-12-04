@@ -9,12 +9,15 @@ from tg_bot.modules.disable import DisableAbleCommandHandler, DisableAbleRegexHa
 from tg_bot.modules.sql import afk_sql as sql
 from tg_bot.modules.users import get_user_id
 
+from tg_bot.modules.translations.strings import tld
+
 AFK_GROUP = 7
 AFK_REPLY_GROUP = 8
 
 
 @run_async
 def afk(bot: Bot, update: Update):
+    chat = update.effective_chat  # type: Optional[Chat]
     args = update.effective_message.text.split(None, 1)
     if len(args) >= 2:
         reason = args[1]
@@ -22,19 +25,20 @@ def afk(bot: Bot, update: Update):
         reason = ""
 
     sql.set_afk(update.effective_user.id, reason)
-    update.effective_message.reply_text("{} is now AFK!".format(update.effective_user.first_name))
+    update.effective_message.reply_text(tld(chat.id, "{} is now AFK!").format(update.effective_user.first_name))
 
 
 @run_async
 def no_longer_afk(bot: Bot, update: Update):
     user = update.effective_user  # type: Optional[User]
+    chat = update.effective_chat  # type: Optional[Chat]
 
     if not user:  # ignore channels
         return
 
     res = sql.rm_afk(user.id)
     if res:
-        update.effective_message.reply_text("{} is no longer AFK!".format(update.effective_user.first_name))
+        update.effective_message.reply_text(tld(chat.id, "{} is no longer AFK!").format(update.effective_user.first_name))
 
 
 @run_async
@@ -66,12 +70,13 @@ def reply_afk(bot: Bot, update: Update):
         check_afk(bot, update, user_id, fst_name)
 
 def check_afk(bot, update, user_id, fst_name):
+    chat = update.effective_chat  # type: Optional[Chat]
     if sql.is_afk(user_id):
         user = sql.check_afk_status(user_id)
         if not user.reason:
-            res = "{} is AFK!".format(fst_name)
+            res = tld(chat.id, "{} is AFK!").format(fst_name)
         else:
-            res = "{} is AFK! says its because of: \n{}".format(fst_name, user.reason)
+            res = tld(chat.id, "{} is AFK! says its because of: \n{}").format(fst_name, user.reason)
         update.effective_message.reply_text(res)
 
 

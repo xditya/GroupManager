@@ -3,6 +3,8 @@ from typing import Optional
 
 from tg_bot.modules.helper_funcs.misc import is_module_loaded
 
+from tg_bot.modules.translations.strings import tld
+
 FILENAME = __name__.rsplit(".", 1)[-1]
 
 if is_module_loaded(FILENAME):
@@ -79,7 +81,7 @@ if is_module_loaded(FILENAME):
         message = update.effective_message  # type: Optional[Message]
         chat = update.effective_chat  # type: Optional[Chat]
         if chat.type == chat.CHANNEL:
-            message.reply_text("Now, forward the /setlog to the group you want to tie this channel to!")
+            message.reply_text(tld(chat.id, "Now, forward the /setlog to the group you want to tie this channel to!"))
 
         elif message.forward_from_chat:
             sql.set_chat_log_channel(chat.id, message.forward_from_chat.id)
@@ -92,22 +94,22 @@ if is_module_loaded(FILENAME):
                     LOGGER.exception("Error deleting message in log channel. Should work anyway though.")
 
             try:
-                bot.send_message(message.forward_from_chat.id,
-                                 "This channel has been set as the log channel for {}.".format(
+                bot.send_message(message.forward_from_chat.id, tld(chat.id, 
+                                 "This channel has been set as the log channel for {}.").format(
                                      chat.title or chat.first_name))
             except Unauthorized as excp:
                 if excp.message == "Forbidden: bot is not a member of the channel chat":
-                    bot.send_message(chat.id, "Successfully set log channel!")
+                    bot.send_message(chat.id, tld(chat.id, "Successfully set log channel!"))
                 else:
                     LOGGER.exception("ERROR in setting the log channel.")
 
-            bot.send_message(chat.id, "Successfully set log channel!")
+            bot.send_message(chat.id, tld(chat.id, "Successfully set log channel!"))
 
         else:
-            message.reply_text("The steps to set a log channel are:\n"
-                               " - add bot to the desired channel\n"
-                               " - send /setlog to the channel\n"
-                               " - forward the /setlog to the group\n")
+            message.reply_text(tld(chat.id, "*The steps to set a log channel are:*\n"
+                               " • add bot to the desired channel\n"
+                               " • send /setlog to the channel\n"
+                               " • forward the /setlog to the group\n"), ParseMode.MARKDOWN)
 
 
     @run_async
@@ -118,11 +120,11 @@ if is_module_loaded(FILENAME):
 
         log_channel = sql.stop_chat_logging(chat.id)
         if log_channel:
-            bot.send_message(log_channel, "Channel has been unlinked from {}".format(chat.title))
-            message.reply_text("Log channel has been un-set.")
+            bot.send_message(log_channel, tld(chat.id, "Channel has been unlinked from {}").format(chat.title))
+            message.reply_text(tld(chat.id, "Log channel has been un-set."))
 
         else:
-            message.reply_text("No log channel has been set yet!")
+            message.reply_text(tld(chat.id, "No log channel has been set yet!"))
 
 
     def __stats__():
@@ -133,8 +135,8 @@ if is_module_loaded(FILENAME):
         sql.migrate_chat(old_chat_id, new_chat_id)
 
 
-    def __chat_settings__(chat_id, user_id):
-        log_channel = sql.get_chat_log_channel(chat_id)
+    def __chat_settings__(bot, update, chat, chatP, user):
+        log_channel = sql.get_chat_log_channel(chat.id)
         if log_channel:
             log_channel_info = dispatcher.bot.get_chat(log_channel)
             return "This group has all it's logs sent to: {} (`{}`)".format(escape_markdown(log_channel_info.title),

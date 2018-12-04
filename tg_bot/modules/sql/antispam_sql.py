@@ -66,6 +66,7 @@ GBANNED_USERS_LOCK = threading.RLock()
 ASPAM_SETTING_LOCK = threading.RLock()
 GBANNED_LIST = set()
 GBANSTAT_LIST = set()
+ANTISPAMSETTING = set()
 
 GMUTED_USERS_LOCK = threading.RLock()
 GMUTE_SETTING_LOCK = threading.RLock()

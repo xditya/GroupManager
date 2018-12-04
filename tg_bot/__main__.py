@@ -274,6 +274,7 @@ def send_settings(chat_id, user_id, user=False):
 def settings_button(bot: Bot, update: Update):
     query = update.callback_query
     user = update.effective_user
+    chatP = update.effective_chat  # type: Optional[Chat]
     mod_match = re.match(r"stngs_module\((.+?),(.+?)\)", query.data)
     prev_match = re.match(r"stngs_prev\((.+?),(.+?)\)", query.data)
     next_match = re.match(r"stngs_next\((.+?),(.+?)\)", query.data)
@@ -286,7 +287,7 @@ def settings_button(bot: Bot, update: Update):
             text = "*{}* has the following settings for the *{}* module:\n\n".format(escape_markdown(chat.title),
                                                                                      CHAT_SETTINGS[
                                                                                          module].__mod_name__) + \
-                   CHAT_SETTINGS[module].__chat_settings__(chat_id, user.id)
+                   CHAT_SETTINGS[module].__chat_settings__(bot, update, chat, chatP, user)
             query.message.reply_text(text=text,
                                      parse_mode=ParseMode.MARKDOWN,
                                      reply_markup=InlineKeyboardMarkup(

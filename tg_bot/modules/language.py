@@ -8,6 +8,8 @@ from tg_bot.modules.helper_funcs.chat_status import user_admin
 from telegram.ext import CallbackQueryHandler
 import re
 
+from tg_bot.modules.connection import connected
+
 @user_admin
 def locale(bot, update, args):
     chat = update.effective_chat
@@ -33,35 +35,45 @@ def locale(bot, update, args):
 @user_admin
 def locale_button(bot, update):
     chat = update.effective_chat
+    user = update.effective_user  # type: Optional[User]
     query = update.callback_query
     lang_match = re.findall(r"en|ru|uk", query.data)
     if lang_match:
         if lang_match[0]:
             switch_to_locale(chat.id, lang_match[0])
-            text = tld(chat.id, "*Language changed*")
+            query.answer(text="Language changed!")
         else:
-            text = "Im sorry, error!"
+            query.answer(text="Error!", show_alert=True)
 
-        query.message.reply_text(text, parse_mode=ParseMode.MARKDOWN,
-                                                reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
                                                                            
-    else:
-        try: 
-            LANGUAGE = prev_locale(chat.id)
-            locale = LANGUAGE.locale_name
-            curr_lang = list_locales[locale]
-        except:
-            curr_lang = "English"
+    try: 
+        LANGUAGE = prev_locale(chat.id)
+        locale = LANGUAGE.locale_name
+        curr_lang = list_locales[locale]
+    except:
+        curr_lang = "English"
 
-        text = "*Select language* (beta)\n"
-        text += "Current language : `{}`".format(curr_lang) 
-        query.message.reply_text(text, parse_mode=ParseMode.MARKDOWN,
-                                                reply_markup=InlineKeyboardMarkup([[
-                                             InlineKeyboardButton("English 🇺🇸", callback_data="set_lang_en")]] + [[
-                                             InlineKeyboardButton("Russian 🇷🇺", callback_data="set_lang_ru"), 
-                                             InlineKeyboardButton("Ukranian 🇺🇦", callback_data="set_lang_uk")]] + [[
-                                             InlineKeyboardButton("Back", callback_data="help_back")]]))
+    text = "*Select language* (beta)\n"
+    text += "User language : `{}`".format(curr_lang) 
+
+    conn = connected(bot, update, chat, user.id, need_admin=False)
+
+    if not conn == False:
+        try: 
+            chatlng = prev_locale(conn).locale_name
+            chatlng = list_locales[chatlng]
+            text += "\nConnected chat language : `{}`".format(chatlng) 
+        except:
+            chatlng = "English"
+
+    text += "*\n\nSelect new user language:*"
+
+    query.message.reply_text(text, parse_mode=ParseMode.MARKDOWN,
+                                            reply_markup=InlineKeyboardMarkup([[
+                                            InlineKeyboardButton("English 🇺🇸", callback_data="set_lang_en")]] + [[
+                                            InlineKeyboardButton("Russian 🇷🇺", callback_data="set_lang_ru"), 
+                                            InlineKeyboardButton("Ukrainian 🇺🇦", callback_data="set_lang_uk")]] + [[
+                                            InlineKeyboardButton("Back", callback_data="help_back")]]))
 
     print(lang_match)
     query.message.delete()

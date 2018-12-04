@@ -17,6 +17,8 @@ from tg_bot.modules.helper_funcs.chat_status import can_delete, is_user_admin, u
 from tg_bot.modules.log_channel import loggable
 from tg_bot.modules.sql import users_sql
 
+from tg_bot.modules.translations.strings import tld
+
 LOCK_TYPES = {'sticker': Filters.sticker,
               'audio': Filters.audio,
               'voice': Filters.voice,
@@ -106,7 +108,7 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
         if len(args) >= 1:
             if args[0] in LOCK_TYPES:
                 sql.update_lock(chat.id, args[0], locked=True)
-                message.reply_text("Locked {} messages for all non-admins!".format(args[0]))
+                message.reply_text(tld(chat.id, "Locked {} messages for all non-admins!").format(args[0]))
 
                 return "<b>{}:</b>" \
                        "\n#LOCK" \
@@ -120,7 +122,7 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
                     members = users_sql.get_chat_members(str(chat.id))
                     restr_members(bot, chat.id, members, messages=True, media=True, other=True)
 
-                message.reply_text("Locked {} for all non-admins!".format(args[0]))
+                message.reply_text(tld(chat.id, "Locked {} for all non-admins!").format(args[0]))
                 return "<b>{}:</b>" \
                        "\n#LOCK" \
                        "\n<b>Admin:</b> {}" \
@@ -128,10 +130,10 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
                                                           mention_html(user.id, user.first_name), args[0])
 
             else:
-                message.reply_text("What are you trying to lock...? Try /locktypes for the list of lockables")
+                message.reply_text(tld(chat.id, "What are you trying to lock...? Try /locktypes for the list of lockables"))
 
     else:
-        message.reply_text("I'm not an administrator, or haven't got delete rights.")
+        message.reply_text(tld(chat.id, "I'm not an administrator, or haven't got delete rights."))
 
     return ""
 
@@ -147,7 +149,7 @@ def unlock(bot: Bot, update: Update, args: List[str]) -> str:
         if len(args) >= 1:
             if args[0] in LOCK_TYPES:
                 sql.update_lock(chat.id, args[0], locked=False)
-                message.reply_text("Unlocked {} for everyone!".format(args[0]))
+                message.reply_text(tld(chat.id, "Unlocked {} for everyone!").format(args[0]))
                 return "<b>{}:</b>" \
                        "\n#UNLOCK" \
                        "\n<b>Admin:</b> {}" \
@@ -173,7 +175,7 @@ def unlock(bot: Bot, update: Update, args: List[str]) -> str:
                 elif args[0] == "all":
                     unrestr_members(bot, chat.id, members, True, True, True, True)
                 """
-                message.reply_text("Unlocked {} for everyone!".format(args[0]))
+                message.reply_text(tld(chat.id, "Unlocked {} for everyone!").format(args[0]))
 
                 return "<b>{}:</b>" \
                        "\n#UNLOCK" \
@@ -181,10 +183,10 @@ def unlock(bot: Bot, update: Update, args: List[str]) -> str:
                        "\nUnlocked <code>{}</code>.".format(html.escape(chat.title),
                                                             mention_html(user.id, user.first_name), args[0])
             else:
-                message.reply_text("What are you trying to unlock...? Try /locktypes for the list of lockables")
+                message.reply_text(tld(chat.id, "What are you trying to unlock...? Try /locktypes for the list of lockables"))
 
         else:
-            bot.sendMessage(chat.id, "What are you trying to unlock...?")
+            bot.sendMessage(chat.id, tld(chat.id, "What are you trying to unlock...?"))
 
     return ""
 
@@ -202,12 +204,11 @@ def del_lockables(bot: Bot, update: Update):
                 for new_mem in new_members:
                     if new_mem.is_bot:
                         if not is_bot_admin(chat, bot.id):
-                            message.reply_text("I see a bot, and I've been told to stop them joining... "
-                                               "but I'm not admin!")
+                            message.reply_text(tld(chat.id, "I see a bot, and I've been told to stop them joining... but I'm not admin!"))
                             return
 
                         chat.kick_member(new_mem.id)
-                        message.reply_text("Only admins are allowed to add bots to this chat! Get outta here.")
+                        message.reply_text(tld(chat.id, "Only admins are allowed to add bots to this chat! Get outta here."))
             else:
                 try:
                     message.delete()
@@ -237,13 +238,13 @@ def rest_handler(bot: Bot, update: Update):
             break
 
 
-def build_lock_message(chat_id):
-    locks = sql.get_locks(chat_id)
-    restr = sql.get_restr(chat_id)
+def build_lock_message(chat, chatP, user, chatname):
+    locks = sql.get_locks(chat.id)
+    restr = sql.get_restr(chat.id)
     if not (locks or restr):
-        res = "There are no current locks in this chat."
+        res = tld(chatP.id, "There are no current locks in *{}*.")
     else:
-        res = "These are the locks in this chat:"
+        res = tld(chatP.id, "These are the locks in *{}*:")
         if locks:
             res += "\n - sticker = `{}`" \
                    "\n - audio = `{}`" \
@@ -275,8 +276,10 @@ def build_lock_message(chat_id):
 @user_admin
 def list_locks(bot: Bot, update: Update):
     chat = update.effective_chat  # type: Optional[Chat]
+    user = update.effective_user  # type: Optional[User]
 
-    res = build_lock_message(chat.id)
+    chatname = chat.title
+    res = build_lock_message(chat, chat, user, chatname)
 
     update.effective_message.reply_text(res, parse_mode=ParseMode.MARKDOWN)
 
@@ -285,8 +288,9 @@ def __migrate__(old_chat_id, new_chat_id):
     sql.migrate_chat(old_chat_id, new_chat_id)
 
 
-def __chat_settings__(chat_id, user_id):
-    return build_lock_message(chat_id)
+def __chat_settings__(bot, update, chat, chatP, user):
+    chatname = tld(chatP.id, "this chat")
+    return build_lock_message(chat, chatP, user, chatname)
 
 
 __help__ = """

@@ -99,7 +99,7 @@ def set_about_bio(bot: Bot, update: Update):
         message.reply_text("Reply to someone's message to set their bio!")
 
 
-def __user_info__(user_id):
+def __user_info__(user_id, chat_id):
     bio = html.escape(sql.get_user_bio(user_id) or "")
     me = html.escape(sql.get_user_me_info(user_id) or "")
     if bio and me:

@@ -48,12 +48,8 @@ def keyboard(bot, update):
         else:
             btn3 = ""
 
-        
-            
-        
-        
-        
-    
+        #TODO: Remove except garbage
+
     update.effective_message.reply_text("keyboard updated",
                                             reply_markup=ReplyKeyboardMarkup([[
                                                 KeyboardButton("/help - Bot Help"), 

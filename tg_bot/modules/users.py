@@ -15,6 +15,8 @@ from tg_bot import dispatcher, OWNER_ID, LOGGER, SUDO_USERS, SUPPORT_USERS
 from telegram.utils.helpers import escape_markdown
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 
+from tg_bot.modules.translations.strings import tld
+
 USERS_GROUP = 4
 
 
@@ -150,11 +152,11 @@ def slist(bot: Bot, update: Update):
     update.effective_message.reply_text(text2 + "\n", parse_mode=ParseMode.MARKDOWN)
 
 
-def __user_info__(user_id):
+def __user_info__(user_id, chat_id):
     if user_id == dispatcher.bot.id:
-        return """I've seen them in... Wow. Are they stalking me? They're in all the same places I am... oh. It's me."""
+        return tld(chat_id, "I've seen them in... Wow. Are they stalking me? They're in all the same places I am... oh. It's me.")
     num_chats = sql.get_user_num_chats(user_id)
-    return """I've seen them in <code>{}</code> chats in total.""".format(num_chats)
+    return tld(chat_id, "I've seen them in <code>{}</code> chats in total.").format(num_chats)
 
 
 def __stats__():

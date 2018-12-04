@@ -15,6 +15,8 @@ from tg_bot.modules.helper_funcs.filters import CustomFilters
 from tg_bot.modules.helper_funcs.misc import send_to_list
 from tg_bot.modules.sql.users_sql import get_all_chats
 
+from tg_bot.modules.translations.strings import tld
+
 GBAN_ENFORCE_GROUP = 6
 
 GBAN_ERRORS = {
@@ -274,7 +276,7 @@ def gmute(bot: Bot, update: Update, args: List[str]):
         chat_id = chat.chat_id
 
         # Check if this group has disabled gmutes
-        if not sql.does_chat_gmute(chat_id):
+        if not sql.does_chat_gban(chat_id):
             continue
 
         try:
@@ -346,7 +348,7 @@ def ungmute(bot: Bot, update: Update, args: List[str]):
         chat_id = chat.chat_id
 
         # Check if this group has disabled gmutes
-        if not sql.does_chat_gmute(chat_id):
+        if not sql.does_chat_gban(chat_id):
             continue
 
         try:
@@ -419,7 +421,7 @@ def check_and_mute(bot, update, user_id, should_message=True):
 @run_async
 def enforce_gmute(bot: Bot, update: Update):
     # Not using @restrict handler to avoid spamming - just ignore if cant gmute.
-    if sql.does_chat_gmute(update.effective_chat.id) and update.effective_chat.get_member(bot.id).can_restrict_members:
+    if sql.does_chat_gban(update.effective_chat.id) and update.effective_chat.get_member(bot.id).can_restrict_members:
         user = update.effective_user  # type: Optional[User]
         chat = update.effective_chat  # type: Optional[Chat]
         msg = update.effective_message  # type: Optional[Message]
@@ -434,25 +436,6 @@ def enforce_gmute(bot: Bot, update: Update):
             user = msg.reply_to_message.from_user  # type: Optional[User]
             if user and not is_user_admin(chat, user.id):
                 check_and_mute(bot, update, user.id, should_message=True)
-
-@run_async
-@user_admin
-def gmutestat(bot: Bot, update: Update, args: List[str]):
-    if len(args) > 0:
-        if args[0].lower() in ["on", "yes"]:
-            sql.enable_gmutes(update.effective_chat.id)
-            update.effective_message.reply_text("I've enabled gmutes in this group. This will help protect you "
-                                                "from spammers, unsavoury characters, and Anirudh.")
-        elif args[0].lower() in ["off", "no"]:
-            sql.disable_gmutes(update.effective_chat.id)
-            update.effective_message.reply_text("I've disabled gmutes in this group. GMutes wont affect your users "
-                                                "anymore. You'll be less protected from Anirudh though!")
-    else:
-        update.effective_message.reply_text("Give me some arguments to choose a setting! on/off, yes/no!\n\n"
-                                            "Your current setting is: {}\n"
-                                            "When True, any gmutes that happen will also happen in your group. "
-                                            "When False, they won't, leaving you at the possible mercy of "
-                                            "spammers.".format(sql.does_chat_gmute(update.effective_chat.id)))
 
 
 @run_async
@@ -480,22 +463,23 @@ def enforce_gban(bot: Bot, update: Update):
 @run_async
 @user_admin
 def antispam(bot: Bot, update: Update, args: List[str]):
+    chat = update.effective_chat  # type: Optional[Chat]
     if len(args) > 0:
         if args[0].lower() in ["on", "yes"]:
-            sql.enable_gbans(update.effective_chat.id)
-            update.effective_message.reply_text("I've enabled antispam security in this group. This will help protect you "
-                                                "from spammers, unsavoury characters, and the biggest trolls.")
+            sql.enable_antispam(chat.id)
+            update.effective_message.reply_text(tld(chat.id, "I've enabled antispam security in this group. This will help protect you "
+                                                "from spammers, unsavoury characters, and the biggest trolls."))
         elif args[0].lower() in ["off", "no"]:
-            sql.disable_gbans(update.effective_chat.id)
-            update.effective_message.reply_text("I've disabled antispam security in this group. GBans wont affect your users "
+            sql.disable_antispam(chat.id)
+            update.effective_message.reply_text(tld(chat.id, "I've disabled antispam security in this group. GBans wont affect your users "
                                                 "anymore. You'll be less protected from any trolls and spammers "
-                                                "though!")
+                                                "though!"))
     else:
-        update.effective_message.reply_text("Give me some arguments to choose a setting! on/off, yes/no!\n\n"
+        update.effective_message.reply_text(tld(chat.id, "Give me some arguments to choose a setting! on/off, yes/no!\n\n"
                                             "Your current setting is: {}\n"
                                             "When True, any gbans that happen will also happen in your group. "
                                             "When False, they won't, leaving you at the possible mercy of "
-                                            "spammers.".format(sql.does_chat_gban(update.effective_chat.id)))
+                                            "spammers.").format(sql.does_chat_gban(chat.id)))
 
 #Gkick
 
@@ -544,7 +528,7 @@ def gkick(bot: Bot, update: Update, args: List[str]):
         message.reply_text("Welp, I'm not gonna to gkick myself!")
         return
 
-    if int(user_id) in iSUDO_USERS:
+    if int(user_id) in SUDO_USERS:
         message.reply_text("")
         return
 
@@ -568,27 +552,27 @@ def __stats__():
     
 
 
-def __user_info__(user_id):
+def __user_info__(user_id, chat_id):
     is_gbanned = sql.is_user_gbanned(user_id)
     is_gmuted = sql.is_user_gmuted(user_id)
 
-    text = "Globally banned: <b>{}</b>"
+    text = tld(chat_id, "Globally banned: <b>{}</b>")
     if is_gbanned:
-        text = text.format("Yes")
+        text = text.format(tld(chat_id, "Yes"))
         user = sql.get_gbanned_user(user_id)
         if user.reason:
-            text += "\nReason: {}".format(html.escape(user.reason))
+            text += tld(chat_id, "\nReason: {}").format(html.escape(user.reason))
     else:
-        text = text.format("No")
+        text = text.format(tld(chat_id, "No"))
     
-    text += "\nGlobally muted: <b>{}</b>"
+    text += tld(chat_id, "\nGlobally muted: <b>{}</b>")
     if is_gmuted:
-        text = text.format("Yes")
+        text = text.format(tld(chat_id, "Yes"))
         user = sql.get_gmuted_user(user_id)
         if user.reason:
-            text += "\nReason: {}".format(html.escape(user.reason))
+            text += tld(chat_id, "\nReason: {}").format(html.escape(user.reason))
     else:
-        text = text.format("No")
+        text = text.format(tld(chat_id, "No"))
 
     return text
 
@@ -597,7 +581,8 @@ def __migrate__(old_chat_id, new_chat_id):
     sql.migrate_chat(old_chat_id, new_chat_id)
 
 
-def __chat_settings__(chat_id, user_id):
+def __chat_settings__(bot, update, chat, chatP, user):
+    chat_id = chat.id
     return "This chat is enforcing *gbans*: `{}`.".format(sql.does_chat_gban(chat_id))
 
 
@@ -649,4 +634,3 @@ dispatcher.add_handler(GKICK_HANDLER)
 
 if STRICT_ANTISPAM:  # enforce GBANS if this is set
     dispatcher.add_handler(GBAN_ENFORCER, GBAN_ENFORCE_GROUP)
-    dispatcher.add_handler(GMUTE_ENFORCER, GMUTE_ENFORCE_GROUP)

@@ -111,15 +111,37 @@ HIT = (
     "bashes",
 )
 
+MARKDOWN_HELP = """
+Markdown is a very powerful formatting tool supported by telegram. {} has some enhancements, to make sure that \
+saved messages are correctly parsed, and to allow you to create buttons.
+
+- <code>_italic_</code>: wrapping text with '_' will produce italic text
+- <code>*bold*</code>: wrapping text with '*' will produce bold text
+- <code>`code`</code>: wrapping text with '`' will produce monospaced text, also known as 'code'
+- <code>[sometext](someURL)</code>: this will create a link - the message will just show <code>sometext</code>, \
+and tapping on it will open the page at <code>someURL</code>.
+EG: <code>[test](example.com)</code>
+
+- <code>[buttontext](buttonurl:someURL)</code>: this is a special enhancement to allow users to have telegram \
+buttons in their markdown. <code>buttontext</code> will be what is displayed on the button, and <code>someurl</code> \
+will be the url which is opened.
+EG: <code>[This is a button](buttonurl:example.com)</code>
+
+If you want multiple buttons on the same line, use :same, as such:
+<code>[one](buttonurl://example.com)
+[two](buttonurl://google.com:same)</code>
+This will create two buttons on a single line, instead of one button per line.
+"""
+
 EnglishStrings = {
     "send-start": """Hi {}, my name {}! If you have any questions on how to use me, read /help - and then head to @NotAvaibleYet.
 
 I'm a group manager bot maintained by [this wonderful person](tg://user?id={}). i be fork of [Marie](https://github.com/PaulSonOfLars/tgbot) 
 I'm built in python3, using the \
 python-telegram-bot library, and am fully opensource - you can find what makes me tick \
-[here](https://gitlab.com/MrYacha/pYanaBot)!
+[here](https://gitlab.com/MrYacha/pYanaBot-2.0)!
 
-Feel free to submit pull requests on github, or to contact my support group, @NotAvaibleYet, with any bugs, questions \
+Feel free to submit pull requests on github, or to contact my support group, @YanaBotGroup, with any bugs, questions \
 or feature requests you might have :)
 
 If you're enjoying using me, and/or would like to help me survive in the wild, hit /donate to help fund/upgrade my VPS!
@@ -144,11 +166,22 @@ Main commands available:
 you're interested in.""",
 
 #Misc
+"RUNS-K": RUN_STRINGS,
 "SLAP_TEMPLATES-K": SLAP_TEMPLATES,
 "ITEMS-K": ITEMS,
 "HIT-K": HIT,
 "THROW-K": THROW,
 "ITEMP-K": ITEMS,
 "ITEMR-K": ITEMS,
+"MARKDOWN_HELP-K": MARKDOWN_HELP,
+
+#GDPR
+"send-gdpr": """Your personal data has been deleted.\n\nNote that this will not unban \
+you from any chats, as that is telegram data, not YanaBot data.
+Flooding, warns, and gbans are also preserved, as of \
+[this](https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-erasure/), "
+which clearly states that the right to erasure does not apply \
+\"for the performance of a task carried out in the public interest\", as is \
+the case for the aforementioned pieces of data."""
 
 }

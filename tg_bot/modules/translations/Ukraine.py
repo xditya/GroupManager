@@ -185,9 +185,33 @@ UkrainianStrings = {
     "Connection failed!": "З'єднання не вдалось!",
     "Connections to this chat not allowed!": "Під'єднання до цього чату не дозволено!",
     "Write chat ID to connect!": "Напишіть ID чату для під'єднання",
-    "Usage limited to PMs only!": "Використання лімітовано лише для особистого використання!",
+    "Usage limited to PMs only!": "Використання лімітовано лише для особистих повідомлень!",
+
+#Admin
+    "How am I meant to promote someone that's already an admin?": "Як я можу призначити адміном того, хто вже ним являється?",
+    "I can't promote myself! Get an admin to do it for me.": "Я не можу призначити себе! Отримайте адміністратора, щоб зробити це для мене.",
+    "Successfully promoted in *{}*!": "Успішно призначений в *{}*!",
+
+    "This person CREATED the chat, how would I demote them?": "Ця людина СТВОРИЛА чат, як я можу її знизити?",
+    "Can't demote what wasn't promoted!": "Як я можу знизити того хто не є адміном?",
+    "I can't demote myself!": "Я не можу знизити себе!",
+    "Successfully demoted in *{}*!": "Успішно знизений в *{}*!",
+    "Could not demote. I might not be admin, or the admin status was appointed by another user, so I can't act upon them!": 
+    "Я не можу знизити. Можливо я не адмін, чи статус адміністратора був був призначений іншим користувачем, тому я не можу знизити його!",
+
+    "I don't have access to the invite link, try changing my permissions!": "У мене немає доступу до запрошувального посилання, спробуйте змінити мої права!",
+    "I can only give you invite links for supergroups and channels, sorry!": "Я можу надавати запрошувальні посилання для супергруп та каналів!",
+
+    "Admins in": "Адміністратори в",
+    "this chat": "цьому чаті",
+    " (Creator)": " (Створювач)",
+
+#Multi
+    "Invalid Chat ID provided!": "ID чату не існує!", #Connections
+    "You don't seem to be referring to a user.": "Здається, ви звертаєтесь не до користувача.", #Admin
 
 #Misc
+"RUNS-K": RUN_STRINGS,
 "SLAP_TEMPLATES-K": SLAP_TEMPLATES,
 "ITEMS-K": ITEMS,
 "HIT-K": HIT,
@@ -313,6 +337,7 @@ UkrainianStrings = {
  • Перегляд та редагування нотаток.
  • Підвищувати/знижувати користувачів.
  • Перегляд списку адмінів, перегляд посилання для запрошення.
+ • Вмикати/вимикати комманди в чаті
  • Більше в майбутньому!
 
  - /connection <chatid>: Підключитися до групи.

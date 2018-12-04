@@ -151,6 +151,9 @@ Actions are available with connected groups:
  • View and edit blacklists
  • Promote/demote users
  • See adminlist, see invitelink
+ • Disable/enable commands in chat
+ • Mute/unmute users in chat
+ • Restrict/unrestrict users in chat
  • More in future!
 
  - /connection <chatid>: Connect to remote chat

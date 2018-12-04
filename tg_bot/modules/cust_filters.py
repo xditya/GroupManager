@@ -17,6 +17,8 @@ from tg_bot.modules.helper_funcs.misc import build_keyboard
 from tg_bot.modules.helper_funcs.string_handling import split_quotes, button_markdown_parser
 from tg_bot.modules.sql import cust_filters_sql as sql
 
+from tg_bot.modules.translations.strings import tld
+
 from tg_bot.modules.connection import connected
 
 HANDLER_GROUP = 10
@@ -31,20 +33,20 @@ def list_handlers(bot: Bot, update: Update):
     if not conn == False:
         chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
-        filter_list = "*Filters in {}:*\n"
+        filter_list = tld(chat.id, "*Filters in {}:*\n")
     else:
         chat_id = update.effective_chat.id
         if chat.type == "private":
-            chat_name = "local filters"
-            filter_list = "*local filters:*\n"
+            chat_name = tld(chat.id, "local filters")
+            filter_list = tld(chat.id, "*local filters:*\n")
         else:
             chat_name = chat.title
-            filter_list = "*Filters in {}*:\n"
+            filter_list = tld(chat.id, "*Filters in {}*:\n")
 
     all_handlers = sql.get_chat_triggers(chat_id)
 
     if not all_handlers:
-        update.effective_message.reply_text("No filters in {}!".format(chat_name))
+        update.effective_message.reply_text(tld(chat.id, "No filters in {}!").format(chat_name))
         return
 
     for keyword in all_handlers:
@@ -99,7 +101,7 @@ def filters(bot: Bot, update: Update):
         content, buttons = button_markdown_parser(extracted[1], entities=msg.parse_entities(), offset=offset)
         content = content.strip()
         if not content:
-            msg.reply_text("There is no note message - You can't JUST have buttons, you need a message to go with it!")
+            msg.reply_text(tld(chat.id, "There is no note message - You can't JUST have buttons, you need a message to go with it!"))
             return
 
     elif msg.reply_to_message and msg.reply_to_message.sticker:
@@ -127,7 +129,7 @@ def filters(bot: Bot, update: Update):
         is_video = True
 
     else:
-        msg.reply_text("You didn't specify what to reply with!")
+        msg.reply_text(tld(chat.id, "You didn't specify what to reply with!"))
         return
 
     # Add the filter
@@ -139,7 +141,7 @@ def filters(bot: Bot, update: Update):
     sql.add_filter(chat_id, keyword, content, is_sticker, is_document, is_image, is_audio, is_voice, is_video,
                    buttons)
 
-    msg.reply_text("Handler '{}' added in *{}*!".format(keyword, chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
+    msg.reply_text(tld(chat.id, "Handler '{}' added in *{}*!").format(keyword, chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
     raise DispatcherHandlerStop
 
 
@@ -167,16 +169,16 @@ def stop_filter(bot: Bot, update: Update):
     chat_filters = sql.get_chat_triggers(chat_id)
 
     if not chat_filters:
-        update.effective_message.reply_text("No filters are active here!")
+        update.effective_message.reply_text(tld(chat.id, "No filters are active in {}!").format(chat_name))
         return
 
     for keyword in chat_filters:
         if keyword == args[1]:
             sql.remove_filter(chat_id, args[1])
-            update.effective_message.reply_text("Yep, I'll stop replying to that in *{}*.".format(chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
+            update.effective_message.reply_text(tld(chat.id, "Yep, I'll stop replying to that in *{}*.").format(chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
             raise DispatcherHandlerStop
 
-    update.effective_message.reply_text("That's not a current filter - run /filters for all active filters.")
+    update.effective_message.reply_text(tld(chat.id, "That's not a current filter - run /filters for all active filters."))
 
 
 @run_async
@@ -242,8 +244,8 @@ def __migrate__(old_chat_id, new_chat_id):
     sql.migrate_chat(old_chat_id, new_chat_id)
 
 
-def __chat_settings__(chat_id, user_id):
-    cust_filters = sql.get_chat_triggers(chat_id)
+def __chat_settings__(bot, update, chat, chatP, user):
+    cust_filters = sql.get_chat_triggers(chat.id)
     return "There are `{}` custom filters here.".format(len(cust_filters))
 
 
