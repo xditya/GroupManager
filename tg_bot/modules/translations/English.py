@@ -134,9 +134,9 @@ This will create two buttons on a single line, instead of one button per line.
 """
 
 EnglishStrings = {
-    "send-start": """Hi {}, my name {}! If you have any questions on how to use me, read /help - and then head to @NotAvaibleYet.
+    "send-start": """Hi {}, my name {}! If you have any questions on how to use me, read /help - and then head to @YanaBotGroup.
 
-I'm a group manager bot maintained by [this wonderful person](tg://user?id={}). i be fork of [Marie](https://github.com/PaulSonOfLars/tgbot) 
+I'm a group manager bot maintained by [this person](tg://user?id={483808054}). I'm a [Marie](https://github.com/PaulSonOfLars/tgbot) fork.
 I'm built in python3, using the \
 python-telegram-bot library, and am fully opensource - you can find what makes me tick \
 [here](https://gitlab.com/MrYacha/pYanaBot-2.0)!
@@ -144,7 +144,7 @@ python-telegram-bot library, and am fully opensource - you can find what makes m
 Feel free to submit pull requests on github, or to contact my support group, @YanaBotGroup, with any bugs, questions \
 or feature requests you might have :)
 
-If you're enjoying using me, and/or would like to help me survive in the wild, hit /donate to help fund/upgrade my VPS!
+If you enjoying using me and/or would like to help me survive in the wild, hit /donate to help fund/upgrade my VPS!
 """,
 
     "send-help": """Hey there! My name is *{}*.
