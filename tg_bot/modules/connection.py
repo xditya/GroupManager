@@ -99,7 +99,7 @@ def connect_chat(bot, update, args):
             else:
                 update.effective_message.reply_text(tld(chat.id, "Connections to this chat not allowed!"))
         else:
-            update.effective_message.reply_text(tld(chat.id, "Write chat ID to connect!"))
+            update.effective_message.reply_text(tld(chat.id, "Input chat ID to connect!"))
             history = sql.get_history(user.id)
             print(history.user_id, history.chat_id1, history.chat_id2, history.chat_id3, history.updated)
 
@@ -131,12 +131,12 @@ def connected(bot, update, chat, user_id, need_admin=True):
                 if bot.get_chat_member(conn_id, update.effective_message.from_user.id).status in ('administrator', 'creator') or user_id in SUDO_USERS:
                     return conn_id
                 else:
-                    update.effective_message.reply_text("You need be a admin in connected group!")
+                    update.effective_message.reply_text("You need to be a admin in a connected group!")
                     exit(1)
             else:
                 return conn_id
         else:
-            update.effective_message.reply_text("Group changed rights connection or you are not admin anymore.\nI disconnect you.")
+            update.effective_message.reply_text("Group changed rights connection or you are not admin anymore.\nI'll disconnect you.")
             disconnect_chat(bot, update)
             exit(1)
     else:
