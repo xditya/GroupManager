@@ -145,7 +145,7 @@ def new_member(bot: Bot, update: Update):
 
                 #Add "I'm not bot button if enabled hard security"
                 if sql.welcome_security(chat.id) == "hard":
-                    update.effective_message.reply_text("Hi {}, click on button below for been unmuted.".format(new_mem.first_name), 
+                    update.effective_message.reply_text("Hi {}, click on button below to prove you're human.".format(new_mem.first_name), 
                          reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="I'm not a bot!", 
                          callback_data="check_bot_({})".format(new_mem.id)) ]]))
                     #Mute user
@@ -182,7 +182,7 @@ def check_bot_button(bot: Bot, update: Update):
         bot.deleteMessage(chat.id, message.message_id)
     else:
         print("NO")
-        query.answer(text="You not a new user!")
+        query.answer(text="You're not a new user!")
     #TODO need kick users after 2 hours and remove message 
 
 @run_async
@@ -453,10 +453,10 @@ def security(bot: Bot, update: Update, args: List[str]) -> str:
             update.effective_message.reply_text("Disabled welcome security")
         elif(var == "soft"):
             sql.set_welcome_security(chat.id, "soft")
-            update.effective_message.reply_text("I will restrict user to send media for 24 hours")
+            update.effective_message.reply_text("I will restrict user's permission to send media for 24 hours")
         elif(var == "hard"):
             sql.set_welcome_security(chat.id, "hard")
-            update.effective_message.reply_text("I will mute user when he don't click on button")
+            update.effective_message.reply_text("New users will be muted if they do not click on the button")
         else:
             update.effective_message.reply_text("Please enter `off`/`no`/`soft`/`hard`!", parse_mode=ParseMode.MARKDOWN)
     else:
@@ -474,7 +474,7 @@ def cleanservice(bot: Bot, update: Update, args: List[str]) -> str:
             print(var)
             if (var == "no" or var == "off"):
                 sql.set_clean_service(chat.id, False)
-                update.effective_message.reply_text("I leave service messages")
+                update.effective_message.reply_text("I'll leave service messages")
             elif(var == "yes" or var == "on"):
                 sql.set_clean_service(chat.id, True)
                 update.effective_message.reply_text("I will clean service messages")
@@ -542,7 +542,7 @@ replying to the desired media, and calling /setwelcome.
  - /resetgoodbye: reset to the default goodbye message.
  - /cleanwelcome <on/off>: On new member, try to delete the previous welcome message to avoid spamming the chat.
  - /cleanservice <on/off/yes/no>: deletes all service message; those are the annoying "x joined the group" you see when people join.
- - /welcomesecurity <off/soft/hard>: soft - restrict user send media files for 24 hours, hard - restict user send messages while him don't click on button \"I'm not bot\"
+ - /welcomesecurity <off/soft/hard>: soft - restrict user's permission to send media files for 24 hours, hard - restict user's permission to send messages until they click on the button \"I'm not a bot\"
 """.format(dispatcher.bot.username)
 
 
