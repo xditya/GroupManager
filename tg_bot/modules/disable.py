@@ -198,12 +198,19 @@ if is_module_loaded(FILENAME):
     __mod_name__ = "Command disabling"
 
     __help__ = """
- - /cmds: check the current status of disabled commands
+Not everyone wants every feature that rose offers. Some commands are best left unused; to avoid spam and abuse.
 
-*Admin only:*
- - /enable <cmd name>: enable that command
- - /disable <cmd name>: disable that command
- - /listcmds: list all possible toggleable commands
+This allows you to disable some commonly used commands, so noone can use them. It'll also allow you to autodelete them, stopping people from
+
+Available commands are:
+ - /disable <commandname>: stop users from using the "commandname" command in this group.
+ - /enable <commandname>: allow users to use the "commandname" command in this group again.
+ - /listcmds: list all disableable commands.
+ - /disabled: list the disabled commands in this chat.
+
+Note:
+When disabling a command, the command only gets disabled for non-admins. All admins can still use those commands.
+Disabled commands are still accessible through the /connect feature. If you would be interested to see this disabled too, let me know in the support chat.
     """
 
     DISABLE_HANDLER = CommandHandler("disable", disable, pass_args=True)

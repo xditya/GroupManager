@@ -188,19 +188,28 @@ def __stats__():
 __mod_name__ = "Word Blacklists"
 
 __help__ = """
-Blacklists are used to stop certain triggers from being said in a group. Any time the trigger is mentioned, \
-the message will immediately be deleted. A good combo is sometimes to pair this up with warn filters!
+You can set blacklist filters to take automatic action on people when they say certain things. This is done using:
+ - /addblacklist <blacklist trigger> <blacklist reason>: blacklists the trigger. You can set sentences by putting quotes around the reason.
+ - /unblacklist <blacklist trigger>: stop blacklisting a certain blacklist trigger.
+ - /rmblacklist <blacklist trigger>: same as /unblacklist
+ - /blacklist: list all active blacklist filters
 
-*NOTE:* blacklists do not affect group admins.
+An example of setting a blacklist filter:
+/blacklistmode warn
+will set your blacklist to automatically warn users who say blacklisted words.
 
- - /blacklist: View the current blacklisted words.
+/addblacklist "the admins suck" Respect your admins!
+This would delete any message containing 'the admins suck'.
+If you've enabled an alternative blacklist mode, it will warn, ban, kick, or mute a user with a message specifying the reason.
 
-*Admin only:*
- - /addblacklist <triggers>: Add a trigger to the blacklist. Each line is considered one trigger, so using different \
-lines will allow you to add multiple triggers.
- - /unblacklist <triggers>: Remove triggers from the blacklist. Same newline logic applies here, so you can remove \
-multiple triggers at once.
- - /rmblacklist <triggers>: Same as above.
+Top tip:
+Blacklists allow you to use some modifiers to match "unknown" characters. For example, you can use the ? character to match a single occurence of any non-whitespace character.
+You could also use the * modifier, which matches any number of any character. If you want to blacklist urls, this will allow you to match the full thing. It matches every character except spaces. This is cool if you want to stop, for example, url shorteners.
+For example, the following will ban any bit.ly link:
+/addblacklist "bit.ly/*" We dont like shorteners!
+If you wanted to only match bit.ly/ links followed by three characters, you could use:
+/addblacklist "bit.ly/???" We dont like shorteners!
+This would match bit.ly/abc, but not bit.ly/abcd.
 """
 
 BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", blacklist, pass_args=True,

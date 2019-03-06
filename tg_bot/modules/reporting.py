@@ -1,9 +1,9 @@
 import html
 from typing import Optional, List
-
-from telegram import Message, Chat, Update, Bot, User, ParseMode
+import re
+from telegram import Message, Chat, Update, Bot, User, ParseMode, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.error import BadRequest, Unauthorized
-from telegram.ext import CommandHandler, RegexHandler, run_async, Filters
+from telegram.ext import CommandHandler, RegexHandler, run_async, Filters, CallbackQueryHandler
 from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher, LOGGER
@@ -61,6 +61,12 @@ def report(bot: Bot, update: Update) -> str:
         chat_name = chat.title or chat.first or chat.username
         admin_list = chat.get_administrators()
 
+        #if reported_user == "483808054":
+        #    continue
+       # 
+        #if user.id == "435606081":
+        #    continue
+
         if chat.username and chat.type == Chat.SUPERGROUP:
             msg = "<b>{}:</b>" \
                   "\n<b>Reported user:</b> {} (<code>{}</code>)" \
@@ -115,9 +121,36 @@ def __chat_settings__(bot, update, chat, chatP, user):
         sql.chat_should_report(chat.id))
 
 
-def __user_settings__(user_id):
-    return "You receive reports from chats you're admin in: `{}`.\nToggle this with /reports in PM.".format(
-        sql.user_should_report(user_id))
+def __user_settings__(bot, update, user):
+    if sql.user_should_report(user.id) == True:
+        text = "You will receive reports from chats you're admin."
+        keyboard = [[InlineKeyboardButton(text="Disable reporting", callback_data="panel_reporting_U_disable")]]
+    else:
+        text = "You will *not* receive reports from chats you're admin."
+        keyboard = [[InlineKeyboardButton(text="Enable reporting", callback_data="panel_reporting_U_enable")]]
+
+    return text, keyboard
+
+    
+def control_panel_user(bot, update):
+    user = update.effective_user  # type: Optional[User]
+    chat = update.effective_chat
+    query = update.callback_query
+    enable = re.match(r"panel_reporting_U_enable", query.data)
+    disable = re.match(r"panel_reporting_U_disable", query.data)
+
+    query.message.delete()
+
+    if enable:
+        sql.set_user_setting(chat.id, True)
+        text = "Enabled reporting in your pm!"
+    else:
+        sql.set_user_setting(chat.id, False)
+        text = "Disabled reporting in your pm!"
+
+    keyboard = [[InlineKeyboardButton(text="⬅️ Back", callback_data="cntrl_panel_U(1)")]]
+
+    update.effective_message.reply_text(text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN)
 
 
 __mod_name__ = "Reporting"
@@ -136,6 +169,9 @@ NOTE: neither of these will get triggered if used by admins
 REPORT_HANDLER = CommandHandler("report", report, filters=Filters.group)
 SETTING_HANDLER = CommandHandler("reports", report_setting, pass_args=True)
 ADMIN_REPORT_HANDLER = RegexHandler("(?i)@admin(s)?", report)
+
+cntrl_panel_user_callback_handler = CallbackQueryHandler(control_panel_user, pattern=r"panel_reporting_U")
+dispatcher.add_handler(cntrl_panel_user_callback_handler)
 
 dispatcher.add_handler(REPORT_HANDLER, REPORT_GROUP)
 dispatcher.add_handler(ADMIN_REPORT_HANDLER, REPORT_GROUP)

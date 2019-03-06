@@ -279,13 +279,22 @@ def unban(bot: Bot, update: Update, args: List[str]) -> str:
 
 
 __help__ = """
- - /kickme: kicks the user who issued the command
+Some people need to be publicly banned; spammers, annoyances, or just trolls.
 
-*Admin only:*
- - /ban <userhandle>: bans a user. (via handle, or reply)
- - /tban <userhandle> x(m/h/d): bans a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
- - /unban <userhandle>: unbans a user. (via handle, or reply)
- - /kick <userhandle>: kicks a user, (via handle, or reply)
+This module allows you to do that easily, by exposing some common actions, so everyone will see!
+
+Available commands are:
+ - /ban: bans a user from your chat.
+ - /tban: temporarily bans a user from your chat. set time using int<d/h/m> (days hours minutes)
+ - /unban: unbans a user from your chat.
+ - /mute: mute a user in your chat.
+ - /tmute: temporarily mute a user in your chat. set time using int<d/h/m> (days hours minutes)
+ - /unmute: unmutes a user from your chat.
+ - /kick: kicks a user from your chat.
+ - /kickme: users who use this, kick themselves!
+
+ An example of temporarily muting someone:
+/tmute @username 2h; this mutes a user for 2 hours.
 """
 
 __mod_name__ = "Bans"

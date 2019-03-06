@@ -10,7 +10,7 @@ from telegram.ext import CommandHandler, Filters, MessageHandler, CallbackQueryH
 from telegram.ext.dispatcher import run_async, DispatcherHandlerStop, Dispatcher
 from telegram.utils.helpers import escape_markdown
 
-from tg_bot import dispatcher, updater, TOKEN, WEBHOOK, OWNER_ID, DONATION_LINK, CERT_PATH, PORT, URL, LOGGER, \
+from tg_bot import dispatcher, updater, TOKEN, WEBHOOK, SUDO_USERS, OWNER_ID, DONATION_LINK, CERT_PATH, PORT, URL, LOGGER, \
     ALLOW_EXCL
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
@@ -18,6 +18,7 @@ from tg_bot.modules import ALL_MODULES
 from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 from tg_bot.modules.translations.strings import tld, tld_help
+from tg_bot.modules.connection import connected
 
 DONATE_STRING = """Heya, glad to hear you want to donate!
 It took lots of work for [my creator](t.me/SonOfLars) to get me to where I am now, and every donation helps \
@@ -118,13 +119,159 @@ def start(bot: Bot, update: Update, args: List[str]):
                 IMPORTED["rules"].send_rules(update, args[0], from_pm=True)
 
         else:
-            first_name = update.effective_user.first_name
-            #update.effective_message.reply_text(tld(chat.id, "send-start"), parse_mode=ParseMode.MARKDOWN)
-            update.effective_message.reply_text(tld(chat.id, "send-start").format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID), parse_mode=ParseMode.MARKDOWN,
-                                            reply_markup=InlineKeyboardMarkup(
-                                         [[InlineKeyboardButton(text="Help", callback_data="help_back")]]))
+            send_start(bot, update)
     else:
         update.effective_message.reply_text("Yo, whadup?")
+
+
+def send_start(bot, update):
+    #Try to remove old message
+    try:
+        query = update.callback_query
+        query.message.delete()
+    except:
+        pass
+
+    chat = update.effective_chat  # type: Optional[Chat]
+    text = "Hey there! My name is YanaBot - I'm here to help you manage your groups! Click Help button to find out more about how to use me to my full potential."
+    text += "\nJoin to [YanaBot group](https://t.me/YanaBotGroup) and [YanaBot NEWS](https://t.me/YanaBotNEWS)"
+
+    keyboard = [[InlineKeyboardButton(text="🛠 Control panel", callback_data="cntrl_panel_M")]]
+    keyboard += [[InlineKeyboardButton(text="🇺🇸 Language", callback_data="set_lang_"), 
+        InlineKeyboardButton(text="❔ Help", callback_data="help_back")]]
+
+    update.effective_message.reply_text(text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN)
+
+
+
+def control_panel(bot, update):
+    print("Panel")
+    chat = update.effective_chat
+    user = update.effective_user
+
+    #Support to run from command handler
+    query = update.callback_query
+    if query:
+        query.message.delete()
+
+        M_match = re.match(r"cntrl_panel_M", query.data)
+        U_match = re.match(r"cntrl_panel_U", query.data)
+        G_match = re.match(r"cntrl_panel_G", query.data)
+        back_match = re.match(r"help_back", query.data)
+
+        print(query.data)
+    else:
+        M_match = "YanaBot is best bot"
+
+    if M_match:
+        text = "*Control panel* 🛠 (beta)"
+
+        keyboard = [[InlineKeyboardButton(text="👤 My settings", callback_data="cntrl_panel_U(1)")]]
+
+        #Show connected chat and add chat settings button
+        conn = connected(bot, update, chat, user.id, need_admin=False)
+
+        if not conn == False:
+            chatG = bot.getChat(conn)
+            admin_list = chatG.get_administrators()
+
+            #If user admin
+            member = chatG.get_member(user.id)
+            if member.status in ('administrator', 'creator'):
+                text += "\nConnected chat - *{}* (you {})".format(chatG.title, member.status)
+                keyboard += [[InlineKeyboardButton(text="👥 Group settings", callback_data="cntrl_panel_G_back")]]
+            elif user.id in SUDO_USERS:
+                text += "\nConnected chat - *{}* (you sudo)".format(chatG.title)
+                keyboard += [[InlineKeyboardButton(text="👥 Group settings (SUDO)", callback_data="cntrl_panel_G_back")]]
+            else:
+                text += "\nConnected chat - *{}* (you don't admin!)".format(chatG.title)
+        else:
+            text += "\nNo chat connected!"
+
+        keyboard += [[InlineKeyboardButton(text="⬅️ Back", callback_data="bot_start")]]
+
+        update.effective_message.reply_text(text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN)
+
+    elif U_match:
+
+        mod_match = re.match(r"cntrl_panel_U_module\((.+?)\)", query.data)
+        back_match = re.match(r"cntrl_panel_U\((.+?)\)", query.data)
+
+        chatP = update.effective_chat  # type: Optional[Chat]
+        if mod_match:
+            module = mod_match.group(1)
+
+            R = CHAT_SETTINGS[module].__user_settings__(bot, update, user)
+
+            text = "You has the following settings for the *{}* module:\n\n".format(
+                CHAT_SETTINGS[module].__mod_name__) + R[0]
+
+            keyboard = R[1]
+            keyboard += [[InlineKeyboardButton(text="⬅️ Back", callback_data="cntrl_panel_U(1)")]]
+                
+            query.message.reply_text(text=text, arse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(keyboard))
+
+        elif back_match:
+            text = "*User control panel* 🛠"
+            
+            query.message.reply_text(text=text, parse_mode=ParseMode.MARKDOWN,
+                    reply_markup=InlineKeyboardMarkup(paginate_modules(user.id, 0, USER_SETTINGS, "cntrl_panel_U")))
+
+    elif G_match:
+        mod_match = re.match(r"cntrl_panel_G_module\((.+?)\)", query.data)
+        prev_match = re.match(r"cntrl_panel_G_prev\((.+?)\)", query.data)
+        next_match = re.match(r"cntrl_panel_G_next\((.+?)\)", query.data)
+        back_match = re.match(r"cntrl_panel_G_back", query.data)
+
+        chatP = chat
+        conn = connected(bot, update, chat, user.id)
+
+        if not conn == False:
+            chat = bot.getChat(conn)
+        else:
+            query.message.reply_text(text="Error with connection to chat")
+            exit(1)
+
+        if mod_match:
+            module = mod_match.group(1)
+            R = CHAT_SETTINGS[module].__chat_settings__(bot, update, chat, chatP, user)
+
+            if type(R) is list:
+                text = R[0]
+                keyboard = R[1]
+            else:
+                text = R
+                keyboard = []
+
+            text = "*{}* has the following settings for the *{}* module:\n\n".format(
+                escape_markdown(chat.title), CHAT_SETTINGS[module].__mod_name__) + text
+
+            keyboard += [[InlineKeyboardButton(text="Back", callback_data="cntrl_panel_G_back")]]
+                
+            query.message.reply_text(text=text, parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(keyboard))
+
+        elif prev_match:
+            chat_id = prev_match.group(1)
+            curr_page = int(prev_match.group(2))
+            chat = bot.get_chat(chat_id)
+            query.message.reply_text(tld(user.id, "send-group-settings").format(chat.title),
+                                    reply_markup=InlineKeyboardMarkup(
+                                        paginate_modules(curr_page - 1, CHAT_SETTINGS, "cntrl_panel_G",
+                                                        chat=chat_id)))
+
+        elif next_match:
+            chat_id = next_match.group(1)
+            next_page = int(next_match.group(2))
+            chat = bot.get_chat(chat_id)
+            query.message.reply_text(tld(user.id, "send-group-settings").format(chat.title),
+                                    reply_markup=InlineKeyboardMarkup(
+                                        paginate_modules(next_page + 1, CHAT_SETTINGS, "cntrl_panel_G",
+                                                        chat=chat_id)))
+
+        elif back_match:
+            text = "Test"
+            query.message.reply_text(text=text, parse_mode=ParseMode.MARKDOWN,
+                reply_markup=InlineKeyboardMarkup(paginate_modules(user.id, 0, CHAT_SETTINGS, "cntrl_panel_G")))
 
 
 # for test purposes
@@ -403,6 +550,16 @@ def main():
 
     help_handler = CommandHandler("help", get_help)
     help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_")
+
+    start_callback_handler = CallbackQueryHandler(send_start, pattern=r"bot_start")
+    dispatcher.add_handler(start_callback_handler)
+
+    cntrl_panel = CommandHandler("controlpanel", control_panel)
+    cntrl_panel_callback_handler = CallbackQueryHandler(control_panel, pattern=r"cntrl_panel")
+    dispatcher.add_handler(cntrl_panel_callback_handler)
+    dispatcher.add_handler(cntrl_panel)
+
+    
 
     settings_handler = CommandHandler("settings", get_settings)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")

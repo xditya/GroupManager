@@ -6,6 +6,7 @@ import pyowm
 from pyowm import timeutils, exceptions
 from datetime import datetime
 from typing import Optional, List
+from pythonping import ping as ping3
 
 import requests
 from telegram import Message, Chat, Update, Bot, MessageEntity
@@ -345,11 +346,17 @@ def stats(bot: Bot, update: Update):
 
 
 def ping(bot: Bot, update: Update):
-    start_time = time.time()
-    requests.get('https://api.telegram.org')
-    end_time = time.time()
-    ping_time = float(end_time - start_time)*1000
-    update.effective_message.reply_text("Pong, Ping speed was : {}ms".format(ping_time))
+    tg_api = ping3('api.telegram.org', count=10)
+    google = ping3('google.com', count=10)
+    print(google)
+    text = "*Pong!*\n"
+    text += "Average speed to Telegram bot API server - `{}` ms\n".format(tg_api.rtt_avg_ms)
+    if google.rtt_avg:
+        gspeed = google.rtt_avg
+    else:
+        gspeed = google.rtt_avg
+    text += "Average speed to Google - `{}` ms".format(gspeed)
+    update.effective_message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
 
 
 # /ip is for private use
@@ -357,8 +364,6 @@ __help__ = """
  - /id: get the current group id. If used by replying to a message, gets that user's id.
  - /runs: reply a random string from an array of replies.
  - /slap: slap a user, or get slapped if not a reply.
- - /time <place>: gives the local time at the given place.
- - /weather <city>: get weather info in a particular place.
  - /info: get information about a user.
  - /gdpr: deletes your information from the bot's database. Private chats only.
  - /stickerid: reply to a sticker to me to tell you its file ID.
@@ -391,7 +396,7 @@ STICKERID_HANDLER = DisableAbleCommandHandler("getsticker", getsticker)
 
 dispatcher.add_handler(ID_HANDLER)
 dispatcher.add_handler(IP_HANDLER)
-dispatcher.add_handler(TIME_HANDLER)
+#dispatcher.add_handler(TIME_HANDLER)
 dispatcher.add_handler(RUNS_HANDLER)
 dispatcher.add_handler(SLAP_HANDLER)
 dispatcher.add_handler(INFO_HANDLER)
@@ -400,6 +405,6 @@ dispatcher.add_handler(MD_HELP_HANDLER)
 dispatcher.add_handler(STATS_HANDLER)
 dispatcher.add_handler(GDPR_HANDLER)
 dispatcher.add_handler(PING_HANDLER)
-dispatcher.add_handler(WEATHER_HANDLER)
+#dispatcher.add_handler(WEATHER_HANDLER)
 dispatcher.add_handler(STICKER_HANDLER)
 dispatcher.add_handler(STICKERID_HANDLER)

@@ -294,18 +294,18 @@ def __chat_settings__(bot, update, chat, chatP, user):
 
 
 __help__ = """
- - /locktypes: a list of possible locktypes
+Do stickers annoy you? or want to avoid people sharing links? or pictures? You're in the right place!
 
-*Admin only:*
- - /lock <type>: lock items of a certain type (not available in private)
- - /unlock <type>: unlock items of a certain type (not available in private)
- - /locks: the current list of locks in this chat.
+The locks module allows you to lock away some common items in the telegram world; the bot will automatically delete them!
 
-Locks can be used to restrict a group's users.
-eg:
-Locking urls will auto-delete all messages with urls which haven't been whitelisted, locking stickers will delete all \
-stickers, etc.
-Locking bots will stop non-admins from adding bots to the chat.
+Available commands are:
+ - /lock <item(s)>: lock the usage of "item". Now, only admins will be able to use this type!
+ - /unlock <item(s)>: unlock "item". Everyone can use them again.
+ - /locks: list the lock status in the chat.
+ - /locktypes: gets a list of all things that can be locked. (have a look at this!)
+
+eg: lock stickers with:
+/lock sticker
 """
 
 __mod_name__ = "Locks"

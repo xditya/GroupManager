@@ -170,7 +170,7 @@ def save(bot: Bot, update: Update):
     sql.add_note_to_db(chat_id, note_name, text, data_type, buttons=buttons, file=content)
 
     msg.reply_text(
-        "Ok, added `{note_name}` in *{chat_name}*.\nGet it with `/get {note_name}`, or `#{note_name}`".format(note_name=note_name, chat_name=chat_name), parse_mode=ParseMode.MARKDOWN)
+        "Ok, added `{note_name}` note in *{chat_name}*.\nGet it with `/get {note_name}`, or `#{note_name}`".format(note_name=note_name, chat_name=chat_name), parse_mode=ParseMode.MARKDOWN)
 
     if msg.reply_to_message and msg.reply_to_message.from_user.is_bot:
         if text:
@@ -239,9 +239,10 @@ def list_notes(bot: Bot, update: Update):
         msg += note_name
 
     if not note_list:
-        update.effective_message.reply_text("No notes in this chat!")
+        update.effective_message.reply_text("No notes in *{}*!".format(chat_name))
 
     elif len(msg) != 0:
+        msg += "\nYou can retrieve these notes by using `/get notename`, or `#notename`"
         update.effective_message.reply_text(msg.format(chat_name), parse_mode=ParseMode.MARKDOWN)
 
 
@@ -282,19 +283,28 @@ def __chat_settings__(bot, update, chat, chatP, user):
 
 
 __help__ = """
- - /get <notename>: get the note with this notename
- - #<notename>: same as /get
- - /notes or /saved: list all saved notes in this chat
+Save data for future users with notes!
 
-If you would like to retrieve the contents of a note without any formatting, use `/get <notename> noformat`. This can \
-be useful when updating a current note.
+Notes are great to save random tidbits of information; a phone number, a nice gif, a funny picture - anything!
 
-*Admin only:*
- - /save <notename> <notedata>: saves notedata as a note with name notename
-A button can be added to a note by using standard markdown link syntax - the link should just be prepended with a \
-`buttonurl:` section, as such: `[somelink](buttonurl:example.com)`. Check /markdownhelp for more info.
- - /save <notename>: save the replied message as a note with name notename
- - /clear <notename>: clear note with this name
+Available commands are:
+ - /save <word> <sentence>: Save that sentence to the note called "word". Replying to a message will save that message. Even works on media!
+ - /get <word>: get the note registered to that word.
+ - #<word>: same as /get word
+ - /clear <word>: delete the note called "word"
+ - /notes: List all notes in the current chat
+ - /saved: same as /notes
+
+An example of how to save a note would be via:
+/save data This is some data!
+
+Now, anyone using "/get data", or "#data" will be replied to with "This is some data!".
+
+If you want to save an image, gif, or sticker, or any other data, do the following:
+/save word while replying to a sticker or whatever data you'd like. Now, the note at "#word" contains a sticker which will be sent as a reply.
+
+Tip: to retrieve a note without the formatting, use /get <notename> noformat
+This will retrieve the note and send it without formatting it; getting you the raw markdown, allowing you to make easy edits
 """
 
 __mod_name__ = "Notes"

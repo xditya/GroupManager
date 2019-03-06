@@ -86,10 +86,12 @@ def del_message(bot: Bot, update: Update) -> str:
 
 
 __help__ = """
-*Admin only:*
- - /del: deletes the message you replied to
- - /purge: deletes all messages between this and the replied to message.
- - /purge <integer X>: deletes the replied message, and X messages following it.
+Need to delete lots of messages? That's what purges are for!
+
+Available commands are:
+ - /purge: deletes all messages from the message you replied to, to the current message.
+ - /purge X: deletes X messages after the message you replied to (including the replied message)
+ - /del: deletes the message you replied to.
 """
 
 __mod_name__ = "Purges"

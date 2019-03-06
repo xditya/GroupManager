@@ -556,25 +556,29 @@ def __user_info__(user_id, chat_id):
     is_gbanned = sql.is_user_gbanned(user_id)
     is_gmuted = sql.is_user_gmuted(user_id)
 
-    text = tld(chat_id, "Globally banned: <b>{}</b>")
-    if is_gbanned:
-        text = text.format(tld(chat_id, "Yes"))
-        user = sql.get_gbanned_user(user_id)
-        if user.reason:
-            text += tld(chat_id, "\nReason: {}").format(html.escape(user.reason))
-    else:
-        text = text.format(tld(chat_id, "No"))
-    
-    text += tld(chat_id, "\nGlobally muted: <b>{}</b>")
-    if is_gmuted:
-        text = text.format(tld(chat_id, "Yes"))
-        user = sql.get_gmuted_user(user_id)
-        if user.reason:
-            text += tld(chat_id, "\nReason: {}").format(html.escape(user.reason))
-    else:
-        text = text.format(tld(chat_id, "No"))
+    if not user_id in SUDO_USERS:
 
-    return text
+        text = tld(chat_id, "Globally banned: <b>{}</b>")
+        if is_gbanned:
+            text = text.format(tld(chat_id, "Yes"))
+            user = sql.get_gbanned_user(user_id)
+            if user.reason:
+                text += tld(chat_id, "\nReason: {}").format(html.escape(user.reason))
+        else:
+            text = text.format(tld(chat_id, "No"))
+        
+        text += tld(chat_id, "\nGlobally muted: <b>{}</b>")
+        if is_gmuted:
+            text = text.format(tld(chat_id, "Yes"))
+            user = sql.get_gmuted_user(user_id)
+            if user.reason:
+                text += tld(chat_id, "\nReason: {}").format(html.escape(user.reason))
+        else:
+            text = text.format(tld(chat_id, "No"))
+
+        return text
+    else:
+        return ""
 
 
 def __migrate__(old_chat_id, new_chat_id):
