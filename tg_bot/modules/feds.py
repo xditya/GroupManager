@@ -121,7 +121,7 @@ def join_fed(bot: Bot, update: Update, args: List[str]):
 
     if len(args) >= 1:
         sql.chat_join_fed(args[0], chat.id)
-        update.effective_message.reply_text(tld(chat.id, "Joined to fed!"))
+        update.effective_message.reply_text(tld(chat.id, "Chat joined to federation!"))
     else:
         update.effective_message.reply_text(tld(chat.id, "Please write federation id to join!"))
 
@@ -186,7 +186,7 @@ def user_join_fed(bot: Bot, update: Update, args: List[str]):
                 return
 
         res = sql.user_join_fed(fed_id, user_id)
-        update.effective_message.reply_text(tld(chat.id, "Joined to fed!"))
+        update.effective_message.reply_text(tld(chat.id, "Promoted to federation!"))
 
 
 def user_demote_fed(bot: Bot, update: Update, args: List[str]):
