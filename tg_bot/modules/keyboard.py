@@ -50,7 +50,7 @@ def keyboard(bot, update):
 
         #TODO: Remove except garbage
 
-    update.effective_message.reply_text("keyboard updated",
+    update.effective_message.reply_text("Keyboard Updated",
                                             reply_markup=ReplyKeyboardMarkup([[
                                                 KeyboardButton("/help - Bot Help"), 
                                                 KeyboardButton("/donate - Donate"),

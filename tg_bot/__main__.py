@@ -20,7 +20,7 @@ from tg_bot.modules.helper_funcs.misc import paginate_modules
 from tg_bot.modules.translations.strings import tld, tld_help
 from tg_bot.modules.connection import connected
 
-DONATE_STRING = """Heya, glad to hear you want to donate!
+DONATE_STRING = """Heya, glad to hear you want to donate! I do not actually want for myself but it \
 It took lots of work for [my creator](t.me/SonOfLars) to get me to where I am now, and every donation helps \
 motivate him to make me even better. All the donation money will go to a better VPS to host me, and/or beer \. 
 https://orangefox.tech/donate."""
@@ -133,8 +133,8 @@ def send_start(bot, update):
         pass
 
     chat = update.effective_chat  # type: Optional[Chat]
-    text = "Hey there! My name is YanaBot - I'm here to help you manage your groups! Click Help button to find out more about how to use me to my full potential."
-    text += "\nJoin to [YanaBot group](https://t.me/YanaBotGroup) and [YanaBot NEWS](https://t.me/YanaBotNEWS)"
+    text = "Hey there! My name is Haruka Aya - I'm here to help you manage your groups! Click Help button to find out more about how to use me to my full potential."
+    text += "\nJoin to [Echelon Team Group](https://t.me/echelonTeam)"
 
     keyboard = [[InlineKeyboardButton(text="🛠 Control panel", callback_data="cntrl_panel_M")]]
     keyboard += [[InlineKeyboardButton(text="🇺🇸 Language", callback_data="set_lang_"), 
@@ -161,7 +161,7 @@ def control_panel(bot, update):
 
         print(query.data)
     else:
-        M_match = "YanaBot is best bot"
+        M_match = "Haruka Aya is best bot"
 
     if M_match:
         text = "*Control panel* 🛠 (beta)"

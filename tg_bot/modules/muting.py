@@ -16,6 +16,7 @@ from tg_bot.modules.log_channel import loggable
 
 from tg_bot.modules.translations.strings import tld
 from tg_bot.modules.connection import connected
+from tg_bot.modules.disable import DisableAbleCommandHandler
 
 
 @run_async
@@ -413,12 +414,37 @@ def temp_nomedia(bot: Bot, update: Update, args: List[str]) -> str:
 
     return ""
 
+@run_async
+@bot_admin
+@can_restrict
+def muteme(bot: Bot, update: Update, args: List[str]) -> str:
+    user_id = update.effective_message.from_user.id
+    chat = update.effective_chat
+    user = update.effective_user
+    if is_user_admin(update.effective_chat, user_id):
+        update.effective_message.reply_text("I wish I could... but you're an admin.")
+        return
+
+    res = bot.restrict_chat_member(chat.id, user_id, can_send_messages=False)
+    if res:
+        update.effective_message.reply_text("No problem, Muted!")
+        log = "<b>{}:</b>" \
+              "\n#MUTEME" \
+              "\n<b>User:</b> {}" \
+              "\n<b>ID:</b> <code>{}</code>".format(html.escape(chat.title),
+                                                    mention_html(user.id, user.first_name), user_id)
+        return log
+
+    else:
+        update.effective_message.reply_text("Huh? I can't :/")
+
 MUTE_HANDLER = CommandHandler("mute", mute, pass_args=True)
 UNMUTE_HANDLER = CommandHandler("unmute", unmute, pass_args=True)
 TEMPMUTE_HANDLER = CommandHandler(["tmute", "tempmute"], temp_mute, pass_args=True)
 TEMP_NOMEDIA_HANDLER = CommandHandler(["trestrict", "temprestrict"], temp_nomedia, pass_args=True, )
 NOMEDIA_HANDLER = CommandHandler(["restrict", "nomedia"], nomedia, pass_args=True,)
 MEDIA_HANDLER = CommandHandler("unrestrict", media, pass_args=True,)
+MUTEME_HANDLER = DisableAbleCommandHandler("muteme", muteme, pass_args=True, filters=Filters.group)
 
 dispatcher.add_handler(MUTE_HANDLER)
 dispatcher.add_handler(UNMUTE_HANDLER)
@@ -426,3 +452,4 @@ dispatcher.add_handler(TEMPMUTE_HANDLER)
 dispatcher.add_handler(TEMP_NOMEDIA_HANDLER)
 dispatcher.add_handler(NOMEDIA_HANDLER)
 dispatcher.add_handler(MEDIA_HANDLER)
+dispatcher.add_handler(MUTEME_HANDLER)
