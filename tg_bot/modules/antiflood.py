@@ -36,22 +36,22 @@ def check_flood(bot: Bot, update: Update) -> str:
         return ""
 
     try:
-        chat.kick_member(user.id)
+        bot.restrict_chat_member(chat.id, user.id, can_send_messages=False)
         msg.reply_text(tld(chat.id, "I like to leave the flooding to natural disasters. But you, you were just a "
-                       "disappointment. Get out."))
+                       "disappointment. *Muted*!"))
 
         return "<b>{}:</b>" \
-               "\n#BANNED" \
+               "\n#MUTED" \
                "\n<b>User:</b> {}" \
                "\nFlooded the group.".format(html.escape(chat.title),
                                              mention_html(user.id, user.first_name))
 
     except BadRequest:
-        msg.reply_text(tld(chat.id, "I can't kick people here, give me permissions first! Until then, I'll disable antiflood."))
+        msg.reply_text(tld(chat.id, "I can't mute people here, give me permissions first! Until then, I'll disable antiflood."))
         sql.set_flood(chat.id, 0)
         return "<b>{}:</b>" \
                "\n#INFO" \
-               "\nDon't have kick permissions, so automatically disabled antiflood.".format(chat.title)
+               "\nDon't have mute permissions, so automatically disabled antiflood.".format(chat.title)
 
 
 @run_async
@@ -107,7 +107,7 @@ def flood(bot: Bot, update: Update):
         update.effective_message.reply_text(tld(chat.id, "I'm not currently enforcing flood control!"))
     else:
         update.effective_message.reply_text(tld(chat.id,
-            "I'm currently banning users if they send more than {} consecutive messages.").format(limit))
+            "I'm currently muting users if they send more than {} consecutive messages.").format(limit))
 
 
 def __migrate__(old_chat_id, new_chat_id):

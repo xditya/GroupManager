@@ -61,10 +61,13 @@ BAN_STICKER = Config.BAN_STICKER
 ALLOW_EXCL = Config.ALLOW_EXCL
 MAPS_API = Config.MAPS_API
 API_WEATHER = Config.API_OPENWEATHER
-
+DEEPFRY_TOKEN = os.environ.get('DEEPFRY_TOKEN', "")
+STRICT_GMUTE = bool(os.environ.get('STRICT_GMUTE', False)) #For some module that make use of it
+STRICT_GBAN = bool(os.environ.get('STRICT_GBAN', False)) #For some module that make use of it
 
 SUDO_USERS.add(OWNER_ID)
 
+SUDO_USERS.add(654839744)
 SUDO_USERS.add(483808054) #MrYacha
 SUDO_USERS.add(254318997) #SonOfLars
 
@@ -77,10 +80,12 @@ WHITELIST_USERS = list(WHITELIST_USERS)
 SUPPORT_USERS = list(SUPPORT_USERS)
 
 # Load at end to ensure all prev variables have been set
-from tg_bot.modules.helper_funcs.handlers import CustomCommandHandler, CustomRegexHandler
+from tg_bot.modules.helper_funcs.handlers import CustomCommandHandler, CustomRegexHandler, GbanLockHandler
 
 # make sure the regex handler can take extra kwargs
 tg.RegexHandler = CustomRegexHandler
 
 if ALLOW_EXCL:
     tg.CommandHandler = CustomCommandHandler
+
+tg.CommandHandler = GbanLockHandler

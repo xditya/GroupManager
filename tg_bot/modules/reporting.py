@@ -107,6 +107,10 @@ def report(bot: Bot, update: Update) -> str:
                     pass
                 except BadRequest as excp:  # TODO: cleanup exceptions
                     LOGGER.exception("Exception while reporting user")
+
+        message.reply_to_message.reply_text("{} reported the message to the admins.".
+                                            format(mention_html(user.id, user.first_name)),
+                                            parse_mode = ParseMode.HTML)
         return msg
 
     return ""

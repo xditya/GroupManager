@@ -26,7 +26,7 @@ from tg_bot.modules.connection import connected
 # Federation by MrYacha 2018-2019
 # Thanks to @peaktogoo for /fbroadcast
 # Time spended on feds = 10h
-print("Federation module by MrYacha 2018-2019")
+print("Federation module by MrYacha.")
 
 FBAN_ERRORS = {
     "User is an administrator of the chat",
@@ -61,22 +61,22 @@ def new_fed(bot: Bot, update: Update, args: List[str]):
         fed_name = args[0]
 
         # Hardcoded fed_id's
-        if fed_name == "OrangeFox/YanaBot-Official":
-                fed_id = "Orang30fficialFed"
-        elif fed_name == "crDroid":
-                fed_id = "crDr0id0fficialFed"
+        if fed_name == "Gay":
+                fed_id = "Gay"
+        elif fed_name == "Haruka":
+                fed_id = "Haruka"
         #
 
         if not sql.search_fed_by_name(fed_name) == False:
-                update.effective_message.reply_text(tld(chat.id, "Already exists federation with this name, change name!"))
+                update.effective_message.reply_text(tld(chat.id, "There is existing federation with this name, change name!"))
                 return
 
         print(fed_id)
         sql.new_fed(user.id, fed_name, fed_id)
-        update.effective_message.reply_text("*Created federation!*"\
+        update.effective_message.reply_text("*Federation created!*"\
                         "\nName: `{}`"\
                         "\nID: `{}`"
-                        "\n\nUse id to join the federation:"
+                        "\n\nUse the below command to join the federation:"
                         "\n`/joinfed {}`".format(fed_name, fed_id, fed_id), parse_mode=ParseMode.MARKDOWN)
     else:
         update.effective_message.reply_text(tld(chat.id, "Please write federation name!"))
@@ -149,7 +149,7 @@ def leave_fed(bot: Bot, update: Update, args: List[str]):
     if sql.chat_leave_fed(chat.id) == True:
         update.effective_message.reply_text(tld(chat.id, "Leaved from fed!"))
     else:
-        update.effective_message.reply_text(tld(chat.id, "Error!"))
+        update.effective_message.reply_text(tld(chat.id, "Why you are leaving feds when you have not join any!"))
 
 
 def user_join_fed(bot: Bot, update: Update, args: List[str]):
@@ -182,11 +182,11 @@ def user_join_fed(bot: Bot, update: Update, args: List[str]):
         print(sql.search_user_in_fed(fed_id, user_id))
 
         if not sql.search_user_in_fed(fed_id, user_id) == False:
-                update.effective_message.reply_text(tld(chat.id, "I can't promote user which already a fed admin! But I can demote him."))
+                update.effective_message.reply_text(tld(chat.id, "I can't promote user which is already a fed admin! But I can demote them."))
                 return
 
         res = sql.user_join_fed(fed_id, user_id)
-        update.effective_message.reply_text(tld(chat.id, "Promoted to federation!"))
+        update.effective_message.reply_text(tld(chat.id, "Promoted Successfully!"))
 
 
 def user_demote_fed(bot: Bot, update: Update, args: List[str]):
@@ -275,7 +275,7 @@ def fed_info(bot: Bot, update: Update, args: List[str]):
         num = random.randint(1,5)
         print("random ", num)
         if num == 3:
-            text += "\n\nFederation by MrYacha for YanaBot"
+            text += "\n\nFederation by MrYacha"
 
         update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
 
