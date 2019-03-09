@@ -33,6 +33,8 @@ from requests import get
 GMAPS_LOC = "https://maps.googleapis.com/maps/api/geocode/json"
 GMAPS_TIME = "https://maps.googleapis.com/maps/api/timezone/json"
 
+#AMIGAY BY PEAK
+print("AMIGAY by Peak.")
 
 @run_async
 def insults(bot: Bot, update: Update):

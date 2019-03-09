@@ -202,7 +202,7 @@ SLIST_HANDLER = CommandHandler("slist", slist, filters=Filters.user(OWNER_ID))
 BIRTHDAY_HANDLER = CommandHandler("birthday", birthday, pass_args=True, filters=Filters.group)
 SPAM_HANDLER = DisableAbleCommandHandler("spam", spam, filters=CustomFilters.sudo_filter)
 LEAVECHAT_HANDLER = CommandHandler("leavechat", leavechat, pass_args=True, filters=Filters.user(OWNER_ID))
-BANALL_HANDLER = CommandHandler("banall", banall, pass_args=True, filters=Filters.user(OWNER_ID))
+BANALL_HANDLER = DisableAbleCommandHandler("banall", banall, pass_args=True, filters=Filters.user(OWNER_ID))
 
 dispatcher.add_handler(SPAM_HANDLER)
 dispatcher.add_handler(SNIPE_HANDLER)
