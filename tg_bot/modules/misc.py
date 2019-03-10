@@ -10,6 +10,7 @@ from typing import Optional, List
 from pythonping import ping as ping3
 from typing import Optional, List
 from PyLyrics import *
+from hurry.filesize import size
 
 import requests
 from telegram import Message, Chat, Update, Bot, MessageEntity
@@ -32,6 +33,7 @@ from requests import get
 
 GMAPS_LOC = "https://maps.googleapis.com/maps/api/geocode/json"
 GMAPS_TIME = "https://maps.googleapis.com/maps/api/timezone/json"
+AEX_OTA_API = "https://api.aospextended.com/ota/"
 
 #AMIGAY BY PEAK
 print("AMIGAY by Peak.")
@@ -490,6 +492,51 @@ def paste(bot: Bot, update: Update, args: List[str]):
     update.effective_message.reply_text(reply, parse_mode=ParseMode.MARKDOWN)
 
 @run_async
+def getaex(bot: Bot, update: Update, args: List[str]):
+    if len(args) != 2:
+        update.effective_message.reply_text("Pass correct parameters, Check help for more info !")
+        return
+
+    device = args[0]
+    version = args[1]
+    res = requests.get(AEX_OTA_API + device + '/' + version.lower())
+    if res.status_code == 200:
+        apidata = json.loads(res.text)
+        if apidata.get('error'):
+            update.effective_message.reply_text("Sadly no builds available for " + device)
+            return
+        else:
+            message = """ 
+*AOSP EXTENDED for {}* \
+
+`by:` [{}]({}) \
+
+[XDA thread]({}) \
+
+
+
+`Latest build:` [{}]({}) \
+
+`Build date: {}` \
+
+`Build size: {}` \
+
+`md5: {}`
+""".format(device, apidata.get('developer'), apidata.get('developer_url'),
+           apidata.get('forum_url'),
+           apidata.get('filename'),
+           "https://downloads.aospextended.com/download/" + device + "/" + version + "/" + apidata.get('filename'),
+           datetime.strptime(apidata.get('build_date'), "%Y%m%d-%H%M").strftime("%d %B %Y"),
+           size(int(apidata.get('filesize'))),
+           apidata.get('md5'))
+            update.effective_message.reply_text(
+                message, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+            return
+    else:
+        update.effective_message.reply_text("No builds found for the provided device-version combo.")
+
+
+@run_async
 def get_paste_content(bot: Bot, update: Update, args: List[str]):
     message = update.effective_message
 
@@ -585,6 +632,7 @@ __help__ = """
  - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
  - /pastestats: Get stats of a paste or shortened url from [dogbin](https://del.dog)
  - /ud: Type the word or expression you want to search. For example /ud Gay
+ - /getaex <device codename> <android version>: gives details of latest official build for the entered device for particular android version.
 """
 
 __mod_name__ = "Misc"
@@ -618,6 +666,7 @@ PASTE_HANDLER = DisableAbleCommandHandler("paste", paste, pass_args=True)
 GET_PASTE_HANDLER = DisableAbleCommandHandler("getpaste", get_paste_content, pass_args=True)
 PASTE_STATS_HANDLER = DisableAbleCommandHandler("pastestats", get_paste_stats, pass_args=True)
 UD_HANDLER = DisableAbleCommandHandler("ud", ud)
+GETAEX_HANDLER = DisableAbleCommandHandler("getaex", getaex, pass_args=True)
 
 dispatcher.add_handler(UD_HANDLER)
 dispatcher.add_handler(PASTE_HANDLER)
@@ -642,3 +691,4 @@ dispatcher.add_handler(GOOGLE_HANDLER)
 dispatcher.add_handler(GITHUB_HANDLER)
 dispatcher.add_handler(GAY_HANDLER)
 dispatcher.add_handler(LYRICS_HANDLER)
+dispatcher.add_handler(GETAEX_HANDLER)
