@@ -22,7 +22,7 @@ from tg_bot.modules.connection import connected
 
 DONATE_STRING = """Heya, glad to hear you want to donate! I do not actually want for myself but it \
 It took lots of work for [my creator](t.me/SonOfLars) to get me to where I am now, and every donation helps \
-motivate him to make me even better. All the donation money will go to a better VPS to host me, and/or beer \. 
+motivate him to make me even better. All the donation money will go to a better VPS to host me, and/or beer \
 https://orangefox.tech/donate."""
 
 IMPORTED = {}
@@ -121,7 +121,7 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             send_start(bot, update)
     else:
-        update.effective_message.reply_text("Yo, whadup?")
+        update.effective_message.reply_text("Hey there! I'm running on Version 1.3 Public Release")
 
 
 def send_start(bot, update):
@@ -134,7 +134,7 @@ def send_start(bot, update):
 
     chat = update.effective_chat  # type: Optional[Chat]
     text = "Hey there! My name is Haruka Aya - I'm here to help you manage your groups! Click Help button to find out more about how to use me to my full potential."
-    text += "\n \nJoin [Echelon Team Group](https://t.me/echelonTeam) ( @EchelonTeam ) if you need any support or help \n \nFollow [Haruka Aya](https://t.me/HarukaAya) ( @HarukaAya ) if you want to keep up with the news, updates and bot downtime! \n \nMade with love by @peaktogoo"
+    text += "\n \n I based on my sis, @pYanaBot ! She help me with alot of thing. \n \nJoin [Echelon Team Group](https://t.me/echelonTeam) ( @EchelonTeam ) if you need any support or help \n \nFollow [Haruka Aya](https://t.me/HarukaAya) ( @HarukaAya ) if you want to keep up with the news, updates and bot downtime! \n \nMade with love by @peaktogoo"
 
     keyboard = [[InlineKeyboardButton(text="🛠 Control panel", callback_data="cntrl_panel_M")]]
     keyboard += [[InlineKeyboardButton(text="🇺🇸 Language", callback_data="set_lang_"), 
