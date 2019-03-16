@@ -247,10 +247,10 @@ def adminlist(bot, update):
         user = admin.user
         status = admin.status
         if status == "creator":
-            name = "[{}](tg://user?id={})".format(user.first_name + (user.last_name or ""), user.id) + tld(chat.id, " (Creator)")
+            name = "{}".format(user.first_name + (user.last_name or "")) + tld(chat.id, " (Creator)")
         else:
-            name = "[{}](tg://user?id={})".format(user.first_name + (user.last_name or ""), user.id)
-        text += "\n• {}".format(name)
+            name = "{}".format(user.first_name + (user.last_name or ""))
+        text += "\n• `{}`".format(name)
 
     update.effective_message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
 
@@ -292,15 +292,15 @@ __help__ = """
 
 __mod_name__ = "Admin"
 
-PIN_HANDLER = CommandHandler("pin", pin, pass_args=True, filters=Filters.group)
-UNPIN_HANDLER = CommandHandler("unpin", unpin, filters=Filters.group)
+PIN_HANDLER = DisableAbleCommandHandler("pin", pin, pass_args=True, filters=Filters.group)
+UNPIN_HANDLER = DisableAbleCommandHandler("unpin", unpin, filters=Filters.group)
 
 INVITE_HANDLER = CommandHandler("invitelink", invite)
 
-PROMOTE_HANDLER = CommandHandler("promote", promote, pass_args=True)
-DEMOTE_HANDLER = CommandHandler("demote", demote, pass_args=True)
+PROMOTE_HANDLER = DisableAbleCommandHandler("promote", promote, pass_args=True)
+DEMOTE_HANDLER = DisableAbleCommandHandler("demote", demote, pass_args=True)
 
-REACT_HANDLER = CommandHandler("reaction", reaction, pass_args=True, filters=Filters.group)
+REACT_HANDLER = DisableAbleCommandHandler("reaction", reaction, pass_args=True, filters=Filters.group)
 
 ADMINLIST_HANDLER = DisableAbleCommandHandler(["adminlist", "admins"], adminlist)
 

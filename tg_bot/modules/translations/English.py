@@ -169,6 +169,15 @@ ITEMS = (
     "ton of bricks",
 )
 
+OOF_STRINGS = (
+    "OOF DUDE",
+    "F",
+    "BOI OUF",
+    "LMAO",
+)
+
+
+
 THROW = (
     "throws",
     "flings",
@@ -211,8 +220,8 @@ EnglishStrings = {
 
 I'm a group manager bot maintained by [this person](tg://user?id={654839744}). I'm a [Marie](https://github.com/PaulSonOfLars/tgbot) fork.
 I'm built in python3, using the \
-python-telegram-bot library, and am fully opensource - you can find what makes me tick \
-[here](https://gitlab.com/peaktogoo/pHarukaAya-1.0))!
+python-telegram-bot library, and am fully opensource - you can find what makes me tick\
+[here](https://github.com/peaktogoo/HarukaAya))!
 
 Feel free to submit pull requests on github, or to contact my support group, @EchelonTeam, with any bugs, questions \
 or feature requests you might have :)
@@ -222,7 +231,6 @@ If you enjoying using me and/or would like to help me survive in the wild, hit /
 
     "send-help": """Hey there! My name is *{}*.
 I'm a modular group management bot with a few fun extras! Have a look at the following for an idea of some of the things I can help you with.
-Find what make ticc [here](https://gitlab.com/peaktogoo/pHarukaAya-1.0)
 
 Main commands available:
  - /start: Cool command to check if the bot is alive or not
@@ -250,6 +258,7 @@ you're interested in.""",
 "MARKDOWN_HELP-K": MARKDOWN_HELP,
 "INSULTS-K": INSULTS_STRINGS,
 "GAY-K": GAY_STRINGS,
+"OOF-K": OOF_STRINGS,
 
 #GDPR
 "send-gdpr": """Your personal data has been deleted.\n\nNote that this will not unban \

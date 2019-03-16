@@ -33,7 +33,7 @@ def list_handlers(bot: Bot, update: Update):
     if not conn == False:
         chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
-        filter_list = tld(chat.id, "*Filters in {}:*\n")
+        filter_list = tld(chat.id, "*List of filters in {}:*\n")
     else:
         chat_id = update.effective_chat.id
         if chat.type == "private":
@@ -268,8 +268,8 @@ Now, anyone saying "hello" will be replied to with "Hello there! How are you?".
 
 __mod_name__ = "Filters"
 
-FILTER_HANDLER = CommandHandler("filter", filters)
-STOP_HANDLER = CommandHandler("stop", stop_filter)
+FILTER_HANDLER = DisableAbleCommandHandler("filter", filters)
+STOP_HANDLER = DisableAbleCommandHandler("stop", stop_filter)
 LIST_HANDLER = DisableAbleCommandHandler("filters", list_handlers, admin_ok=True)
 CUST_FILTER_HANDLER = MessageHandler(CustomFilters.has_text, reply_filter)
 

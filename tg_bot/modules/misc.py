@@ -38,6 +38,14 @@ AEX_OTA_API = "https://api.aospextended.com/ota/"
 #AMIGAY BY PEAK
 print("AMIGAY by Peak.")
 
+
+@run_async
+def oof(bot: Bot, update: Update):
+    chat = update.effective_chat  # type: Optional[Chat]
+    text = random.choice(tld(chat.id, "OOF-K"))
+    update.effective_message.reply_text(text)
+
+
 @run_async
 def insults(bot: Bot, update: Update):
     chat = update.effective_chat  # type: Optional[Chat]
@@ -165,7 +173,7 @@ def info(bot: Bot, update: Update, args: List[str]):
     text += tld(chat.id, "\nPermanent user link: {}").format(mention_html(user.id, "link"))
 
     if user.id == OWNER_ID:
-        text += tld(chat.id, "\n\nThis person is my owner - I would never do anything against them!")
+        text += tld(chat.id, "\n\nAy, This guy is my owner. I would never do anything against him!")
     else:
         if user.id in SUDO_USERS:
             text += tld(chat.id, "\nThis person is one of my sudo users! " \
@@ -631,6 +639,7 @@ __help__ = """
  - /paste: Create a paste or a shortened url using [dogbin](https://del.dog)
  - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
  - /pastestats: Get stats of a paste or shortened url from [dogbin](https://del.dog)
+ - /oof: OOF!
  - /ud: Type the word or expression you want to search. For example /ud Gay
  - /getaex <device codename> <android version>: gives details of latest official build for the entered device for particular android version.
 """
@@ -645,6 +654,7 @@ LYRICS_HANDLER = DisableAbleCommandHandler("lyrics", lyrics, pass_args=True)
 
 TIME_HANDLER = DisableAbleCommandHandler("time", get_time, pass_args=True)
 
+OOF_HANDLER = DisableAbleCommandHandler("oof", oof)
 INSULTS_HANDLER = DisableAbleCommandHandler("insults", insults)
 RUNS_HANDLER = DisableAbleCommandHandler("runs", runs)
 SLAP_HANDLER = DisableAbleCommandHandler("slap", slap, pass_args=True)
@@ -692,3 +702,4 @@ dispatcher.add_handler(GITHUB_HANDLER)
 dispatcher.add_handler(GAY_HANDLER)
 dispatcher.add_handler(LYRICS_HANDLER)
 dispatcher.add_handler(GETAEX_HANDLER)
+dispatcher.add_handler(OOF_HANDLER)

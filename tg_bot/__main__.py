@@ -134,7 +134,7 @@ def send_start(bot, update):
 
     chat = update.effective_chat  # type: Optional[Chat]
     text = "Hey there! My name is Haruka Aya - I'm here to help you manage your groups! Click Help button to find out more about how to use me to my full potential."
-    text += "\n \n I based on my sis, @pYanaBot ! She help me with alot of thing. \n \nJoin [Echelon Team Group](https://t.me/echelonTeam) ( @EchelonTeam ) if you need any support or help \n \nFollow [Haruka Aya](https://t.me/HarukaAya) ( @HarukaAya ) if you want to keep up with the news, updates and bot downtime! \n \nMade with love by @peaktogoo"
+    text += "\n \n I based on my sis, @pYanaBot ! She help me with alot of thing. \n \nJoin [Echelon Team Group](https://t.me/echelonTeam) ( @EchelonTeam ) if you need any support or help \n \nFollow [Haruka Aya](https://t.me/HarukaAya) ( @HarukaAya ) if you want to keep up with the news, updates and bot downtime! \n \nMy source can be founded [here](https://github.com/peaktogoo/HarukaAya) \n \nMade with love by @peaktogoo"
 
     keyboard = [[InlineKeyboardButton(text="🛠 Control panel", callback_data="cntrl_panel_M")]]
     keyboard += [[InlineKeyboardButton(text="🇺🇸 Language", callback_data="set_lang_"), 
