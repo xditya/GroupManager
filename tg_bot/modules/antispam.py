@@ -87,14 +87,12 @@ def gban(bot: Bot, update: Update, args: List[str]):
         if old_reason:
             banner = update.effective_user  # type: Optional[User]
             send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
-                     "<b>Emendation of Global Ban</b>" \
-                     "\n#GBAN" \
-                     "\n<b>Status:</b> <code>Amended</code>" \
+                     "<b>New Reason of Global Ban</b>" \
                      "\n<b>Sudo Admin:</b> {}" \
                      "\n<b>User:</b> {}" \
                      "\n<b>ID:</b> <code>{}</code>" \
                      "\n<b>Previous Reason:</b> {}" \
-                     "\n<b>Amended Reason:</b> {}".format(mention_html(banner.id, banner.first_name),
+                     "\n<b>New Reason:</b> {}".format(mention_html(banner.id, banner.first_name),
                                               mention_html(user_chat.id, user_chat.first_name), 
                                                            user_chat.id, old_reason, new_reason), 
                     html=True)
@@ -106,9 +104,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
         else:
             banner = update.effective_user  # type: Optional[User]
             send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
-                     "<b>Emendation of Global Ban</b>" \
-                     "\n#GBAN" \
-                     "\n<b>Status:</b> <code>New reason</code>" \
+                     "<b>New reason of Global Ban</b>" \
                      "\n<b>Sudo Admin:</b> {}" \
                      "\n<b>User:</b> {}" \
                      "\n<b>ID:</b> <code>{}</code>" \

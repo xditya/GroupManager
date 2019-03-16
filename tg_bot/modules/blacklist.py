@@ -194,10 +194,6 @@ You can set blacklist filters to take automatic action on people when they say c
  - /rmblacklist <blacklist trigger>: same as /unblacklist
  - /blacklist: list all active blacklist filters
 
-An example of setting a blacklist filter:
-/blacklistmode warn
-will set your blacklist to automatically warn users who say blacklisted words.
-
 /addblacklist "the admins suck" Respect your admins!
 This would delete any message containing 'the admins suck'.
 If you've enabled an alternative blacklist mode, it will warn, ban, kick, or mute a user with a message specifying the reason.

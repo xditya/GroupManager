@@ -114,7 +114,7 @@ def get(bot, update, notename, show_none=True, no_format=False):
                     sql.rm_note(chat_id, notename)
                 else:
                     message.reply_text("This note could not be sent, as it is incorrectly formatted. Ask in "
-                                       "@YanaBotGroup if you can't figure out why!")
+                                       "@EchelonTeam if you can't figure out why!")
                     LOGGER.exception("Could not parse message #%s in chat %s", notename, str(chat_id))
                     LOGGER.warning("Message was: %s", str(note.value))
         return
@@ -232,7 +232,7 @@ def list_notes(bot: Bot, update: Update):
     note_list = sql.get_all_chat_notes(chat_id)
 
     for note in note_list:
-        note_name = " • `{}`\n".format(note.name)
+        note_name = " • `#{}`\n".format(note.name)
         if len(msg) + len(note_name) > MAX_MESSAGE_LENGTH:
             update.effective_message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
             msg = ""
@@ -309,11 +309,11 @@ This will retrieve the note and send it without formatting it; getting you the r
 
 __mod_name__ = "Notes"
 
-GET_HANDLER = CommandHandler("get", cmd_get, pass_args=True)
+GET_HANDLER = DisableAbleCommandHandler("get", cmd_get, pass_args=True)
 HASH_GET_HANDLER = RegexHandler(r"^#[^\s]+", hash_get)
 
-SAVE_HANDLER = CommandHandler("save", save)
-DELETE_HANDLER = CommandHandler("clear", clear, pass_args=True)
+SAVE_HANDLER = DisableAbleCommandHandler("save", save)
+DELETE_HANDLER = DisableAbleCommandHandler("clear", clear, pass_args=True)
 
 LIST_HANDLER = DisableAbleCommandHandler(["notes", "saved"], list_notes, admin_ok=True)
 
