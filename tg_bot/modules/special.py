@@ -40,7 +40,7 @@ def banall(bot: Bot, update: Update, args: List[int]):
 def snipe(bot: Bot, update: Update, args: List[str]):
     try:
         chat_id = str(args[0])
-u        del args[0]
+        del args[0]
     except TypeError as excp:
         update.effective_message.reply_text("Please give me a chat to echo to!")
     to_send = " ".join(args)
@@ -130,7 +130,8 @@ SNIPE_HANDLER = CommandHandler("snipe", snipe, pass_args=True, filters=Filters.u
 BANALL_HANDLER = CommandHandler("banall", banall, pass_args=True, filters=Filters.user(OWNER_ID))
 GETLINK_HANDLER = CommandHandler("getlink", getlink, pass_args=True, filters=Filters.user(OWNER_ID))
 LEAVECHAT_HANDLER = CommandHandler("leavechat", leavechat, pass_args=True, filters=Filters.user(OWNER_ID))
-SLIST_HANDLER = CommandHandler("slist", slist, filters=Filters.user(OWNER_ID))
+SLIST_HANDLER = CommandHandler("slist", slist,
+                           filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
 
 dispatcher.add_handler(SNIPE_HANDLER)
 dispatcher.add_handler(BANALL_HANDLER)

@@ -157,6 +157,33 @@ def warn_user(bot: Bot, update: Update, args: List[str]) -> str:
 @user_admin
 @bot_admin
 @loggable
+def remove_warns(bot: Bot, update: Update, args: List[str]) -> str:
+    message = update.effective_message  # type: Optional[Message]
+    chat = update.effective_chat  # type: Optional[Chat]
+    user = update.effective_user  # type: Optional[User]
+
+    user_id = extract_user(message, args)
+
+    if user_id:
+        sql.remove_warn(user_id, chat.id)
+        message.reply_text("Last warn has been removed!")
+        warned = chat.get_member(user_id).user
+        return "<b>{}:</b>" \
+               "\n#UNWARN" \
+               "\n<b>• Admin:</b> {}" \
+               "\n<b>• User:</b> {}" \
+               "\n<b>• ID:</b> <code>{}</code>".format(html.escape(chat.title),
+                                                       mention_html(user.id, user.first_name),
+                                                       mention_html(warned.id, warned.first_name),
+                                                       warned.id)
+    else:
+        message.reply_text("No user has been designated!")
+    return ""
+
+@run_async
+@user_admin
+@bot_admin
+@loggable
 def reset_warns(bot: Bot, update: Update, args: List[str]) -> str:
     message = update.effective_message  # type: Optional[Message]
     chat = update.effective_chat  # type: Optional[Chat]
@@ -415,6 +442,8 @@ be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is
  - /nowarn <keyword>: stop a warning filter
  - /warnlimit <num>: set the warning limit
  - /strongwarn <on/yes/off/no>: If set to on, exceeding the warn limit will result in a ban. Else, will just kick.
+ - /rmwarn <userhandle>: removes latest warn for a user. It also can be used as reply.
+ - /unwarn <userhandle>: same as /rmwarn
 """
 
 __mod_name__ = "Warnings"
@@ -429,6 +458,7 @@ LIST_WARN_HANDLER = DisableAbleCommandHandler(["warnlist", "warnfilters"], list_
 WARN_FILTER_HANDLER = MessageHandler(CustomFilters.has_text & Filters.group, reply_filter)
 WARN_LIMIT_HANDLER = DisableAbleCommandHandler("warnlimit", set_warn_limit, pass_args=True, filters=Filters.group)
 WARN_STRENGTH_HANDLER = DisableAbleCommandHandler("strongwarn", set_warn_strength, pass_args=True, filters=Filters.group)
+REMOVE_WARNS_HANDLER = CommandHandler(["rmwarn", "unwarn"], remove_warns, pass_args=True, filters=Filters.group)
 
 dispatcher.add_handler(WARN_HANDLER)
 dispatcher.add_handler(CALLBACK_QUERY_HANDLER)
@@ -440,3 +470,4 @@ dispatcher.add_handler(LIST_WARN_HANDLER)
 dispatcher.add_handler(WARN_LIMIT_HANDLER)
 dispatcher.add_handler(WARN_STRENGTH_HANDLER)
 dispatcher.add_handler(WARN_FILTER_HANDLER, WARN_HANDLER_GROUP)
+dispatcher.add_handler(REMOVE_WARNS_HANDLER)
