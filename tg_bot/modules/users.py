@@ -116,42 +116,6 @@ def chats(bot: Bot, update: Update):
                                                 caption="Here is the list of chats in my database.")
 
 
-@run_async
-def snipe(bot: Bot, update: Update, args: List[str]):
-    try:
-        chat_id = str(args[0])
-        del args[0]
-    except TypeError as excp:
-        update.effective_message.reply_text("Please give me a chat to echo to!")
-    to_send = " ".join(args)
-    if len(to_send) >= 2:
-        try:
-            bot.sendMessage(int(chat_id), str(to_send))
-        except TelegramError:
-            LOGGER.warning("Couldn't send to group %s", str(chat_id))
-            update.effective_message.reply_text("Couldn't send the message. Perhaps I'm not part of that group?")
-
-
-@run_async
-def slist(bot: Bot, update: Update):
-    text1 = "My sudo users are:"
-    for user_id in SUDO_USERS:
-        user = bot.get_chat(user_id)
-        name = "[{}](tg://user?id={})".format(user.first_name + (user.last_name or ""), user.id)
-        if user.username:
-            name = escape_markdown("@" + user.username)
-        text1 += "\n - {}".format(name)
-    text2 = "My support users are:"
-    for user_id in SUPPORT_USERS:
-        user = bot.get_chat(user_id)
-        name = "[{}](tg://user?id={})".format(user.first_name + (user.last_name or ""), user.id)
-        if user.username:
-            name = escape_markdown("@" + user.username)
-        text2 += "\n - {}".format(name)
-    update.effective_message.reply_text(text1 + "\n", parse_mode=ParseMode.MARKDOWN)
-    update.effective_message.reply_text(text2 + "\n", parse_mode=ParseMode.MARKDOWN)
-
-
 def __user_info__(user_id, chat_id):
     if user_id == dispatcher.bot.id:
         return tld(chat_id, "I've seen them in... Wow. Are they stalking me? They're in all the same places I am... oh. It's me.")
@@ -179,12 +143,8 @@ BROADCAST_HANDLER = CommandHandler("broadcast", broadcast, filters=Filters.user(
 USER_HANDLER = MessageHandler(Filters.all & Filters.group, log_user)
 CHATLIST_HANDLER = CommandHandler("chatlist", chats, filters=Filters.user(OWNER_ID))
 
-SNIPE_HANDLER = CommandHandler("snipe", snipe, pass_args=True, filters=Filters.user(OWNER_ID))
-SLIST_HANDLER = CommandHandler("slist", slist, filters=Filters.user(OWNER_ID))
 
 dispatcher.add_handler(USER_HANDLER, USERS_GROUP)
 dispatcher.add_handler(BROADCAST_HANDLER)
 dispatcher.add_handler(CHATLIST_HANDLER)
 
-dispatcher.add_handler(SNIPE_HANDLER)
-dispatcher.add_handler(SLIST_HANDLER)
