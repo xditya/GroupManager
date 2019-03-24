@@ -18,7 +18,7 @@ from telegram import ParseMode
 from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from tg_bot import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, MAPS_API, API_WEATHER
+from tg_bot import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER
 from tg_bot.__main__ import GDPR
 from tg_bot.__main__ import STATS, USER_INFO
 from tg_bot.modules.disable import DisableAbleCommandHandler
@@ -31,20 +31,7 @@ from tg_bot.modules.translations.strings import tld
 
 from requests import get
 
-GMAPS_LOC = "https://maps.googleapis.com/maps/api/geocode/json"
-GMAPS_TIME = "https://maps.googleapis.com/maps/api/timezone/json"
 AEX_OTA_API = "https://api.aospextended.com/ota/"
-
-#AMIGAY BY PEAK
-print("AMIGAY by Peak.")
-
-
-@run_async
-def oof(bot: Bot, update: Update):
-    chat = update.effective_chat  # type: Optional[Chat]
-    text = random.choice(tld(chat.id, "OOF-K"))
-    update.effective_message.reply_text(text)
-
 
 @run_async
 def insults(bot: Bot, update: Update):
@@ -196,51 +183,6 @@ def info(bot: Bot, update: Update, args: List[str]):
 
 
 @run_async
-def get_time(bot: Bot, update: Update, args: List[str]):
-    chat = update.effective_chat  # type: Optional[Chat]
-    location = " ".join(args)
-    if location.lower() == bot.first_name.lower():
-        update.effective_message.reply_text(tld(chat.id, "Its always banhammer time for me!"))
-        bot.send_sticker(chat.id, BAN_STICKER)
-        return
-
-    res = requests.get(GMAPS_LOC, params=dict(address=location, key=MAPS_API))
-
-    if res.status_code == 200:
-        loc = json.loads(res.text)
-        print(loc)
-        if loc.get('status') == 'OK':
-            lat = loc['results'][0]['geometry']['location']['lat']
-            long = loc['results'][0]['geometry']['location']['lng']
-
-            country = None
-            city = None
-
-            address_parts = loc['results'][0]['address_components']
-            for part in address_parts:
-                if 'country' in part['types']:
-                    country = part.get('long_name')
-                if 'administrative_area_level_1' in part['types'] and not city:
-                    city = part.get('long_name')
-                if 'locality' in part['types']:
-                    city = part.get('long_name')
-
-            if city and country:
-                location = "{}, {}".format(city, country)
-            elif country:
-                location = country
-
-            timenow = int(datetime.utcnow().timestamp())
-            res = requests.get(GMAPS_TIME, params=dict(location="{},{}".format(lat, long), timestamp=timenow, key=MAPS_API))
-
-            if res.status_code == 200:
-                offset = json.loads(res.text)['dstOffset']
-                timestamp = json.loads(res.text)['rawOffset']
-                time_there = datetime.fromtimestamp(timenow + timestamp + offset).strftime("%H:%M:%S on %A %d %B")
-                update.message.reply_text(tld(chat.id, "It's {} in {}").format(time_there, location))
-
-
-@run_async
 def echo(bot: Bot, update: Update):
     message = update.effective_message
     message.delete()
@@ -249,100 +191,6 @@ def echo(bot: Bot, update: Update):
         message.reply_to_message.reply_text(args[1])
     else:
         message.reply_text(args[1], quote=False)
-
-@run_async
-def stickerid(bot: Bot, update: Update):
-    msg = update.effective_message
-    if msg.reply_to_message and msg.reply_to_message.sticker:
-        update.effective_message.reply_text("Sticker ID:\n```" + 
-                                            escape_markdown(msg.reply_to_message.sticker.file_id) + "```",
-                                            parse_mode=ParseMode.MARKDOWN)
-    else:
-        update.effective_message.reply_text(tld(update.effective_chat, "Please reply to a sticker to get its ID."))
-
-
-@run_async
-def getsticker(bot: Bot, update: Update):
-    msg = update.effective_message
-    chat_id = update.effective_chat.id
-    if msg.reply_to_message and msg.reply_to_message.sticker:
-        file_id = msg.reply_to_message.sticker.file_id
-        newFile = bot.get_file(file_id)
-        newFile.download('sticker.png')
-        bot.sendDocument(chat_id, document=open('sticker.png', 'rb'))
-        
-    else:
-        update.effective_message.reply_text(tld(chat_id, "Please reply to a sticker for me to upload its PNG."))
-
-
-@run_async
-def weather(bot, update, args):
-    chat = update.effective_chat  # type: Optional[Chat]
-    if len(args) == 0:
-        update.effective_message.reply_text(tld(chat.id, "Write a location to check the weather."))
-        return
-
-    location = " ".join(args)
-    if location.lower() == bot.first_name.lower():
-        update.effective_message.reply_text(tld(chat.id, "I will keep an eye on both happy and sad times!"))
-        bot.send_sticker(chat.id, BAN_STICKER)
-        return
-
-    try:
-        LANGUAGE = prev_locale(chat.id)
-        try:
-            LANGUAGE = LANGUAGE.locale_name
-        except:
-            LANGUAGE = "en"
-        print(LANGUAGE)
-        owm = pyowm.OWM(API_WEATHER, language=LANGUAGE)
-        observation = owm.weather_at_place(location)
-        getloc = observation.get_location()
-        thelocation = getloc.get_name()
-        if thelocation == None:
-            thelocation = "Unknown"
-        theweather = observation.get_weather()
-        temperature = theweather.get_temperature(unit='celsius').get('temp')
-        if temperature == None:
-            temperature = "Unknown"
-
-        # Weather symbols
-        status = ""
-        status_now = theweather.get_weather_code()
-        print(status_now)
-        if status_now == 232: # Rain storm
-            status += "⛈️ "
-        elif status_now == 321: # Drizzle
-            status += "🌧️ "
-        elif status_now == 504: # Light rain
-            status += "🌦️ "
-        elif status_now == 531: # Cloudy rain
-            status += "⛈️ "
-        elif status_now == 622: # Snow
-            status += "🌨️ "
-        elif status_now == 781: # Atmosphere
-            status += "🌪️ "
-        elif status_now == 800: # Bright
-            status += "🌤️ "
-        elif status_now == 801: # A little cloudy
-            status += "⛅️ "
-        elif status_now == 804: # Cloudy
-            status += "☁️ "
-
-        print(getloc, observation)
-        print(status)
-        #print(status.formatted_address)
-        
-
-        status = status + theweather._detailed_status
-                        
-
-        update.message.reply_text(tld(chat.id, "Today in {} is being {}, around {}°C.\n").format(thelocation,
-                status, temperature))
-
-    except:
-        update.effective_message.reply_text(tld(chat.id, "Sorry, location not found."))
-
 
 @run_async
 def gdpr(bot: Bot, update: Update):
@@ -421,20 +269,6 @@ SFW_STRINGS = (
     "80%",
     "Sad but you are not gay",
 )
-
-@run_async
-def amigay(bot: Bot, update: Update):
-    user_id = update.effective_message.from_user.id
-    chat = update.effective_chat  # type: Optional[Chat]
-    message = update.effective_message
-
-    if user_id == OWNER_ID:
-        update.effective_message.reply_text("OMG You are GAYLORD 100%")
-    else:
-        if user_id in SUDO_USERS:
-            update.effective_message.reply_text("You are the follower of gaylord")
-        else:
-           message.reply_text(random.choice(tld(chat.id, "GAY-K")))
 
 LYRICSINFO = "\n[Full Lyrics](http://lyrics.wikia.com/wiki/%s:%s)"
 
@@ -652,25 +486,18 @@ PING_HANDLER = DisableAbleCommandHandler("ping", ping)
 GOOGLE_HANDLER = DisableAbleCommandHandler("google", google)
 LYRICS_HANDLER = DisableAbleCommandHandler("lyrics", lyrics, pass_args=True)
 
-TIME_HANDLER = DisableAbleCommandHandler("time", get_time, pass_args=True)
 
-OOF_HANDLER = DisableAbleCommandHandler("oof", oof)
 INSULTS_HANDLER = DisableAbleCommandHandler("insults", insults)
 RUNS_HANDLER = DisableAbleCommandHandler("runs", runs)
 SLAP_HANDLER = DisableAbleCommandHandler("slap", slap, pass_args=True)
 INFO_HANDLER = DisableAbleCommandHandler("info", info, pass_args=True)
 GITHUB_HANDLER = DisableAbleCommandHandler("git", github)
-GAY_HANDLER = DisableAbleCommandHandler("amigay", amigay)
 
 ECHO_HANDLER = CommandHandler("echo", echo, filters=Filters.user(OWNER_ID))
 MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private)
 
 STATS_HANDLER = CommandHandler("stats", stats, filters=CustomFilters.sudo_filter)
 GDPR_HANDLER = CommandHandler("gdpr", gdpr, filters=Filters.private)
-
-WEATHER_HANDLER = DisableAbleCommandHandler("weather", weather, pass_args=True)
-STICKER_HANDLER = DisableAbleCommandHandler("stickerid", stickerid)
-STICKERID_HANDLER = DisableAbleCommandHandler("getsticker", getsticker)
 
 PASTE_HANDLER = DisableAbleCommandHandler("paste", paste, pass_args=True)
 GET_PASTE_HANDLER = DisableAbleCommandHandler("getpaste", get_paste_content, pass_args=True)
@@ -684,7 +511,6 @@ dispatcher.add_handler(GET_PASTE_HANDLER)
 dispatcher.add_handler(PASTE_STATS_HANDLER)
 dispatcher.add_handler(ID_HANDLER)
 dispatcher.add_handler(IP_HANDLER)
-dispatcher.add_handler(TIME_HANDLER)
 dispatcher.add_handler(INSULTS_HANDLER)
 dispatcher.add_handler(RUNS_HANDLER)
 dispatcher.add_handler(SLAP_HANDLER)
@@ -694,12 +520,7 @@ dispatcher.add_handler(MD_HELP_HANDLER)
 dispatcher.add_handler(STATS_HANDLER)
 dispatcher.add_handler(GDPR_HANDLER)
 dispatcher.add_handler(PING_HANDLER)
-#dispatcher.add_handler(WEATHER_HANDLER)
-dispatcher.add_handler(STICKER_HANDLER)
-dispatcher.add_handler(STICKERID_HANDLER)
 dispatcher.add_handler(GOOGLE_HANDLER)
 dispatcher.add_handler(GITHUB_HANDLER)
-dispatcher.add_handler(GAY_HANDLER)
 dispatcher.add_handler(LYRICS_HANDLER)
 dispatcher.add_handler(GETAEX_HANDLER)
-dispatcher.add_handler(OOF_HANDLER)
