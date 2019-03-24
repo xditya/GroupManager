@@ -26,56 +26,6 @@ WIDE_MAP[0x20] = 0x3000
 
 # D A N K modules by @deletescape vvv
 
-# based on https://github.com/wrxck/mattata/blob/master/plugins/copypasta.mattata
-@run_async
-def copypasta(bot: Bot, update: Update):
-    message = update.effective_message
-    if not message.reply_to_message:
-        message.reply_text("I need a message to meme.")
-    else:
-        emojis = ["😂", "😂", "👌", "✌", "💞", "👍", "👌", "💯", "🎶", "👀", "😂", "👓", "👏", "👐", "🍕", "💥", "🍴", "💦", "💦", "🍑", "🍆", "😩", "😏", "👉👌", "👀", "👅", "😩", "🚰"]
-        reply_text = random.choice(emojis)
-        b_char = random.choice(message.reply_to_message.text).lower() # choose a random character in the message to be substituted with 🅱️
-        for c in message.reply_to_message.text:
-            if c == " ":
-                reply_text += random.choice(emojis)
-            elif c in emojis:
-                reply_text += c
-                reply_text += random.choice(emojis)
-            elif c.lower() == b_char:
-                reply_text += "🅱️"
-            else:
-                if bool(random.getrandbits(1)):
-                    reply_text += c.upper()
-                else:
-                    reply_text += c.lower()
-        reply_text += random.choice(emojis)
-        message.reply_to_message.reply_text(reply_text)
-
-
-@run_async
-def bmoji(bot: Bot, update: Update):
-    message = update.effective_message
-    if not message.reply_to_message:
-        message.reply_text("I need a message to meme.")
-    else:
-        b_char = random.choice(message.reply_to_message.text).lower() # choose a random character in the message to be substituted with 🅱️
-        reply_text = message.reply_to_message.text.replace(b_char, "🅱️").replace(b_char.upper(), "🅱️")
-        message.reply_to_message.reply_text(reply_text)
-
-
-@run_async
-def clapmoji(bot: Bot, update: Update):
-    message = update.effective_message
-    if not message.reply_to_message:
-        message.reply_text("I need a message to meme.")
-    else:
-        reply_text = "👏 "
-        reply_text += message.reply_to_message.text.replace(" ", " 👏 ")
-        reply_text += " 👏"
-        message.reply_to_message.reply_text(reply_text)
-
-
 @run_async
 def owo(bot: Bot, update: Update):
     message = update.effective_message
@@ -130,20 +80,6 @@ def vapor(bot: Bot, update: Update, args: List[str]):
         message.reply_text(reply_text)
     else:
         message.reply_to_message.reply_text(reply_text)
-
-@run_async
-def me_too(bot: Bot, update: Update):
-    message = update.effective_message
-    if random.randint(0, 100) > 60:
-        reply = random.choice(["Me too thanks", "Haha yes, me too", "Same lol", "Me irl"])
-        message.reply_text(reply)
-
-@run_async
-def i_gay(bot: Bot, update: Update):
-    message = update.effective_message
-    if random.randint(0, 100) > 60:
-        reply = random.choice(["Me too thanks", "Haha yes, me too", "Same lol", "Me irl"])
-        message.reply_text(reply)
 
 # D A N K modules by @deletescape ^^^
 # Less D A N K modules by @skittles9823 # holi fugg I did some maymays vvv
@@ -385,9 +321,6 @@ Some memes command, find it all out yourself!
 
 __mod_name__ = "Memes and etc."
 
-COPYPASTA_HANDLER = DisableAbleCommandHandler("😂", copypasta)
-CLAPMOJI_HANDLER = DisableAbleCommandHandler("👏", clapmoji, admin_ok=True)
-BMOJI_HANDLER = DisableAbleCommandHandler("🅱", bmoji, admin_ok=True)
 OWO_HANDLER = DisableAbleCommandHandler("owo", owo, admin_ok=True)
 STRETCH_HANDLER = DisableAbleCommandHandler("stretch", stretch)
 VAPOR_HANDLER = DisableAbleCommandHandler("vapor", vapor, pass_args=True, admin_ok=True)
@@ -399,17 +332,12 @@ HITLER_HANDLER = DisableAbleCommandHandler("hitler", hitlertext, admin_ok=True)
 ZALGO_HANDLER = DisableAbleCommandHandler("zalgofy", zalgotext)
 FORBES_HANDLER = DisableAbleCommandHandler("forbes", forbesify, admin_ok=True)
 DEEPFRY_HANDLER = DisableAbleCommandHandler("deepfry", deepfryer, admin_ok=True)
-ME_TOO_THANKS_HANDLER = DisableAbleRegexHandler(r"(?i)me too", me_too, friendly="me_too")
-I_GAY_HANDLER = DisableAbleRegexHandler(r"(?i)i gay", i_gay, friendly="i_gay")
 SHOUT_HANDLER = DisableAbleCommandHandler("shout", shout, pass_args=True)
 
 
 dispatcher.add_handler(MAFIA_HANDLER)
 dispatcher.add_handler(PIDOR_HANDLER)
 dispatcher.add_handler(SHOUT_HANDLER)
-dispatcher.add_handler(COPYPASTA_HANDLER)
-dispatcher.add_handler(CLAPMOJI_HANDLER)
-dispatcher.add_handler(BMOJI_HANDLER)
 dispatcher.add_handler(OWO_HANDLER)
 dispatcher.add_handler(STRETCH_HANDLER)
 dispatcher.add_handler(VAPOR_HANDLER)
@@ -417,8 +345,6 @@ dispatcher.add_handler(MOCK_HANDLER)
 dispatcher.add_handler(ZALGO_HANDLER)
 dispatcher.add_handler(FORBES_HANDLER)
 dispatcher.add_handler(DEEPFRY_HANDLER)
-dispatcher.add_handler(ME_TOO_THANKS_HANDLER)
 dispatcher.add_handler(KIM_HANDLER)
 dispatcher.add_handler(HITLER_HANDLER)
-dispatcher.add_handler(I_GAY_HANDLER)
 
