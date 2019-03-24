@@ -438,13 +438,13 @@ def muteme(bot: Bot, update: Update, args: List[str]) -> str:
     else:
         update.effective_message.reply_text("Huh? I can't :/")
 
-MUTE_HANDLER = DisableAbleCommandHandler("mute", mute, pass_args=True)
-UNMUTE_HANDLER = DisableAbleCommandHandler("unmute", unmute, pass_args=True)
-TEMPMUTE_HANDLER = DisableAbleCommandHandler(["tmute", "tempmute"], temp_mute, pass_args=True)
-TEMP_NOMEDIA_HANDLER = DisableAbleCommandHandler(["trestrict", "temprestrict"], temp_nomedia, pass_args=True, )
-NOMEDIA_HANDLER = DisableAbleCommandHandler(["restrict", "nomedia"], nomedia, pass_args=True,)
-MEDIA_HANDLER = DisableAbleCommandHandler("unrestrict", media, pass_args=True,)
-MUTEME_HANDLER = DisableAbleCommandHandler("muteme", muteme, pass_args=True, filters=Filters.group)
+MUTE_HANDLER = DisableAbleCommandHandler("mute", mute, pass_args=True, admin_ok=True)
+UNMUTE_HANDLER = DisableAbleCommandHandler("unmute", unmute, pass_args=True, admin_ok=True)
+TEMPMUTE_HANDLER = DisableAbleCommandHandler(["tmute", "tempmute"], temp_mute, pass_args=True, admin_ok=True)
+TEMP_NOMEDIA_HANDLER = DisableAbleCommandHandler(["trestrict", "temprestrict"], temp_nomedia, pass_args=True, admin_ok=True)
+NOMEDIA_HANDLER = DisableAbleCommandHandler(["restrict", "nomedia"], nomedia, pass_args=True, admin_ok=True)
+MEDIA_HANDLER = DisableAbleCommandHandler("unrestrict", media, pass_args=True, admin_ok=True)
+MUTEME_HANDLER = DisableAbleCommandHandler("muteme", muteme, pass_args=True, filters=Filters.group, admin_ok=True)
 
 dispatcher.add_handler(MUTE_HANDLER)
 dispatcher.add_handler(UNMUTE_HANDLER)
