@@ -50,14 +50,6 @@ RUN_STRINGS = (
     "As The Doctor would say... RUN!",
 )
 
-GAY_STRINGS = (
-    "20%",
-    "40%",
-    "60%",
-    "80%",
-    "Sad but you are not gay",
-)
-
 INSULTS_STRINGS = (
     "Owww ... Such a stupid idiot.",
     "Don't drink and type.",
@@ -169,15 +161,6 @@ ITEMS = (
     "ton of bricks",
 )
 
-OOF_STRINGS = (
-    "OOF DUDE",
-    "F",
-    "BOI OUF",
-    "LMAO",
-)
-
-
-
 THROW = (
     "throws",
     "flings",
@@ -257,8 +240,6 @@ you're interested in.""",
 "ITEMR-K": ITEMS,
 "MARKDOWN_HELP-K": MARKDOWN_HELP,
 "INSULTS-K": INSULTS_STRINGS,
-"GAY-K": GAY_STRINGS,
-"OOF-K": OOF_STRINGS,
 
 #GDPR
 "send-gdpr": """Your personal data has been deleted.\n\nNote that this will not unban \
