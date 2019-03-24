@@ -14,6 +14,7 @@ import tg_bot.modules.sql.users_sql as sql
 from tg_bot import dispatcher, OWNER_ID, LOGGER, SUDO_USERS, SUPPORT_USERS
 from telegram.utils.helpers import escape_markdown
 from tg_bot.modules.helper_funcs.filters import CustomFilters
+from tg_bot.modules.helper_funcs.chat_status import is_user_ban_protected, bot_admin
 
 from tg_bot.modules.translations.strings import tld
 
