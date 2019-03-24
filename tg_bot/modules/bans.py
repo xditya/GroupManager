@@ -380,12 +380,12 @@ Available commands are:
 
 __mod_name__ = "Bans"
 
-BAN_HANDLER = DisableAbleCommandHandler("ban", ban, pass_args=True, filters=Filters.group)
-TEMPBAN_HANDLER = DisableAbleCommandHandler(["tban", "tempban"], temp_ban, pass_args=True, filters=Filters.group)
-KICK_HANDLER = DisableAbleCommandHandler("kick", kick, pass_args=True, filters=Filters.group)
-UNBAN_HANDLER = DisableAbleCommandHandler("unban", unban, pass_args=True, filters=Filters.group)
+BAN_HANDLER = DisableAbleCommandHandler("ban", ban, pass_args=True, filters=Filters.group, admin_ok=True)
+TEMPBAN_HANDLER = DisableAbleCommandHandler(["tban", "tempban"], temp_ban, pass_args=True, filters=Filters.group, admin_ok=True)
+KICK_HANDLER = DisableAbleCommandHandler("kick", kick, pass_args=True, filters=Filters.group, admin_ok=True)
+UNBAN_HANDLER = DisableAbleCommandHandler("unban", unban, pass_args=True, filters=Filters.group, admin_ok=True)
 KICKME_HANDLER = DisableAbleCommandHandler("kickme", kickme, filters=Filters.group)
-SBAN_HANDLER = CommandHandler("sban", sban, pass_args=True, filters=Filters.group)
+SBAN_HANDLER = CommandHandler("sban", sban, pass_args=True, filters=Filters.group, admin_ok=True)
 BANME_HANDLER = DisableAbleCommandHandler("banme", banme, filters=Filters.group)
 
 dispatcher.add_handler(BAN_HANDLER)
