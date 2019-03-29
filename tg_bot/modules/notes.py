@@ -172,18 +172,18 @@ def save(bot: Bot, update: Update):
     msg.reply_text(
         "Ok, added `{note_name}` note in *{chat_name}*.\nGet it with `/get {note_name}`, or `#{note_name}`".format(note_name=note_name, chat_name=chat_name), parse_mode=ParseMode.MARKDOWN)
 
-    if msg.reply_to_message and msg.reply_to_message.from_user.is_bot:
-        if text:
-            msg.reply_text("Seems like you're trying to save a message from a bot. Unfortunately, "
-                           "bots can't forward bot messages, so I can't save the exact message. "
-                           "\nI'll save all the text I can, but if you want more, you'll have to "
-                           "forward the message yourself, and then save it.")
-        else:
-            msg.reply_text("Bots are kinda handicapped by telegram, making it hard for bots to "
-                           "interact with other bots, so I can't save this message "
-                           "like I usually would - do you mind forwarding it and "
-                           "then saving that new message? Thanks!")
-        return
+#    if msg.reply_to_message and msg.reply_to_message.from_user.is_bot:
+#        if text:
+#            msg.reply_text("Seems like you're trying to save a message from a bot. Unfortunately, "
+#                           "bots can't forward bot messages, so I can't save the exact message. "
+#                           "\nI'll save all the text I can, but if you want more, you'll have to "
+#                           "forward the message yourself, and then save it.")
+#        else:
+#            msg.reply_text("Bots are kinda handicapped by telegram, making it hard for bots to "
+#                           "interact with other bots, so I can't save this message "
+#                           "like I usually would - do you mind forwarding it and "
+#                           "then saving that new message? Thanks!")
+#        return
 
 
 @run_async
