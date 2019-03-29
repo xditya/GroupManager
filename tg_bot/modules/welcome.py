@@ -1,4 +1,3 @@
-import asyncio
 import html, time
 import re
 from typing import Optional, List
@@ -17,6 +16,8 @@ from tg_bot.modules.helper_funcs.msg_types import get_welcome_type
 from tg_bot.modules.helper_funcs.string_handling import markdown_parser, \
     escape_invalid_curly_brackets
 from tg_bot.modules.log_channel import loggable
+
+from tg_bot.modules.feds import welcome_fed
 
 
 VALID_WELCOME_FORMATTERS = ['first', 'last', 'fullname', 'username', 'id', 'count', 'chatname', 'mention']
@@ -133,6 +134,10 @@ def new_member(bot: Bot, update: Update):
                 sent = send(update, res, keyboard,
                             sql.DEFAULT_WELCOME.format(first=first_name))  # type: Optional[Message]
 
+                #feds
+                if welcome_fed(bot, update) == True:
+                    continue
+
                 #Clean service welcome
                 if sql.clean_service(chat.id) == True:
                     bot.delete_message(chat.id, update.message.message_id)
@@ -152,10 +157,6 @@ def new_member(bot: Bot, update: Update):
                          callback_data="check_bot_({})".format(new_mem.id)) ]]))
                     #Mute user
                     bot.restrict_chat_member(chat.id, new_mem.id, can_send_messages=False, can_send_media_messages=False, can_send_other_messages=False, can_add_web_page_previews=False)
-                    #1h unmute
-                    # time.sleep(3600)
-                    # await asyncio.sleep(3600)
-                    # bot.restrict_chat_member(chat.id, new_mem.id, can_send_messages=True, can_send_media_messages=True, can_send_other_messages=True, can_add_web_page_previews=True)
 
 
         prev_welc = sql.get_clean_pref(chat.id)
