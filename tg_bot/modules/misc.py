@@ -496,7 +496,7 @@ GITHUB_HANDLER = DisableAbleCommandHandler("git", github)
 ECHO_HANDLER = CommandHandler("echo", echo, filters=Filters.user(OWNER_ID))
 MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private)
 
-STATS_HANDLER = CommandHandler("stats", stats, filters=CustomFilters.sudo_filter)
+STATS_HANDLER = CommandHandler("stats", stats, filters=Filters.user(OWNER_ID))
 GDPR_HANDLER = CommandHandler("gdpr", gdpr, filters=Filters.private)
 
 PASTE_HANDLER = DisableAbleCommandHandler("paste", paste, pass_args=True)

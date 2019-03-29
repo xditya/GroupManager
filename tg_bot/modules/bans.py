@@ -47,7 +47,7 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
         return ""
 
     if is_user_ban_protected(chat, user_id, member):
-        message.reply_text(tld(chat.id, "I really wish I could ban admins..."))
+        message.reply_text(tld(chat.id, "Why would I ban an admin? That sounds like a pretty dumb idea."))
         return ""
 
     log = "<b>{}:</b>" \
@@ -109,7 +109,7 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
             raise
 
     if is_user_ban_protected(chat, user_id, member):
-        message.reply_text(tld(chat.id, "I really wish I could ban admins..."))
+        message.reply_text(tld(chat.id, "This user is ban protected, meaning that you cannot ban this user!"))
         return ""
 
     if user_id == bot.id:
@@ -191,7 +191,7 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
             raise
 
     if is_user_ban_protected(chat, user_id):
-        message.reply_text("I really wish I could kick admins...")
+        message.reply_text("Why would I kick an admin? That sounds like a pretty dumb idea.")
         return ""
 
     if user_id == bot.id:
@@ -226,7 +226,7 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
 def kickme(bot: Bot, update: Update):
     user_id = update.effective_message.from_user.id
     if is_user_admin(update.effective_chat, user_id):
-        update.effective_message.reply_text("I wish I could... but you're an admin.")
+        update.effective_message.reply_text("Why would I kick an admin? That sounds like a pretty dumb idea.")
         return
 
     res = update.effective_chat.unban_member(user_id)  # unban on current user = kick
@@ -245,7 +245,7 @@ def banme(bot: Bot, update: Update):
     chat = update.effective_chat
     user = update.effective_user
     if is_user_admin(update.effective_chat, user_id):
-        update.effective_message.reply_text("I wish I could... but you're an admin.")
+        update.effective_message.reply_text("Why would I ban an admin? That sounds like a pretty dumb idea.")
         return
 
     res = update.effective_chat.kick_member(user_id)  
