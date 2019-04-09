@@ -312,7 +312,7 @@ Some memes command, find it all out yourself!
 /stretch: STRETCH de text
 /vapor: owo vapor dis
 /hiter: Quote a message and type this command to make a caption of hitler
-/mock: Does the same as /hitler but Ricardo Milos instead
+/mock: Does the same as /hitler but spongemock instead
 /kim: Does the same as /hitler but with Kim Jong Un instead (O no plox dont bomb my house)
 /pidor: 4pda memes
 /shout: Write anything that u want it to should

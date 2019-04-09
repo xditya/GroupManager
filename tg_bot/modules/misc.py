@@ -468,12 +468,10 @@ __help__ = """
  - /google: Search google
  - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
  - /git: Returns info about a GitHub user or organization.
- - /amigay: Magic command that check your gayness
  - /lyrics: Find your favorite songs lyrics!
  - /paste: Create a paste or a shortened url using [dogbin](https://del.dog)
  - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
  - /pastestats: Get stats of a paste or shortened url from [dogbin](https://del.dog)
- - /oof: OOF!
  - /ud: Type the word or expression you want to search. For example /ud Gay
  - /getaex <device codename> <android version>: gives details of latest official build for the entered device for particular android version.
 """
