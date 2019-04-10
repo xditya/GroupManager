@@ -3,7 +3,7 @@ emoji
 requests
 sqlalchemy
 python-telegram-bot>=11.1.0
-psycopg2-binary
+psycopg2
 feedparser
 pyowm
 pythonping
@@ -20,3 +20,5 @@ PyLyrics
 gsearch
 #AEX
 hurry.filesize
+#translator
+py_translator
