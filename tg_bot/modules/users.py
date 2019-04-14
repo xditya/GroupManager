@@ -221,8 +221,8 @@ def slist(bot: Bot, update: Update):
         except BadRequest as excp:
             if excp.message == 'Chat not found':
                 text2 += "\n - ({}) - not found".format(user_id)
-    message.reply_text(text1 + "\n", parse_mode=ParseMode.MARKDOWN)
-    message.reply_text(text2 + "\n", parse_mode=ParseMode.MARKDOWN)
+    message.reply_text(text1 + "\n" + text2 + "\n", parse_mode=ParseMode.MARKDOWN)
+    #message.reply_text(text2 + "\n", parse_mode=ParseMode.MARKDOWN)
 
 
 
