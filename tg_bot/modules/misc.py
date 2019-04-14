@@ -217,7 +217,7 @@ def stats(bot: Bot, update: Update):
 
 
 def ping(bot: Bot, update: Update):
-    tg_api = ping3('api.telegram.org', count=10)
+    tg_api = ping3('35.204.161.94', count=10)
     google = ping3('google.com', count=10)
     print(google)
     text = "*Pong!*\n"
