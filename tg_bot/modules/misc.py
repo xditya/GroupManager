@@ -217,7 +217,7 @@ def stats(bot: Bot, update: Update):
 
 
 def ping(bot: Bot, update: Update):
-    tg_api = ping3('35.204.161.94', count=10)
+    tg_api = ping3('api.telegram.org', count=10)
     google = ping3('google.com', count=10)
     print(google)
     text = "*Pong!*\n"
@@ -242,7 +242,7 @@ def github(bot: Bot, update: Update):
     usr = get(f'https://api.github.com/users/{text}').json()
     if usr.get('login'):
         reply_text = f"""*Name:* `{usr['name']}`
-*Username:* `{usr['login']}`
+*Username:* [{usr['login']}](https://github.com/{usr['login']})
 *Account ID:* `{usr['id']}`
 *Account type:* `{usr['type']}`
 *Location:* `{usr['location']}`
@@ -253,22 +253,23 @@ def github(bot: Bot, update: Update):
 *Public Repos:* `{usr['public_repos']}`
 *Public Gists:* `{usr['public_gists']}`
 *Email:* `{usr['email']}`
+*Blog:* [Click Here]({usr['blog']})
 *Company:* `{usr['company']}`
-*Website:* `{usr['blog']}`
 *Last updated:* `{usr['updated_at']}`
 *Account created at:* `{usr['created_at']}`
 """
     else:
         reply_text = "User not found. Make sure you entered valid username!"
-    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
+    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
-SFW_STRINGS = (
-    "20%",
-    "40%",
-    "60%",
-    "80%",
-    "Sad but you are not gay",
-)
+def repo(bot: Bot, update: Update, args: List[str]):
+    message = update.effective_message
+    text = message.text[len('/repo '):]
+    usr = get(f'https://api.github.com/users/{text}/repos?per_page=40').json()
+    reply_text = "*Repo*\n"
+    for i in range(len(usr)):
+        reply_text += f"[{usr[i]['name']}]({usr[i]['html_url']})\n"
+    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 LYRICSINFO = "\n[Full Lyrics](http://lyrics.wikia.com/wiki/%s:%s)"
 
@@ -332,51 +333,6 @@ def paste(bot: Bot, update: Update, args: List[str]):
     else:
         reply = f'{BASE_URL}/{key}'
     update.effective_message.reply_text(reply, parse_mode=ParseMode.MARKDOWN)
-
-@run_async
-def getaex(bot: Bot, update: Update, args: List[str]):
-    if len(args) != 2:
-        update.effective_message.reply_text("Pass correct parameters, Check help for more info !")
-        return
-
-    device = args[0]
-    version = args[1]
-    res = requests.get(AEX_OTA_API + device + '/' + version.lower())
-    if res.status_code == 200:
-        apidata = json.loads(res.text)
-        if apidata.get('error'):
-            update.effective_message.reply_text("Sadly no builds available for " + device)
-            return
-        else:
-            message = """ 
-*AOSP EXTENDED for {}* \
-
-`by:` [{}]({}) \
-
-[XDA thread]({}) \
-
-
-
-`Latest build:` [{}]({}) \
-
-`Build date: {}` \
-
-`Build size: {}` \
-
-`md5: {}`
-""".format(device, apidata.get('developer'), apidata.get('developer_url'),
-           apidata.get('forum_url'),
-           apidata.get('filename'),
-           "https://downloads.aospextended.com/download/" + device + "/" + version + "/" + apidata.get('filename'),
-           datetime.strptime(apidata.get('build_date'), "%Y%m%d-%H%M").strftime("%d %B %Y"),
-           size(int(apidata.get('filesize'))),
-           apidata.get('md5'))
-            update.effective_message.reply_text(
-                message, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-            return
-    else:
-        update.effective_message.reply_text("No builds found for the provided device-version combo.")
-
 
 @run_async
 def get_paste_content(bot: Bot, update: Update, args: List[str]):
@@ -467,7 +423,9 @@ __help__ = """
  - /getsticker: reply to a sticker to me to upload its raw PNG file.
  - /google: Search google
  - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
+
  - /git: Returns info about a GitHub user or organization.
+ - /repo: Return the GitHub user or organization repository list (Limited at 40)
  - /lyrics: Find your favorite songs lyrics!
  - /paste: Create a paste or a shortened url using [dogbin](https://del.dog)
  - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
@@ -478,18 +436,19 @@ __help__ = """
 
 __mod_name__ = "Misc"
 
-ID_HANDLER = DisableAbleCommandHandler("id", get_id, pass_args=True)
-IP_HANDLER = CommandHandler("ip", get_bot_ip, filters=Filters.chat(OWNER_ID))
-PING_HANDLER = DisableAbleCommandHandler("ping", ping)
+ID_HANDLER = DisableAbleCommandHandler("id", get_id, pass_args=True, admin_ok=True)
+IP_HANDLER = CommandHandler("ip", get_bot_ip, filters=Filters.chat(OWNER_ID), admin_ok=True)
+PING_HANDLER = DisableAbleCommandHandler("ping", ping, admin_ok=True)
 GOOGLE_HANDLER = DisableAbleCommandHandler("google", google)
-LYRICS_HANDLER = DisableAbleCommandHandler("lyrics", lyrics, pass_args=True)
+LYRICS_HANDLER = DisableAbleCommandHandler("lyrics", lyrics, pass_args=True, admin_ok=True)
 
 
-INSULTS_HANDLER = DisableAbleCommandHandler("insults", insults)
-RUNS_HANDLER = DisableAbleCommandHandler("runs", runs)
-SLAP_HANDLER = DisableAbleCommandHandler("slap", slap, pass_args=True)
-INFO_HANDLER = DisableAbleCommandHandler("info", info, pass_args=True)
-GITHUB_HANDLER = DisableAbleCommandHandler("git", github)
+INSULTS_HANDLER = DisableAbleCommandHandler("insults", insults, admin_ok=True)
+RUNS_HANDLER = DisableAbleCommandHandler("runs", runs, admin_ok=True)
+SLAP_HANDLER = DisableAbleCommandHandler("slap", slap, pass_args=True, admin_ok=True)
+INFO_HANDLER = DisableAbleCommandHandler("info", info, pass_args=True, admin_ok=True)
+GITHUB_HANDLER = DisableAbleCommandHandler("git", github, admin_ok=True)
+REPO_HANDLER = DisableAbleCommandHandler("repo", repo, pass_args=True, admin_ok=True)
 
 ECHO_HANDLER = CommandHandler("echo", echo, filters=Filters.user(OWNER_ID))
 MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private)
@@ -501,7 +460,7 @@ PASTE_HANDLER = DisableAbleCommandHandler("paste", paste, pass_args=True)
 GET_PASTE_HANDLER = DisableAbleCommandHandler("getpaste", get_paste_content, pass_args=True)
 PASTE_STATS_HANDLER = DisableAbleCommandHandler("pastestats", get_paste_stats, pass_args=True)
 UD_HANDLER = DisableAbleCommandHandler("ud", ud)
-GETAEX_HANDLER = DisableAbleCommandHandler("getaex", getaex, pass_args=True)
+
 
 dispatcher.add_handler(UD_HANDLER)
 dispatcher.add_handler(PASTE_HANDLER)
@@ -521,4 +480,4 @@ dispatcher.add_handler(PING_HANDLER)
 dispatcher.add_handler(GOOGLE_HANDLER)
 dispatcher.add_handler(GITHUB_HANDLER)
 dispatcher.add_handler(LYRICS_HANDLER)
-dispatcher.add_handler(GETAEX_HANDLER)
+dispatcher.add_handler(REPO_HANDLER)
