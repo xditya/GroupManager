@@ -1,12 +1,13 @@
 import threading
 
-from sqlalchemy import String, Column, Integer
+from sqlalchemy import Column, Integer, String
 
-from tg_bot.modules.sql import SESSION, BASE
+from tg_bot.modules.sql import BASE, SESSION
 
 DEF_COUNT = 0
 DEF_LIMIT = 0
 DEF_OBJ = (None, DEF_COUNT, DEF_LIMIT)
+
 
 class FloodControl(BASE):
     __tablename__ = "antiflood"
@@ -52,7 +53,7 @@ def update_flood(chat_id: str, user_id) -> bool:
             return False
 
         if user_id != curr_user_id or user_id is None:  # other user
-            CHAT_FLOOD[str(chat_id)] = (user_id, DEF_COUNT, limit)
+            CHAT_FLOOD[str(chat_id)] = (user_id, DEF_COUNT + 1, limit)
             return False
 
         count += 1
