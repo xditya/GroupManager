@@ -37,7 +37,7 @@ ENUM_FUNC_MAP = {
 # do not async
 def send(update, message, keyboard, backup_message):
     try:
-        msg = update.effective_message.reply_text(message, parse_mode=ParseMode.MARKDOWN, reply_markup=keyboard)
+        msg = update.effective_message.reply_text(message, parse_mode=ParseMode.MARKDOWN, reply_markup=keyboard, disable_web_page_preview=True)
     except IndexError:
         msg = update.effective_message.reply_text(markdown_parser(backup_message +
                                                                   "\nNote: the current message was "
@@ -278,7 +278,7 @@ def welcome(bot: Bot, update: Update, args: List[str]):
                 ENUM_FUNC_MAP[welcome_type](chat.id, welcome_m)
 
             else:
-                ENUM_FUNC_MAP[welcome_type](chat.id, welcome_m, parse_mode=ParseMode.MARKDOWN)
+                ENUM_FUNC_MAP[welcome_type](chat.id, welcome_m, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
     elif len(args) >= 1:
         if args[0].lower() in ("on", "yes", "yas"):
