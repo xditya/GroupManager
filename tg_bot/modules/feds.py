@@ -26,10 +26,11 @@ from tg_bot.modules.connection import connected
 
 # Hello bot owner, I spended for feds many hours of my life, i beg don't remove MrYacha from sudo to apprecate his work
 # Federation by MrYacha 2018-2019
-# Federation rework in process by peaktogoo 2019
+# Federation rework in process by Mizukito Akito 2019
 # Thanks to @peaktogoo for /fbroadcast
 # Time spended on feds = 10h
 print("Federation module by MrYacha.")
+print("Federation module reworked by Mizukito Akito.")
 
 FBAN_ERRORS = {
     "User is an administrator of the chat",
@@ -291,6 +292,10 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
     user = update.effective_user  # type: Optional[User]
     fed_id = sql.get_fed_id(chat.id)
     info = sql.get_fed_info(fed_id)
+    OW = bot.get_chat(info.owner_id)
+    HAHA = OW.id
+    FEDADMIN = sql.all_fed_users(fed_id)
+    FEDADMIN.append(int(HAHA))
 
     if is_user_fed_admin(fed_id, user.id) == False:
         update.effective_message.reply_text(tld(chat.id, "Only fed admins can do this!"))
@@ -318,13 +323,22 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
         message.reply_text(tld(chat.id, "I'm not fbanning my master, That's pretty dumb idea!"))
         return
 
+    if user_chat.id in SUDO_USERS:
+        message.reply_text(tld(chat.id, "I'm not fbanning the bot sudoers!"))
+        return
+
     if user_chat.id in WHITELIST_USERS:
         message.reply_text(tld(chat.id, "This person is whitelist from being fbanned!"))
         return
 
-    if user_chat.id in SUDO_USERS:
-        message.reply_text(tld(chat.id, "I'm not fbanning the bot sudoers!"))
+    if user_chat.id == HAHA:
+        message.reply_text(tld(chat.id, "I'm not fbanning the federation owner!"))
         return
+
+    if user_chat.id in FEDADMIN:
+        message.reply_text(tld(chat.id, "I'm not fbanning the federation admin!"))
+        return
+
 
     if user_chat.type != 'private':
         message.reply_text(tld(chat.id, "That's not a user!"))
@@ -354,11 +368,6 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
                 return
         except TelegramError:
             pass
-
-    OW = bot.get_chat(info.owner_id)
-    HAHA = OW.id
-    FEDADMIN = sql.all_fed_users(fed_id)
-    FEDADMIN.append(int(HAHA))
 
     send_to_list(bot, FEDADMIN,
              "<b>New FedBan</b>" \
@@ -394,7 +403,7 @@ def unfban(bot: Bot, update: Update, args: List[str]):
         return
 
     if sql.get_fban_user(fed_id, user_id) == False:
-        message.reply_text(tld(chat.id, "This user is not gbanned!"))
+        message.reply_text(tld(chat.id, "This user is not fbanned!"))
         return
 
     banner = update.effective_user  # type: Optional[User]
