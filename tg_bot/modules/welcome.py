@@ -276,17 +276,17 @@ def welcome(bot: Bot, update: Update, args: List[str]):
                 ENUM_FUNC_MAP[welcome_type](chat.id, welcome_m, parse_mode=ParseMode.MARKDOWN)
 
     elif len(args) >= 1:
-        if args[0].lower() in ("on", "yes"):
+        if args[0].lower() in ("on", "yes", "yas"):
             sql.set_welc_preference(str(chat.id), True)
             update.effective_message.reply_text("I'll be polite!")
 
-        elif args[0].lower() in ("off", "no"):
+        elif args[0].lower() in ("off", "no", "nou"):
             sql.set_welc_preference(str(chat.id), False)
             update.effective_message.reply_text("I'm sulking, not saying hello anymore.")
 
         else:
             # idek what you're writing, say yes or no
-            update.effective_message.reply_text("I understand 'on/yes' or 'off/no' only!")
+            update.effective_message.reply_text("I understand 'on/yes/yas' or 'off/no/nou' only!")
 
 
 @run_async

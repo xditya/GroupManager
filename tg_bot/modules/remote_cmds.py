@@ -24,6 +24,7 @@ RBAN_ERRORS = {
     "Chat_admin_required",
     "Only the creator of a basic group can kick group administrators",
     "Channel_private",
+    "Oof, u know u suck at this",
     "Not in the chat"
 }
 
