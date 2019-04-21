@@ -4,6 +4,7 @@ import json
 import random
 import time
 import pyowm
+import re
 from pyowm import timeutils, exceptions
 from datetime import datetime
 from typing import Optional, List
@@ -24,6 +25,8 @@ from tg_bot.__main__ import STATS, USER_INFO
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.extraction import extract_user
 from tg_bot.modules.helper_funcs.filters import CustomFilters
+from tg_bot.modules.rextester.api import Rextester, CompilerError
+from tg_bot.modules.rextester.langs import languages
 
 from tg_bot.modules.sql.translation import prev_locale
 
@@ -435,6 +438,44 @@ def ud(bot: Bot, update: Update):
   reply_text = f'Word: {text}\nDefinition: {results["list"][0]["definition"]}'
   message.reply_text(reply_text)
 
+
+def execute(bot: Bot, update: Update, args: List[str]):
+
+    message = update.effective_message
+    text = ' '.join(args)
+    regex = re.search('^([\w.#+]+)\s+([\s\S]+?)(?:\s+\/stdin\s+([\s\S]+))?$', text, re.IGNORECASE)
+
+    if not regex:
+        available_languages = ', '.join(languages.keys())
+        message.reply_text('*The availale languages are:*\n`{}`'.format(available_languages), parse_mode=ParseMode.MARKDOWN)
+        return
+
+    language = regex.group(1)
+    code = regex.group(2)
+    stdin = regex.group(3)
+
+    try:
+        regexter = Rextester(language, code, stdin)
+    except CompilerError as exc: # Exception on empy code or missing output
+        message.reply_text(exc)
+        return
+
+    output = ""
+    output += "*Language:*\n`{}`".format(language)
+    output += "*\n\nSource:*\n`{}`".format(code)
+
+    if regexter.result:
+        output += "*\n\nResult:*\n`{}`".format(regexter.result)
+
+    if regexter.warnings:
+        output += "\n\n*Warnings:*\n`{}`\n".format(regexter.warnings)
+
+    if regexter.errors:
+        output += "\n\n*Errors:*\n'{}`".format(regexter.errors)
+
+    message.reply_text(output, parse_mode=ParseMode.MARKDOWN)
+
+
 __help__ = """
  - /id: get the current group id. If used by replying to a message, gets that user's id.
  - /runs: reply a random string from an array of replies.
@@ -455,6 +496,7 @@ __help__ = """
  - /pastestats: Get stats of a paste or shortened url from [dogbin](https://del.dog)
  - /ud: Type the word or expression you want to search. For example /ud Gay
  - /removebotkeyboard: Got a nasty bot keyboard stuck in your group?
+ - /exec <language> <code> [/stdin <stdin>]: Execute a code in a specified language. Send an empty command to get the suppoerted languages.
 """
 
 __mod_name__ = "Misc"
@@ -478,6 +520,7 @@ MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.
 
 STATS_HANDLER = CommandHandler("stats", stats, filters=Filters.user(OWNER_ID))
 GDPR_HANDLER = CommandHandler("gdpr", gdpr, filters=Filters.private)
+EXECUTE_HANDLER = CommandHandler("exec", execute, pass_args=True, filters=CustomFilters.sudo_filter)
 
 PASTE_HANDLER = DisableAbleCommandHandler("paste", paste, pass_args=True)
 GET_PASTE_HANDLER = DisableAbleCommandHandler("getpaste", get_paste_content, pass_args=True)
@@ -505,3 +548,4 @@ dispatcher.add_handler(GITHUB_HANDLER)
 dispatcher.add_handler(LYRICS_HANDLER)
 dispatcher.add_handler(REPO_HANDLER)
 dispatcher.add_handler(DisableAbleCommandHandler("removebotkeyboard", reply_keyboard_remove))
+dispatcher.add_handler(EXECUTE_HANDLER)
