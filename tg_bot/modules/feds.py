@@ -11,7 +11,7 @@ from telegram import ParseMode, Update, Bot, Chat, User
 from telegram.ext import run_async, CommandHandler, MessageHandler, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from tg_bot import dispatcher, SUDO_USERS
+from tg_bot import dispatcher, OWNER_ID, SUDO_USERS, WHITELIST_USERS
 from tg_bot.modules.helper_funcs.handlers import CMD_STARTERS
 from tg_bot.modules.helper_funcs.misc import is_module_loaded
 from tg_bot.modules.helper_funcs.misc import send_to_list
@@ -304,14 +304,26 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
         message.reply_text(tld(chat.id, "You don't seem to be referring to a user."))
         return
 
-    if user_id == bot.id:
-        message.reply_text(tld(chat.id, "You can't fban me, better hit your head against the wall, it's more fun."))
-        return
-
     try:
         user_chat = bot.get_chat(user_id)
     except BadRequest as excp:
         message.reply_text(excp.message)
+        return
+
+    if user_chat.id == bot.id:
+        message.reply_text(tld(chat.id, "You can't fban me, better hit your head against the wall, it's more fun."))
+        return
+
+    if user_chat.id == OWNER_ID:
+        message.reply_text(tld(chat.id, "I'm not fbanning my master, That's pretty dumb idea!"))
+        return
+
+    if user_chat.id in WHITELIST_USERS:
+        message.reply_text(tld(chat.id, "This person is whitelist from being fbanned!"))
+        return
+
+    if user_chat.id in SUDO_USERS:
+        message.reply_text(tld(chat.id, "I'm not fbanning the bot sudoers!"))
         return
 
     if user_chat.type != 'private':
