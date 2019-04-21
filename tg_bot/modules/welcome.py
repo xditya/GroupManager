@@ -9,7 +9,7 @@ from telegram.ext import MessageHandler, Filters, CommandHandler, run_async, Cal
 from telegram.utils.helpers import mention_markdown, mention_html, escape_markdown
 
 import tg_bot.modules.sql.welcome_sql as sql
-from tg_bot import dispatcher, OWNER_ID, LOGGER
+from tg_bot import dispatcher, OWNER_ID, LOGGER, MESSAGE_DUMP
 from tg_bot.modules.helper_funcs.chat_status import user_admin, is_user_ban_protected
 from tg_bot.modules.helper_funcs.misc import build_keyboard, revert_buttons
 from tg_bot.modules.helper_funcs.msg_types import get_welcome_type
@@ -96,6 +96,11 @@ def new_member(bot: Bot, update: Update):
 
             # Give start information when add bot to group
             elif new_mem.id == bot.id:
+                bot.send_message(
+                    MESSAGE_DUMP,
+                    "I have been added to {} with ID: <pre>{}</pre>".format(chat.title, chat.id),
+                    parse_mode=ParseMode.HTML
+                )
                 bot.send_message(chat.id, "Thanks for adding me into your group! Checkout our news channel! @HarukaAya")
 
             else:
