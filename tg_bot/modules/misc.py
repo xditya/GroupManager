@@ -279,7 +279,6 @@ def github(bot: Bot, update: Update):
 *Public Repos:* `{usr['public_repos']}`
 *Public Gists:* `{usr['public_gists']}`
 *Email:* `{usr['email']}`
-*Blog:* [Click Here]({usr['blog']})
 *Company:* `{usr['company']}`
 *Last updated:* `{usr['updated_at']}`
 *Account created at:* `{usr['created_at']}`
