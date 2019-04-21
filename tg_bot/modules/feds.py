@@ -108,18 +108,18 @@ def join_fed(bot: Bot, update: Update, args: List[str]):
 
     administrators = chat.get_administrators()
 
-    #if user.id in SUDO_USERS:
-    #    pass
-    #else:
-    for admin in administrators:
-        status = admin.status
-        if status == "creator":
-            print(admin)
-            if str(admin.user.id) == str(user.id):
-                pass
-            else:
-                update.effective_message.reply_text(tld(chat.id, "Only group creator can do it!"))
-                return
+    if user.id in SUDO_USERS:
+        pass
+    else:
+        for admin in administrators:
+            status = admin.status
+            if status == "creator":
+                print(admin)
+                if str(admin.user.id) == str(user.id):
+                    pass
+                else:
+                    update.effective_message.reply_text(tld(chat.id, "Only group creator can do it!"))
+                    return
 
     if len(args) >= 1:
         sql.chat_join_fed(args[0], chat.id)
