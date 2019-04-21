@@ -318,7 +318,8 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
     message.reply_text(tld(chat.id, "Start fbanning!"))
 
     if reason == "":
-        reason = "no reason"
+        message.reply_text(tld(chat.id, "You have entered no reason, fbanning without reason!"))
+        reason = "No Reason have been given"
 
     sql.fban_user(fed_id, user_id, reason)
 
@@ -427,7 +428,7 @@ def get_frules(bot: Bot, update: Update, args: List[str]):
     print(rules)
     text = "*Rules in this fed:*\n"
     text += rules
-    update.effective_message.reply_text(tld(chat.id, text, parse_mode=ParseMode.MARKDOWN))
+    update.effective_message.reply_text(tld(chat.id, text), parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
