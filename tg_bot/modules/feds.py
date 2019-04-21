@@ -1,5 +1,6 @@
-from typing import Union, List, Optional
-
+import html
+from io import BytesIO
+from typing import Optional, List
 import random
 import string
 from time import sleep
@@ -13,6 +14,7 @@ from telegram.utils.helpers import escape_markdown, mention_html
 from tg_bot import dispatcher, SUDO_USERS
 from tg_bot.modules.helper_funcs.handlers import CMD_STARTERS
 from tg_bot.modules.helper_funcs.misc import is_module_loaded
+from tg_bot.modules.helper_funcs.misc import send_to_list
 from tg_bot.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from tg_bot.modules.helper_funcs.string_handling import markdown_parser
 
@@ -24,6 +26,7 @@ from tg_bot.modules.connection import connected
 
 # Hello bot owner, I spended for feds many hours of my life, i beg don't remove MrYacha from sudo to apprecate his work
 # Federation by MrYacha 2018-2019
+# Federation rework in process by peaktogoo 2019
 # Thanks to @peaktogoo for /fbroadcast
 # Time spended on feds = 10h
 print("Federation module by MrYacha.")
@@ -287,6 +290,7 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     fed_id = sql.get_fed_id(chat.id)
+    info = sql.get_fed_info(fed_id)
 
     if is_user_fed_admin(fed_id, user.id) == False:
         update.effective_message.reply_text(tld(chat.id, "Only fed admins can do this!"))
@@ -339,6 +343,21 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
         except TelegramError:
             pass
 
+    OW = bot.get_chat(info.owner_id)
+    HAHA = OW.id
+    FEDADMIN = sql.all_fed_users(fed_id)
+    FEDADMIN.append(int(HAHA))
+
+    send_to_list(bot, FEDADMIN,
+             "<b>New FedBan</b>" \
+             "\n<b>Fed:</b> {}" \
+             "\n<b>FedAdmin:</b> {}" \
+             "\n<b>User:</b> {}" \
+             "\n<b>User ID:</b> <code>{}</code>" \
+             "\n<b>Reason:</b> {}".format(info.fed_name, mention_html(user.id, user.first_name),
+                                   mention_html(user_chat.id, user_chat.first_name),
+                                                user_chat.id, reason), 
+            html=True)
 
 @run_async
 def unfban(bot: Bot, update: Update, args: List[str]):
@@ -346,6 +365,7 @@ def unfban(bot: Bot, update: Update, args: List[str]):
     user = update.effective_user  # type: Optional[User]
     message = update.effective_message  # type: Optional[Message]
     fed_id = sql.get_fed_id(chat.id)
+    info = sql.get_fed_info(fed_id)
 
     if is_user_fed_admin(fed_id, user.id) == False:
         update.effective_message.reply_text(tld(chat.id, "Only fed admins can do this!"))
@@ -395,6 +415,21 @@ def unfban(bot: Bot, update: Update, args: List[str]):
             pass
 
     message.reply_text(tld(chat.id, "Person has been un-fbanned."))
+
+    OW = bot.get_chat(info.owner_id)
+    HAHA = OW.id
+    FEDADMIN = sql.all_fed_users(fed_id)
+    FEDADMIN.append(int(HAHA))
+
+    send_to_list(bot, FEDADMIN,
+             "<b>Un-FedBan</b>" \
+             "\n<b>Fed:</b> {}" \
+             "\n<b>FedAdmin:</b> {}" \
+             "\n<b>User:</b> {}" \
+             "\n<b>User ID:</b> <code>{}</code>".format(info.fed_name, mention_html(user.id, user.first_name),
+                                                 mention_html(user_chat.id, user_chat.first_name),
+                                                              user_chat.id),
+            html=True)
 
 
 def set_frules(bot: Bot, update: Update, args: List[str]):
