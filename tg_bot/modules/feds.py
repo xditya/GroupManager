@@ -299,6 +299,35 @@ def fed_info(bot: Bot, update: Update, args: List[str]):
 
         update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
 
+def fed_admin(bot: Bot, update: Update, args: List[str]):
+
+        chat = update.effective_chat  # type: Optional[Chat]
+        user = update.effective_user  # type: Optional[User]
+        fed_id = sql.get_fed_id(chat.id)
+
+        if not fed_id:
+            update.effective_message.reply_text(tld(chat.id, "This group not in any federation!"))
+            return
+
+        if is_user_fed_admin(fed_id, user.id) == False:
+            update.effective_message.reply_text(tld(chat.id, "Only fed admins can do this!"))
+            return
+
+        print(fed_id)
+        user = update.effective_user  # type: Optional[Chat]
+        chat = update.effective_chat  # type: Optional[Chat]
+        info = sql.get_fed_info(fed_id)
+
+        text = "\n\n<b>Federation Admins:</b>"
+        user = bot.get_chat(info.owner_id) 
+        text += "\n• {} - <code>{}</code> (Creator)".format(mention_html(user.id, user.first_name), user.id)
+
+        h = sql.all_fed_users(fed_id)
+        for O in h:
+                user = bot.get_chat(O) 
+                text += "\n• {} - <code>{}</code>".format(mention_html(user.id, user.first_name), user.id, O)
+
+        update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
 
 
 def fed_ban(bot: Bot, update: Update, args: List[str]):
@@ -612,6 +641,7 @@ Commands:
  - /setfrules: Set federation rules
  - /frules: Show federation rules
  - /chatfed: Show the federation the chat is in
+ - /fedadmins: Show the federation admins
 """
 
 NEW_FED_HANDLER = CommandHandler("newfed", new_fed, pass_args=True)
@@ -627,6 +657,7 @@ FED_BROADCAST_HANDLER = CommandHandler("fbroadcast", broadcast, pass_args=True)
 FED_SET_RULES_HANDLER = CommandHandler("setfrules", set_frules, pass_args=True)
 FED_GET_RULES_HANDLER = CommandHandler("frules", get_frules, pass_args=True)
 FED_CHAT_HANDLER = CommandHandler("chatfed", fed_chat, pass_args=True)
+FED_ADMIN_HANDLER = CommandHandler("fedadmins", fed_admin, pass_args=True)
 
 dispatcher.add_handler(NEW_FED_HANDLER)
 dispatcher.add_handler(DEL_FED_HANDLER)
@@ -641,3 +672,4 @@ dispatcher.add_handler(UN_BAN_FED_HANDLER)
 dispatcher.add_handler(FED_SET_RULES_HANDLER)
 dispatcher.add_handler(FED_GET_RULES_HANDLER)
 dispatcher.add_handler(FED_CHAT_HANDLER)
+dispatcher.add_handler(FED_ADMIN_HANDLER)
