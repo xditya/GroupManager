@@ -315,6 +315,10 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
         message.reply_text(excp.message)
         return
 
+    if user_chat.id == user.id:
+        message.reply_text(tld(chat.id, "Do you know what you are doing? Fbanning yourself?"))
+        return
+
     if user_chat.id == bot.id:
         message.reply_text(tld(chat.id, "You can't fban me, better hit your head against the wall, it's more fun."))
         return
