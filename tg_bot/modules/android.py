@@ -35,72 +35,96 @@ from requests import get
 def havoc(bot: Bot, update: Update):
     message = update.effective_message
     device = message.text[len('/havoc '):]
-    usr = get(f'https://raw.githubusercontent.com/Havoc-Devices/android_vendor_OTA/pie/{device}.json').json()
-    reply_text = f"""*Download:* [{usr['response'][0]['filename']}]({usr['response'][0]['url']})
+    fetch = get(f'https://raw.githubusercontent.com/Havoc-Devices/android_vendor_OTA/pie/{device}.json')
+    if fetch.status_code == 200:
+        usr = fetch.json()
+        reply_text = f"""*Download:* [{usr['response'][0]['filename']}]({usr['response'][0]['url']})
 *Size:* `{usr['response'][0]['size']}`
 *Version:* `{usr['response'][0]['version']}`
 """
+    elif fetch.status_code == 404:
+        reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 @run_async
 def pearl(bot: Bot, update: Update):
     message = update.effective_message
     device = message.text[len('/pearl '):]
-    usr = get(f'https://raw.githubusercontent.com/PearlOS/OTA/master/{device}.json').json()
-    reply_text = f"""*Maintainer:* `{usr['response'][0]['maintainer']}`
+    fetch = get(f'https://raw.githubusercontent.com/PearlOS/OTA/master/{device}.json')
+    if fetch.status_code == 200:
+        usr = fetch.json()
+        reply_text = f"""*Maintainer:* `{usr['response'][0]['maintainer']}`
 *Rom Type:* `{usr['response'][0]['romtype']}`
 *Download:* [{usr['response'][0]['filename']}]({usr['response'][0]['url']})
 *Size:* `{usr['response'][0]['size']}`
 *Version:* `{usr['response'][0]['version']}`
 *XDA Thread:* [Click me]({usr['response'][0]['xda']})
 """
+    elif fetch.status_code == 404:
+        reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 @run_async
 def posp(bot: Bot, update: Update):
     message = update.effective_message
     device = message.text[len('/posp '):]
-    usr = get(f'https://api.potatoproject.co/checkUpdate?device={device}&type=weekly').json()
-    reply_text = f"""*Download:* [{usr['response'][-1]['filename']}]({usr['response'][-1]['url']})
+    fetch = get(f'https://api.potatoproject.co/checkUpdate?device={device}&type=weekly')
+    if fetch.status_code == 200:
+        usr = fetch.json()
+        reply_text = f"""*Download:* [{usr['response'][-1]['filename']}]({usr['response'][-1]['url']})
 *Size:* `{usr['response'][-1]['size']}`
 *Version:* `{usr['response'][-1]['version']}`
 """
+    elif fetch.status_code == 404:
+        reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 @run_async
 def dotos(bot: Bot, update: Update):
     message = update.effective_message
     device = message.text[len('/dotos '):]
-    usr = get(f'https://raw.githubusercontent.com/DotOS/ota_config/dot-p/{device}.json').json()
-    reply_text = f"""*Download:* [{usr['response'][0]['filename']}]({usr['response'][0]['url']})
+    fetch = get(f'https://raw.githubusercontent.com/DotOS/ota_config/dot-p/{device}.json')
+    if fetch.status_code == 200:
+        usr = fetch.json()
+        reply_text = f"""*Download:* [{usr['response'][0]['filename']}]({usr['response'][0]['url']})
 *Size:* `{usr['response'][0]['size']}`
 *Version:* `{usr['response'][0]['version']}`
 *Device Changelog:* `{usr['response'][0]['changelog_device']}`
 """
+    elif fetch.status_code == 404:
+        reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 @run_async
 def viper(bot: Bot, update: Update):
     message = update.effective_message
     device = message.text[len('/havoc '):]
-    usr = get(f'https://raw.githubusercontent.com/Viper-Devices/official_devices/master/{device}/build.json').json()
-    reply_text = f"""*Download:* [{usr['response'][0]['filename']}]({usr['response'][0]['url']})
+    fetch = get(f'https://raw.githubusercontent.com/Viper-Devices/official_devices/master/{device}/build.json')
+    if fetch.status_code == 200:
+        usr = fetch.json()
+        reply_text = f"""*Download:* [{usr['response'][0]['filename']}]({usr['response'][0]['url']})
 *Size:* `{usr['response'][0]['size']}`
 *Version:* `{usr['response'][0]['version']}`
 """
+    elif fetch.status_code == 404:
+        reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 @run_async
 def evo(bot: Bot, update: Update):
     message = update.effective_message
     device = message.text[len('/evo '):]
-    usr = get(f'https://raw.githubusercontent.com/evolution-x/official_devices/master/builds/{device}.json').json()
-    reply_text = f"""*Download:* [{usr['filename']}]({usr['url']})
+    fetch = get(f'https://raw.githubusercontent.com/evolution-x/official_devices/master/builds/{device}.json')
+    if fetch.status_code == 200:
+        usr = fetch.json()
+        reply_text = f"""*Download:* [{usr['filename']}]({usr['url']})
 *Size:* `{usr['size']}`
 *Android Version:* `{usr['version']}`
 *Maintainer:* [{usr['maintainer']}]({usr['maintainer_url']})
 *XDA Thread:* [Here]({usr['forum_url']})
 """
+    elif fetch.status_code == 404:
+        reply_text = "Device not found!"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 def enesrelease(bot: Bot, update: Update, args: List[str]):
