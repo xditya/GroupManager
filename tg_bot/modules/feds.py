@@ -29,8 +29,7 @@ from tg_bot.modules.connection import connected
 # Federation rework in process by Mizukito Akito 2019
 # Thanks to @peaktogoo for /fbroadcast
 # Time spended on feds = 10h
-print("Federation module by MrYacha.")
-print("Federation module reworked by Mizukito Akito.")
+print("Original federation module by MrYacha, reworked by Mizukito Akito (@peaktogoo) on Telegram.")
 
 FBAN_ERRORS = {
     "User is an administrator of the chat",
@@ -109,6 +108,26 @@ def del_fed(bot: Bot, update: Update, args: List[str]):
                 update.effective_message.reply_text(tld(chat.id, "Deleted!"))
         else:
                 update.effective_message.reply_text(tld(chat.id, "Please write federation id to remove!"))
+
+
+def fed_chat(bot: Bot, update: Update, args: List[str]):
+        chat = update.effective_chat  # type: Optional[Chat]
+        user = update.effective_user  # type: Optional[User]
+        fed_id = sql.get_fed_id(chat.id)
+
+        if not fed_id:
+            update.effective_message.reply_text(tld(chat.id, "This group not in any federation!"))
+            return
+
+        print(fed_id)
+        user = update.effective_user  # type: Optional[Chat]
+        chat = update.effective_chat  # type: Optional[Chat]
+        info = sql.get_fed_info(fed_id)
+
+        text = "This chat is part of the following federation:"
+        text += "\n{} (ID: <code>{}</code>)".format(info.fed_name, fed_id)
+
+        update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
 
 
 def join_fed(bot: Bot, update: Update, args: List[str]):
@@ -592,6 +611,7 @@ Commands:
  - /unfban <user>: unbans a user from all federations that this chat is in, and that the executor has control over.
  - /setfrules: Set federation rules
  - /frules: Show federation rules
+ - /chatfed: Show the federation the chat is in
 """
 
 NEW_FED_HANDLER = CommandHandler("newfed", new_fed, pass_args=True)
@@ -606,6 +626,7 @@ UN_BAN_FED_HANDLER = CommandHandler("unfban", unfban, pass_args=True)
 FED_BROADCAST_HANDLER = CommandHandler("fbroadcast", broadcast, pass_args=True)
 FED_SET_RULES_HANDLER = CommandHandler("setfrules", set_frules, pass_args=True)
 FED_GET_RULES_HANDLER = CommandHandler("frules", get_frules, pass_args=True)
+FED_CHAT_HANDLER = CommandHandler("chatfed", fed_chat, pass_args=True)
 
 dispatcher.add_handler(NEW_FED_HANDLER)
 dispatcher.add_handler(DEL_FED_HANDLER)
@@ -619,3 +640,4 @@ dispatcher.add_handler(UN_BAN_FED_HANDLER)
 #dispatcher.add_handler(FED_BROADCAST_HANDLER)
 dispatcher.add_handler(FED_SET_RULES_HANDLER)
 dispatcher.add_handler(FED_GET_RULES_HANDLER)
+dispatcher.add_handler(FED_CHAT_HANDLER)
