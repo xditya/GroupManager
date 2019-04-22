@@ -11,7 +11,7 @@ from telegram import ParseMode, Update, Bot, Chat, User
 from telegram.ext import run_async, CommandHandler, MessageHandler, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from tg_bot import dispatcher, OWNER_ID, SUDO_USERS, WHITELIST_USERS
+from tg_bot import dispatcher, OWNER_ID, SUDO_USERS, WHITELIST_USERS, MESSAGE_DUMP
 from tg_bot.modules.helper_funcs.handlers import CMD_STARTERS
 from tg_bot.modules.helper_funcs.misc import is_module_loaded
 from tg_bot.modules.helper_funcs.misc import send_to_list
@@ -77,13 +77,18 @@ def new_fed(bot: Bot, update: Update, args: List[str]):
 
         print(fed_id)
         sql.new_fed(user.id, fed_name, fed_id)
-        update.effective_message.reply_text("*You have successfully created a federation!*"\
+        update.effective_message.reply_text("*You have successfully created a new federation!*"\
                         "\nName: `{}`"\
                         "\nID: `{}`"
                         "\n\nUse the below command to join the federation:"
                         "\n`/joinfed {}`"
                         "\n\nUse the below command to delete the federation:"
                         "\n`/delfed {}`".format(fed_name, fed_id, fed_id, fed_id), parse_mode=ParseMode.MARKDOWN)
+        bot.send_message(
+            MESSAGE_DUMP,
+           "Federation <b>{}</b> have been created with ID: <pre>{}</pre>".format(fed_name, fed_id),
+            parse_mode=ParseMode.HTML
+        )
     else:
         update.effective_message.reply_text(tld(chat.id, "Please write federation name!"))
 
