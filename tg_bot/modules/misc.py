@@ -267,22 +267,31 @@ def github(bot: Bot, update: Update):
     text = message.text[len('/git '):]
     usr = get(f'https://api.github.com/users/{text}').json()
     if usr.get('login'):
-        reply_text = f"""*Name:* `{usr['name']}`
-*Username:* [{usr['login']}](https://github.com/{usr['login']})
-*Account ID:* `{usr['id']}`
-*Account type:* `{usr['type']}`
-*Location:* `{usr['location']}`
-*Bio:* `{usr['bio']}`
-*Followers:* `{usr['followers']}`
-*Following:* `{usr['following']}`
-*Hireable:* `{usr['hireable']}`
-*Public Repos:* `{usr['public_repos']}`
-*Public Gists:* `{usr['public_gists']}`
-*Email:* `{usr['email']}`
-*Company:* `{usr['company']}`
-*Last updated:* `{usr['updated_at']}`
-*Account created at:* `{usr['created_at']}`
-"""
+        text = f"*Username:* [{usr['login']}](https://github.com/{usr['login']})"
+
+        whitelist = ['name', 'id', 'type', 'location', 'blog',
+                     'bio', 'followers', 'following', 'hireable',
+                     'public_gists', 'public_repos', 'email',
+                     'company', 'updated_at', 'created_at']
+
+        difnames = {'id': 'Account ID', 'type': 'Account type', 'created_at': 'Account created at',
+                    'updated_at': 'Last updated', 'public_repos': 'Public Repos', 'public_gists': 'Public Gists'}
+
+        goaway = [None, 0, 'null', '']
+
+        for x, y in usr.items():
+            if x in whitelist:
+                if x in difnames:
+                    x = difnames[x]
+                else:
+                    x = x.title()
+
+                if x == 'Account created at' or x == 'Last updated':
+                    y = datetime.strptime(y, "%Y-%m-%dT%H:%M:%SZ")
+
+                if y not in goaway:
+                    text += ("\n*{}:* `{}`".format(x, y))
+        reply_text = text
     else:
         reply_text = "User not found. Make sure you entered valid username!"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
