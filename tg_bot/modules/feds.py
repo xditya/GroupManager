@@ -243,6 +243,13 @@ def fed_info(bot: Bot, update: Update, args: List[str]):
         chat = update.effective_chat  # type: Optional[Chat]
         user = update.effective_user  # type: Optional[User]
         fed_id = sql.get_fed_id(chat.id)
+        info = sql.get_fed_info(fed_id)
+        OW = bot.get_chat(info.owner_id)
+        HAHA = OW.id
+        FEDADMIN = sql.all_fed_users(fed_id)
+        FEDADMIN.append(int(HAHA))
+        ACTUALADMIN = len(FEDADMIN)
+
 
         if not fed_id:
             update.effective_message.reply_text(tld(chat.id, "This group not in any federation!"))
@@ -257,36 +264,19 @@ def fed_info(bot: Bot, update: Update, args: List[str]):
         chat = update.effective_chat  # type: Optional[Chat]
         info = sql.get_fed_info(fed_id)
 
-        text = "<b>Federation INFO:</b>"
-        text += "\nName: <code>{}</code>".format(info.fed_name)
-        text += "\nID: <code>{}</code>".format(fed_id)
-
+        text = "<b>Fed info:</b>"
+        text += "\nFedID: <code>{}</code>".format(fed_id)
+        text += "\nName: {}".format(info.fed_name)
+        text += "\nCreator: {}".format(mention_html(HAHA, "this guy"))
+        text += "\nNumber of admins: <code>{}</code>".format(ACTUALADMIN)
         R = 0
         for O in sql.get_all_fban_users(fed_id):
                 R = R + 1
 
-        text += "\nBanned: <code>{}</code>".format(R)
-        text += "\n\n<b>Chats:</b>"
+        text += "\nNumber of bans: <code>{}</code>".format(R)
         h = sql.all_fed_chats(fed_id)
-        for O in h:
-                cht = bot.get_chat(O)
-                text += "\n• {} (<code>{}</code>)".format(cht.title, O)
-
-        text += "\n\n<b>Admins:</b>"
-        user = bot.get_chat(info.owner_id) 
-        text += "\n• {} - <code>{}</code> (Creator)".format(user.first_name, user.id)
-
-        h = sql.all_fed_users(fed_id)
-        for O in h:
-                user = bot.get_chat(O) 
-                text += "\n• {} - <code>{}</code>".format(user.first_name, user.id, O)
-
-        # Chance 1/5 to add this string to /fedinfo
-        # You can remove this or reduce the percentage, but if you really like my work leave this.
-        num = random.randint(1,5)
-        print("random ", num)
-        if num == 3:
-            text += "\n\nFederation by MrYacha"
+        asdf = len(h)
+        text += "\nNumber of connected chats: <code>{}</code>".format(asdf)
 
         update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
 
