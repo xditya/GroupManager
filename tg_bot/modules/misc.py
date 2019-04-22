@@ -34,7 +34,6 @@ from tg_bot.modules.translations.strings import tld
 
 from requests import get
 
-AEX_OTA_API = "https://api.aospextended.com/ota/"
 
 @run_async
 def insults(bot: Bot, update: Update):

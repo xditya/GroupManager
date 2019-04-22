@@ -31,6 +31,8 @@ from tg_bot.modules.translations.strings import tld
 
 from requests import get
 
+AEX_OTA_API = "https://api.aospextended.com/ota/"
+
 @run_async
 def havoc(bot: Bot, update: Update):
     message = update.effective_message
@@ -235,6 +237,7 @@ __help__ = """
  - /viper <device>: Get the Viper Rom
  - /evo <device>: Get the Evolution X Rom
  - /dotos <device>: Get the DotOS Rom
+ - /aex <device> <android version>: Get the AEX Rom
  *GSI*
  - /phh: Get the lastest Phh AOSP GSI!
  - /descendant: Get the lastest Descendant GSI!
@@ -244,7 +247,7 @@ __help__ = """
 __mod_name__ = "Android"
 
 
-GETAEX_HANDLER = DisableAbleCommandHandler("getaex", getaex, pass_args=True, admin_ok=True)
+GETAEX_HANDLER = DisableAbleCommandHandler("aex", getaex, pass_args=True, admin_ok=True)
 MIUI_HANDLER = DisableAbleCommandHandler("miui", miui, admin_ok=True)
 EVO_HANDLER = DisableAbleCommandHandler("evo", evo, admin_ok=True)
 HAVOC_HANDLER = DisableAbleCommandHandler("havoc", havoc, admin_ok=True)
