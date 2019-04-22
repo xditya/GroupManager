@@ -49,6 +49,22 @@ def havoc(bot: Bot, update: Update):
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 @run_async
+def pixy(bot: Bot, update: Update):
+    message = update.effective_message
+    device = message.text[len('/pixy '):]
+    fetch = get(f'https://raw.githubusercontent.com/PixysOS-Devices/official_devices/master/{device}/build.json')
+    if fetch.status_code == 200:
+        usr = fetch.json()
+        reply_text = f"""*Download:* [{usr['response'][0]['filename']}]({usr['response'][0]['url']})
+*Size:* `{usr['response'][0]['size']}`
+*Rom Type:* `{usr['response'][0]['romtype']}`
+*Version:* `{usr['response'][0]['version']}`
+"""
+    elif fetch.status_code == 404:
+        reply_text="Device not found"
+    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+
+@run_async
 def pearl(bot: Bot, update: Update):
     message = update.effective_message
     device = message.text[len('/pearl '):]
@@ -238,6 +254,7 @@ __help__ = """
  - /evo <device>: Get the Evolution X Rom
  - /dotos <device>: Get the DotOS Rom
  - /aex <device> <android version>: Get the AEX Rom
+ - /pixy <device>: Get the Pixy Rom
  *GSI*
  - /phh: Get the lastest Phh AOSP GSI!
  - /descendant: Get the lastest Descendant GSI!
@@ -258,6 +275,7 @@ PHH_HANDLER = DisableAbleCommandHandler("phh", phh, pass_args=True, admin_ok=Tru
 PEARL_HANDLER = DisableAbleCommandHandler("pearl", pearl, admin_ok=True)
 POSP_HANDLER = DisableAbleCommandHandler("posp", posp, admin_ok=True)
 DOTOS_HANDLER = DisableAbleCommandHandler("dotos", dotos, admin_ok=True)
+PIXY_HANDLER = DisableAbleCommandHandler("pixy", pixy, admin_ok=True)
 
 dispatcher.add_handler(GETAEX_HANDLER)
 dispatcher.add_handler(MIUI_HANDLER)
@@ -270,3 +288,4 @@ dispatcher.add_handler(PHH_HANDLER)
 dispatcher.add_handler(PEARL_HANDLER)
 dispatcher.add_handler(POSP_HANDLER)
 dispatcher.add_handler(DOTOS_HANDLER)
+dispatcher.add_handler(PIXY_HANDLER)
