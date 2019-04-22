@@ -290,7 +290,11 @@ def github(bot: Bot, update: Update):
                     y = datetime.strptime(y, "%Y-%m-%dT%H:%M:%SZ")
 
                 if y not in goaway:
-                    text += ("\n*{}:* `{}`".format(x, y))
+                    if x == 'Blog':
+                        y = f"[Here!]({y})"
+                        text += ("\n*{}:* {}".format(x, y))
+                    else:
+                        text += ("\n*{}:* `{}`".format(x, y))
         reply_text = text
     else:
         reply_text = "User not found. Make sure you entered valid username!"
