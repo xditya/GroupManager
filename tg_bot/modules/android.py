@@ -95,15 +95,12 @@ def evo(bot: Bot, update: Update):
     message = update.effective_message
     device = message.text[len('/evo '):]
     usr = get(f'https://raw.githubusercontent.com/evolution-x/official_devices/master/builds/{device}.json').json()
-    if usr.get('url'):
-        reply_text = f"""*Download:* [{usr['filename']}]({usr['url']})
+    reply_text = f"""*Download:* [{usr['filename']}]({usr['url']})
 *Size:* `{usr['size']}`
 *Android Version:* `{usr['version']}`
 *Maintainer:* [{usr['maintainer']}]({usr['maintainer_url']})
 *XDA Thread:* [Here]({usr['forum_url']})
 """
-    else:
-        reply_text = "Device not found!"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 def enesrelease(bot: Bot, update: Update, args: List[str]):
