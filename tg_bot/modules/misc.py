@@ -370,7 +370,7 @@ def paste(bot: Bot, update: Update, args: List[str]):
         reply = f'Shortened URL: {BASE_URL}/{key}\nYou can view stats, etc. [here]({BASE_URL}/v/{key})'
     else:
         reply = f'{BASE_URL}/{key}'
-    update.effective_message.reply_text(reply, parse_mode=ParseMode.MARKDOWN)
+    update.effective_message.reply_text(reply, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 @run_async
 def get_paste_content(bot: Bot, update: Update, args: List[str]):
