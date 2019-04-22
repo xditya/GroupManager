@@ -291,6 +291,7 @@ def github(bot: Bot, update: Update):
 
                 if y not in goaway:
                     if x == 'Blog':
+                        x = "Website"
                         y = f"[Here!]({y})"
                         text += ("\n*{}:* {}".format(x, y))
                     else:
