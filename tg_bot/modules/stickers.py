@@ -43,10 +43,14 @@ def getsticker(bot: Bot, update: Update):
 
 @run_async
 def kang(bot: Bot, update: Update, args: List[str]):
+    if os.path.isfile("kangsticker.png"):
+        os.remove("kangsticker.png")
+
     msg = update.effective_message
     user = update.effective_user
     packname = f"u{user.id}_by_{bot.username}"
     kangsticker = "kangsticker.png"
+
     if msg.reply_to_message:
         if msg.reply_to_message.sticker:
             file_id = msg.reply_to_message.sticker.file_id
@@ -55,108 +59,48 @@ def kang(bot: Bot, update: Update, args: List[str]):
         elif msg.reply_to_message.document:
             file_id = msg.reply_to_message.document.file_id
         kang_file = bot.get_file(file_id)
-        kang_file.download('kangsticker.png')
+        kang_file.download(kangsticker)
         if args:
             sticker_emoji = str(args[0])
         elif msg.reply_to_message.sticker and msg.reply_to_message.sticker.emoji:
             sticker_emoji = msg.reply_to_message.sticker.emoji
         else:
             sticker_emoji = "🤔"
-        try:
-            im = Image.open(kangsticker)
-            maxsize = (512, 512)
-            if (im.width and im.height) < 512:
-                size1 = im.width
-                size2 = im.height
-                if im.width > im.height:
-                    scale = 512/size1
-                    size1new = 512
-                    size2new = size2 * scale
-                else:
-                    scale = 512/size2
-                    size1new = size1 * scale
-                    size2new = 512
-                size1new = math.floor(size1new)
-                size2new = math.floor(size2new)
-                sizenew = (size1new, size2new)
-                im = im.resize(sizenew)
-            else:
-                im.thumbnail(maxsize)
-            if not msg.reply_to_message.sticker:
-                im.save(kangsticker, "PNG")
-            bot.add_sticker_to_set(user_id=user.id, name=packname,
-                                    png_sticker=open('kangsticker.png', 'rb'), emojis=sticker_emoji)
-            msg.reply_text("Sticker successfully added to [pack](t.me/addstickers/%s)" % packname + "\n"
-                            "Emoji is:" + " " + sticker_emoji, parse_mode=ParseMode.MARKDOWN)
-        except OSError as e:
-            msg.reply_text("I can only kang images m8.")
-            print(e)
+    elif args and not msg.reply_to_message:
+        urlemoji = msg.text.split(" ")
+        if len(urlemoji) == 2:                
+            png_sticker = urlemoji[1]
+            sticker_emoji = urlemoji[2]
+        elif len(urlemoji) == 1:
+            png_sticker = urlemoji[1]
+            sticker_emoji = "🤔"
+        else:
+            msg.reply("/kang <link> <emoji(s) [Optional]>")
             return
-        except TelegramError as e:
-            if e.message == "Stickerset_invalid":
-                makepack_internal(msg, user, open('kangsticker.png', 'rb'), sticker_emoji, bot)
-            elif e.message == "Sticker_png_dimensions":
-                im.save(kangsticker, "PNG")
-                bot.add_sticker_to_set(user_id=user.id, name=packname,
-                                        png_sticker=open('kangsticker.png', 'rb'), emojis=sticker_emoji)
-                msg.reply_text("Sticker successfully added to [pack](t.me/addstickers/%s)" % packname + "\n"
-                            "Emoji is:" + " " + sticker_emoji, parse_mode=ParseMode.MARKDOWN)
-            elif e.message == "Invalid sticker emojis":
-                msg.reply_text("Invalid emoji(s).")
-            elif e.message == "Stickers_too_much":
-                msg.reply_text("Max packsize reached. Press F to pay respecc.")
-            print(e)
-    elif args:
-        try:
-            try:
-                urlemoji = msg.text.split(" ")
-                png_sticker = urlemoji[1] 
-                sticker_emoji = urlemoji[2]
-            except IndexError:
-                sticker_emoji = "🤔"
-            urllib.urlretrieve(png_sticker, kangsticker)
-            im = Image.open(kangsticker)
-            maxsize = (512, 512)
-            if (im.width and im.height) < 512:
-                size1 = im.width
-                size2 = im.height
-                if im.width > im.height:
-                    scale = 512/size1
-                    size1new = 512
-                    size2new = size2 * scale
-                else:
-                    scale = 512/size2
-                    size1new = size1 * scale
-                    size2new = 512
-                size1new = math.floor(size1new)
-                size2new = math.floor(size2new)
-                sizenew = (size1new, size2new)
-                im = im.resize(sizenew)
-            else:
-                im.thumbnail(maxsize)
-            im.save(kangsticker, "PNG")
-            msg.reply_photo(photo=open('kangsticker.png', 'rb'))
-            bot.add_sticker_to_set(user_id=user.id, name=packname,
-                                    png_sticker=open('kangsticker.png', 'rb'), emojis=sticker_emoji)
-            msg.reply_text("Sticker successfully added to [pack](t.me/addstickers/%s)" % packname + "\n"
-                            "Emoji is:" + " " + sticker_emoji, parse_mode=ParseMode.MARKDOWN)
-        except OSError as e:
-            msg.reply_text("I can only kang images m8.")
-            print(e)
-            return
-        except TelegramError as e:
-            if e.message == "Stickerset_invalid":
-                makepack_internal(msg, user, open('kangsticker.png', 'rb'), sticker_emoji, bot)
-            elif e.message == "Sticker_png_dimensions":
-                msg.reply_text("Could not resize image to the correct dimensions.")
-            elif e.message == "Invalid sticker emojis":
-                msg.reply_text("Invalid emoji(s).")
-            print(e)
+        urllib.urlretrieve(png_sticker, kangsticker)
     else:
-        msg.reply_text("Please reply to a sticker, or image to kang it!" + "\n"
-                        "Oh, by the way. Your pack can be found [here](t.me/addstickers/%s)" % packname, parse_mode=ParseMode.MARKDOWN)
-    if os.path.isfile("kangsticker.png"):
-        os.remove("kangsticker.png")
+        msg.reply_text("Please reply to a sticker, or an image to kang it!")
+        return
+
+    try:
+        im = imresize(kangsticker)
+        im.save(kangsticker, "PNG")
+        bot.add_sticker_to_set(user_id=user.id, name=packname,
+                                png_sticker=open('kangsticker.png', 'rb'), emojis=sticker_emoji)
+        msg.reply_text("Sticker successfully added to [pack](t.me/addstickers/%s)" % packname + "\n"
+                        "Emoji(s):" + " " + sticker_emoji, parse_mode=ParseMode.MARKDOWN)
+    except OSError as e:
+        msg.reply_text("I can only kang images m8.")
+        print(e)
+        return
+    except TelegramError as e:
+        if e.message == "Stickerset_invalid":
+            makepack_internal(msg, user, open('kangsticker.png', 'rb'), sticker_emoji, bot)
+        elif e.message == "Invalid sticker emojis":
+            msg.reply_text("Invalid emoji(s).")
+        elif e.message == "Stickers_too_much":
+            msg.reply_text("Max packsize reached. Press F to pay respecc.")
+        print(e)
 
 def makepack_internal(msg, user, png_sticker, emoji, bot):
     name = user.first_name
@@ -173,20 +117,43 @@ def makepack_internal(msg, user, png_sticker, emoji, bot):
             msg.reply_text("Your pack can be found [here](t.me/addstickers/%s)" % packname,
                            parse_mode=ParseMode.MARKDOWN)
         elif e.message == "Peer_id_invalid":
-            msg.reply_text("Contact me in PM first.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
+            msg.reply_text("Message me in PM first so I can get your ID.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
                 text="Start", url=f"t.me/{bot.username}")]]))
         return
 
     if success:
-        msg.reply_text("Sticker pack successfully created. Get it [here](t.me/addstickers/%s)" % packname,
+        msg.reply_text("Sticker added and new pack successfully created. Get it [here](t.me/addstickers/%s)" % packname,
                        parse_mode=ParseMode.MARKDOWN)
     else:
         msg.reply_text("Failed to create sticker pack. Possibly due to blek mejik.")
 
+def imresize(kangsticker):
+    im = Image.open(kangsticker)
+    maxsize = (512, 512)
+    if (im.width and im.height) < 512:
+        size1 = im.width
+        size2 = im.height
+        if im.width > im.height:
+            scale = 512/size1
+            size1new = 512
+            size2new = size2 * scale
+        else:
+            scale = 512/size2
+            size1new = size1 * scale
+            size2new = 512
+        size1new = math.floor(size1new)
+        size2new = math.floor(size2new)
+        sizenew = (size1new, size2new)
+        im = im.resize(sizenew)
+    else:
+        im.thumbnail(maxsize)
+    return im
+
+
 __help__ = """
-- /stickerid: reply to a sticker to me to tell you its file ID.
-- /getsticker: reply to a sticker to me to upload its raw PNG file.
-- /kang: reply to a sticker to add it to your pack.
+- /stickerid: Gives the ID of the sticker you've replied to.
+- /getsticker: Uploads the .png of the sticker you've replied to.
+- /kang: Reply to a sticker to add it to your pack or makes a new one if it doesn't exist.
 """
 
 __mod_name__ = "Stickers"
