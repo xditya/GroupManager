@@ -2,6 +2,7 @@ import os
 import math
 import requests
 import urllib.request as urllib
+from urllib.error import URLError, HTTPError
 
 from PIL import Image
 
@@ -68,16 +69,30 @@ def kang(bot: Bot, update: Update, args: List[str]):
             sticker_emoji = "🤔"
     elif args and not msg.reply_to_message:
         urlemoji = msg.text.split(" ")
-        if len(urlemoji) == 2:                
+        if len(urlemoji) == 3:                
             png_sticker = urlemoji[1]
             sticker_emoji = urlemoji[2]
-        elif len(urlemoji) == 1:
+        elif len(urlemoji) == 2:
             png_sticker = urlemoji[1]
             sticker_emoji = "🤔"
         else:
             msg.reply("/kang <link> <emoji(s) [Optional]>")
             return
-        urllib.urlretrieve(png_sticker, kangsticker)
+        try:
+            urllib.urlretrieve(png_sticker, kangsticker)
+        except HTTPError as HE:
+            if HE.reason == 'Not Found':
+                msg.reply("Image not found.")
+                return
+            elif HE.reason == 'Forbidden':
+                msg.reply("Couldn't access the provided link.")
+                return
+        except URLError as UE:
+            msg.reply(f"{UE.reason}")
+            return
+        except ValueError as VE:
+            msg.reply(f"{VE}\nTry using http or https.")
+            return
     else:
         msg.reply_text("Please reply to a sticker, or an image to kang it!")
         return
