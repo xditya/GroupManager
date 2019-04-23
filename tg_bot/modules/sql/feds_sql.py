@@ -294,11 +294,11 @@ def get_all_fban_users_global():
         SESSION.close()
         return h
 
-def get_all_feds_users_global():
-        r = SESSION.query(Federations).all()
-        h = []
-        for I in r:
-                h.append(I.fed_id)
+def search_fed_by_id(fed_id):
+        curr = SESSION.query(Federations).all()
+        result = False
+        for Q in curr:
+                if Q.fed_id == fed_id:
+                        result = Q.fed_id
 
-        SESSION.close()
-        return h
+        return result

@@ -70,9 +70,9 @@ def new_fed(bot: Bot, update: Update, args: List[str]):
                 fed_id = "Haruka"
         #
 
-        if sql.search_fed_by_name(fed_name):
-            update.effective_message.reply_text(tld(chat.id, "There is existing federation with this name, change name!"))
-            return
+        #if sql.search_fed_by_name(fed_name):
+        #    update.effective_message.reply_text(tld(chat.id, "There is existing federation with this name, change name!"))
+        #    return
 
         print(fed_id)
         sql.new_fed(user.id, fed_name, fed_id)
@@ -133,8 +133,9 @@ def fed_chat(bot: Bot, update: Update, args: List[str]):
 def join_fed(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
-
+    message = update.effective_message
     administrators = chat.get_administrators()
+
 
     if user.id in SUDO_USERS:
         pass
@@ -150,12 +151,16 @@ def join_fed(bot: Bot, update: Update, args: List[str]):
                     return
 
     if len(args) >= 1:
-        sql.chat_join_fed(args[0], chat.id)
-        update.effective_message.reply_text(tld(chat.id, "Chat joined to federation!"))
-    else:
-        update.effective_message.reply_text(tld(chat.id, "Please write federation id to join!"))
+        fedd = args[0]
+        print(fedd)
+        if sql.search_fed_by_id(fedd) == False:
+            message.reply_text(tld(chat.id, "Please enter valid federation id."))
+            return
 
-    
+        sql.chat_join_fed(fedd, chat.id)
+        message.reply_text(tld(chat.id, "Chat joined to federation!"))
+
+
 def leave_fed(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
