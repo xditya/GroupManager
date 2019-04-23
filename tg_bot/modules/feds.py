@@ -98,12 +98,12 @@ def del_fed(bot: Bot, update: Update, args: List[str]):
         user = update.effective_user  # type: Optional[User]
         fed_id = sql.get_fed_id(chat.id)
 
-        if not is_user_fed_owner(fed_id, user.id):
-            update.effective_message.reply_text(tld(chat.id, "Only fed owner can do this!"))
-            return
-
         if not fed_id:
             update.effective_message.reply_text(tld(chat.id, "At the moment, We only supported deleting federation on the group that joined it."))
+            return
+
+        if not is_user_fed_owner(fed_id, user.id):
+            update.effective_message.reply_text(tld(chat.id, "Only fed owner can do this!"))
             return
 
         if len(args) >= 1:
