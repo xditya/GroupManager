@@ -76,25 +76,25 @@ def kang(bot: Bot, update: Update, args: List[str]):
             png_sticker = urlemoji[1]
             sticker_emoji = "🤔"
         else:
-            msg.reply("/kang <link> <emoji(s) [Optional]>")
+            msg.reply_text("/kang <link> <emoji(s) [Optional]>")
             return
         try:
             urllib.urlretrieve(png_sticker, kangsticker)
         except HTTPError as HE:
             if HE.reason == 'Not Found':
-                msg.reply("Image not found.")
+                msg.reply_text("Image not found.")
                 return
             elif HE.reason == 'Forbidden':
-                msg.reply("Couldn't access the provided link.")
+                msg.reply_text("Couldn't access the provided link, The website might have blocked accessing to the website by bot or the website does not existed.")
                 return
         except URLError as UE:
-            msg.reply(f"{UE.reason}")
+            msg.reply_text(f"{UE.reason}")
             return
         except ValueError as VE:
-            msg.reply(f"{VE}\nTry using http or https.")
+            msg.reply_text(f"{VE}\nPlease try again using http or https protocol.")
             return
     else:
-        msg.reply_text("Please reply to a sticker, or an image to kang it!")
+        msg.reply_text("Please reply to a sticker, or an image to kang it!\nDo you know that you can kang image from website too? `/kang [picturelink] <emoji(s)>`.", parse_mode=ParseMode.MARKDOWN)
         return
 
     try:
