@@ -135,8 +135,8 @@ def makepack_internal(msg, user, png_sticker, emoji, bot):
             msg.reply_text("Your pack can be found [here](t.me/addstickers/%s)" % packname,
                            parse_mode=ParseMode.MARKDOWN)
         elif e.message == "Peer_id_invalid":
-            msg.reply_text("Message me in PM first so I can get your ID.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
-                text="Start", url=f"t.me/{bot.username}")]]))
+            msg.reply_text("I need you to PM to me first to able to gain your basic information.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
+                text="PM the bot", url=f"t.me/{bot.username}")]]))
         return
 
     if success:
