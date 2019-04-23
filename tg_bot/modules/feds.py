@@ -338,6 +338,7 @@ def fed_admin(bot: Bot, update: Update, args: List[str]):
         update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
 
 
+
 def fed_ban(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
@@ -364,6 +365,14 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
         message.reply_text(tld(chat.id, "You can't fban me, better hit your head against the wall, it's more fun."))
         return
 
+    if is_user_fed_owner(fed_id, user_id) == True:
+        message.reply_text(tld(chat.id, "Why you are trying to fban the federation owner?"))
+        return
+
+    if is_user_fed_admin(fed_id, user.id) == True:
+        message.reply_text(tld(chat.id, "Why so serious trying to fban the federation admin?"))
+        return
+
     if user_id == OWNER_ID:
         message.reply_text(tld(chat.id, "I'm not fbanning my master, That's pretty dumb idea!"))
         return
@@ -374,10 +383,6 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
 
     if int(user_id) in WHITELIST_USERS:
         message.reply_text(tld(chat.id, "This person is whitelist from being fbanned!"))
-        return
-
-    if int(user_id) in FEDADMIN:
-        message.reply_text(tld(chat.id, "I'm not fbanning the federation admin!"))
         return
 
     try:
