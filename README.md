@@ -16,7 +16,7 @@ Alternatively, [find me on telegram](https://t.me/peaktogoo)! (Keep all support 
 ## Thanks to
 
 * Skittle - for memes and sticker stuff
-* 1mavarik1 - gmutes, etc 
+* 1mavarick1 - gmutes, etc 
 * AyraHikari - weather
 * Paul Larsen - marie creator
 * FFBot - for translations functions
