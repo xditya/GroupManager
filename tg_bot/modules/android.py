@@ -87,13 +87,13 @@ def posp(bot: Bot, update: Update):
     message = update.effective_message
     device = message.text[len('/posp '):]
     fetch = get(f'https://api.potatoproject.co/checkUpdate?device={device}&type=weekly')
-    if fetch.status_code == 200:
+    if fetch.status_code == 200 and str(fetch.json()['response']) != "[]":
         usr = fetch.json()
         reply_text = f"""*Download:* [{usr['response'][-1]['filename']}]({usr['response'][-1]['url']})
 *Size:* `{usr['response'][-1]['size']}`
 *Version:* `{usr['response'][-1]['version']}`
 """
-    elif fetch.status_code == 404:
+    else:
         reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
