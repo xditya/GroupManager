@@ -254,11 +254,15 @@ def user_demote_fed(bot: Bot, update: Update, args: List[str]):
                 msg.reply_text(tld(chat.id, "I can't extract a user from this."))
                 return
 
-        else:
+        #else:
+        #        return
+
+        if user_id == bot.id:
+                update.effective_message.reply_text(tld(chat.id, "What are you trying to do? Demoting me from your federation?"))
                 return
 
         if sql.search_user_in_fed(fed_id, user_id) == False:
-                update.effective_message.reply_text(tld(chat.id, "I can't demote user which not a fed admin! If you wanna bring him to tears, promote him and demote."))
+                update.effective_message.reply_text(tld(chat.id, "I can't demote user which not a fed admin! If you wanna bring him to tears, promote him first!"))
                 return
 
         res = sql.user_demote_fed(fed_id, user_id)
