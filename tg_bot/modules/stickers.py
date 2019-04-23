@@ -48,7 +48,7 @@ def kang(bot: Bot, update: Update, args: List[str]):
 
     msg = update.effective_message
     user = update.effective_user
-    packname = f"u{user.id}_by_{bot.username}"
+    packname = f"c{user.id}_by_{bot.username}"
     kangsticker = "kangsticker.png"
 
     if msg.reply_to_message:
@@ -105,8 +105,7 @@ def kang(bot: Bot, update: Update, args: List[str]):
 def makepack_internal(msg, user, png_sticker, emoji, bot):
     name = user.first_name
     name = name[:50]
-    asdf = user.id
-    packname = f"u{asdf}_by_{bot.username}"
+    packname = f"c{user.id}_by_{bot.username}"
     try:
         success = bot.create_new_sticker_set(user.id, packname, name + "'s haruka pack",
                                              png_sticker=png_sticker,
