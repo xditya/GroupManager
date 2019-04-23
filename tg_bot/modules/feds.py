@@ -2,7 +2,7 @@ import html
 from io import BytesIO
 from typing import Optional, List
 import random
-import string
+import uuid
 from time import sleep
 
 from future.utils import string_types
@@ -60,7 +60,7 @@ def new_fed(bot: Bot, update: Update, args: List[str]):
     if len(args) >= 1:
         chat = update.effective_chat  # type: Optional[Chat]
         user = update.effective_user  # type: Optional[User]
-        fed_id = key_gen()
+        fed_id = str(uuid.uuid4())
         fed_name = args[0]
 
         # Hardcoded fed_id's
@@ -70,9 +70,9 @@ def new_fed(bot: Bot, update: Update, args: List[str]):
                 fed_id = "Haruka"
         #
 
-        if not sql.search_fed_by_name(fed_name) == False:
-                update.effective_message.reply_text(tld(chat.id, "There is existing federation with this name, change name!"))
-                return
+        if sql.search_fed_by_name(fed_name):
+            update.effective_message.reply_text(tld(chat.id, "There is existing federation with this name, change name!"))
+            return
 
         print(fed_id)
         sql.new_fed(user.id, fed_name, fed_id)
@@ -586,13 +586,6 @@ def welcome_fed(bot, update):
         return True
     else:
         return False
-
-
-def base_str():
-    return (string.ascii_letters+string.digits)   
-def key_gen():
-    keylist = [random.choice(base_str()) for i in range(20)]
-    return ("".join(keylist))
 
 
 def __stats__():
