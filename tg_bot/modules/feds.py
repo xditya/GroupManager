@@ -220,8 +220,12 @@ def user_join_fed(bot: Bot, update: Update, args: List[str]):
                 update.effective_message.reply_text(tld(chat.id, "I can't promote user which is already a fed admin! But I can demote them."))
                 return
 
-        else:
+        if user_id == bot.id:
+                update.effective_message.reply_text(tld(chat.id, "I am already the federation admin and the one that manage it!"))
                 return
+
+        #else:
+        #        return
 
         res = sql.user_join_fed(fed_id, user_id)
         update.effective_message.reply_text(tld(chat.id, "Promoted Successfully!"))
