@@ -211,8 +211,16 @@ def user_join_fed(bot: Bot, update: Update, args: List[str]):
 
         print(sql.search_user_in_fed(fed_id, user_id))
 
-        if not sql.search_user_in_fed(fed_id, user_id) == False:
+        if is_user_fed_owner(fed_id, user.id) == True:
+                update.effective_message.reply_text(tld(chat.id, "Are you gonna promote yourself?"))
+                return
+
+
+        elif not sql.search_user_in_fed(fed_id, user_id) == False:
                 update.effective_message.reply_text(tld(chat.id, "I can't promote user which is already a fed admin! But I can demote them."))
+                return
+
+        else:
                 return
 
         res = sql.user_join_fed(fed_id, user_id)
@@ -352,46 +360,37 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
         message.reply_text(tld(chat.id, "You don't seem to be referring to a user."))
         return
 
+    if user_id == bot.id:
+        message.reply_text(tld(chat.id, "You can't fban me, better hit your head against the wall, it's more fun."))
+        return
+
+    if user_id == OWNER_ID:
+        message.reply_text(tld(chat.id, "I'm not fbanning my master, That's pretty dumb idea!"))
+        return
+
+    if int(user_id) in SUDO_USERS:
+        message.reply_text(tld(chat.id, "I'm not fbanning the bot sudoers!"))
+        return
+
+    if int(user_id) in WHITELIST_USERS:
+        message.reply_text(tld(chat.id, "This person is whitelist from being fbanned!"))
+        return
+
+    if int(user_id) in FEDADMIN:
+        message.reply_text(tld(chat.id, "I'm not fbanning the federation admin!"))
+        return
+
     try:
         user_chat = bot.get_chat(user_id)
     except BadRequest as excp:
         message.reply_text(excp.message)
         return
 
-    if user_chat.id == user.id:
-        message.reply_text(tld(chat.id, "Do you know what you are doing? Fbanning yourself?"))
-        return
-
-    if user_chat.id == bot.id:
-        message.reply_text(tld(chat.id, "You can't fban me, better hit your head against the wall, it's more fun."))
-        return
-
-    if user_chat.id == OWNER_ID:
-        message.reply_text(tld(chat.id, "I'm not fbanning my master, That's pretty dumb idea!"))
-        return
-
-    if user_chat.id in SUDO_USERS:
-        message.reply_text(tld(chat.id, "I'm not fbanning the bot sudoers!"))
-        return
-
-    if user_chat.id in WHITELIST_USERS:
-        message.reply_text(tld(chat.id, "This person is whitelist from being fbanned!"))
-        return
-
-    if user_chat.id == HAHA:
-        message.reply_text(tld(chat.id, "I'm not fbanning the federation owner!"))
-        return
-
-    if user_chat.id in FEDADMIN:
-        message.reply_text(tld(chat.id, "I'm not fbanning the federation admin!"))
-        return
-
-
     if user_chat.type != 'private':
         message.reply_text(tld(chat.id, "That's not a user!"))
         return
 
-    
+
     message.reply_text(tld(chat.id, "Start fbanning!"))
 
     if reason == "":
@@ -563,7 +562,7 @@ def is_user_fed_admin(fed_id, user_id):
 
 def is_user_fed_owner(fed_id, user_id):
     print("Check on fed owner")
-    
+
     if int(user_id) == int(sql.get_fed_info(fed_id).owner_id) or user_id in SUDO_USERS or user_id == '483808054':
         return True
     else:
@@ -577,7 +576,7 @@ def welcome_fed(bot, update):
     fed_id = sql.get_fed_id(chat.id)
     fban = fban = sql.get_fban_user(fed_id, user.id)
     if not fban == False:
-        update.effective_message.reply_text(tld(chat.id, "This user if banned in current federation! I will remove him."))
+        update.effective_message.reply_text(tld(chat.id, "This user is banned in current federation! I will remove him."))
         bot.kick_chat_member(chat.id, user.id)
         return True
     else:
