@@ -258,7 +258,7 @@ def google(bot: Bot, update: Update):
         query = update.effective_message.text.split(" ",1)
         result_ = subprocess.run(['gsearch', str(query[1])], stdout=subprocess.PIPE)
         result = str(result_.stdout.decode())
-        update.effective_message.reply_markdown('*Searching:*\n`' + str(query[1]) + '`\n\n*RESULTS:*\n' + result)
+        update.effective_message.reply_text('*Searching:*\n`' + str(query[1]) + '`\n\n*RESULTS:*\n' + result, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 @run_async
 def github(bot: Bot, update: Update):
