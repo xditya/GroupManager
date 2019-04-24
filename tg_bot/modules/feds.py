@@ -63,13 +63,6 @@ def new_fed(bot: Bot, update: Update, args: List[str]):
         fed_id = str(uuid.uuid4())
         fed_name = args[0]
 
-        # Hardcoded fed_id's
-        if fed_name == "Gay":
-                fed_id = "Gay"
-        elif fed_name == "Haruka":
-                fed_id = "Haruka"
-        #
-
         #if sql.search_fed_by_name(fed_name):
         #    update.effective_message.reply_text(tld(chat.id, "There is existing federation with this name, change name!"))
         #    return
