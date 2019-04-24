@@ -372,7 +372,7 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
         message.reply_text(tld(chat.id, "Why you are trying to fban the federation owner?"))
         return
 
-    if is_user_fed_admin(fed_id, user.id) == True:
+    if is_user_fed_admin(fed_id, user_id) == True:
         message.reply_text(tld(chat.id, "Why so serious trying to fban the federation admin?"))
         return
 
