@@ -1,3 +1,4 @@
+import re
 from io import BytesIO
 from time import sleep
 from typing import Optional
