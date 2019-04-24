@@ -3,6 +3,7 @@ from tg_bot.modules.translations.English import EnglishStrings
 from tg_bot.modules.translations.Russian import RussianStrings
 from tg_bot.modules.translations.Ukraine import UkrainianStrings
 from tg_bot.modules.translations.Spanish import SpanishStrings
+from tg_bot.modules.translations.Turkish import TurkishStrings
 
 def tld(chat_id, t, show_none=True):
     LANGUAGE = prev_locale(chat_id)
@@ -15,6 +16,8 @@ def tld(chat_id, t, show_none=True):
             return UkrainianStrings[t]
         elif LOCALE in ('es') and t in SpanishStrings:
             return SpanishStrings[t]
+        elif LOCALE in ('tr') and t in TurkishStrings:
+            return TurkishStrings[t]
         else:
             if t in EnglishStrings:
                 return EnglishStrings[t]
@@ -44,6 +47,8 @@ def tld_help(chat_id, t):
             return UkrainianStrings[t]
         elif LOCALE in ('es') and t in SpanishStrings:
             return SpanishStrings[t]
+        elif LOCALE in ('tr') and t in TurkishStrings:
+            return TurkishStrings[t]
         else:
             return False
     else:
