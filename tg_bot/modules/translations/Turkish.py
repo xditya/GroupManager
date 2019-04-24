@@ -214,6 +214,329 @@ olduğunu seç.""",
 "MARKDOWN_HELP-K": MARKDOWN_HELP,
 "INSULTS-K": INSULTS_STRINGS,
 
+#Multi
+    "Invalid Chat ID provided!": "ID чату не існує!", #Connections
+
+#__main__
+    #Module names
+        "Admin": "EDIT THIS",
+        "AFK": "EDIT THIS",
+        "AntiFlood": "EDIT THIS",
+        "Bans": "EDIT THIS",
+        "Word Blacklists": "EDIT THIS",
+        "Filters": "EDIT THIS",
+        "Command disabling": "EDIT THIS",
+        "Antispam security": "EDIT THIS",
+        "Locks": "EDIT THIS",
+        "Log Channels": "EDIT THIS",
+        "Misc": "EDIT THIS",
+        "Purges": "EDIT THIS",
+        "Muting & Restricting": "EDIT THIS",
+        "Notes": "EDIT THIS",
+        "Reporting": "EDIT THIS",
+        "RSS Feed": "EDIT THIS",
+        "Rules": "EDIT THIS",
+        "Connections": "EDIT THIS",
+        "Bios and Abouts": "EDIT THIS",
+        "Warnings": "EDIT THIS",
+        "Welcomes/Goodbyes": "EDIT THIS",
+
+#Some main stuff
+"Here is the help for the *{}* module:\n{}": "Допомога по модулю *{}*:\n{}",
+"Back": "Назад",
+"send-help": """Привіт усім! Моє ім'я *{}*. Я модульний бот з функцією управління групами з різними фановими фічами! 
+Погляньте на наступні можливості, які я можу вам запропонувати:
+
+Головні команди:
+ - /start: коротка інфа про бота.
+ - /help: Я напишу вам повідомлення.
+ - /help <назва модуля>: Я раскажу вам про цей модуль.
+ - /donate: Інформація про те як вдонатити в мене!
+ - /lang: Змінити мову бота.
+ - /settings: Показати поточні установки бота.
+   {}
+   """,
+
+
+"\nAll commands can either be used with `/` or `!`.\n": "\nУсі команди можуть починатися з `/` або `!`\n",
+
+#Module helps
+"Admin_help": """ - /adminlist | /admins: list of admins in the chat
+
+*Admin only:*
+ - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.
+ - /unpin: unpins the currently pinned message
+ - /invitelink: gets invitelink
+ - /promote: promotes the user replied to
+ - /demote: demotes the user replied to""",
+
+"AFK_help": """ - /afk <reason>: mark yourself as AFK.
+ - brb <reason>: same as the afk command - but not a command.
+
+When marked as AFK, any mentions will be replied to with a message to say you're not available!""",
+
+"AntiFlood_help": """ You know how sometimes, people join, send 100 messages, and ruin your chat? With antiflood, that happens no more!
+
+Antiflood allows you to take action on users that send more than x messages in a row. Actions are: ban/kick/mute/tban/tmute
+
+Available commands are:
+ - /flood: gets the current antiflood settings.
+ - /setflood <number/off>: sets the number of messages at which to take action on a user.""",
+
+"Locks_help": """Do stickers annoy you? or want to avoid people sharing links? or pictures? You're in the right place!
+
+The locks module allows you to lock away some common items in the telegram world; the bot will automatically delete them!
+
+Available commands are:
+ - /lock <item(s)>: lock the usage of "item". Now, only admins will be able to use this type!
+ - /unlock <item(s)>: unlock "item". Everyone can use them again.
+ - /locks: list the lock status in the chat.
+ - /locktypes: gets a list of all things that can be locked. (have a look at this!)
+
+eg: lock stickers with:
+/lock sticker""",
+
+"Command disabling_help":"""Not everyone wants every feature that rose offers. Some commands are best left unused; to avoid spam and abuse.
+
+This allows you to disable some commonly used commands, so noone can use them. It'll also allow you to autodelete them, stopping people from
+
+Available commands are:
+ - /disable <commandname>: stop users from using the "commandname" command in this group.
+ - /enable <commandname>: allow users to use the "commandname" command in this group again.
+ - /listcmds: list all disableable commands.
+ - /disabled: list the disabled commands in this chat.
+
+Note:
+When disabling a command, the command only gets disabled for non-admins. All admins can still use those commands.
+Disabled commands are still accessible through the /connect feature. If you would be interested to see this disabled too, let me know in the support chat.""", 
+
+"Filters_help": """Make your chat more lively with filters; The bot will reply to certain words!
+Filters are case insensitive; every time someone says your trigger words, {} will reply something else! can be used to create your own commands, if desired.
+ - /filters: list all active filters in this chat.
+*Admin only:*
+ - /filter <keyword> <reply message>: Every time someone says "word", the bot will reply with "sentence". For multiple word filters, quote the first word.
+ - /stop <filter keyword>: stop that filter.
+ 
+ An example of how to set a filter would be via:
+`/filter hello Hello there! How are you?`
+A multiword filter could be set via:
+`/filter "hello friend" Hello back! Long time no see!`
+If you want to save an image, gif, or sticker, or any other data, do the following:
+`/filter word while replying to a sticker or whatever data you'd like. Now, every time someone mentions "word", that sticker will be sent as a reply.`
+Now, anyone saying "hello" will be replied to with "Hello there! How are you?".""",
+
+"Bans_help": """Some people need to be publicly banned; spammers, annoyances, or just trolls.
+
+This module allows you to do that easily, by exposing some common actions, so everyone will see!
+
+Available commands are:
+ - /ban: bans a user from your chat.
+ - /banme: ban yourself
+ - /tban: temporarily bans a user from your chat. set time using int<d/h/m> (days hours minutes)
+ - /unban: unbans a user from your chat.
+ - /sban: silently bans a user. (via handle, or reply)
+ - /mute: mute a user in your chat.
+ - /tmute: temporarily mute a user in your chat. set time using int<d/h/m> (days hours minutes)
+ - /unmute: unmutes a user from your chat.
+ - /kick: kicks a user from your chat.
+ - /kickme: users who use this, kick themselves!
+
+ An example of temporarily muting someone:
+/tmute @username 2h; this mutes a user for 2 hours.""",
+
+"Connections_help":"""Sometimes, you just want to add some notes and filters to a group chat, but you don't want everyone to see; This is where connections come in...
+
+This allows you to connect to a chat's database, and add things to it without the chat knowing about it! For obvious reasons, you need to be an admin to add things; but any member can view your data. (banned/kicked users can't!)
+
+Actions are available with connected groups:
+ • View and edit notes
+ • View and edit filters
+ • View and edit blacklists
+ • Promote/demote users
+ • See adminlist, see invitelink
+ • Disable/enable commands in chat
+ • Mute/unmute users in chat
+ • Restrict/unrestrict users in chat
+ • More in future!
+
+ - /connection <chatid>: Connect to remote chat
+ - /disconnect: Disconnect from chat
+ - /allowconnect on/yes/off/no: Allow connect users to group
+
+ You can retrieve the chat id by using the /id command in your chat. Don't be surprised if the id is negative; all super groups have negative ids.""",
+
+"Log Channels_help": """*Admin only:*
+- /logchannel: get log channel info
+- /setlog: set the log channel.
+- /unsetlog: unset the log channel.
+
+Setting the log channel is done by:
+- adding the bot to the desired channel (as an admin!)
+- sending /setlog in the channel
+- forwarding the /setlog to the group
+""", 
+
+"Reporting_help": """ - /report <reason>: reply to a message to report it to admins.
+ - @admin: reply to a message to report it to admins.
+NOTE: neither of these will get triggered if used by admins
+
+*Admin only:*
+ - /reports <on/off>: change report setting, or view current status.
+   - If done in pm, toggles your status.
+   - If in chat, toggles that chat's status.""",
+
+"Notes_help": """Save data for future users with notes!
+
+Notes are great to save random tidbits of information; a phone number, a nice gif, a funny picture - anything!
+
+Available commands are:
+ - /save <word> <sentence>: Save that sentence to the note called "word". Replying to a message will save that message. Even works on media!
+ - /get <word>: get the note registered to that word.
+ - #<word>: same as /get word
+ - /clear <word>: delete the note called "word"
+ - /notes: List all notes in the current chat
+ - /saved: same as /notes
+
+An example of how to save a note would be via:
+/save data This is some data!
+
+Now, anyone using "/get data", or "#data" will be replied to with "This is some data!".
+
+If you want to save an image, gif, or sticker, or any other data, do the following:
+/save word while replying to a sticker or whatever data you'd like. Now, the note at "#word" contains a sticker which will be sent as a reply.
+
+Tip: to retrieve a note without the formatting, use /get <notename> noformat
+This will retrieve the note and send it without formatting it; getting you the raw markdown, allowing you to make easy edits""",
+
+"Muting & Restricting_help": """Some people need to be publicly banned; spammers, annoyances, or just trolls.
+
+This module allows you to do that easily, by exposing some common actions, so everyone will see!
+
+Available commands are:
+ - /ban: bans a user from your chat.
+ - /banme: ban yourself
+ - /tban: temporarily bans a user from your chat. set time using int<d/h/m> (days hours minutes)
+ - /unban: unbans a user from your chat.
+ - /sban: silently bans a user. (via handle, or reply)
+ - /mute: mute a user in your chat.
+ - /tmute: temporarily mute a user in your chat. set time using int<d/h/m> (days hours minutes)
+ - /unmute: unmutes a user from your chat.
+ - /kick: kicks a user from your chat.
+ - /kickme: users who use this, kick themselves!
+
+ An example of temporarily muting someone:
+/tmute @username 2h; this mutes a user for 2 hours.""",
+
+"Misc_help": """ - /id: get the current group id. If used by replying to a message, gets that user's id.
+ - /runs: reply a random string from an array of replies.
+ - /insults: reply a random string from an array of replies.
+ - /slap: slap a user, or get slapped if not a reply.
+ - /info: get information about a user.
+ - /gdpr: deletes your information from the bot's database. Private chats only.
+ - /stickerid: reply to a sticker to me to tell you its file ID.
+ - /getsticker: reply to a sticker to me to upload its raw PNG file.
+ - /google: Search google
+ - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
+
+ - /git: Returns info about a GitHub user or organization.
+ - /repo: Return the GitHub user or organization repository list (Limited at 40)
+ - /lyrics: Find your favorite songs lyrics!
+ - /paste: Create a paste or a shortened url using [dogbin](https://del.dog)
+ - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
+ - /pastestats: Get stats of a paste or shortened url from [dogbin](https://del.dog)
+ - /ud: Type the word or expression you want to search. For example /ud Gay
+ - /removebotkeyboard: Got a nasty bot keyboard stuck in your group?
+ - /exec <language> <code> [/stdin <stdin>]: Execute a code in a specified language. Send an empty command to get the suppoerted languages.""",
+
+"Bios and Abouts_help": """ - /setbio <text>: while replying, will save another user's bio
+ - /bio: will get your or another user's bio. This cannot be set by yourself.
+ - /setme <text>: will set your info
+ - /me: will get your or another user's info""",
+
+"Rules_help": """ - /rules: get the rules for this chat.
+
+*Admin only:*
+ - /setrules <your rules here>: set the rules for this chat.
+ - /clearrules: clear the rules for this chat.""",
+
+"Warnings_help": """ - /warns <userhandle>: get a user's number, and reason, of warnings.
+ - /warnlist: list of all current warning filters
+
+*Admin only:*
+ - /warn <userhandle>: warn a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.
+ - /resetwarn <userhandle>: reset the warnings for a user. Can also be used as a reply.
+ - /addwarn <keyword> <reply message>: set a warning filter on a certain keyword. If you want your keyword to \
+be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is an angry user`.
+ - /nowarn <keyword>: stop a warning filter
+ - /warnlimit <num>: set the warning limit
+ - /strongwarn <on/yes/off/no>: If set to on, exceeding the warn limit will result in a ban. Else, will just kick.
+ - /rmwarn <userhandle>: removes latest warn for a user. It also can be used as reply.
+ - /unwarn <userhandle>: same as /rmwarn""",
+
+"Welcomes/Goodbyes_help": """
+Give your members a warm welcome with the greetings module! Or a sad goodbye... Depends!
+
+Available commands are:
+ - /welcome <on/off/yes/no>: enables/disables welcome messages. If no option is given, returns the current welcome message and welcome settings.
+ - /goodbye <on/off/yes/no>: enables/disables goodbye messages. If no option is given, returns  the current goodbye message and goodbye settings.
+ - /setwelcome <message>: sets your new welcome message! Markdown and buttons are supported, as well as fillings.
+ - /resetwelcome: resets your welcome message to default; deleting any changes you've made.
+ - /setgoodbye <message>: sets your new goodbye message! Markdown and buttons are supported, as well as fillings.
+ - /resetgoodbye: resets your goodbye message to default; deleting any changes you've made.
+ - /cleanwelcome <on/off/yes/no>: deletes old welcome messages; when a new person joins, the old message is deleted.
+ - /cleanservice <on/off/yes/no>: deletes all service message; those are the annoying "x joined the group" you see when people join.
+ - /welcomesecurity <off/soft/hard>: soft - restrict user's permission to send media files for 24 hours, hard - restict user's permission to send me$
+
+
+Fillings:
+As mentioned, you can use certain tags to fill in your welcome message with user or chat info; there are:
+{first}: The user's first name.
+{last}: The user's last name.
+{fullname}: The user's full name.
+{username}: The user's username; if none is available, mentions the user.
+{mention}: Mentions the user, using their firstname.
+{id}: The user's id.
+{chatname}: The chat's name.
+
+An example of how to use fillings would be to set your welcome, via:
+/setwelcome Hey there {first}! Welcome to {chatname}.
+
+You can enable/disable welcome messages as such:
+/welcome off
+
+If you want to save an image, gif, or sticker, or any other data, do the following:
+/setwelcome while replying to a sticker or whatever data you'd like. This data will now be sent to welcome new users.
+
+Tip: use /welcome noformat to retrieve the unformatted welcome message.
+This will retrieve the welcome message and send it without formatting it; getting you the raw markdown, allowing you to make easy edits.
+This also works with /goodbye.""",
+
+"Word Blacklists_help":"""You can set blacklist filters to take automatic action on people when they say certain things. This is done using:
+ - /addblacklist <blacklist trigger> <blacklist reason>: blacklists the trigger. You can set sentences by putting quotes around the reason.
+ - /unblacklist <blacklist trigger>: stop blacklisting a certain blacklist trigger.
+ - /rmblacklist <blacklist trigger>: same as /unblacklist
+ - /blacklist: list all active blacklist filters
+
+/addblacklist "the admins suck" Respect your admins!
+This would delete any message containing 'the admins suck'.
+If you've enabled an alternative blacklist mode, it will warn, ban, kick, or mute a user with a message specifying the reason.
+
+Top tip:
+Blacklists allow you to use some modifiers to match "unknown" characters. For example, you can use the ? character to match a single occurence of an$
+You could also use the * modifier, which matches any number of any character. If you want to blacklist urls, this will allow you to match the full t$
+For example, the following will ban any bit.ly link:
+/addblacklist "bit.ly/*" We dont like shorteners!
+If you wanted to only match bit.ly/ links followed by three characters, you could use:
+/addblacklist "bit.ly/???" We dont like shorteners!
+This would match bit.ly/abc, but not bit.ly/abcd.""",
+
+"Purges_help": """Need to delete lots of messages? That's what purges are for!
+
+Available commands are:
+ - /purge: deletes all messages from the message you replied to, to the current message.
+ - /purge X: deletes X messages after the message you replied to (including the replied message)
+ - /del: deletes the message you replied to. """,
+ 
 #GDPR
 "send-gdpr": """Kişisel bilgilerin silindi.\n\nBu işlem senin yasağını \
 hiçbir gruptan açmayacak çünkü bu telegramın verisi YanaBot'un değil.
