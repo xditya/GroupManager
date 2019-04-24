@@ -22,3 +22,4 @@ gsearch
 hurry.filesize
 #translator
 py_translator
+beautifulsoup4==4.6.3
