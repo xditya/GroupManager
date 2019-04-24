@@ -73,9 +73,7 @@ def new_fed(bot: Bot, update: Update, args: List[str]):
                         "\nName: `{}`"\
                         "\nID: `{}`"
                         "\n\nUse the below command to join the federation:"
-                        "\n`/joinfed {}`"
-                        "\n\nUse the below command to delete the federation:"
-                        "\n`/delfed {}`".format(fed_name, fed_id, fed_id, fed_id), parse_mode=ParseMode.MARKDOWN)
+                        "\n`/joinfed {}`".format(fed_name, fed_id, fed_id), parse_mode=ParseMode.MARKDOWN)
         bot.send_message(
             MESSAGE_DUMP,
            "Federation <b>{}</b> have been created with ID: <pre>{}</pre>".format(fed_name, fed_id),
