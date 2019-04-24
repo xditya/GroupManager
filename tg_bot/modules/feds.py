@@ -106,13 +106,8 @@ def del_fed(bot: Bot, update: Update, args: List[str]):
             update.effective_message.reply_text(tld(chat.id, "Only fed owner can do this!"))
             return
 
-        if len(args) >= 1:
-            fed_id = args[0]
-            sql.del_fed(fed_id, chat.id)
-            update.effective_message.reply_text(tld(chat.id, "Deleted!"))
-        else:
-            update.effective_message.reply_text(tld(chat.id, "Please write federation id to remove!"))
-
+        sql.del_fed(fed_id, chat.id)
+        update.effective_message.reply_text(tld(chat.id, "Deleted!"))
 
 def fed_chat(bot: Bot, update: Update, args: List[str]):
         chat = update.effective_chat  # type: Optional[Chat]
@@ -288,12 +283,6 @@ def fed_info(bot: Bot, update: Update, args: List[str]):
         user = update.effective_user  # type: Optional[User]
         fed_id = sql.get_fed_id(chat.id)
         info = sql.get_fed_info(fed_id)
-        OW = bot.get_chat(info.owner_id)
-        HAHA = OW.id
-        FEDADMIN = sql.all_fed_users(fed_id)
-        FEDADMIN.append(int(HAHA))
-        ACTUALADMIN = len(FEDADMIN)
-
 
         if not fed_id:
             update.effective_message.reply_text(tld(chat.id, "This group not in any federation!"))
@@ -302,6 +291,12 @@ def fed_info(bot: Bot, update: Update, args: List[str]):
         if is_user_fed_admin(fed_id, user.id) == False:
             update.effective_message.reply_text(tld(chat.id, "Only fed admins can do this!"))
             return
+
+        OW = bot.get_chat(info.owner_id)
+        HAHA = OW.id
+        FEDADMIN = sql.all_fed_users(fed_id)
+        FEDADMIN.append(int(HAHA))
+        ACTUALADMIN = len(FEDADMIN)
 
         print(fed_id)
         user = update.effective_user  # type: Optional[Chat]
