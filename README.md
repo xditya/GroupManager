@@ -26,7 +26,7 @@ Alternatively, [find me on telegram](https://t.me/peaktogoo)! (Keep all support 
 
 Once you've setup your database and your configuration (see below) is complete, simply run:
 
-`python3.6 -m tg_bot`
+`python3.7 -m tg_bot`
 
 
 ## Setting up the bot (Read this before trying to use!):
