@@ -125,6 +125,7 @@ def join_fed(bot: Bot, update: Update, args: List[str]):
     user = update.effective_user  # type: Optional[User]
     message = update.effective_message
     administrators = chat.get_administrators()
+    fed_id = sql.get_fed_id(chat.id)
 
 
     if user.id in SUDO_USERS:
@@ -139,6 +140,9 @@ def join_fed(bot: Bot, update: Update, args: List[str]):
                 else:
                     update.effective_message.reply_text(tld(chat.id, "Only group creator can do it!"))
                     return
+    if fed_id:
+        message.reply_text(tld(chat.id, "Uh, Are you gonna join two federations at one chat?"))
+        return
 
     if len(args) >= 1:
         fedd = args[0]
