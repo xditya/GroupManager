@@ -6,4 +6,3 @@ Copy it into your preferred text editor and start translating!
 
 After you have finished, Kindly send it to [Haruka Support Group](https://t.me/HarukaAyaGroup)
 
-By your language i mean English, Brazil, Turkish, Japanese and etc.
