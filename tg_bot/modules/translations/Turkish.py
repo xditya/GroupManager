@@ -242,23 +242,25 @@ olduğunu seç.""",
         "Welcomes/Goodbyes": "EDIT THIS",
 
 #Some main stuff
-"Here is the help for the *{}* module:\n{}": "Допомога по модулю *{}*:\n{}",
-"Back": "Назад",
-"send-help": """Привіт усім! Моє ім'я *{}*. Я модульний бот з функцією управління групами з різними фановими фічами! 
-Погляньте на наступні можливості, які я можу вам запропонувати:
-
-Головні команди:
- - /start: коротка інфа про бота.
- - /help: Я напишу вам повідомлення.
- - /help <назва модуля>: Я раскажу вам про цей модуль.
- - /donate: Інформація про те як вдонатити в мене!
- - /lang: Змінити мову бота.
- - /settings: Показати поточні установки бота.
-   {}
+"Here is the help for the *{}* module:\n{}": "Here is the help for the *{}* module:\n{}",
+"Back": "Back",
+"send-help": """Hey there! My name is {}.
+I'm a modular group management bot with a few fun extras! Have a look at the following for an idea of some of the things I can help you with.
+Main commands available:
+ - /start: Cool command to check if the bot is alive or not
+ - /help: PM's you this message.
+ - /help <module name>: PM's you info about that module.
+ - /donate: information about how to donate!
+ - /lang: Change bot language
+ - /settings:
+   - in PM: will send you your settings for all supported modules.
+   - in a group: will redirect you to pm, with all that chat's settings.
+   
+{}
    """,
 
 
-"\nAll commands can either be used with `/` or `!`.\n": "\nУсі команди можуть починатися з `/` або `!`\n",
+"\nAll commands can either be used with `/` or `!`.\n": "\nAll commands can either be used with `/` or `!`.\n",
 
 #Module helps
 "Admin_help": """ - /adminlist | /admins: list of admins in the chat
