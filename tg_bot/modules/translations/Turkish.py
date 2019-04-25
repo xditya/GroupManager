@@ -214,57 +214,9 @@ olduğunu seç.""",
 "MARKDOWN_HELP-K": MARKDOWN_HELP,
 "INSULTS-K": INSULTS_STRINGS,
 
-#Multi
-    "Invalid Chat ID provided!": "ID чату не існує!", #Connections
-
-#__main__
-    #Module names
-        "Admin": "EDIT THIS",
-        "AFK": "EDIT THIS",
-        "AntiFlood": "EDIT THIS",
-        "Bans": "EDIT THIS",
-        "Word Blacklists": "EDIT THIS",
-        "Filters": "EDIT THIS",
-        "Command disabling": "EDIT THIS",
-        "Antispam security": "EDIT THIS",
-        "Locks": "EDIT THIS",
-        "Log Channels": "EDIT THIS",
-        "Misc": "EDIT THIS",
-        "Purges": "EDIT THIS",
-        "Muting & Restricting": "EDIT THIS",
-        "Notes": "EDIT THIS",
-        "Reporting": "EDIT THIS",
-        "RSS Feed": "EDIT THIS",
-        "Rules": "EDIT THIS",
-        "Connections": "EDIT THIS",
-        "Bios and Abouts": "EDIT THIS",
-        "Warnings": "EDIT THIS",
-        "Welcomes/Goodbyes": "EDIT THIS",
-
-#Some main stuff
-"Here is the help for the *{}* module:\n{}": "Here is the help for the *{}* module:\n{}",
-"Back": "Back",
-"send-help": """Hey there! My name is {}.
-I'm a modular group management bot with a few fun extras! Have a look at the following for an idea of some of the things I can help you with.
-Main commands available:
- - /start: Cool command to check if the bot is alive or not
- - /help: PM's you this message.
- - /help <module name>: PM's you info about that module.
- - /donate: information about how to donate!
- - /lang: Change bot language
- - /settings:
-   - in PM: will send you your settings for all supported modules.
-   - in a group: will redirect you to pm, with all that chat's settings.
-   
-{}
-   """,
-
-
-"\nAll commands can either be used with `/` or `!`.\n": "\nAll commands can either be used with `/` or `!`.\n",
 
 #Module helps
 "Admin_help": """ - /adminlist | /admins: list of admins in the chat
-
 *Admin only:*
  - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.
  - /unpin: unpins the currently pinned message
@@ -274,40 +226,31 @@ Main commands available:
 
 "AFK_help": """ - /afk <reason>: mark yourself as AFK.
  - brb <reason>: same as the afk command - but not a command.
-
 When marked as AFK, any mentions will be replied to with a message to say you're not available!""",
 
 "AntiFlood_help": """ You know how sometimes, people join, send 100 messages, and ruin your chat? With antiflood, that happens no more!
-
 Antiflood allows you to take action on users that send more than x messages in a row. Actions are: ban/kick/mute/tban/tmute
-
 Available commands are:
  - /flood: gets the current antiflood settings.
  - /setflood <number/off>: sets the number of messages at which to take action on a user.""",
 
 "Locks_help": """Do stickers annoy you? or want to avoid people sharing links? or pictures? You're in the right place!
-
 The locks module allows you to lock away some common items in the telegram world; the bot will automatically delete them!
-
 Available commands are:
  - /lock <item(s)>: lock the usage of "item". Now, only admins will be able to use this type!
  - /unlock <item(s)>: unlock "item". Everyone can use them again.
  - /locks: list the lock status in the chat.
  - /locktypes: gets a list of all things that can be locked. (have a look at this!)
-
 eg: lock stickers with:
 /lock sticker""",
 
 "Command disabling_help":"""Not everyone wants every feature that rose offers. Some commands are best left unused; to avoid spam and abuse.
-
 This allows you to disable some commonly used commands, so noone can use them. It'll also allow you to autodelete them, stopping people from
-
 Available commands are:
  - /disable <commandname>: stop users from using the "commandname" command in this group.
  - /enable <commandname>: allow users to use the "commandname" command in this group again.
  - /listcmds: list all disableable commands.
  - /disabled: list the disabled commands in this chat.
-
 Note:
 When disabling a command, the command only gets disabled for non-admins. All admins can still use those commands.
 Disabled commands are still accessible through the /connect feature. If you would be interested to see this disabled too, let me know in the support chat.""", 
@@ -328,9 +271,7 @@ If you want to save an image, gif, or sticker, or any other data, do the followi
 Now, anyone saying "hello" will be replied to with "Hello there! How are you?".""",
 
 "Bans_help": """Some people need to be publicly banned; spammers, annoyances, or just trolls.
-
 This module allows you to do that easily, by exposing some common actions, so everyone will see!
-
 Available commands are:
  - /ban: bans a user from your chat.
  - /banme: ban yourself
@@ -342,14 +283,11 @@ Available commands are:
  - /unmute: unmutes a user from your chat.
  - /kick: kicks a user from your chat.
  - /kickme: users who use this, kick themselves!
-
  An example of temporarily muting someone:
 /tmute @username 2h; this mutes a user for 2 hours.""",
 
 "Connections_help":"""Sometimes, you just want to add some notes and filters to a group chat, but you don't want everyone to see; This is where connections come in...
-
 This allows you to connect to a chat's database, and add things to it without the chat knowing about it! For obvious reasons, you need to be an admin to add things; but any member can view your data. (banned/kicked users can't!)
-
 Actions are available with connected groups:
  • View and edit notes
  • View and edit filters
@@ -360,18 +298,15 @@ Actions are available with connected groups:
  • Mute/unmute users in chat
  • Restrict/unrestrict users in chat
  • More in future!
-
  - /connection <chatid>: Connect to remote chat
  - /disconnect: Disconnect from chat
  - /allowconnect on/yes/off/no: Allow connect users to group
-
  You can retrieve the chat id by using the /id command in your chat. Don't be surprised if the id is negative; all super groups have negative ids.""",
 
 "Log Channels_help": """*Admin only:*
 - /logchannel: get log channel info
 - /setlog: set the log channel.
 - /unsetlog: unset the log channel.
-
 Setting the log channel is done by:
 - adding the bot to the desired channel (as an admin!)
 - sending /setlog in the channel
@@ -381,16 +316,13 @@ Setting the log channel is done by:
 "Reporting_help": """ - /report <reason>: reply to a message to report it to admins.
  - @admin: reply to a message to report it to admins.
 NOTE: neither of these will get triggered if used by admins
-
 *Admin only:*
  - /reports <on/off>: change report setting, or view current status.
    - If done in pm, toggles your status.
    - If in chat, toggles that chat's status.""",
 
 "Notes_help": """Save data for future users with notes!
-
 Notes are great to save random tidbits of information; a phone number, a nice gif, a funny picture - anything!
-
 Available commands are:
  - /save <word> <sentence>: Save that sentence to the note called "word". Replying to a message will save that message. Even works on media!
  - /get <word>: get the note registered to that word.
@@ -398,22 +330,16 @@ Available commands are:
  - /clear <word>: delete the note called "word"
  - /notes: List all notes in the current chat
  - /saved: same as /notes
-
 An example of how to save a note would be via:
 /save data This is some data!
-
 Now, anyone using "/get data", or "#data" will be replied to with "This is some data!".
-
 If you want to save an image, gif, or sticker, or any other data, do the following:
 /save word while replying to a sticker or whatever data you'd like. Now, the note at "#word" contains a sticker which will be sent as a reply.
-
 Tip: to retrieve a note without the formatting, use /get <notename> noformat
 This will retrieve the note and send it without formatting it; getting you the raw markdown, allowing you to make easy edits""",
 
 "Muting & Restricting_help": """Some people need to be publicly banned; spammers, annoyances, or just trolls.
-
 This module allows you to do that easily, by exposing some common actions, so everyone will see!
-
 Available commands are:
  - /ban: bans a user from your chat.
  - /banme: ban yourself
@@ -425,7 +351,6 @@ Available commands are:
  - /unmute: unmutes a user from your chat.
  - /kick: kicks a user from your chat.
  - /kickme: users who use this, kick themselves!
-
  An example of temporarily muting someone:
 /tmute @username 2h; this mutes a user for 2 hours.""",
 
@@ -439,7 +364,6 @@ Available commands are:
  - /getsticker: reply to a sticker to me to upload its raw PNG file.
  - /google: Search google
  - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
-
  - /git: Returns info about a GitHub user or organization.
  - /repo: Return the GitHub user or organization repository list (Limited at 40)
  - /lyrics: Find your favorite songs lyrics!
@@ -456,14 +380,12 @@ Available commands are:
  - /me: will get your or another user's info""",
 
 "Rules_help": """ - /rules: get the rules for this chat.
-
 *Admin only:*
  - /setrules <your rules here>: set the rules for this chat.
  - /clearrules: clear the rules for this chat.""",
 
 "Warnings_help": """ - /warns <userhandle>: get a user's number, and reason, of warnings.
  - /warnlist: list of all current warning filters
-
 *Admin only:*
  - /warn <userhandle>: warn a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.
  - /resetwarn <userhandle>: reset the warnings for a user. Can also be used as a reply.
@@ -477,7 +399,6 @@ be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is
 
 "Welcomes/Goodbyes_help": """
 Give your members a warm welcome with the greetings module! Or a sad goodbye... Depends!
-
 Available commands are:
  - /welcome <on/off/yes/no>: enables/disables welcome messages. If no option is given, returns the current welcome message and welcome settings.
  - /goodbye <on/off/yes/no>: enables/disables goodbye messages. If no option is given, returns  the current goodbye message and goodbye settings.
@@ -488,8 +409,6 @@ Available commands are:
  - /cleanwelcome <on/off/yes/no>: deletes old welcome messages; when a new person joins, the old message is deleted.
  - /cleanservice <on/off/yes/no>: deletes all service message; those are the annoying "x joined the group" you see when people join.
  - /welcomesecurity <off/soft/hard>: soft - restrict user's permission to send media files for 24 hours, hard - restict user's permission to send me$
-
-
 Fillings:
 As mentioned, you can use certain tags to fill in your welcome message with user or chat info; there are:
 {first}: The user's first name.
@@ -499,30 +418,24 @@ As mentioned, you can use certain tags to fill in your welcome message with user
 {mention}: Mentions the user, using their firstname.
 {id}: The user's id.
 {chatname}: The chat's name.
-
 An example of how to use fillings would be to set your welcome, via:
 /setwelcome Hey there {first}! Welcome to {chatname}.
-
 You can enable/disable welcome messages as such:
 /welcome off
-
 If you want to save an image, gif, or sticker, or any other data, do the following:
 /setwelcome while replying to a sticker or whatever data you'd like. This data will now be sent to welcome new users.
-
 Tip: use /welcome noformat to retrieve the unformatted welcome message.
 This will retrieve the welcome message and send it without formatting it; getting you the raw markdown, allowing you to make easy edits.
-This also works with /goodbye.""",
+This also works with /goodbye.""".format(dispatcher.bot.username),
 
 "Word Blacklists_help":"""You can set blacklist filters to take automatic action on people when they say certain things. This is done using:
  - /addblacklist <blacklist trigger> <blacklist reason>: blacklists the trigger. You can set sentences by putting quotes around the reason.
  - /unblacklist <blacklist trigger>: stop blacklisting a certain blacklist trigger.
  - /rmblacklist <blacklist trigger>: same as /unblacklist
  - /blacklist: list all active blacklist filters
-
 /addblacklist "the admins suck" Respect your admins!
 This would delete any message containing 'the admins suck'.
 If you've enabled an alternative blacklist mode, it will warn, ban, kick, or mute a user with a message specifying the reason.
-
 Top tip:
 Blacklists allow you to use some modifiers to match "unknown" characters. For example, you can use the ? character to match a single occurence of an$
 You could also use the * modifier, which matches any number of any character. If you want to blacklist urls, this will allow you to match the full t$
@@ -533,12 +446,32 @@ If you wanted to only match bit.ly/ links followed by three characters, you coul
 This would match bit.ly/abc, but not bit.ly/abcd.""",
 
 "Purges_help": """Need to delete lots of messages? That's what purges are for!
-
 Available commands are:
  - /purge: deletes all messages from the message you replied to, to the current message.
  - /purge X: deletes X messages after the message you replied to (including the replied message)
  - /del: deletes the message you replied to. """,
- 
+
+
+"Feds_help": """Ah, group management. It's all fun and games, until you start getting spammers in, and you need to ban them. Then you need to start banning more, and more, and it gets painful.
+But then you have multiple groups, and you don't want these spammers in any of your groups - how can you deal? Do you have to ban them manually, in all your groups?
+Inspired by [Rose bot](t.me/MissRose_bot)
+No more! With federations, you can make a ban in one chat overlap to all your other chats.
+You can even appoint federation admins, so that your trustworthy admins can ban across all the chats that you want to protect.
+Commands:
+ - /newfed <fedname>: creates a new federation with the given name. Users are only allowed to own one federation. This method can also be used to change the federation name. (max 64 characters)
+ - /delfed: deletes your federation, and any information relating to it. Will not unban any banned users.
+ - /fedinfo <FedID>: information about the specified federation.
+ - /joinfed <FedID>: joins the current chat to the federation. Only chat owners can do this. Each chat can only be in one federation.
+ - /leavefed <FedID>: leaves the given federation. Only chat owners can do this.
+ - /fpromote <user>: promotes the user to fed admin. Fed owner only.
+ - /fdemote <user>: demotes the user from fed admin to normal user. Fed owner only.
+ - /fban <user>: bans a user from all federations that this chat is in, and that the executor has control over.
+ - /unfban <user>: unbans a user from all federations that this chat is in, and that the executor has control over.
+ - /setfrules: Set federation rules
+ - /frules: Show federation rules
+ - /chatfed: Show the federation the chat is in
+ - /fedadmins: Show the federation admins""",
+
 #GDPR
 "send-gdpr": """Kişisel bilgilerin silindi.\n\nBu işlem senin yasağını \
 hiçbir gruptan açmayacak çünkü bu telegramın verisi YanaBot'un değil.
