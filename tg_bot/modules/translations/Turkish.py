@@ -476,7 +476,7 @@ If you want to save an image, gif, or sticker, or any other data, do the followi
 /setwelcome while replying to a sticker or whatever data you'd like. This data will now be sent to welcome new users.
 Tip: use /welcome noformat to retrieve the unformatted welcome message.
 This will retrieve the welcome message and send it without formatting it; getting you the raw markdown, allowing you to make easy edits.
-This also works with /goodbye.""".format(dispatcher.bot.username),
+This also works with /goodbye.""",
 
 "Word Blacklists_help":"""You can set blacklist filters to take automatic action on people when they say certain things. This is done using:
  - /addblacklist <blacklist trigger> <blacklist reason>: blacklists the trigger. You can set sentences by putting quotes around the reason.

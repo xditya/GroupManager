@@ -97,6 +97,23 @@ def posp(bot: Bot, update: Update):
         reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
+
+@run_async
+def los(bot: Bot, update: Update):
+    message = update.effective_message
+    device = message.text[len('/los '):]
+    fetch = get(f'https://download.lineageos.org/api/v1/{device}/nightly/*')
+    if fetch.status_code == 200 and str(fetch.json()['response']) != "[]":
+        usr = fetch.json()
+        reply_text = f"""*Download:* [{usr['response'][-1]['filename']}]({usr['response'][-1]['url']})
+*Size:* `{usr['response'][-1]['size']}`
+*Version:* `{usr['response'][-1]['version']}`
+"""
+    else:
+        reply_text="Device not found"
+    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+
+
 @run_async
 def dotos(bot: Bot, update: Update):
     message = update.effective_message
@@ -255,6 +272,7 @@ __help__ = """
  - /dotos <device>: Get the DotOS Rom
  - /aex <device> <android version>: Get the AEX Rom
  - /pixy <device>: Get the Pixy Rom
+ - /los <device>: Get the LineageOS Rom
  *GSI*
  - /phh: Get the lastest Phh AOSP GSI!
  - /descendant: Get the lastest Descendant GSI!
@@ -276,6 +294,7 @@ PEARL_HANDLER = DisableAbleCommandHandler("pearl", pearl, admin_ok=True)
 POSP_HANDLER = DisableAbleCommandHandler("posp", posp, admin_ok=True)
 DOTOS_HANDLER = DisableAbleCommandHandler("dotos", dotos, admin_ok=True)
 PIXY_HANDLER = DisableAbleCommandHandler("pixy", pixy, admin_ok=True)
+LOS_HANDLER = DisableAbleCommandHandler("los", los, admin_ok=True)
 
 dispatcher.add_handler(GETAEX_HANDLER)
 dispatcher.add_handler(MIUI_HANDLER)
@@ -289,3 +308,4 @@ dispatcher.add_handler(PEARL_HANDLER)
 dispatcher.add_handler(POSP_HANDLER)
 dispatcher.add_handler(DOTOS_HANDLER)
 dispatcher.add_handler(PIXY_HANDLER)
+dispatcher.add_handler(LOS_HANDLER)
