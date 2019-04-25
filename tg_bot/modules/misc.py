@@ -254,11 +254,11 @@ def ping(bot: Bot, update: Update):
     text += "Average speed to Google - `{}` ms".format(gspeed)
     update.effective_message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
 
-def google(bot: Bot, update: Update):
-        query = update.effective_message.text.split(" ",1)
-        result_ = subprocess.run(['gsearch', str(query[1])], stdout=subprocess.PIPE)
-        result = str(result_.stdout.decode())
-        update.effective_message.reply_text('*Searching:*\n`' + str(query[1]) + '`\n\n*RESULTS:*\n' + result, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+#def google(bot: Bot, update: Update):
+#        query = update.effective_message.text.split(" ",1)
+#        result_ = subprocess.run(['gsearch', str(query[1])], stdout=subprocess.PIPE)
+#        result = str(result_.stdout.decode())
+#        update.effective_message.reply_text('*Searching:*\n`' + str(query[1]) + '`\n\n*RESULTS:*\n' + result, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 @run_async
 def github(bot: Bot, update: Update):
@@ -497,7 +497,6 @@ __help__ = """
  - /gdpr: deletes your information from the bot's database. Private chats only.
  - /stickerid: reply to a sticker to me to tell you its file ID.
  - /getsticker: reply to a sticker to me to upload its raw PNG file.
- - /google: Search google
  - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
 
  - /git: Returns info about a GitHub user or organization.
@@ -516,7 +515,7 @@ __mod_name__ = "Misc"
 ID_HANDLER = DisableAbleCommandHandler("id", get_id, pass_args=True, admin_ok=True)
 IP_HANDLER = CommandHandler("ip", get_bot_ip, filters=Filters.chat(OWNER_ID), admin_ok=True)
 PING_HANDLER = DisableAbleCommandHandler("ping", ping, admin_ok=True)
-GOOGLE_HANDLER = DisableAbleCommandHandler("google", google)
+#GOOGLE_HANDLER = DisableAbleCommandHandler("google", google)
 LYRICS_HANDLER = DisableAbleCommandHandler("lyrics", lyrics, pass_args=True, admin_ok=True)
 
 
@@ -555,7 +554,7 @@ dispatcher.add_handler(MD_HELP_HANDLER)
 dispatcher.add_handler(STATS_HANDLER)
 dispatcher.add_handler(GDPR_HANDLER)
 dispatcher.add_handler(PING_HANDLER)
-dispatcher.add_handler(GOOGLE_HANDLER)
+#dispatcher.add_handler(GOOGLE_HANDLER)
 dispatcher.add_handler(GITHUB_HANDLER)
 dispatcher.add_handler(LYRICS_HANDLER)
 dispatcher.add_handler(REPO_HANDLER)
