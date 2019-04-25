@@ -172,7 +172,7 @@ Bu işlem tek satırda tek tuş yerine, tek satırda iki tuş oluşturacak.
 """
 
 TurkishStrings = {
-    "send-start": """Merhaba {}, benim adım {}! Beni nasıl kullanacağın hakkında soruların varsa, /help okuyun - ve @YanaBotGroup gidin.
+    "send-start": """Merhaba {}, benim adım {}! Beni nasıl kullanacağın hakkında soruların varsa, /help okuyun @HarukaAyaBot  gidin.
 
 Ben bir [bu kişi](tg://user?id={654839744}) tarafından yönetilen bir grup yönetim botuyum. Bir [Marie](https://github.com/PaulSonOfLars/tgbot) forkuyum.
 python3'de python-telegram-bot, \
@@ -214,6 +214,56 @@ olduğunu seç.""",
 "MARKDOWN_HELP-K": MARKDOWN_HELP,
 "INSULTS-K": INSULTS_STRINGS,
 
+#Multi
+    "Invalid Chat ID provided!": "Invalid Chat ID provided!", #Connections
+
+
+#__main__
+    #Module names
+        "Admin": "Admin",
+        "AFK": "AFK",
+        "AntiFlood": "AntiFlood",
+        "Antispam Security": "Antispam Security",
+        "Bans": "Bans",
+        "Memes and etc.": "Memes and etc.",
+        "Word Blacklists": "Word Blacklists",
+        "Filters": "Filters",
+        "Federations": "Federations",
+        "Command disabling": "Command disabling",
+        "Locks": "Locks",
+        "Log Channels": "Log Channels",
+        "Misc": "Misc",
+        "Purges": "Purges",
+        "Muting & Restricting": "Muting & Restricting",
+        "Notes": "Notes",
+        "Reporting": "Reporting",
+        "RSS Feed": "RSS Feed",
+        "Rules": "Rules",
+        "Connections": "Connections",
+        "Bios and Abouts": "Bios and Abouts",
+        "Warnings": "Warnings",
+        "Welcomes/Goodbyes": "Welcomes/Goodbyes",
+
+#Some main stuff
+"Here is the help for the *{}* module:\n{}": "Here is the help for the *{}* module:\n{}",
+"Back": "Back",
+"send-help": """Hey there! My name is {}.
+I'm a modular group management bot with a few fun extras! Have a look at the following for an idea of some of the things I can help you with.
+Main commands available:
+ - /start: Cool command to check if the bot is alive or not
+ - /help: PM's you this message.
+ - /help <module name>: PM's you info about that module.
+ - /donate: information about how to donate!
+ - /lang: Change bot language
+ - /settings:
+   - in PM: will send you your settings for all supported modules.
+   - in a group: will redirect you to pm, with all that chat's settings.
+   
+{}
+   """,
+
+
+"\nAll commands can either be used with `/` or `!`.\n": "\nAll commands can either be used with `/` or `!`.\n",
 
 #Module helps
 "Admin_help": """ - /adminlist | /admins: list of admins in the chat
