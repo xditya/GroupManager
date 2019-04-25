@@ -412,7 +412,6 @@ Available commands are:
  - /gdpr: deletes your information from the bot's database. Private chats only.
  - /stickerid: reply to a sticker to me to tell you its file ID.
  - /getsticker: reply to a sticker to me to upload its raw PNG file.
- - /google: Search google
  - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
  - /git: Returns info about a GitHub user or organization.
  - /repo: Return the GitHub user or organization repository list (Limited at 40)
