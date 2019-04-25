@@ -136,7 +136,8 @@ def send_start(bot, update):
     text = "Hey there! My name is Haruka Aya - I'm here to help you manage your groups! Click Help button to find out more about how to use me to my full potential."
     text += "\n \nJoin [Haruka Aya Group](https://t.me/HarukaAyaGroup) ( @HarukaAyaGroup ) if you need any support or help \n \nFollow [Haruka Aya](https://t.me/HarukaAya) ( @HarukaAya ) if you want to keep up with the news, updates and bot downtime! \n \nMy source can be founded [here](https://github.com/peaktogoo/HarukaAya) \n \nMade with love by @peaktogoo \n \nWant to add me to your group? [Click here!](t.me/HarukaAyaBot?startgroup=true)"
 
-    keyboard = [[InlineKeyboardButton(text="🛠 Control panel", callback_data="cntrl_panel_M")]]
+    keyboard = [[InlineKeyboardButton(text="📢 Support Group", url="https://t.me/HarukaAyaGroup")]]
+    keyboard += [[InlineKeyboardButton(text="🛠 Control panel", callback_data="cntrl_panel_M")]]
     keyboard += [[InlineKeyboardButton(text="🇺🇸 Language", callback_data="set_lang_"), 
         InlineKeyboardButton(text="❔ Help", callback_data="help_back")]]
 
@@ -164,7 +165,7 @@ def control_panel(bot, update):
         M_match = "Haruka Aya is best bot"
 
     if M_match:
-        text = "*Control panel* 🛠 (beta)"
+        text = "*Control panel* 🛠"
 
         keyboard = [[InlineKeyboardButton(text="👤 My settings", callback_data="cntrl_panel_U(1)")]]
 
