@@ -53,7 +53,7 @@ def locale_button(bot, update):
     except:
         curr_lang = "English"
 
-    text = "*Select language* (beta)\n"
+    text = "*Select language* \n"
     text += "User language : `{}`".format(curr_lang) 
 
     conn = connected(bot, update, chat, user.id, need_admin=False)
