@@ -31,10 +31,12 @@ from tg_bot.modules.translations.strings import tld
 
 from requests import get
 
-# Spend many times doing this shet so please dont delete this
+# DO NOT DELETE THIS PLEASE
 # Worked by @peaktogo on github and telegram
-# Time spended on feds = 10h
-print("Original Android Modules by @peaktogo on Telegram")
+# This module was inspired by Android Helper Bot by Vachounet
+# None of the code were taken from the bot, to avoid any more confusion.
+
+print("Original Android Modules by @peaktogoo on Telegram")
 
 
 AEX_OTA_API = "https://api.aospextended.com/ota/"
