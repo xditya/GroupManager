@@ -315,6 +315,7 @@ __help__ = """
  - /aex <device> <android version>: Get the AEX Rom
  - /pixys <device>: Get the Pixy Rom
  - /los <device>: Get the LineageOS Rom
+ - /bootleggers <device>: Get the Bootleggers Rom
  *GSI*
  - /phh: Get the lastest Phh AOSP Oreo GSI!
  - /descendant: Get the lastest Descendant GSI!
