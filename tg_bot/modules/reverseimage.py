@@ -91,9 +91,9 @@ def reverse(bot: Bot, update: Update, args: List[str]):
 
         if response != 400:
             xx = bot.send_message(chat_id, "Image was successfully uploaded to Google."
-                                  "\nParsing source now. Maybe.")
+                                  "\nParsing source now. Maybe.", reply_to_message_id=rtmid)
         else:
-            xx = bot.send_message(chat_id, "Google told me to go away.")
+            xx = bot.send_message(chat_id, "Google told me to go away.", reply_to_message_id=rtmid)
             return
 
         os.remove(imagename)
@@ -122,6 +122,7 @@ def reverse(bot: Bot, update: Update, args: List[str]):
             imglinks.append(lmao)
 
         bot.send_media_group(chat_id=chat_id, media=imglinks, reply_to_message_id=rtmid)
+        xx.edit_text(f"[{guess}]({fetchUrl})\n[Visually similar images]({imgspage})", parse_mode='Markdown')
     except TelegramError as e:
         print(e)
     except Exception as exception:
