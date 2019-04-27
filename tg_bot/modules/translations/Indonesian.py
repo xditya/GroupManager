@@ -499,10 +499,7 @@ anda tertarik.""",
 
 #Notes
     "Get rekt": "Get rekt.",
-
-
-#Multi
-    "ID Obrolan salah diberikan!": "ID Obrolan tidak valid disediakan!", #Connections
+    "Invalid Chat ID provided!": "Invalid Chat ID provided!", #Connections 
     "You don't seem to be referring to a user.": "You don't seem to be referring to a user.", #Admin, Bans, Muting
     "I can't seem to find this user": "I can't seem to find this user", #Bans, Muting
     "Yes": "Yes", #Antispam
