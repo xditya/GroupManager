@@ -571,7 +571,7 @@ Perintah yang tersedia adalah:
 """,
 
 
-"Feds_help": """Ah, manajemen grup. Hal ini semua menyenangkan dan permainan, sampai Anda mulai mendapatkan spammer di, dan Anda perlu untuk melarang mereka. Maka Anda perlu untuk mulai melarang lebih dan lebih, dan itu akan menyakitkan.
+"Federations_help": """Ah, manajemen grup. Hal ini semua menyenangkan dan permainan, sampai Anda mulai mendapatkan spammer di, dan Anda perlu untuk melarang mereka. Maka Anda perlu untuk mulai melarang lebih dan lebih, dan itu akan menyakitkan.
 Tapi kemudian Anda memiliki beberapa kelompok, dan Anda tidak ingin spammer ini dalam salah satu grup Anda - bagaimana Anda dapat menangani? Apakah Anda memiliki melarang mereka secara manual, di semua kelompok Anda?
 Terinspirasi oleh [Rose bot](t.me/MissRose_bot)
 Jangan lagi! Dengan Federasi, Anda dapat membuat ban di tumpang-tindih satu obrolan untuk semua obrolan lain.
