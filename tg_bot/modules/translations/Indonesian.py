@@ -230,6 +230,17 @@ Perintah tersedia:
     "send-group-settings": """Hai disana! Ada beberapa pengaturan untuk *{}* - pergi ke depan dan memilih apa
 anda tertarik.""",
 
+
+    "Disabled connections to this chat for users": "Disabled connections to this chat for users",
+    "Enabled connections to this chat for users": "Enabled connections to this chat for users",
+    "Please enter on/yes/off/no in group!": "Please enter on/yes/off/no in group!",
+    "Successfully connected to *{}*": "Successfully connected to *{}*",
+    "Connection failed!": "Connection failed!",
+    "Connections to this chat not allowed!": "Connections to this chat not allowed!",
+    "Write chat ID to connect!": "Write chat ID to connect!",
+    "Usage limited to PMs only!": "Usage limited to PMs only!",
+
+
 #Misc
 "RUNS-K": RUN_STRINGS,
 "SLAP_TEMPLATES-K": SLAP_TEMPLATES,
@@ -241,9 +252,261 @@ anda tertarik.""",
 "MARKDOWN_HELP-K": MARKDOWN_HELP,
 "INSULTS-K": INSULTS_STRINGS,
 
+
+    "The original sender, {}, has an ID of `{}`.\nThe forwarder, {}, has an ID of `{}`.":
+        "The original sender, {}, has an ID of `{}`.\nThe forwarder, {}, has an ID of `{}`.",
+    "{}'s id is `{}`.": "{}'s id is `{}`.",
+    "Your id is `{}`.": "Your id is `{}`.",
+    "This group's id is `{}`.": "This group's id is `{}`.",
+
+    "I can't extract a user from this.": "I can't extract a user from this.",
+    "<b>User info</b>:": "<b>User info</b>:",
+    "\nFirst Name: {}": "\nFirst Name: {}",
+    "\nLast Name: {}": "\nLast Name: {}",
+    "\nUsername: @{}": "\nUsername: @{}",
+    "\nPermanent user link: {}": "\nPermanent user link: {}",
+    "\n\nThis person is my owner - I would never do anything against them!":
+        "\n\nThis person is my owner - I would never do anything against them!",
+    "\nThis person is one of my sudo users! Nearly as powerful as my owner - so watch it.":
+        "\nThis person is one of my sudo users! Nearly as powerful as my owner - so watch it.",
+    "\nThis person is one of my support users! Not quite a sudo user, but can still gban you off the map.":
+        "\nThis person is one of my support users! Not quite a sudo user, but can still gban you off the map.",
+    "\nThis person has been whitelisted! That means I'm not allowed to ban/kick them.":
+        "\nThis person has been whitelisted! That means I'm not allowed to ban/kick them.",
+
+    "Its always banhammer time for me!": "Its always banhammer time for me!",
+
+    "It's {} in {}": "It's {} in {}",
+
+    "Please reply to a sticker to get its ID.": "Please reply to a sticker to get its ID.",
+    "Please reply to a sticker for me to upload its PNG.": "Please reply to a sticker for me to upload its PNG.",
+
+    "Write a location to check the weather.": "Write a location to check the weather.",
+    "I will keep an eye on both happy and sad times!": "I will keep an eye on both happy and sad times!",
+    "Today in {} is being {}, around {}°C.\n": "Today in {} is being {}, around {}°C.\n",
+    "Sorry, location not found.": "Sorry, location not found.",
+
+    "Deleting identifiable data...": "Deleting identifiable data...",
+
+    "Try forwarding the following message to me, and you'll see!":
+        "Try forwarding the following message to me, and you'll see!",
+    "/save test This is a markdown test. _italics_, *bold*, `code`, [URL](example.com) [button](buttonurl:github.com) [button2](buttonurl://google.com:same)":
+    """/save test This is a markdown test. _italics_, *bold*, `code`, \
+[URL](example.com)
+[Botón](buttonurl:github.com)
+[Botón2](buttonurl://google.com:same)""",
+
+#Admin
+"How am I meant to promote someone that's already an admin?": "How am I meant to promote someone that's already an admin?",
+"I can't promote myself! Get an admin to do it for me.": "I can't promote myself! Get an admin to do it for me.",
+"Successfully promoted in *{}*!": "Successfully promoted in *{}*!",
+
+"This person CREATED the chat, how would I demote them?": "This person CREATED the chat, how would I demote them?",
+"Can't demote what wasn't promoted!": "Can't demote what wasn't promoted!",
+"I can't demote myself!": "I can't demote myself!",
+"Successfully demoted in *{}*!": "Successfully demoted in *{}*!",
+"Could not demote. I might not be admin, or the admin status was appointed by another user, so I can't act upon them!": 
+"Could not demote. I might not be admin, or the admin status was appointed by another user, so I can't act upon them!",
+
+"I don't have access to the invite link, try changing my permissions!": "I don't have access to the invite link, try changing my permissions!",
+"I can only give you invite links for supergroups and channels, sorry!": "I can only give you invite links for supergroups and channels, sorry!",
+
+"Admins in": "Admins in",
+"this chat": "this chat",
+" (Creator)": " (Creator)",
+
+#AFK
+"{} is now AFK!": "{} is now AFK!",
+"{} is no longer AFK!": "{} is no longer AFK!",
+"{} is AFK!": "{} is AFK!",
+"{} is AFK! says its because of: \n{}": "{} is AFK! says its because of: \n{}",
+
+#Antiflood
+"I like to leave the flooding to natural disasters. But you, you were just a disappointment. Get out.":
+     "I like to leave the flooding to natural disasters. But you, you were just a disappointment. Get out.",
+"I can't kick people here, give me permissions first! Until then, I'll disable antiflood.":
+    "I can't kick people here, give me permissions first! Until then, I'll disable antiflood.",
+"Antiflood has been disabled.": "Antiflood has been disabled.",
+"Antiflood has to be either 0 (disabled), or a number bigger than 3 (enabled)!":
+    "Antiflood has to be either 0 (disabled), or a number bigger than 3 (enabled)!",
+"Antiflood has been updated and set to {}": "Antiflood has been updated and set to {}",
+"Unrecognised argument - please use a number, 'off', or 'no'.":
+    "Unrecognised argument - please use a number, 'off', or 'no'.",
+"I'm not currently enforcing flood control!": "I'm not currently enforcing flood control!",
+"I'm currently banning users if they send more than {} consecutive messages.":
+     "I'm currently banning users if they send more than {} consecutive messages.",
+
+#Antispam
+"I've enabled antispam security in this group. This will help protect you from spammers, unsavoury characters, and the biggest trolls.":
+ "I've enabled antispam security in this group. This will help protect you from spammers, unsavoury characters, and the biggest trolls.",
+
+"I've disabled antispam security in this group. GBans wont affect your users anymore. You'll be less protected from any trolls and spammers though!":
+    "I've disabled antispam security in this group. GBans wont affect your users anymore. You'll be less protected from any trolls and spammers though!",
+
+"Give me some arguments to choose a setting! on/off, yes/no!\n\nYour current setting is: {}\nWhen True, any gbans that happen will also happen in your group. When False, they won't, leaving you at the possible mercy of spammers.":
+    "Give me some arguments to choose a setting! on/off, yes/no!\n\nYour current setting is: {}\nWhen True, any gbans that happen will also happen in your group. When False, they won't, leaving you at the possible mercy of spammers.",
+
+"Globally banned: <b>{}</b>": "Globally banned: <b>{}</b>",
+"\nGlobally muted: <b>{}</b>": "\nGlobally muted: <b>{}</b>",
+"\nReason: {}": "\nReason: {}",
+
+#Bans
+    "I really wish I could ban admins...": "I really wish I could ban admins...",
+    "I'm not gonna BAN myself, are you crazy?": "I'm not gonna BAN myself, are you crazy?",
+    "Banned!": "Banned!",
+    "Well damn, I can't ban that user.": "Well damn, I can't ban that user.",
+    "You haven't specified a time to ban this user for!":
+        "You haven't specified a time to ban this user for!",
+    "Banned! User will be banned for {}.": "Banned! User will be banned for {}.",
+
+#Blacklist
+    "<b>Current blacklisted words in {}:</b>\n": "<b>Current blacklisted words in {}:</b>\n",
+    "There are no blacklisted messages in <b>{}</b>!": "There are no blacklisted messages in <b>{}</b>!",
+    "Added <code>{}</code> to the blacklist in <b>{}</b>!":
+        "Added <code>{}</code> to the blacklist in <b>{}</b>!",
+    "Tell me which words you would like to add to the blacklist.":
+        "Tell me which words you would like to add to the blacklist.",
+    "Removed <code>{}</code> from the blacklist in <b>{}</b>!":
+        "Removed <code>{}</code> from the blacklist in <b>{}</b>!",
+    "This isn't a blacklisted trigger...!": "This isn't a blacklisted trigger...!",
+    "None of these triggers exist, so they weren't removed.":
+        "None of these triggers exist, so they weren't removed.",
+    "Removed <code>{}</code> triggers from the blacklist in <b>{}</b>! {} did not exist, so were not removed.":
+        "Removed <code>{}</code> triggers from the blacklist in <b>{}</b>! {} did not exist, so were not removed.",
+    "Tell me which words you would like to remove from the blacklist.":
+        "Tell me which words you would like to remove from the blacklist.",
+
+    #Filters
+    "*Filters in {}:*\n": "*Filters in {}:*\n",
+    "local filters": "local filters",
+    "*local filters:*\n": "*local filters:*\n",
+    "No filters in {}!": "No filters in {}!",
+    "There is no note message - You can't JUST have buttons, you need a message to go with it!":
+        "There is no note message - You can't JUST have buttons, you need a message to go with it!",
+    "You didn't specify what to reply with!": "You didn't specify what to reply with!",
+    "Handler '{}' added in *{}*!": "Handler '{}' added in *{}*!",
+    "No filters are active in {}!": "No filters are active in {}!",
+    "Yep, I'll stop replying to that in *{}*." : "Yep, I'll stop replying to that in *{}*.",
+    "That's not a current filter - run /filters for all active filters.":
+        "That's not a current filter - run /filters for all active filters.",
+
+    #Disable
+    "Disabled the use of `{}` in *{}*": "Disabled the use of `{}` in *{}*",
+    "That command can't be disabled": "That command can't be disabled",
+    "What should I disable?": "What should I disable?",
+
+    "Enabled the use of `{}` in *{}*": "Enabled the use of `{}` in *{}*",
+    "Is that even disabled?": "Is that even disabled?",
+    "What should I enable?": "What should I enable?",
+
+    "The following commands are toggleable:\n{}": "The following commands are toggleable:\n{}",
+    "No commands can be disabled.": "No commands can be disabled.",
+    "No commands are disabled in *{}*!": "No commands are disabled in *{}*!",
+    "No commands are disabled!": "No commands are disabled!",
+    "The following commands are currently restricted in *{}*:\n{}":
+        "The following commands are currently restricted in *{}*:\n{}",
+
+#Locks
+    "Locked {} messages for all non-admins!": "Locked {} messages for all non-admins!",
+    "What are you trying to lock...? Try /locktypes for the list of lockables":
+        "What are you trying to lock...? Try /locktypes for the list of lockables",
+    "I'm not an administrator, or haven't got delete rights.":
+        "I'm not an administrator, or haven't got delete rights.",
+    "Unlocked {} for everyone!": "Unlocked {} for everyone!",
+    "What are you trying to unlock...? Try /locktypes for the list of lockables":
+        "What are you trying to unlock...? Try /locktypes for the list of lockables",
+    "What are you trying to unlock...?": "What are you trying to unlock...?",
+    "I see a bot, and I've been told to stop them joining... but I'm not admin!":
+        "I see a bot, and I've been told to stop them joining... but I'm not admin!",
+    "Only admins are allowed to add bots to this chat! Get outta here.":
+        "Only admins are allowed to add bots to this chat! Get outta here.",
+    "There are no current locks in *{}*.": "There are no current locks in *{}*.",
+    "These are the locks in *{}*:": "These are the locks in *{}*:",
+    "this chat": "this chat",
+
+#Log channel
+    "Now, forward the /setlog to the group you want to tie this channel to!":
+        "Now, forward the /setlog to the group you want to tie this channel to!",
+    "This channel has been set as the log channel for {}.":
+        "This channel has been set as the log channel for {}.",
+    "Successfully set log channel!": "Successfully set log channel!",
+    "*The steps to set a log channel are:*\n • add bot to the desired channel\n • send /setlog to the channel\n • forward the /setlog to the group\n":
+        """*The steps to set a log channel are:*
+ • add bot to the desired channel)
+ • send /setlog to the channel
+ • forward the /setlog to the group.""",
+
+    "Channel has been unlinked from {}": "Channel has been unlinked from {}",
+    "Log channel has been un-set.": "Log channel has been un-set.",
+    "No log channel has been set yet!": "No log channel has been set yet!",
+
+#Users
+    "I've seen them in <code>{}</code> chats in total.":
+        "I've seen them in <code>{}</code> chats in total.",
+    "I've seen them in... Wow. Are they stalking me? They're in all the same places I am... oh. It's me.":
+        "I've seen them in... Wow. Are they stalking me? They're in all the same places I am... oh. It's me.",
+
+#Msg_deleting
+    "Cannot delete all messages. The messages may be too old, I might not have delete rights, or this might not be a supergroup.":
+        "Cannot delete all messages. The messages may be too old, I might not have delete rights, or this might not be a supergroup.",
+    "Purge complete.": "Purge complete.",
+    "Reply to a message to select where to start purging from.":
+        "Reply to a message to select where to start purging from.",
+    "Whadya want to delete?": "Whadya want to delete?",
+
+#Muting
+    "You'll need to either give me a username to mute, or reply to someone to be muted.":
+        "You'll need to either give me a username to mute, or reply to someone to be muted.",
+    "I'm not muting myself!": "I'm not muting myself!",
+    "Afraid I can't stop an admin from talking!": "Afraid I can't stop an admin from talking!",
+    "You'll need to either give me a username to unmute, or reply to someone to be unmuted.":
+        "You'll need to either give me a username to unmute, or reply to someone to be unmuted.",
+    "This user already has the right to speak in {}.": "This user already has the right to speak in {}.",
+    "Yep, {} can start talking again in {}!": "Yep, {} can start talking again in {}!",
+    "This user isn't even in the chat, unmuting them won't make them talk more than they already do!":
+        "This user isn't even in the chat, unmuting them won't make them talk more than they already do!",
+    "I really wish I could mute admins...": "I really wish I could mute admins...",
+    "I'm not gonna MUTE myself, are you crazy?" : "I'm not gonna MUTE myself, are you crazy?",
+    "You haven't specified a time to mute this user for!":
+        "You haven't specified a time to mute this user for!",
+    "Muted for {} in {}!": "Muted for {} in {}!",
+    "This user is already muted in {}!": "This user is already muted in {}!",
+    "Well damn, I can't mute that user.": "Well damn, I can't mute that user.",
+
+    "You'll need to either give me a username to restrict, or reply to someone to be restricted.":
+        "You'll need to either give me a username to restrict, or reply to someone to be restricted.",
+    "I'm not restricting myself!": "I'm not restricting myself!",
+    "Afraid I can't restrict admins!": "Afraid I can't restrict admins!",
+    "{} is restricted from sending media in {}!": "{} is restricted from sending media in {}!",
+    "This user is already restricted in {}!": "This user is already restricted in {}!",
+    "This user isn't in the {}!": "This user isn't in the {}!",
+
+    "You'll need to either give me a username to unrestrict, or reply to someone to be unrestricted.":
+        "You'll need to either give me a username to unrestrict, or reply to someone to be unrestricted.",
+    "This user already has the rights to send anything in {}.": 
+        "This user already has the rights to send anything in {}.",
+    "Yep, {} can send media again in {}!": "Yep, {} can send media again in {}!",
+    "This user isn't even in the chat, unrestricting them won't make them send anything than they already do!":
+        "This user isn't even in the chat, unrestricting them won't make them send anything than they already do!",
+    "I really wish I could restrict admins...": "I really wish I could restrict admins...",
+    "I'm not gonna RESTRICT myself, are you crazy?": "I'm not gonna RESTRICT myself, are you crazy?",
+    "You haven't specified a time to restrict this user for!": 
+        "You haven't specified a time to restrict this user for!",
+    "Well damn, I can't restrict that user.": "Well damn, I can't restrict that user.",
+    "{} is muted in {}!": "{} is muted in {}!",
+    "Restricted from sending media for {} in {}!": "Restricted from sending media for {} in {}!",
+    "Restricted for {} in {}!": "Restricted for {} in {}!",
+
+#Notes
+    "Get rekt": "Get rekt.",
+
+
 #Multi
     "ID Obrolan salah diberikan!": "ID Obrolan tidak valid disediakan!", #Connections
-
+    "You don't seem to be referring to a user.": "You don't seem to be referring to a user.", #Admin, Bans, Muting
+    "I can't seem to find this user": "I can't seem to find this user", #Bans, Muting
+    "Yes": "Yes", #Antispam
+    "No": "No", #Antispam
 
 #__main__
     #Module names
