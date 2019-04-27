@@ -6,7 +6,7 @@ simple to use.
 
 Can be found on telegram as [Haruka Aya](https://t.me/HarukaAyaBot).
 
-Haruka and I are moderating a [support group](https://t.me/EchelonTeam), where you can ask for help setting up your
+Haruka are moderating many groups on Android community, and etc. You can find our [support group](https://t.me/HarukaAyaGroup), where you can ask for help setting up your
 bot, discover/request new features, report bugs, and stay in the loop whenever a new update is available. Of course
 I'll also help when a database schema changes, and some table column needs to be modified/added. Note to maintainers that all schema changes will be found in the commit messages, and its their responsibility to read any new commits.
 
