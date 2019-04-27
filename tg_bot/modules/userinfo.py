@@ -82,10 +82,9 @@ def set_about_bio(bot: Bot, update: Update):
             message.reply_text("Ha, you can't set your own bio! You're at the mercy of others here...")
             return
         elif user_id == bot.id and sender.id not in SUDO_USERS:
-            message.reply_text("Erm... yeah, I only trust sudo users to set my bio.")
+            message.reply_text("Erm... yeah, I only trust sudo users to set my bio LMAO.")
             return
-
-        elif user_id == user_id and sender.id not in SUDO_USERS:
+        elif user_id in SUDO_USERS and sender.id not in SUDO_USERS:
             message.reply_text("Erm... yeah, I only trust sudo users to set sudo users bio LMAO.")
             return
 
@@ -140,3 +139,4 @@ dispatcher.add_handler(SET_BIO_HANDLER)
 dispatcher.add_handler(GET_BIO_HANDLER)
 dispatcher.add_handler(SET_ABOUT_HANDLER)
 dispatcher.add_handler(GET_ABOUT_HANDLER)
+
