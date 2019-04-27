@@ -278,9 +278,9 @@ def bootleggers(bot: Bot, update: Update):
         nestedjson = fetch.json()
 
         if codename.lower() == 'x00t':
-            device = 'X00T'
+            devicetoget = 'X00T'
         else:
-            device = codename.lower()
+            devicetoget = codename.lower()
 
         reply_text = ""
         devices = {}
@@ -288,13 +288,13 @@ def bootleggers(bot: Bot, update: Update):
         for device, values in nestedjson.items():
             devices.update({device: values})
 
-        if device in devices:
-            for oh, baby in devices[device].items():
+        if devicetoget in devices:
+            for oh, baby in devices[devicetoget].items():
                 dontneedlist = ['id', 'downloadfolder', 'filename', 'download', 'xdathread']
                 if baby and oh not in dontneedlist:
                     reply_text += f"\n*{oh.title()}: {baby}*"
-            reply_text += f"\n*XDA Thread:* [Here]({devices[device]['xdathread']})"
-            reply_text += f"\n*Download:* [{devices[device]['filename']}]({devices[device]['download']})"
+            reply_text += f"\n*XDA Thread:* [Here]({devices[devicetoget]['xdathread']})"
+            reply_text += f"\n*Download:* [{devices[devicetoget]['filename']}]({devices[devicetoget]['download']})"
             reply_text = reply_text.strip("\n")
         else:
             reply_text = 'Device not found.'
