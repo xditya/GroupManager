@@ -105,7 +105,7 @@ def reverse(bot: Bot, update: Update, args: List[str]):
             imgspage = match['similar_images']
 
         if guess and imgspage:
-            xx.edit_text(f"[{guess}]({fetchUrl})\nLooking for images...", parse_mode='Markdown')
+            xx.edit_text(f"[{guess}]({fetchUrl})\nLooking for images...", parse_mode='Markdown', disable_web_page_preview=True)
         else:
             xx.edit_text("Couldn't find anything.")
             return
@@ -113,7 +113,7 @@ def reverse(bot: Bot, update: Update, args: List[str]):
         images = scam(imgspage, lim)
         if len(images) == 0:
             xx.edit_text(f"[{guess}]({fetchUrl})\n[Visually similar images]({imgspage})"
-                          "\nCouldn't fetch any images.", parse_mode='Markdown')
+                          "\nCouldn't fetch any images.", parse_mode='Markdown', disable_web_page_preview=True)
             return
 
         imglinks = []
@@ -122,7 +122,7 @@ def reverse(bot: Bot, update: Update, args: List[str]):
             imglinks.append(lmao)
 
         bot.send_media_group(chat_id=chat_id, media=imglinks, reply_to_message_id=rtmid)
-        xx.edit_text(f"[{guess}]({fetchUrl})\n[Visually similar images]({imgspage})", parse_mode='Markdown')
+        xx.edit_text(f"[{guess}]({fetchUrl})\n[Visually similar images]({imgspage})", parse_mode='Markdown', disable_web_page_preview=True)
     except TelegramError as e:
         print(e)
     except Exception as exception:
@@ -161,6 +161,8 @@ def scam(imgspage, lim):
 
     single = opener.open(imgspage).read()
     decoded = single.decode('utf-8')
+    if int(lim) > 10:
+        lim = 10
 
     imglinks = []
     counter = 0
@@ -171,7 +173,7 @@ def scam(imgspage, lim):
     for imglink in oboi:
         counter += 1
         imglinks.append(imglink)
-        if counter >= int(lim) or counter == 10:
+        if counter >= int(lim):
             break
 
     return imglinks
