@@ -290,9 +290,22 @@ def bootleggers(bot: Bot, update: Update):
 
         if devicetoget in devices:
             for oh, baby in devices[devicetoget].items():
-                dontneedlist = ['id', 'downloadfolder', 'filename', 'download', 'xdathread']
+                dontneedlist = ['id', 'filename', 'download', 'xdathread']
+                peaksmod = {'fullname': 'Device name', 'buildate': 'Build date', 'buildsize': 'Build size',
+                            'downloadfolder': 'SourceForge folder', 'mirrorlink': 'Mirror link', 'xdathread': 'XDA thread'}
                 if baby and oh not in dontneedlist:
-                    reply_text += f"\n*{oh.title()}: {baby}*"
+                    if oh in peaksmod:
+                        oh = peaksmod[oh]
+                    else:
+                        oh = oh.title()
+
+                    if oh == 'SourceForge folder':
+                        reply_text += f"\n*{oh}:* [Here]({baby})"
+                    elif oh == 'Mirror link':
+                        reply_text += f"\n*{oh}:* [Here]({baby})"
+                    else:
+                        reply_text += f"\n*{oh}:* `{baby}`"
+
             reply_text += f"\n*XDA Thread:* [Here]({devices[devicetoget]['xdathread']})"
             reply_text += f"\n*Download:* [{devices[devicetoget]['filename']}]({devices[devicetoget]['download']})"
             reply_text = reply_text.strip("\n")
