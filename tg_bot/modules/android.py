@@ -269,6 +269,40 @@ def getaex(bot: Bot, update: Update, args: List[str]):
     else:
         update.effective_message.reply_text("No builds found for the provided device-version combo.")
 
+@run_async
+def bootleggers(bot: Bot, update: Update):
+    message = update.effective_message
+    codename = message.text[len('/bootleggers '):]
+    fetch = get('https://bootleggersrom-devices.github.io/api/devices.json')
+    if fetch.status_code == 200:
+        nestedjson = fetch.json()
+
+        if codename.lower() == 'x00t':
+            device = 'X00T'
+        else:
+            device = codename.lower()
+
+        reply_text = ""
+        devices = {}
+
+        for device, values in nestedjson.items():
+            devices.update({device: values})
+
+        if device in devices:
+            for oh, baby in devices[device].items():
+                dontneedlist = ['id', 'downloadfolder', 'filename', 'download', 'xdathread']
+                if baby and oh not in dontneedlist:
+                    reply_text += f"\n*{oh.title()}: {baby}*"
+            reply_text += f"\n*XDA Thread:* [Here]({devices[device]['xdathread']})"
+            reply_text += f"\n*Download:* [{devices[device]['filename']}]({devices[device]['download']})"
+            reply_text = reply_text.strip("\n")
+        else:
+            reply_text = 'Device not found.'
+
+    elif fetch.status_code == 404:
+        reply_text="Couldn't reach Bootleggers API."
+    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+
 
 __help__ = """
  *Device Specific Rom*
@@ -303,6 +337,7 @@ POSP_HANDLER = DisableAbleCommandHandler("posp", posp, admin_ok=True)
 DOTOS_HANDLER = DisableAbleCommandHandler("dotos", dotos, admin_ok=True)
 PIXYS_HANDLER = DisableAbleCommandHandler("pixys", pixys, admin_ok=True)
 LOS_HANDLER = DisableAbleCommandHandler("los", los, admin_ok=True)
+BOOTLEGGERS_HANDLER = DisableAbleCommandHandler("bootleggers", bootleggers, admin_ok=True)
 
 dispatcher.add_handler(GETAEX_HANDLER)
 dispatcher.add_handler(MIUI_HANDLER)
@@ -317,3 +352,4 @@ dispatcher.add_handler(POSP_HANDLER)
 dispatcher.add_handler(DOTOS_HANDLER)
 dispatcher.add_handler(PIXYS_HANDLER)
 dispatcher.add_handler(LOS_HANDLER)
+dispatcher.add_handler(BOOTLEGGERS_HANDLER)
