@@ -17,7 +17,6 @@ aiohttp>=2.2.5
 Pillow>=4.2.0
 #Cool stuff by Peak
 PyLyrics
-gsearch
 #AEX
 hurry.filesize
 #translator
