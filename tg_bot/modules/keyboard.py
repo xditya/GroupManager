@@ -53,7 +53,6 @@ def keyboard(bot, update):
     update.effective_message.reply_text("Keyboard Updated",
                                             reply_markup=ReplyKeyboardMarkup([[
                                                 KeyboardButton("/help - Bot Help"), 
-                                                KeyboardButton("/donate - Donate"),
                                                 KeyboardButton("/notes - Notes")],
                                              [KeyboardButton(btn1)], 
                                              [KeyboardButton(btn2)],

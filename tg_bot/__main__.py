@@ -20,10 +20,7 @@ from tg_bot.modules.helper_funcs.misc import paginate_modules
 from tg_bot.modules.translations.strings import tld, tld_help
 from tg_bot.modules.connection import connected
 
-DONATE_STRING = """Heya, glad to hear you want to donate! I do not actually want for myself but it \
-It took lots of work for [my creator](t.me/SonOfLars) to get me to where I am now, and every donation helps \
-motivate him to make me even better. All the donation money will go to a better VPS to host me, and/or beer \
-https://orangefox.tech/donate."""
+DONATE_STRING = """Heya, glad to hear you want to donate! But we do not accept any donations!"""
 
 IMPORTED = {}
 MIGRATEABLE = []
