@@ -173,51 +173,49 @@ HIT = (
 )
 
 MARKDOWN_HELP = """
-Markdown is a very powerful formatting tool supported by telegram. {} has some enhancements, to make sure that \
-saved messages are correctly parsed, and to allow you to create buttons.
-- <code>_italic_</code>: wrapping text with '_' will produce italic text
-- <code>*bold*</code>: wrapping text with '*' will produce bold text
-- <code>`code`</code>: wrapping text with '`' will produce monospaced text, also known as 'code'
-- <code>[sometext](someURL)</code>: this will create a link - the message will just show <code>sometext</code>, \
-and tapping on it will open the page at <code>someURL</code>.
-EG: <code>[test](example.com)</code>
-- <code>[buttontext](buttonurl:someURL)</code>: this is a special enhancement to allow users to have telegram \
-buttons in their markdown. <code>buttontext</code> will be what is displayed on the button, and <code>someurl</code> \
-will be the url which is opened.
-EG: <code>[This is a button](buttonurl:example.com)</code>
-If you want multiple buttons on the same line, use :same, as such:
-<code>[one](buttonurl://example.com)
-[two](buttonurl://google.com:same)</code>
-This will create two buttons on a single line, instead of one button per line.
+Markdown è uno strumento di formattazione molto potente supportato da telegram. {} ha alcuni miglioramenti, per assicurarti che \
+le note salvate vengano formattate correttamente e ti permette di creare pulsanti.
+- <code>_corsivo_</code>: se il testo è inserito tra '_' produrrà testo in corsivo
+- <code>*grassetto*</code>: se il testo è inserito tra '*' produrrà testo in grassetto
+- <code>`codice`</code>: se il testo è inserito tra '`' produrrà testo monospazio, conosciuto anche come 'codice'
+- <code>[testo](url)</code>: produrrà un link - il messaggio verrà visualizzato in <code>testo</code>, \
+e cliccando su di esso vi porterà alla pagina che avete inserito in <code>url</code>.
+ES: <code>[testo](esempio.com)</code>
+- <code>[testodelpulsante](buttonurl:url)</code>: questo è un miglioramento speciale che consente agli utenti di \
+avere pulsanti in telegram. <code>testodelpulsante</code> sarà il nome che viene visualizzato sul pulsante, e <code>url</code> \
+sarà la pagina web o l'URL che si aprirà quando si preme il tasto.
+ES: <code>[Questo è un pulsante](buttonurl:esempio.com)</code>
+Se vuoi mettere diversi pulsanti sulla stessa riga, usa :same, come qui:
+<code>[uno](buttonurl://esempio.com)
+[due](buttonurl://google.it:same)</code>
+Questo creerà due pulsanti sulla stessa linea invece di uno su ogni linea.
 """
 
 ItalianStrings = {
-    "send-start": """Hi {}, my name {}! If you have any questions on how to use me, read /help - and then head to @HarukaAyaGroup .
-I'm a group manager bot maintained by [this person](tg://user?id={654839744}). I'm a [Marie](https://github.com/PaulSonOfLars/tgbot) fork.
-I'm built in python3, using the \
-python-telegram-bot library, and am fully opensource - you can find what makes me tick\
-[here](https://github.com/peaktogoo/HarukaAya))!
-Feel free to submit pull requests on github, or to contact my support group, @EchelonTeam, with any bugs, questions \
-or feature requests you might have :)
-If you enjoying using me and/or would like to help me survive in the wild, hit /donate to help fund/upgrade my VPS!
+    "send-start": """Ciao {}, il mio nome è {}! Se avete domande su come usarmi, leggete /help - e poi unitevi al nostro gruppo: @HarukaAyaGroup .
+Posso aiutarti a gestire i tuoi gruppi. Sono sostenuta da [questa persona](tg://user?id={654839744}) e sono un fork di [Marie](https://github.com/PaulSonOfLars/tgbot) .
+Sono realizzata in python3, usando \
+python-telegram-bot library, e sono completamente opensource - puoi trovare il mio codice sorgente\
+[qui](https://github.com/peaktogoo/HarukaAya))!
+Puoi inviare richieste di pull su github, scrivere nel mio gruppo di supporto, @HarukaAyaGroup, segnalando bugs oppure fare domande \
+e richiedere di nuove funzioni. :)
 """,
 
-    "send-help": """Hey there! My name is *{}*.
-I'm a modular group management bot with a few fun extras! Have a look at the following for an idea of some of the things I can help you with.
-Main commands available:
- - /start: Cool command to check if the bot is alive or not
- - /help: PM's you this message.
- - /help <module name>: PM's you info about that module.
- - /donate: information about how to donate!
- - /lang: Change bot language
+    "send-help": """Hey ciao! Il mio nome è *{}*.
+Posso aiutarti a gestire i tuoi gruppi con alcune funzioni divertenti! Dai un'occhiata alle mie funzioni per avere un'idea di come posso aiutarti.
+Comandi principali disponibili:
+ - /start: Verifica se il bot funziona oppure no.
+ - /help: Vedi tutti i miei comandi.
+ - /help <nome del modulo>: Ottieni informazioni su questo modulo.
+ - /donate: Informazioni su come donare!
+ - /lang: Cambia lingua al bot
  - /settings:
-   - in PM: will send you your settings for all supported modules.
-   - in a group: will redirect you to pm, with all that chat's settings.
+   - in privato: Ti invierò le impostazioni per tutti i moduli supportati
+   - nel gruppo: Ti reindirizzerò in privato con tutte le impostazioni della chat.
    {}
    """,
 
-    "send-group-settings": """Hi there! There are quite a few settings for *{}* - go ahead and pick what
-you're interested in.""",
+    "send-group-settings": """Hey ciao! Ci sono molti settaggi per *{}* - tappa il bottone impostazioni e seleziona ciò che ti interessa.""",
 
 
     "Disabled connections to this chat for users": "Disabled connections to this chat for users",
