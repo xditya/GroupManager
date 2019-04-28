@@ -152,7 +152,7 @@ def control_panel(bot, update):
     # ONLY send help in PM
     if chat.type != chat.PRIVATE:
 
-        update.effective_message.reply_text("Contact me in PM to acces the control panel.",
+        update.effective_message.reply_text("Contact me in PM to access the control panel.",
                                             reply_markup=InlineKeyboardMarkup(
                                                 [[InlineKeyboardButton(text="Control Panel",
                                                                        url=f"t.me/{bot.username}?start=controlpanel")]]))
