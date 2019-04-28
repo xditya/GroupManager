@@ -1,4 +1,4 @@
-tg_bot/config.py
+haruka/config.py
 *.pyc
 .idea/
 logfile
