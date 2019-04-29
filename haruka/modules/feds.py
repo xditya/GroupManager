@@ -11,7 +11,7 @@ from telegram import ParseMode, Update, Bot, Chat, User
 from telegram.ext import run_async, CommandHandler, MessageHandler, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from haruka import dispatcher, OWNER_ID, SUDO_USERS, WHITELIST_USERS, MESSAGE_DUMP
+from haruka import dispatcher, OWNER_ID, SUDO_USERS, WHITELIST_USERS, MESSAGE_DUMP, LOGGER
 from haruka.modules.helper_funcs.handlers import CMD_STARTERS
 from haruka.modules.helper_funcs.misc import is_module_loaded
 from haruka.modules.helper_funcs.misc import send_to_list
@@ -29,7 +29,7 @@ from haruka.modules.connection import connected
 # Federation rework in process by Mizukito Akito 2019
 # Thanks to @peaktogoo for /fbroadcast
 # Time spended on feds = 10h
-print("Original federation module by MrYacha, reworked by Mizukito Akito (@peaktogoo) on Telegram.")
+LOGGER.info("Original federation module by MrYacha, reworked by Mizukito Akito (@peaktogoo) on Telegram.")
 
 FBAN_ERRORS = {
     "User is an administrator of the chat",

@@ -18,7 +18,7 @@ from telegram import ParseMode
 from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from haruka import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER
+from haruka import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, LOGGER
 from haruka.__main__ import GDPR
 from haruka.__main__ import STATS, USER_INFO
 from haruka.modules.disable import DisableAbleCommandHandler
@@ -36,7 +36,7 @@ from requests import get
 # This module was inspired by Android Helper Bot by Vachounet
 # None of the code were taken from the bot, to avoid any more confusion.
 
-print("Original Android Modules by @peaktogoo on Telegram")
+LOGGER.info("Original Android Modules by @peaktogoo on Telegram")
 
 
 AEX_OTA_API = "https://api.aospextended.com/ota/"
