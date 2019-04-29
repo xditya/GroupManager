@@ -10,7 +10,7 @@ from telegram.ext import CommandHandler, Filters, MessageHandler, CallbackQueryH
 from telegram.ext.dispatcher import run_async, DispatcherHandlerStop, Dispatcher
 from telegram.utils.helpers import escape_markdown
 
-from haruka import dispatcher, updater, TOKEN, WEBHOOK, SUDO_USERS, OWNER_ID, DONATION_LINK, CERT_PATH, PORT, URL, LOGGER, \
+from haruka import dispatcher, updater, TOKEN, WEBHOOK, SUDO_USERS, OWNER_ID, CERT_PATH, PORT, URL, LOGGER, \
     ALLOW_EXCL
 
 
@@ -94,14 +94,16 @@ def test(bot: Bot, update: Update):
 
 @run_async
 def start(bot: Bot, update: Update, args: List[str]):
-    print("Start")
+    LOGGER.info("Start")
     chat = update.effective_chat  # type: Optional[Chat]
     #query = update.callback_query #Unused variable
     if update.effective_chat.type == "private":
         if len(args) >= 1:
             if args[0].lower() == "help":
                 send_help(update.effective_chat.id, tld(chat.id, "send-help").format(
-                     dispatcher.bot.first_name, "" if not ALLOW_EXCL else tld(chat.id, "\nAll commands can either be used with `/` or `!`.\n")))
+                     dispatcher.bot.first_name, "" if not ALLOW_EXCL else tld(
+                         chat.id, "\nAll commands can either be used with `/` or `!`.\n"
+                             )))
 
             elif args[0].lower().startswith("stngs_"):
                 match = re.match("stngs_(.*)", args[0].lower())
@@ -132,8 +134,13 @@ def send_start(bot, update):
         pass
 
     #chat = update.effective_chat  # type: Optional[Chat] and unused variable
-    text = "Hey there! My name is Haruka Aya - I'm here to help you manage your groups! Click Help button to find out more about how to use me to my full potential."
-    text += "\n \nJoin [Haruka Aya Group](https://t.me/HarukaAyaGroup) ( @HarukaAyaGroup ) if you need any support or help \n \nFollow [Haruka Aya](https://t.me/HarukaAya) ( @HarukaAya ) if you want to keep up with the news, updates and bot downtime! \n \nMy source can be founded [here](https://github.com/peaktogoo/HarukaAya) \n \nMade with love by @peaktogoo \n \nWant to add me to your group? [Click here!](t.me/HarukaAyaBot?startgroup=true)"
+    text = "Hey there! My name is Haruka Aya - I'm here to help you manage your groups!\n\
+Click Help button to find out more about how to use me to my full potential.\n\n"
+
+    text += "Join [Haruka Aya Group](https://t.me/HarukaAyaGroup) ( @HarukaAyaGroup ) if you need any support or help\n\n\
+Follow [Haruka Aya](https://t.me/HarukaAya) ( @HarukaAya ) if you want to keep up with the news, updates and bot downtime!\n\n\
+My source can be founded [here](https://github.com/peaktogoo/HarukaAya)\n\n\
+Made with love by @peaktogoo\n\nWant to add me to your group? [Click here!](t.me/HarukaAyaBot?startgroup=true)"
 
     keyboard = [[InlineKeyboardButton(text="📢 Support Group", url="https://t.me/HarukaAyaGroup")]]
     keyboard += [[InlineKeyboardButton(text="🛠 Control panel", callback_data="cntrl_panel_M")]]
@@ -145,7 +152,7 @@ def send_start(bot, update):
 
 
 def control_panel(bot, update):
-    print("Panel")
+    LOGGER.info("Control panel")
     chat = update.effective_chat
     user = update.effective_user
 
@@ -168,7 +175,7 @@ def control_panel(bot, update):
         G_match = re.match(r"cntrl_panel_G", query.data)
         back_match = re.match(r"help_back", query.data)
 
-        print(query.data)
+        LOGGER.info(query.data)
     else:
         M_match = "Haruka Aya is best bot" #LMAO, don't uncomment
 
@@ -288,27 +295,27 @@ def error_callback(bot, update, error):
     try:
         raise error
     except Unauthorized:
-        print("no nono1")
-        print(error)
+        LOGGER.info("NO NONO1")
+        LOGGER.info(error)
         # remove update.message.chat_id from conversation list
     except BadRequest:
-        print("no nono2")
-        print("BadRequest caught")
-        print(error)
+        LOGGER.info("NO NONO2")
+        LOGGER.info("BadRequest caught")
+        LOGGER.info(error)
 
         # handle malformed requests - read more below!
     except TimedOut:
-        print("no nono3")
+        LOGGER.info("NO NONO3")
         # handle slow connection problems
     except NetworkError:
-        print("no nono4")
+        LOGGER.info("NO NONO4")
         # handle other connection problems
     except ChatMigrated as err:
-        print("no nono5")
-        print(err)
+        LOGGER.info("NO NONO5")
+        LOGGER.info(err)
         # the chat_id of a group has changed, use e.new_chat_id instead
     except TelegramError:
-        print(error)
+        LOGGER.info(error)
         # handle all other telegram related errors
 
 
@@ -337,23 +344,23 @@ def help_button(bot: Bot, update: Update):
 
         elif prev_match:
             curr_page = int(prev_match.group(1))
-            query.message.reply_text(tld(chat.id, "send-help").format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else tld(chat.id, "\nAll commands can either be used with `/` or `!`.\n")),
-                                     parse_mode=ParseMode.MARKDOWN,
-                                     reply_markup=InlineKeyboardMarkup(
-                                         paginate_modules(chat.id, curr_page - 1, HELPABLE, "help")))
+            query.message.reply_text(tld(chat.id, "send-help").format(
+                dispatcher.bot.first_name, "" if not ALLOW_EXCL else tld(chat.id, "\nAll commands can either be used with `/` or `!`.\n")
+                    ),
+                    parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(paginate_modules(chat.id, curr_page - 1, HELPABLE, "help")))
 
         elif next_match:
             next_page = int(next_match.group(1))
-            query.message.reply_text(tld(chat.id, "send-help").format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else tld(chat.id, "\nAll commands can either be used with `/` or `!`.\n")),
-                                     parse_mode=ParseMode.MARKDOWN,
-                                     reply_markup=InlineKeyboardMarkup(
-                                         paginate_modules(chat.id, next_page + 1, HELPABLE, "help")))
+            query.message.reply_text(tld(chat.id, "send-help").format(
+                dispatcher.bot.first_name, "" if not ALLOW_EXCL else tld(chat.id, "\nAll commands can either be used with `/` or `!`.\n")
+                    ),
+                    parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(paginate_modules(chat.id, next_page + 1, HELPABLE, "help")))
 
         elif back_match:
-            query.message.reply_text(text=tld(chat.id, "send-help").format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else tld(chat.id, "\nAll commands can either be used with `/` or `!`.\n")),
-                                     parse_mode=ParseMode.MARKDOWN,
-                                     reply_markup=InlineKeyboardMarkup(
-                                         paginate_modules(chat.id, 0, HELPABLE, "help")))
+            query.message.reply_text(text=tld(chat.id, "send-help").format(
+                dispatcher.bot.first_name, "" if not ALLOW_EXCL else tld(chat.id, "\nAll commands can either be used with `/` or `!`.\n")
+                    ),
+                    parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(paginate_modules(chat.id, 0, HELPABLE, "help")))
 
         # ensure no spinny white circle
         bot.answer_callback_query(query.id)
@@ -396,7 +403,9 @@ def get_help(bot: Bot, update: Update):
         send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text=tld(chat.id, "Back"), callback_data="help_back")]]))
 
     else:
-        send_help(chat.id, tld(chat.id, "send-help").format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else tld(chat.id, "\nAll commands can either be used with `/` or `!`.\n")))
+        send_help(chat.id, tld(chat.id, "send-help").format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else tld(
+            chat.id, "\nAll commands can either be used with `/` or `!`.\n"
+                )))
 
 
 def send_settings(chat_id, user_id, update, user=False):
