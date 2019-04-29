@@ -65,16 +65,12 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
                           can_restrict_members=bot_member.can_restrict_members,
                           can_pin_messages=bot_member.can_pin_messages,
                           can_promote_members=bot_member.can_promote_members)
-    
-    print(ls)
 
-    message.reply_text(tld(chat.id, "Successfully promoted in *{}*!").format(chatD.title), parse_mode=ParseMode.MARKDOWN)
-    return "<b>{}:</b>" \
-           "\n#PROMOTED" \
-           "\n<b>Admin:</b> {}" \
-           "\n<b>User:</b> {}".format(html.escape(chatD.title),
-                                      mention_html(user.id, user.first_name),
-                                      mention_html(user_member.user.id, user_member.user.first_name))
+    message.reply_text(tld(chat.id, f"Successfully promoted in *{chatD.title}*!"), parse_mode=ParseMode.MARKDOWN)
+    return f"<b>{html.escape(chatD.title)}:</b>" \
+            "\n#PROMOTED" \
+           f"\n<b>Admin:</b> {mention_html(user.id, user.first_name)}" \
+           f"\n<b>User:</b> {mention_html(user_member.user.id, user_member.user.first_name)}"
 
 
 @run_async
@@ -126,16 +122,16 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
                               can_restrict_members=False,
                               can_pin_messages=False,
                               can_promote_members=False)
-        message.reply_text(tld(chat.id, "Successfully demoted in *{}*!").format(chatD.title), parse_mode=ParseMode.MARKDOWN)
-        return "<b>{}:</b>" \
-               "\n#DEMOTED" \
-               "\n<b>Admin:</b> {}" \
-               "\n<b>User:</b> {}".format(html.escape(chatD.title),
-                                          mention_html(user.id, user.first_name),
-                                          mention_html(user_member.user.id, user_member.user.first_name))
+        message.reply_text(tld(chat.id, f"Successfully demoted in *{chatD.title}*!"), parse_mode=ParseMode.MARKDOWN)
+        return f"<b>{html.escape(chatD.title)}:</b>" \
+                "\n#DEMOTED" \
+               f"\n<b>Admin:</b> {mention_html(user.id, user.first_name)}" \
+               f"\n<b>User:</b> {mention_html(user_member.user.id, user_member.user.first_name)}"
 
     except BadRequest:
-        message.reply_text(tld(chat.id, "Could not demote. I might not be admin, or the admin status was appointed by another user, so I can't act upon them!"))
+        message.reply_text(
+            tld(chat.id, "Could not demote. I might not be admin, or the admin status was appointed by another user, so I can't act upon them!")
+            )
         return ""
 
 
@@ -164,9 +160,9 @@ def pin(bot: Bot, update: Update, args: List[str]) -> str:
                 pass
             else:
                 raise
-        return "<b>{}:</b>" \
-               "\n#PINNED" \
-               "\n<b>Admin:</b> {}".format(html.escape(chat.title), mention_html(user.id, user.first_name))
+        return f"<b>{html.escape(chat.title)}:</b>" \
+                "\n#PINNED" \
+               f"\n<b>Admin:</b> {mention_html(user.id, user.first_name)}"
 
     return ""
 
@@ -188,10 +184,9 @@ def unpin(bot: Bot, update: Update) -> str:
         else:
             raise
 
-    return "<b>{}:</b>" \
-           "\n#UNPINNED" \
-           "\n<b>Admin:</b> {}".format(html.escape(chat.title),
-                                       mention_html(user.id, user.first_name))
+    return f"<b>{html.escape(chat.title)}:</b>" \
+            "\n#UNPINNED" \
+           f"\n<b>Admin:</b> {mention_html(user.id, user.first_name)}"
 
 
 @run_async
@@ -214,9 +209,8 @@ def invite(bot: Bot, update: Update):
         bot_member = chatP.get_member(bot.id)
         if bot_member.can_invite_users:
             invitelink = chatP.invite_link
-            print(invitelink)
+            #print(invitelink)
             if not invitelink:
-                print("Test")
                 invitelink = bot.exportChatInviteLink(chatP.id)
 
             update.effective_message.reply_text(invitelink)
@@ -240,17 +234,15 @@ def adminlist(bot, update):
     
     administrators = chatP.get_administrators()
 
-    print(chat.id, user.id)
-
     text = tld(chat.id, "Admins in") + " *{}*:".format(chatP.title or tld(chat.id, "this chat"))
     for admin in administrators:
         user = admin.user
         status = admin.status
         if status == "creator":
-            name = "{}".format(user.first_name + (user.last_name or "")) + tld(chat.id, " (Creator)")
+            name = user.first_name + (user.last_name or "") + tld(chat.id, " (Creator)")
         else:
-            name = "{}".format(user.first_name + (user.last_name or ""))
-        text += "\n• `{}`".format(name)
+            name = user.first_name + (user.last_name or "")
+        text += f"\n• `{name}`"
 
     update.effective_message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
 
