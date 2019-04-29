@@ -295,27 +295,27 @@ def error_callback(bot, update, error):
     try:
         raise error
     except Unauthorized:
-        LOGGER.info("NO NONO1")
-        LOGGER.info(error)
+        LOGGER.warning("NO NONO1")
+        LOGGER.warning(error)
         # remove update.message.chat_id from conversation list
     except BadRequest:
-        LOGGER.info("NO NONO2")
-        LOGGER.info("BadRequest caught")
-        LOGGER.info(error)
+        LOGGER.warning("NO NONO2")
+        LOGGER.warning("BadRequest caught")
+        LOGGER.warning(error)
 
         # handle malformed requests - read more below!
     except TimedOut:
-        LOGGER.info("NO NONO3")
+        LOGGER.warning("NO NONO3")
         # handle slow connection problems
     except NetworkError:
-        LOGGER.info("NO NONO4")
+        LOGGER.warning("NO NONO4")
         # handle other connection problems
     except ChatMigrated as err:
-        LOGGER.info("NO NONO5")
-        LOGGER.info(err)
+        LOGGER.warning("NO NONO5")
+        LOGGER.warning(err)
         # the chat_id of a group has changed, use e.new_chat_id instead
     except TelegramError:
-        LOGGER.info(error)
+        LOGGER.warning(error)
         # handle all other telegram related errors
 
 
