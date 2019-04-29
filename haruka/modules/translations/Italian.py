@@ -180,13 +180,13 @@ le note salvate vengano formattate correttamente e ti permette di creare pulsant
 - <code>`codice`</code>: se il testo è inserito tra '`' produrrà testo monospazio, conosciuto anche come 'codice'
 - <code>[testo](url)</code>: produrrà un link - il messaggio verrà visualizzato in <code>testo</code>, \
 e cliccando su di esso vi porterà alla pagina che avete inserito in <code>url</code>.
-ES: <code>[testo](esempio.com)</code>
+ES: <code>[testo](esempio.it)</code>
 - <code>[testodelpulsante](buttonurl:url)</code>: questo è un miglioramento speciale che consente agli utenti di \
 avere pulsanti in telegram. <code>testodelpulsante</code> sarà il nome che viene visualizzato sul pulsante, e <code>url</code> \
 sarà la pagina web o l'URL che si aprirà quando si preme il tasto.
-ES: <code>[Questo è un pulsante](buttonurl:esempio.com)</code>
+ES: <code>[Questo è un pulsante](buttonurl:esempio.it)</code>
 Se vuoi mettere diversi pulsanti sulla stessa riga, usa :same, come qui:
-<code>[uno](buttonurl://esempio.com)
+<code>[uno](buttonurl://esempio.it)
 [due](buttonurl://google.it:same)</code>
 Questo creerà due pulsanti sulla stessa linea invece di uno su ogni linea.
 """
@@ -218,14 +218,14 @@ Comandi principali disponibili:
     "send-group-settings": """Hey ciao! Ci sono molti settaggi per *{}* - tappa il bottone impostazioni e seleziona ciò che ti interessa.""",
 
 
-    "Disabled connections to this chat for users": "Disabled connections to this chat for users",
-    "Enabled connections to this chat for users": "Enabled connections to this chat for users",
-    "Please enter on/yes/off/no in group!": "Please enter on/yes/off/no in group!",
-    "Successfully connected to *{}*": "Successfully connected to *{}*",
-    "Connection failed!": "Connection failed!",
-    "Connections to this chat not allowed!": "Connections to this chat not allowed!",
-    "Write chat ID to connect!": "Write chat ID to connect!",
-    "Usage limited to PMs only!": "Usage limited to PMs only!",
+   "Disabled connections to this chat for users": "Connessioni disabilitate a questa chat per gli utenti",
+    "Enabled connections to this chat for users": "Connessioni abilitate a questa chat per gli utenti",
+    "Please enter on/yes/off/no in group!": "Per favore scrivi on/yes/off/no nel gruppo!",
+    "Successfully connected to *{}*": "Connesso a *{}*",
+    "Connection failed!": "Connessione fallita!",
+    "Connections to this chat not allowed!": "Connessioni non permesse a questa chat!",
+    "Write chat ID to connect!": "Scrivi l'ID della chat per connetterti!",
+    "Usage limited to PMs only!": "Utilizzo limitato in privato!",
 
 
 #Misc
@@ -241,72 +241,72 @@ Comandi principali disponibili:
 
 
     "The original sender, {}, has an ID of `{}`.\nThe forwarder, {}, has an ID of `{}`.":
-        "The original sender, {}, has an ID of `{}`.\nThe forwarder, {}, has an ID of `{}`.",
-    "{}'s id is `{}`.": "{}'s id is `{}`.",
-    "Your id is `{}`.": "Your id is `{}`.",
-    "This group's id is `{}`.": "This group's id is `{}`.",
+        "Il mittente, {}, ha l'ID `{}`.\nL'utente che ha inoltrato il messaggio, {}, ha l'ID `{}`.",
+    "{}'s id is `{}`.": "{} l'ID è `{}`.",
+    "Your id is `{}`.": "Il tuo ID è `{}`.",
+    "This group's id is `{}`.": "L'ID di questo gruppo è `{}`.",
 
-    "I can't extract a user from this.": "I can't extract a user from this.",
-    "<b>User info</b>:": "<b>User info</b>:",
-    "\nFirst Name: {}": "\nFirst Name: {}",
-    "\nLast Name: {}": "\nLast Name: {}",
-    "\nUsername: @{}": "\nUsername: @{}",
-    "\nPermanent user link: {}": "\nPermanent user link: {}",
+    "I can't extract a user from this.": "Non posso estrarre un utente da questo.",
+    "<b>User info</b>:": "<b>Informazioni utente</b>:",
+    "\nFirst Name: {}": "\nNome: {}",
+    "\nLast Name: {}": "\nCognome: {}",
+    "\nUsername: @{}": "\nNome utente: @{}",
+    "\nPermanent user link: {}": "\nLink permanente dell'utente: {}",
     "\n\nThis person is my owner - I would never do anything against them!":
-        "\n\nThis person is my owner - I would never do anything against them!",
+        "\n\nQuesta persona è il mio proprietario - Non farei mai nulla contro di lui!",
     "\nThis person is one of my sudo users! Nearly as powerful as my owner - so watch it.":
-        "\nThis person is one of my sudo users! Nearly as powerful as my owner - so watch it.",
+        "\nQuesta persona fa parte degli utenti sudo! è potente quasi come il mio proprietario - quindi fai attenzione.",
     "\nThis person is one of my support users! Not quite a sudo user, but can still gban you off the map.":
-        "\nThis person is one of my support users! Not quite a sudo user, but can still gban you off the map.",
+        "\nQuesta persona fa parte degli utenti di supporto! Non è potente quanto un utente sudo, ma può bannarti da tutti i miei gruppi.",
     "\nThis person has been whitelisted! That means I'm not allowed to ban/kick them.":
-        "\nThis person has been whitelisted! That means I'm not allowed to ban/kick them.",
+        "\nQuesta persona è stata inserita nella lista bianca! Questo significa che non mi e' permesso espellerli o bannarli.",
 
-    "Its always banhammer time for me!": "Its always banhammer time for me!",
+    "Its always banhammer time for me!": "È sempre tempo di ban per me!",
 
-    "It's {} in {}": "It's {} in {}",
+    "It's {} in {}": "Sono le {} in {}",
 
-    "Please reply to a sticker to get its ID.": "Please reply to a sticker to get its ID.",
-    "Please reply to a sticker for me to upload its PNG.": "Please reply to a sticker for me to upload its PNG.",
+    "Please reply to a sticker to get its ID.": "Rispondi ad uno sticker per ottenere il suo ID.",
+    "Please reply to a sticker for me to upload its PNG.": "Rispondi ad uno sticker per ottenere il suo PNG.",
 
-    "Write a location to check the weather.": "Write a location to check the weather.",
-    "I will keep an eye on both happy and sad times!": "I will keep an eye on both happy and sad times!",
-    "Today in {} is being {}, around {}°C.\n": "Today in {} is being {}, around {}°C.\n",
-    "Sorry, location not found.": "Sorry, location not found.",
+    "Write a location to check the weather.": "Scrivi una luogo per controllare il meteo.",
+    "I will keep an eye on both happy and sad times!": "Terrò d'occhio sia i tempi felici che quelli tristi!",
+    "Today in {} is being {}, around {}°C.\n": "Oggi in {} è {}, attorno ai {}°C.\n",
+    "Sorry, location not found.": "Luogo non trovato.",
 
-    "Deleting identifiable data...": "Deleting identifiable data...",
+    "Deleting identifiable data...": "Eliminazione di dati personali...",
 
     "Try forwarding the following message to me, and you'll see!":
-        "Try forwarding the following message to me, and you'll see!",
+        "Prova a inoltrarmi il seguente messaggio, e vedrai!",
     "/save test This is a markdown test. _italics_, *bold*, `code`, [URL](example.com) [button](buttonurl:github.com) [button2](buttonurl://google.com:same)":
-    """/save test This is a markdown test. _italics_, *bold*, `code`, \
-[URL](example.com)
-[Botón](buttonurl:github.com)
-[Botón2](buttonurl://google.com:same)""",
+    """/save test Questo è un test markdown. _corsivo_, *grassetto*, `codice`, \
+[URL](example.it)
+[Pulsante](buttonurl:github.com)
+[Pulsante2](buttonurl://google.it:same)""",
 
 #Admin
-"How am I meant to promote someone that's already an admin?": "How am I meant to promote someone that's already an admin?",
-"I can't promote myself! Get an admin to do it for me.": "I can't promote myself! Get an admin to do it for me.",
-"Successfully promoted in *{}*!": "Successfully promoted in *{}*!",
+"How am I meant to promote someone that's already an admin?": "Come promuovo qualcuno che è già un amministratore?",
+"I can't promote myself! Get an admin to do it for me.": "Non posso promuovere me stessa! Chiedi a un amministratore di farlo per me.",
+"Successfully promoted in *{}*!": "Promosso con successo in *{}*!",
 
-"This person CREATED the chat, how would I demote them?": "This person CREATED the chat, how would I demote them?",
-"Can't demote what wasn't promoted!": "Can't demote what wasn't promoted!",
-"I can't demote myself!": "I can't demote myself!",
-"Successfully demoted in *{}*!": "Successfully demoted in *{}*!",
+"This person CREATED the chat, how would I demote them?": "Questa persona ha CREATO la chat, come potrei delegittimarla?",
+"Can't demote what wasn't promoted!": "Non posso delegittimare chi non è stato promosso!",
+"I can't demote myself!": "Non posso delegittimarmi!",
+"Successfully demoted in *{}*!": "Delegittimato con successo in *{}*!",
 "Could not demote. I might not be admin, or the admin status was appointed by another user, so I can't act upon them!": 
-"Could not demote. I might not be admin, or the admin status was appointed by another user, so I can't act upon them!",
+"Non posso delegittimarlo. Potrei non essere amministratore, o lo stato di amministrazione è stato delegittimato da un altro utente, quindi non posso farci nulla!",
 
-"I don't have access to the invite link, try changing my permissions!": "I don't have access to the invite link, try changing my permissions!",
-"I can only give you invite links for supergroups and channels, sorry!": "I can only give you invite links for supergroups and channels, sorry!",
+"I don't have access to the invite link, try changing my permissions!": "Non ho accesso al link di invito, prova a cambiare i miei permessi!",
+"I can only give you invite links for supergroups and channels, sorry!": "Posso solo darti dei link di invito per supergruppi e canali, mi dispiace!",
 
-"Admins in": "Admins in",
-"this chat": "this chat",
-" (Creator)": " (Creator)",
+"Admins in": "Amministratori in",
+"this chat": "Questa chat",
+" (Creator)": " (Creatore)",
 
 #AFK
-"{} is now AFK!": "{} is now AFK!",
-"{} is no longer AFK!": "{} is no longer AFK!",
-"{} is AFK!": "{} is AFK!",
-"{} is AFK! says its because of: \n{}": "{} is AFK! says its because of: \n{}",
+"{} is now AFK!": "{} è ora inattivo!",
+"{} is no longer AFK!": "{} non è più inattivo!",
+"{} is AFK!": "{} è inattivo!",
+"{} is AFK! says its because of: \n{}": "{} è inattivo perchè: \n{}",
 
 #Antiflood
 "I like to leave the flooding to natural disasters. But you, you were just a disappointment. Get out.":
@@ -524,6 +524,7 @@ Comandi principali disponibili:
 "Back": "Back",
 "send-help": """Hey there! My name is {}.
 I'm a modular group management bot with a few fun extras! Have a look at the following for an idea of some of the things I can help you with.
+
 Main commands available:
  - /start: Cool command to check if the bot is alive or not
  - /help: PM's you this message.
@@ -542,6 +543,7 @@ Main commands available:
 
 #Module helps
 "Admin_help": """ - /adminlist | /admins: list of admins in the chat
+
 *Admin only:*
  - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.
  - /unpin: unpins the currently pinned message
@@ -551,31 +553,40 @@ Main commands available:
 
 "AFK_help": """ - /afk <reason>: mark yourself as AFK.
  - brb <reason>: same as the afk command - but not a command.
+
 When marked as AFK, any mentions will be replied to with a message to say you're not available!""",
 
 "AntiFlood_help": """ You know how sometimes, people join, send 100 messages, and ruin your chat? With antiflood, that happens no more!
+
 Antiflood allows you to take action on users that send more than x messages in a row. Actions are: ban/kick/mute/tban/tmute
+
 Available commands are:
  - /flood: gets the current antiflood settings.
  - /setflood <number/off>: sets the number of messages at which to take action on a user.""",
 
 "Locks_help": """Do stickers annoy you? or want to avoid people sharing links? or pictures? You're in the right place!
+
 The locks module allows you to lock away some common items in the telegram world; the bot will automatically delete them!
+
 Available commands are:
  - /lock <item(s)>: lock the usage of "item". Now, only admins will be able to use this type!
  - /unlock <item(s)>: unlock "item". Everyone can use them again.
  - /locks: list the lock status in the chat.
  - /locktypes: gets a list of all things that can be locked. (have a look at this!)
+
 eg: lock stickers with:
 /lock sticker""",
 
 "Command disabling_help":"""Not everyone wants every feature that rose offers. Some commands are best left unused; to avoid spam and abuse.
+
 This allows you to disable some commonly used commands, so noone can use them. It'll also allow you to autodelete them, stopping people from
+
 Available commands are:
  - /disable <commandname>: stop users from using the "commandname" command in this group.
  - /enable <commandname>: allow users to use the "commandname" command in this group again.
  - /listcmds: list all disableable commands.
  - /disabled: list the disabled commands in this chat.
+
 Note:
 When disabling a command, the command only gets disabled for non-admins. All admins can still use those commands.
 Disabled commands are still accessible through the /connect feature. If you would be interested to see this disabled too, let me know in the support chat.""", 
@@ -596,7 +607,9 @@ If you want to save an image, gif, or sticker, or any other data, do the followi
 Now, anyone saying "hello" will be replied to with "Hello there! How are you?".""",
 
 "Bans_help": """Some people need to be publicly banned; spammers, annoyances, or just trolls.
+
 This module allows you to do that easily, by exposing some common actions, so everyone will see!
+
 Available commands are:
  - /ban: bans a user from your chat.
  - /banme: ban yourself
@@ -608,11 +621,14 @@ Available commands are:
  - /unmute: unmutes a user from your chat.
  - /kick: kicks a user from your chat.
  - /kickme: users who use this, kick themselves!
+
  An example of temporarily muting someone:
 /tmute @username 2h; this mutes a user for 2 hours.""",
 
 "Connections_help":"""Sometimes, you just want to add some notes and filters to a group chat, but you don't want everyone to see; This is where connections come in...
+
 This allows you to connect to a chat's database, and add things to it without the chat knowing about it! For obvious reasons, you need to be an admin to add things; but any member can view your data. (banned/kicked users can't!)
+
 Actions are available with connected groups:
  • View and edit notes
  • View and edit filters
@@ -623,15 +639,18 @@ Actions are available with connected groups:
  • Mute/unmute users in chat
  • Restrict/unrestrict users in chat
  • More in future!
+
  - /connection <chatid>: Connect to remote chat
  - /disconnect: Disconnect from chat
  - /allowconnect on/yes/off/no: Allow connect users to group
+
  You can retrieve the chat id by using the /id command in your chat. Don't be surprised if the id is negative; all super groups have negative ids.""",
 
 "Log Channels_help": """*Admin only:*
 - /logchannel: get log channel info
 - /setlog: set the log channel.
 - /unsetlog: unset the log channel.
+
 Setting the log channel is done by:
 - adding the bot to the desired channel (as an admin!)
 - sending /setlog in the channel
@@ -641,13 +660,16 @@ Setting the log channel is done by:
 "Reporting_help": """ - /report <reason>: reply to a message to report it to admins.
  - @admin: reply to a message to report it to admins.
 NOTE: neither of these will get triggered if used by admins
+
 *Admin only:*
  - /reports <on/off>: change report setting, or view current status.
    - If done in pm, toggles your status.
    - If in chat, toggles that chat's status.""",
 
 "Notes_help": """Save data for future users with notes!
+
 Notes are great to save random tidbits of information; a phone number, a nice gif, a funny picture - anything!
+
 Available commands are:
  - /save <word> <sentence>: Save that sentence to the note called "word". Replying to a message will save that message. Even works on media!
  - /get <word>: get the note registered to that word.
@@ -655,16 +677,22 @@ Available commands are:
  - /clear <word>: delete the note called "word"
  - /notes: List all notes in the current chat
  - /saved: same as /notes
+
 An example of how to save a note would be via:
 /save data This is some data!
+
 Now, anyone using "/get data", or "#data" will be replied to with "This is some data!".
+
 If you want to save an image, gif, or sticker, or any other data, do the following:
 /save word while replying to a sticker or whatever data you'd like. Now, the note at "#word" contains a sticker which will be sent as a reply.
+
 Tip: to retrieve a note without the formatting, use /get <notename> noformat
 This will retrieve the note and send it without formatting it; getting you the raw markdown, allowing you to make easy edits""",
 
 "Muting & Restricting_help": """Some people need to be publicly banned; spammers, annoyances, or just trolls.
+
 This module allows you to do that easily, by exposing some common actions, so everyone will see!
+
 Available commands are:
  - /ban: bans a user from your chat.
  - /banme: ban yourself
@@ -676,6 +704,7 @@ Available commands are:
  - /unmute: unmutes a user from your chat.
  - /kick: kicks a user from your chat.
  - /kickme: users who use this, kick themselves!
+
  An example of temporarily muting someone:
 /tmute @username 2h; this mutes a user for 2 hours.""",
 
@@ -688,6 +717,7 @@ Available commands are:
  - /stickerid: reply to a sticker to me to tell you its file ID.
  - /getsticker: reply to a sticker to me to upload its raw PNG file.
  - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
+
  - /git: Returns info about a GitHub user or organization.
  - /repo: Return the GitHub user or organization repository list (Limited at 40)
  - /lyrics: Find your favorite songs lyrics!
@@ -704,12 +734,14 @@ Available commands are:
  - /me: will get your or another user's info""",
 
 "Rules_help": """ - /rules: get the rules for this chat.
+
 *Admin only:*
  - /setrules <your rules here>: set the rules for this chat.
  - /clearrules: clear the rules for this chat.""",
 
 "Warnings_help": """ - /warns <userhandle>: get a user's number, and reason, of warnings.
  - /warnlist: list of all current warning filters
+
 *Admin only:*
  - /warn <userhandle>: warn a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.
  - /resetwarn <userhandle>: reset the warnings for a user. Can also be used as a reply.
@@ -723,6 +755,7 @@ be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is
 
 "Welcomes/Goodbyes_help": """
 Give your members a warm welcome with the greetings module! Or a sad goodbye... Depends!
+
 Available commands are:
  - /welcome <on/off/yes/no>: enables/disables welcome messages. If no option is given, returns the current welcome message and welcome settings.
  - /goodbye <on/off/yes/no>: enables/disables goodbye messages. If no option is given, returns  the current goodbye message and goodbye settings.
@@ -733,6 +766,8 @@ Available commands are:
  - /cleanwelcome <on/off/yes/no>: deletes old welcome messages; when a new person joins, the old message is deleted.
  - /cleanservice <on/off/yes/no>: deletes all service message; those are the annoying "x joined the group" you see when people join.
  - /welcomesecurity <off/soft/hard>: soft - restrict user's permission to send media files for 24 hours, hard - restict user's permission to send me$
+
+
 Fillings:
 As mentioned, you can use certain tags to fill in your welcome message with user or chat info; there are:
 {first}: The user's first name.
@@ -742,12 +777,16 @@ As mentioned, you can use certain tags to fill in your welcome message with user
 {mention}: Mentions the user, using their firstname.
 {id}: The user's id.
 {chatname}: The chat's name.
+
 An example of how to use fillings would be to set your welcome, via:
 /setwelcome Hey there {first}! Welcome to {chatname}.
+
 You can enable/disable welcome messages as such:
 /welcome off
+
 If you want to save an image, gif, or sticker, or any other data, do the following:
 /setwelcome while replying to a sticker or whatever data you'd like. This data will now be sent to welcome new users.
+
 Tip: use /welcome noformat to retrieve the unformatted welcome message.
 This will retrieve the welcome message and send it without formatting it; getting you the raw markdown, allowing you to make easy edits.
 This also works with /goodbye.""",
@@ -757,9 +796,11 @@ This also works with /goodbye.""",
  - /unblacklist <blacklist trigger>: stop blacklisting a certain blacklist trigger.
  - /rmblacklist <blacklist trigger>: same as /unblacklist
  - /blacklist: list all active blacklist filters
+
 /addblacklist "the admins suck" Respect your admins!
 This would delete any message containing 'the admins suck'.
 If you've enabled an alternative blacklist mode, it will warn, ban, kick, or mute a user with a message specifying the reason.
+
 Top tip:
 Blacklists allow you to use some modifiers to match "unknown" characters. For example, you can use the ? character to match a single occurence of an$
 You could also use the * modifier, which matches any number of any character. If you want to blacklist urls, this will allow you to match the full t$
@@ -770,6 +811,7 @@ If you wanted to only match bit.ly/ links followed by three characters, you coul
 This would match bit.ly/abc, but not bit.ly/abcd.""",
 
 "Purges_help": """Need to delete lots of messages? That's what purges are for!
+
 Available commands are:
  - /purge: deletes all messages from the message you replied to, to the current message.
  - /purge X: deletes X messages after the message you replied to (including the replied message)
@@ -807,3 +849,4 @@ which clearly states that the right to erasure does not apply \
 the case for the aforementioned pieces of data."""
 
 }
+
