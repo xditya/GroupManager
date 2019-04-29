@@ -223,7 +223,8 @@ Perintah tersedia:
  - /settings:
    -di PM: akan mengirimkan setelan untuk semua modul yang didukung.
    -dalam grup: akan mengarahkan Anda ke pm, dengan semua aturan.
-   {}
+
+{}
    """,
 
     "send-group-settings": """Hai disana! Ada beberapa pengaturan untuk *{}* - pergi ke depan dan memilih apa
