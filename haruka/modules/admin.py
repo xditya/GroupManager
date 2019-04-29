@@ -56,7 +56,7 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
     # set same perms as bot - bot can't assign higher perms than itself!
     bot_member = chatD.get_member(bot.id)
 
-    ls = bot.promoteChatMember(chatD.id, user_id,
+    bot.promoteChatMember(chatD.id, user_id,
                           can_change_info=bot_member.can_change_info,
                           can_post_messages=bot_member.can_post_messages,
                           can_edit_messages=bot_member.can_edit_messages,
