@@ -4,14 +4,14 @@ import sys
 
 import telegram.ext as tg
 
-print("Starting haruka...")
-
 #Enable logging
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     level=logging.INFO)
 
 LOGGER = logging.getLogger(__name__)
+
+LOGGER.info("Starting haruka...")
 
 #If Python version is < 3.6, stops the bot.
 #If sys.version_info[0] < 3 or sys.version_info[1] < 6:
