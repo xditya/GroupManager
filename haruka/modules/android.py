@@ -9,10 +9,8 @@ from datetime import datetime
 from typing import Optional, List
 from pythonping import ping as ping3
 from typing import Optional, List
-from PyLyrics import *
 from hurry.filesize import size
 
-import requests
 from telegram import Message, Chat, Update, Bot, MessageEntity
 from telegram import ParseMode
 from telegram.ext import CommandHandler, run_async, Filters
@@ -31,15 +29,13 @@ from haruka.modules.translations.strings import tld
 
 from requests import get
 
-# DO NOT DELETE THIS PLEASE
-# Worked by @peaktogo on github and telegram
-# This module was inspired by Android Helper Bot by Vachounet
-# None of the code were taken from the bot, to avoid any more confusion.
+# DO NOT DELETE THIS, PLEASE.
+# Made by @peaktogo on GitHub and Telegram.
+# This module was inspired by Android Helper Bot by Vachounet.
+# None of the code is taken from the bot itself, to avoid any more confusion.
 
 LOGGER.info("Original Android Modules by @peaktogoo on Telegram")
 
-
-AEX_OTA_API = "https://api.aospextended.com/ota/"
 
 @run_async
 def havoc(bot: Bot, update: Update):
@@ -48,13 +44,19 @@ def havoc(bot: Bot, update: Update):
     fetch = get(f'https://raw.githubusercontent.com/Havoc-Devices/android_vendor_OTA/pie/{device}.json')
     if fetch.status_code == 200:
         usr = fetch.json()
-        reply_text = f"""*Download:* [{usr['response'][0]['filename']}]({usr['response'][0]['url']})
-*Size:* `{usr['response'][0]['size']}`
-*Version:* `{usr['response'][0]['version']}`
-"""
+        response = usr['response'][0]
+        filename = response['filename']
+        url = response['url']
+        buildsize = response['size']
+        version = response['version']
+
+        reply_text = (f"*Download:* [{filename}]({url})\n"
+                      f"*Build size:* `{buildsize}`\n"
+                      f"*Version:* `{version}`")
     elif fetch.status_code == 404:
-        reply_text="Device not found"
+        reply_text = "Device not found."
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+
 
 @run_async
 def pixys(bot: Bot, update: Update):
@@ -63,14 +65,21 @@ def pixys(bot: Bot, update: Update):
     fetch = get(f'https://raw.githubusercontent.com/PixysOS-Devices/official_devices/master/{device}/build.json')
     if fetch.status_code == 200:
         usr = fetch.json()
-        reply_text = f"""*Download:* [{usr['response'][0]['filename']}]({usr['response'][0]['url']})
-*Size:* `{usr['response'][0]['size']}`
-*Rom Type:* `{usr['response'][0]['romtype']}`
-*Version:* `{usr['response'][0]['version']}`
-"""
+        response = usr['response'][0]
+        filename = response['filename']
+        url = response['url']
+        buildsize = response['size']
+        romtype = response['romtype']
+        version = response['version']
+
+        reply_text = (f"*Download:* [{filename}]({url})\n"
+                      f"*Build size:* `{buildsize}`\n"
+                      f"*Version:* `{version}`\n"
+                      f"*Rom Type:* `{romtype}`")
     elif fetch.status_code == 404:
-        reply_text="Device not found"
+        reply_text = "Device not found."
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+
 
 @run_async
 def pearl(bot: Bot, update: Update):
@@ -79,28 +88,42 @@ def pearl(bot: Bot, update: Update):
     fetch = get(f'https://raw.githubusercontent.com/PearlOS/OTA/master/{device}.json')
     if fetch.status_code == 200:
         usr = fetch.json()
-        reply_text = f"""*Maintainer:* `{usr['response'][0]['maintainer']}`
-*Rom Type:* `{usr['response'][0]['romtype']}`
-*Download:* [{usr['response'][0]['filename']}]({usr['response'][0]['url']})
-*Size:* `{usr['response'][0]['size']}`
-*Version:* `{usr['response'][0]['version']}`
-*XDA Thread:* [Click me]({usr['response'][0]['xda']})
-"""
+        response = usr['response'][0]
+        maintainer = response['maintainer']
+        romtype = response['romtype']
+        filename = response['filename']
+        url = response['url']
+        buildsize = response['size']
+        version = response['version']
+        xda = response['xda']
+
+        reply_text = (f"*Download:* [{filename}]({url})\n"
+                      f"*Build size:* `{buildsize}`\n"
+                      f"*Version:* `{version}`\n"
+                      f"*Maintainer:* `{maintainer}`\n"
+                      f"*ROM Type:* `{romtype}`\n"                      
+                      f"*XDA Thread:* [Link]({xda})")
     elif fetch.status_code == 404:
-        reply_text="Device not found"
+        reply_text = "Device not found."
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+
 
 @run_async
 def posp(bot: Bot, update: Update):
     message = update.effective_message
     device = message.text[len('/posp '):]
     fetch = get(f'https://api.potatoproject.co/checkUpdate?device={device}&type=weekly')
-    if fetch.status_code == 200 and str(fetch.json()['response']) != "[]":
+    if fetch.status_code == 200 and len(fetch.json()['response']) != 0:
         usr = fetch.json()
-        reply_text = f"""*Download:* [{usr['response'][-1]['filename']}]({usr['response'][-1]['url']})
-*Size:* `{usr['response'][-1]['size']}`
-*Version:* `{usr['response'][-1]['version']}`
-"""
+        response = usr['response'][0]
+        filename = response['filename']
+        url = response['url']
+        buildsize = response['size']
+        version = response['version']
+
+        reply_text = (f"*Download:* [{filename}]({url})\n"
+                      f"*Build size:* `{buildsize}`\n"
+                      f"*Version:* `{version}`")
     else:
         reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -111,12 +134,17 @@ def los(bot: Bot, update: Update):
     message = update.effective_message
     device = message.text[len('/los '):]
     fetch = get(f'https://download.lineageos.org/api/v1/{device}/nightly/*')
-    if fetch.status_code == 200 and str(fetch.json()['response']) != "[]":
+    if fetch.status_code == 200 and len(fetch.json()['response']) != 0:
         usr = fetch.json()
-        reply_text = f"""*Download:* [{usr['response'][-1]['filename']}]({usr['response'][-1]['url']})
-*Size:* `{usr['response'][-1]['size']}`
-*Version:* `{usr['response'][-1]['version']}`
-"""
+        response = usr['response'][0]
+        filename = response['filename']
+        url = response['url']
+        buildsize = response['size']
+        version = response['version']
+
+        reply_text = (f"*Download:* [{filename}]({url})\n"
+                      f"*Build size:* `{buildsize}`\n"
+                      f"*Version:* `{version}`")
     else:
         reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -129,11 +157,17 @@ def dotos(bot: Bot, update: Update):
     fetch = get(f'https://raw.githubusercontent.com/DotOS/ota_config/dot-p/{device}.json')
     if fetch.status_code == 200:
         usr = fetch.json()
-        reply_text = f"""*Download:* [{usr['response'][0]['filename']}]({usr['response'][0]['url']})
-*Size:* `{usr['response'][0]['size']}`
-*Version:* `{usr['response'][0]['version']}`
-*Device Changelog:* `{usr['response'][0]['changelog_device']}`
-"""
+        response = usr['response'][0]
+        filename = response['filename']
+        url = response['url']
+        buildsize = response['size']
+        version = response['version']
+        changelog = response['changelog_device']
+
+        reply_text = (f"*Download:* [{filename}]({url})\n"
+                      f"*Build size:* `{buildsize}`\n"
+                      f"*Version:* `{version}`\n"
+                      f"*Device Changelog:* `{changelog}`")
     elif fetch.status_code == 404:
         reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -145,10 +179,15 @@ def viper(bot: Bot, update: Update):
     fetch = get(f'https://raw.githubusercontent.com/Viper-Devices/official_devices/master/{device}/build.json')
     if fetch.status_code == 200:
         usr = fetch.json()
-        reply_text = f"""*Download:* [{usr['response'][0]['filename']}]({usr['response'][0]['url']})
-*Size:* `{usr['response'][0]['size']}`
-*Version:* `{usr['response'][0]['version']}`
-"""
+        response = usr['response'][0]
+        filename = response['filename']
+        url = response['url']
+        buildsize = response['size']
+        version = response['version']
+
+        reply_text = (f"*Download:* [{filename}]({url})\n"
+                      f"*Build size:* `{buildsize}`\n"
+                      f"*Version:* `{version}`")
     elif fetch.status_code == 404:
         reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -160,12 +199,19 @@ def evo(bot: Bot, update: Update):
     fetch = get(f'https://raw.githubusercontent.com/evolution-x/official_devices/master/builds/{device}.json')
     if fetch.status_code == 200:
         usr = fetch.json()
-        reply_text = f"""*Download:* [{usr['filename']}]({usr['url']})
-*Size:* `{usr['size']}`
-*Android Version:* `{usr['version']}`
-*Maintainer:* [{usr['maintainer']}]({usr['maintainer_url']})
-*XDA Thread:* [Here]({usr['forum_url']})
-"""
+        filename = usr['filename']
+        url = usr['url']
+        buildsize = usr['size']
+        version = usr['version']
+        maintainer = usr['maintainer']
+        maintainer_url = usr['maintainer_url']
+        xda = usr['forum_url']
+
+        reply_text = (f"*Download:* [{filename}]({url})\n"
+                      f"*Build size:* `{buildsize}`\n"
+                      f"*Android Version:* `{version}`\n"
+                      f"*maintainer:* [{maintainer}]({maintainer_url})\n"
+                      f"*XDA Thread:* [Link]({xda})")
     elif fetch.status_code == 404:
         reply_text = "Device not found!"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -173,10 +219,12 @@ def evo(bot: Bot, update: Update):
 def enesrelease(bot: Bot, update: Update, args: List[str]):
     message = update.effective_message
     usr = get(f'https://api.github.com/repos/EnesSastim/Downloads/releases/latest').json()
-    reply_text = "*EnesSastim lastest upload*\n"
+    reply_text = "*Enes Sastim's lastest upload(s)*\n"
     for i in range(len(usr)):
         try:
-            reply_text += f"[{usr['assets'][i]['name']}]({usr['assets'][i]['browser_download_url']})\n"
+            name = usr['assets'][i]['name']
+            url = usr['assets'][i]['browser_download_url']
+            reply_text += f"[{name}]({url})\n"
         except IndexError:
             continue
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
@@ -184,10 +232,12 @@ def enesrelease(bot: Bot, update: Update, args: List[str]):
 def phh(bot: Bot, update: Update, args: List[str]):
     message = update.effective_message
     usr = get(f'https://api.github.com/repos/phhusson/treble_experimentations/releases/latest').json()
-    reply_text = "*Phh lastest AOSP Release*\n"
+    reply_text = "*Phh's lastest AOSP Release(s)*\n"
     for i in range(len(usr)):
         try:
-            reply_text += f"[{usr['assets'][i]['name']}]({usr['assets'][i]['browser_download_url']})\n"
+            name = usr['assets'][i]['name']
+            url = usr['assets'][i]['browser_download_url']
+            reply_text += f"[{name}]({url})\n"
         except IndexError:
             continue
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
@@ -198,71 +248,67 @@ def descendant(bot: Bot, update: Update, args: List[str]):
     reply_text = "*Descendant GSI Download*\n"
     for i in range(len(usr)):
         try:
-            reply_text += f"[{usr['assets'][i]['name']}]({usr['assets'][i]['browser_download_url']})\n"
+            name = usr['assets'][i]['name']
+            url = usr['assets'][i]['browser_download_url']
+            reply_text += f"[{name}]({url})\n"
         except IndexError:
             continue
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
 
 def miui(bot: Bot, update: Update):
+    giturl = "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/"
     message = update.effective_message
     device = message.text[len('/miui '):]
-    result = "*Recovery ROM*\n"
+    result = "*Recovery ROM*\n\n"
     result += "*Stable*\n"
-    stable_all = json.loads(get(
-        "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/" +
-        "stable_recovery/stable_recovery.json").content)
+    stable_all = json.loads(get(giturl + "stable_recovery/stable_recovery.json").content)
     data = [i for i in stable_all if device == i['codename']]
-    for i in data:
-        result += "[" + i['filename'] + "](" + i['download'] + ")\n"
+    if len(data) != 0:
+        for i in data:
+            result += "[" + i['filename'] + "](" + i['download'] + ")\n\n"
 
-    result += "*Weekly*\n"
-    weekly_all = json.loads(get(
-        "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/" +
-        "weekly_recovery/weekly_recovery.json").content)
-    data = [i for i in weekly_all if device == i['codename']]
-    for i in data:
-        result += "[" + i['filename'] + "](" + i['download'] + ")\n"
+        result += "*Weekly*\n"
+        weekly_all = json.loads(get(giturl + "weekly_recovery/weekly_recovery.json").content)
+        data = [i for i in weekly_all if device == i['codename']]
+        for i in data:
+            result += "[" + i['filename'] + "](" + i['download'] + ")"
+    else:
+        result = "Couldn't find any device matching your query."
 
     message.reply_text(result, parse_mode=ParseMode.MARKDOWN)
 
 @run_async
 def getaex(bot: Bot, update: Update, args: List[str]):
+    AEX_OTA_API = "https://api.aospextended.com/ota/"
     if len(args) != 2:
-        update.effective_message.reply_text("Pass correct parameters, Check help for more info !")
+        update.effective_message.reply_text("Pass the correct parameters or use help for more info!")
         return
 
     device = args[0]
     version = args[1]
-    res = requests.get(AEX_OTA_API + device + '/' + version.lower())
+    res = get(AEX_OTA_API + device + '/' + version.lower())
     if res.status_code == 200:
         apidata = json.loads(res.text)
         if apidata.get('error'):
-            update.effective_message.reply_text("Sadly no builds available for " + device)
+            update.effective_message.reply_text("Sadly there isn't any build available for " + device)
             return
         else:
-            message = """ 
-*AOSP EXTENDED for {}* \
+            developer = apidata.get('developer')
+            developer_url = apidata.get('developer_url')
+            xda = apidata.get('forum_url')
+            filename = apidata.get('filename')
+            url = "https://downloads.aospextended.com/download/" + device + "/" + version + "/" + apidata.get('filename')
+            builddate = datetime.strptime(apidata.get('build_date'), "%Y%m%d-%H%M").strftime("%d %B %Y")
+            buildsize = size(int(apidata.get('filesize')))
+            md5 = apidata.get('md5')
 
-`by:` [{}]({}) \
-
-[XDA thread]({}) \
-
-
-
-`Latest build:` [{}]({}) \
-
-`Build date: {}` \
-
-`Build size: {}` \
-
-`md5: {}`
-""".format(device, apidata.get('developer'), apidata.get('developer_url'),
-           apidata.get('forum_url'),
-           apidata.get('filename'),
-           "https://downloads.aospextended.com/download/" + device + "/" + version + "/" + apidata.get('filename'),
-           datetime.strptime(apidata.get('build_date'), "%Y%m%d-%H%M").strftime("%d %B %Y"),
-           size(int(apidata.get('filesize'))),
-           apidata.get('md5'))
+            message = (f"*AOSP EXTENDED for {device}*\n"
+                       f"*By:* [{developer}]({developer_url})\n"
+                       f"*XDA Thread:* [Link]({xda})\n\n\n"
+                       f"*Latest build:* [{filename}]({url})\n"
+                       f"*Build date:* `{builddate}`\n"
+                       f"*Build size:* `{buildsize}`\n"
+                       f"*MD5:* `{md5}`")
             update.effective_message.reply_text(
                 message, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
             return
