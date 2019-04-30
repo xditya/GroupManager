@@ -210,7 +210,7 @@ def evo(bot: Bot, update: Update):
         reply_text = (f"*Download:* [{filename}]({url})\n"
                       f"*Build size:* `{buildsize}`\n"
                       f"*Android Version:* `{version}`\n"
-                      f"*maintainer:* [{maintainer}]({maintainer_url})\n"
+                      f"*Maintainer:* [{maintainer}]({maintainer_url})\n"
                       f"*XDA Thread:* [Link]({xda})")
     elif fetch.status_code == 404:
         reply_text = "Device not found!"
@@ -245,7 +245,7 @@ def phh(bot: Bot, update: Update, args: List[str]):
 def descendant(bot: Bot, update: Update, args: List[str]):
     message = update.effective_message
     usr = get(f'https://api.github.com/repos/Descendant/InOps/releases/latest').json()
-    reply_text = "*Descendant GSI Download*\n"
+    reply_text = "*Descendant GSI Download(s)*\n"
     for i in range(len(usr)):
         try:
             name = usr['assets'][i]['name']
