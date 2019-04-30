@@ -310,106 +310,106 @@ Comandi principali disponibili:
 
 #Antiflood
 "I like to leave the flooding to natural disasters. But you, you were just a disappointment. Get out.":
-     "I like to leave the flooding to natural disasters. But you, you were just a disappointment. Get out.",
+     "Mi piace lasciare il flood a disastri naturali. Ma tu sei solo una delusione. Vattene.",
 "I can't kick people here, give me permissions first! Until then, I'll disable antiflood.":
-    "I can't kick people here, give me permissions first! Until then, I'll disable antiflood.",
-"Antiflood has been disabled.": "Antiflood has been disabled.",
+    "Non posso espellere le persone qui se non mi concedi le autorizzazioni! Fino ad allora, disabiliterò l'anti-flood.",
+"Antiflood has been disabled.": "L'antiflood è stato disabilitato.",
 "Antiflood has to be either 0 (disabled), or a number bigger than 3 (enabled)!":
-    "Antiflood has to be either 0 (disabled), or a number bigger than 3 (enabled)!",
-"Antiflood has been updated and set to {}": "Antiflood has been updated and set to {}",
+    "Antiflood deve essere impostato tra lo 0 ( per disabilitato), o un numero maggiore di 3 (per abilitarlo)!",
+"Antiflood has been updated and set to {}": "L'antiflood è stato aggiornato e impostato su {}",
 "Unrecognised argument - please use a number, 'off', or 'no'.":
-    "Unrecognised argument - please use a number, 'off', or 'no'.",
-"I'm not currently enforcing flood control!": "I'm not currently enforcing flood control!",
+    "Argomento non riconosciuto: si prega di utilizzare un numero, 'off', or 'no'.",
+"I'm not currently enforcing flood control!": "Al momento non sto imponendo il controllo del flood!",
 "I'm currently banning users if they send more than {} consecutive messages.":
-     "I'm currently banning users if they send more than {} consecutive messages.",
+     "Attualmente sto vietando agli utenti di inviare più di {} messaggi consecutivi.",
 
 #Antispam
 "I've enabled antispam security in this group. This will help protect you from spammers, unsavoury characters, and the biggest trolls.":
- "I've enabled antispam security in this group. This will help protect you from spammers, unsavoury characters, and the biggest trolls.",
+ "Ho attivato la sicurezza antispam in questo gruppo. Questo ti aiuterà a proteggerti dagli spammer, dai troll e da utenti sgradevoli.",
 
 "I've disabled antispam security in this group. GBans wont affect your users anymore. You'll be less protected from any trolls and spammers though!":
-    "I've disabled antispam security in this group. GBans wont affect your users anymore. You'll be less protected from any trolls and spammers though!",
+    "Ho disabilitato la sicurezza antispam in questo gruppo. I GBan non influenzeranno più i tuoi utenti. Sarai comunque meno protetto da troll e spammer!",
 
 "Give me some arguments to choose a setting! on/off, yes/no!\n\nYour current setting is: {}\nWhen True, any gbans that happen will also happen in your group. When False, they won't, leaving you at the possible mercy of spammers.":
-    "Give me some arguments to choose a setting! on/off, yes/no!\n\nYour current setting is: {}\nWhen True, any gbans that happen will also happen in your group. When False, they won't, leaving you at the possible mercy of spammers.",
+    "Scegli un'impostazione! on/off, yes/no!\n\nLe impostazioni correnti sono: {}\nSe impostato su True, tutti i gban eseguiti verranno applicati a tutti i miei gruppi. Se impostato su False, non succederà, lasciandoti in balia di spammer.",
 
-"Globally banned: <b>{}</b>": "Globally banned: <b>{}</b>",
-"\nGlobally muted: <b>{}</b>": "\nGlobally muted: <b>{}</b>",
-"\nReason: {}": "\nReason: {}",
+"Globally banned: <b>{}</b>": "Bannati ovunque: <b>{}</b>",
+"\nGlobally muted: <b>{}</b>": "\nMutati ovunque: <b>{}</b>",
+"\nReason: {}": "\nMotivo: {}",
 
 #Bans
-    "I really wish I could ban admins...": "I really wish I could ban admins...",
-    "I'm not gonna BAN myself, are you crazy?": "I'm not gonna BAN myself, are you crazy?",
-    "Banned!": "Banned!",
-    "Well damn, I can't ban that user.": "Well damn, I can't ban that user.",
+    "I really wish I could ban admins...": "Mi piacerebbe davvero poter bannare amministratori...",
+    "I'm not gonna BAN myself, are you crazy?": "Non bannerò me stessa, sei pazzo?",
+    "Banned!": "Bannato!",
+    "Well damn, I can't ban that user.": "Maledizione, non posso bannare questo utente.",
     "You haven't specified a time to ban this user for!":
-        "You haven't specified a time to ban this user for!",
-    "Banned! User will be banned for {}.": "Banned! User will be banned for {}.",
+        "Non hai specificato il tempo per bannare questo utente!",
+    "Banned! User will be banned for {}.": "Bannato! L'utente sarà bannato per {}.",
 
 #Blacklist
-    "<b>Current blacklisted words in {}:</b>\n": "<b>Current blacklisted words in {}:</b>\n",
-    "There are no blacklisted messages in <b>{}</b>!": "There are no blacklisted messages in <b>{}</b>!",
+    "<b>Current blacklisted words in {}:</b>\n": "<b>Parole sulla lista nera {}:</b>\n",
+    "There are no blacklisted messages in <b>{}</b>!": "Non ci sono messaggi sulla lista nera <b>{}</b>!",
     "Added <code>{}</code> to the blacklist in <b>{}</b>!":
-        "Added <code>{}</code> to the blacklist in <b>{}</b>!",
+        "Aggiunto <code>{}</code> alla lista nera in <b>{}</b>!",
     "Tell me which words you would like to add to the blacklist.":
-        "Tell me which words you would like to add to the blacklist.",
+        "Dimmi quali parole vorresti aggiungere alla lista nera.",
     "Removed <code>{}</code> from the blacklist in <b>{}</b>!":
-        "Removed <code>{}</code> from the blacklist in <b>{}</b>!",
-    "This isn't a blacklisted trigger...!": "This isn't a blacklisted trigger...!",
+        "Rimosso <code>{}</code> dalla lista nera in <b>{}</b>!",
+    "This isn't a blacklisted trigger...!": "Questo non è un trigger nella lista nera...!",
     "None of these triggers exist, so they weren't removed.":
-        "None of these triggers exist, so they weren't removed.",
+        "Nessuno di questi trigger esiste, quindi non sono stati rimossi.",
     "Removed <code>{}</code> triggers from the blacklist in <b>{}</b>! {} did not exist, so were not removed.":
-        "Removed <code>{}</code> triggers from the blacklist in <b>{}</b>! {} did not exist, so were not removed.",
+        "Rimossi <code>{}</code> trigger dalla blacklist in <b>{}</b>! {} non esistevano, quindi non sono stati rimossi.",
     "Tell me which words you would like to remove from the blacklist.":
-        "Tell me which words you would like to remove from the blacklist.",
+        "Dimmi quali parole vorresti rimuovere dalla lista nera.",
 
     #Filters
-    "*Filters in {}:*\n": "*Filters in {}:*\n",
-    "local filters": "local filters",
-    "*local filters:*\n": "*local filters:*\n",
-    "No filters in {}!": "No filters in {}!",
+    "*Filters in {}:*\n": "*Filtri in {}:*\n",
+    "local filters": "Filtri locali",
+    "*local filters:*\n": "*filtri locali:*\n",
+    "No filters in {}!": "Nessun filtro in {}!",
     "There is no note message - You can't JUST have buttons, you need a message to go with it!":
-        "There is no note message - You can't JUST have buttons, you need a message to go with it!",
-    "You didn't specify what to reply with!": "You didn't specify what to reply with!",
-    "Handler '{}' added in *{}*!": "Handler '{}' added in *{}*!",
-    "No filters are active in {}!": "No filters are active in {}!",
-    "Yep, I'll stop replying to that in *{}*." : "Yep, I'll stop replying to that in *{}*.",
+        "Non c'è nessun messaggio nelle note salvate - Non puoi avere SOLO pulsanti, hai bisogno di un messaggio per farlo!",
+    "You didn't specify what to reply with!": "Non hai specificato cosa rispondere!",
+    "Handler '{}' added in *{}*!": "Handler '{}' aggiunto in *{}*!",
+    "No filters are active in {}!": "Nessun filtro attivo in {}!",
+    "Yep, I'll stop replying to that in *{}*." : "Sì, non risponderò a questo in *{}*.",
     "That's not a current filter - run /filters for all active filters.":
-        "That's not a current filter - run /filters for all active filters.",
+        "Questo attualmente non è un filtro - esegui /filters per vedere tutti i filtri attivi.",
 
     #Disable
-    "Disabled the use of `{}` in *{}*": "Disabled the use of `{}` in *{}*",
-    "That command can't be disabled": "That command can't be disabled",
-    "What should I disable?": "What should I disable?",
+    "Disabled the use of `{}` in *{}*": "Disabilitato l'uso di `{}` in *{}*",
+    "That command can't be disabled": "Questo comando non può essere disabilitato",
+    "What should I disable?": "Cosa dovrei disabilitare?",
 
-    "Enabled the use of `{}` in *{}*": "Enabled the use of `{}` in *{}*",
-    "Is that even disabled?": "Is that even disabled?",
-    "What should I enable?": "What should I enable?",
+    "Enabled the use of `{}` in *{}*": "Abilita l'uso di `{}` in *{}*",
+    "Is that even disabled?": "È disabilitato?",
+    "What should I enable?": "Cosa dovrei abilitare?",
 
-    "The following commands are toggleable:\n{}": "The following commands are toggleable:\n{}",
-    "No commands can be disabled.": "No commands can be disabled.",
-    "No commands are disabled in *{}*!": "No commands are disabled in *{}*!",
-    "No commands are disabled!": "No commands are disabled!",
+    "The following commands are toggleable:\n{}": "I seguenti comandi sono modificabili:\n{}",
+    "No commands can be disabled.": "Nessun comando può essere disabilitato.",
+    "No commands are disabled in *{}*!": "Nessun comando è stato disabilitato in *{}*!",
+    "No commands are disabled!": "Nessun comando è stato disabilitato!",
     "The following commands are currently restricted in *{}*:\n{}":
-        "The following commands are currently restricted in *{}*:\n{}",
+        "I seguenti comandi sono attualmente limitati in *{}*:\n{}",
 
 #Locks
-    "Locked {} messages for all non-admins!": "Locked {} messages for all non-admins!",
+    "Locked {} messages for all non-admins!": "Bloccati messaggi {} per tutti i non amministratori!",
     "What are you trying to lock...? Try /locktypes for the list of lockables":
-        "What are you trying to lock...? Try /locktypes for the list of lockables",
+        "Cosa stai cercando di bloccare...? Prova /locktypes per avere la lista dei bloccabili",
     "I'm not an administrator, or haven't got delete rights.":
-        "I'm not an administrator, or haven't got delete rights.",
-    "Unlocked {} for everyone!": "Unlocked {} for everyone!",
+        "Non sono un amministratore o non ho i permessi per eliminarli.",
+    "Unlocked {} for everyone!": "Sbloccato {} per tutti!",
     "What are you trying to unlock...? Try /locktypes for the list of lockables":
-        "What are you trying to unlock...? Try /locktypes for the list of lockables",
-    "What are you trying to unlock...?": "What are you trying to unlock...?",
+        "What are you trying to unlock...? Prova /locktypes per avere la lista dei bloccabili",
+    "What are you trying to unlock...?": "Cosa stai cercando di sbloccare...?",
     "I see a bot, and I've been told to stop them joining... but I'm not admin!":
-        "I see a bot, and I've been told to stop them joining... but I'm not admin!",
+        "Ho visto un bot e mi è stato detto di impedire a loro di unirsi al gruppo... ma non sono un amministratore!",
     "Only admins are allowed to add bots to this chat! Get outta here.":
-        "Only admins are allowed to add bots to this chat! Get outta here.",
-    "There are no current locks in *{}*.": "There are no current locks in *{}*.",
-    "These are the locks in *{}*:": "These are the locks in *{}*:",
-    "this chat": "this chat",
+        "Solo gli amministratori possono aggiungere bot a questa chat! Vattene.",
+    "There are no current locks in *{}*.": "Attualmente non ci stanno restrizioni in *{}*.",
+    "These are the locks in *{}*:": "Non ci sono restrizioni in *{}*:",
+    "this chat": "questa chat",
 
 #Log channel
     "Now, forward the /setlog to the group you want to tie this channel to!":
