@@ -30,7 +30,7 @@ from haruka.modules.translations.strings import tld
 from requests import get
 
 # DO NOT DELETE THIS, PLEASE.
-# Made by @peaktogo on GitHub and Telegram.
+# Made by @peaktogoo on GitHub and Telegram.
 # This module was inspired by Android Helper Bot by Vachounet.
 # None of the code is taken from the bot itself, to avoid any more confusion.
 
