@@ -196,7 +196,7 @@ def viper(bot: Bot, update: Update):
 def evo(bot: Bot, update: Update):
     message = update.effective_message
     device = message.text[len('/evo '):]
-    fetch = get(f'https://raw.githubusercontent.com/evolution-x/official_devices/master/builds/{device}.json')
+    fetch = get(f'https://raw.githubusercontent.com/Evolution-X-Devices/official_devices/master/builds/{device}.json')
     if fetch.status_code == 200:
         usr = fetch.json()
         filename = usr['filename']
