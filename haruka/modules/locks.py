@@ -242,9 +242,9 @@ def build_lock_message(chat, chatP, user, chatname):
     locks = sql.get_locks(chat.id)
     restr = sql.get_restr(chat.id)
     if not (locks or restr):
-        res = tld(chatP.id, "There are no current locks in *{}*.")
+        res = tld(chatP.id, "There are no current locks in *{}*.".format(chatname))
     else:
-        res = tld(chatP.id, "These are the locks in *{}*:")
+        res = tld(chatP.id, "These are the locks in *{}*:".format(chatname))
         if locks:
             res += "\n - sticker = `{}`" \
                    "\n - audio = `{}`" \
