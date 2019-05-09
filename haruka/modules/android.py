@@ -250,7 +250,8 @@ def descendant(bot: Bot, update: Update, args: List[str]):
         try:
             name = usr['assets'][i]['name']
             url = usr['assets'][i]['browser_download_url']
-            reply_text += f"[{name}]({url})\n"
+            download_count = usr['assets'][i]['download_count']
+            reply_text += f"[{name}]({url}) - Downloaded `{download_count}` Times\n\n"
         except IndexError:
             continue
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
