@@ -8,11 +8,11 @@ from telegram.ext import run_async, CommandHandler, MessageHandler, Filters
 from telegram.utils.helpers import mention_html
 
 import haruka.modules.sql.antispam_sql as sql
-from haruka import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, STRICT_ANTISPAM
+from haruka import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, MESSAGE_DUMP, STRICT_ANTISPAM
 from haruka.modules.helper_funcs.chat_status import user_admin, is_user_admin
 from haruka.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from haruka.modules.helper_funcs.filters import CustomFilters
-from haruka.modules.helper_funcs.misc import send_to_list
+#from haruka.modules.helper_funcs.misc import send_to_list
 from haruka.modules.sql.users_sql import get_all_chats
 
 from haruka.modules.translations.strings import tld
@@ -86,7 +86,8 @@ def gban(bot: Bot, update: Update, args: List[str]):
         user_id, new_reason = extract_user_and_text(message, args)
         if old_reason:
             banner = update.effective_user  # type: Optional[User]
-            send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
+            bot.send_message(
+                MESSAGE_DUMP,
                      "<b>New Reason of Global Ban</b>" \
                      "\n<b>Sudo Admin:</b> {}" \
                      "\n<b>User:</b> {}" \
@@ -95,7 +96,8 @@ def gban(bot: Bot, update: Update, args: List[str]):
                      "\n<b>New Reason:</b> {}".format(mention_html(banner.id, banner.first_name),
                                               mention_html(user_chat.id, user_chat.first_name or "Deleted Account"), 
                                                            user_chat.id, old_reason, new_reason), 
-                    html=True)
+                parse_mode=ParseMode.HTML
+            )
 
             message.reply_text("This user is already gbanned, for the following reason:\n"
                                "<code>{}</code>\n"
@@ -103,7 +105,8 @@ def gban(bot: Bot, update: Update, args: List[str]):
                                parse_mode=ParseMode.HTML)
         else:
             banner = update.effective_user  # type: Optional[User]
-            send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
+            bot.send_message(
+                MESSAGE_DUMP,
                      "<b>New reason of Global Ban</b>" \
                      "\n<b>Sudo Admin:</b> {}" \
                      "\n<b>User:</b> {}" \
@@ -111,7 +114,8 @@ def gban(bot: Bot, update: Update, args: List[str]):
                      "\n<b>New Reason:</b> {}".format(mention_html(banner.id, banner.first_name or "Deleted Account"),
                                               mention_html(user_chat.id, user_chat.first_name), 
                                                            user_chat.id, new_reason), 
-                    html=True)
+                parse_mode=ParseMode.HTML
+            )
             message.reply_text("This user is already gbanned, but had no reason set; I've gone and updated it!")
 
         return
@@ -119,11 +123,13 @@ def gban(bot: Bot, update: Update, args: List[str]):
     message.reply_text("*Blows dust off of banhammer* 😉")
 
     banner = update.effective_user  # type: Optional[User]
-    send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
+    bot.send_message(
+        MESSAGE_DUMP,
                  "{} is gbanning user {} "
                  "because:\n{}".format(mention_html(banner.id, banner.first_name),
                                        mention_html(user_chat.id, user_chat.first_name), reason or "No reason given"),
-                 html=True)
+                  parse_mode=ParseMode.HTML
+        )
 
     sql.gban_user(user_id, user_chat.username or user_chat.first_name, reason)
 
@@ -142,15 +148,15 @@ def gban(bot: Bot, update: Update, args: List[str]):
                 pass
             else:
                 message.reply_text("Could not gban due to: {}".format(excp.message))
-                send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "Could not gban due to: {}".format(excp.message))
+                bot.send_message(MESSAGE_DUMP, "Could not gban due to: {}".format(excp.message))
                 sql.ungban_user(user_id)
                 return
         except TelegramError:
             pass
 
-    send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
+    bot.send_message(MESSAGE_DUMP,
                    "{} has been successfully gbanned!".format(mention_html(user_chat.id, user_chat.first_name)),
-                   html=True)
+                   parse_mode=ParseMode.HTML)
 
 @run_async
 def ungban(bot: Bot, update: Update, args: List[str]):
@@ -174,10 +180,10 @@ def ungban(bot: Bot, update: Update, args: List[str]):
 
     message.reply_text("I'll give {} a second chance, globally.".format(user_chat.first_name))
 
-    send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
+    bot.send_message(MESSAGE_DUMP,
                  "{} has ungbanned user {}".format(mention_html(banner.id, banner.first_name),
                                                    mention_html(user_chat.id, user_chat.first_name)),
-                 html=True)
+                 parse_mode=ParseMode.HTML)
 
     chats = get_all_chats()
     for chat in chats:
@@ -204,7 +210,7 @@ def ungban(bot: Bot, update: Update, args: List[str]):
 
     sql.ungban_user(user_id)
 
-    send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "un-gban complete!")
+    bot.send_message(MESSAGE_DUMP, "un-gban complete!")
 
     message.reply_text("Person has been un-gbanned.")
 
@@ -286,11 +292,11 @@ def gmute(bot: Bot, update: Update, args: List[str]):
     message.reply_text("*Gets duct tape ready* 😉")
 
     muter = update.effective_user  # type: Optional[User]
-    send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
+    bot.send_message(MESSAGE_DUMP,
                  "{} is gmuting user {} "
                  "because:\n{}".format(mention_html(muter.id, muter.first_name),
                                        mention_html(user_chat.id, user_chat.first_name), reason or "No reason given"),
-                 html=True)
+                 parse_mode=ParseMode.HTML)
 
     sql.gmute_user(user_id, user_chat.username or user_chat.first_name, reason)
 
@@ -329,13 +335,13 @@ def gmute(bot: Bot, update: Update, args: List[str]):
                 pass
             else:
                 message.reply_text("Could not gmute due to: {}".format(excp.message))
-                send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "Could not gmute due to: {}".format(excp.message))
+                bot.send_message(MESSAGE_DUMP, "Could not gmute due to: {}".format(excp.message))
                 sql.ungmute_user(user_id)
                 return
         except TelegramError:
             pass
 
-    send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "gmute complete!")
+    bot.send_message(MESSAGE_DUMP, "gmute complete!")
     message.reply_text("Person has been gmuted.")
 
 
@@ -361,10 +367,10 @@ def ungmute(bot: Bot, update: Update, args: List[str]):
 
     message.reply_text("I'll let {} speak again, globally.".format(user_chat.first_name))
 
-    send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
+    bot.send_message(MESSAGE_DUMP,
                  "{} has ungmuted user {}".format(mention_html(muter.id, muter.first_name),
                                                    mention_html(user_chat.id, user_chat.first_name)),
-                 html=True)
+                 parse_mode=ParseMode.HTML)
 
     chats = get_all_chats()
     for chat in chats:
@@ -409,7 +415,7 @@ def ungmute(bot: Bot, update: Update, args: List[str]):
 
     sql.ungmute_user(user_id)
 
-    send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "un-gmute complete!")
+    bot.send_message(MESSAGE_DUMP, "un-gmute complete!")
 
     message.reply_text("Person has been un-gmuted.")
 
