@@ -77,6 +77,10 @@ def gban(bot: Bot, update: Update, args: List[str]):
         message.reply_text("That's not a user!")
         return
 
+    if user_chat.first_name == '':
+        message.reply_text("That's a deleted account! Why even bother gbanning them?")
+        return
+
     if sql.is_user_gbanned(user_id):
         if not reason:
             message.reply_text("This user is already gbanned; I'd change the reason, but you haven't given me one...")
