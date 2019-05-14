@@ -17,6 +17,7 @@ from haruka.modules.helper_funcs.misc import is_module_loaded
 from haruka.modules.helper_funcs.misc import send_to_list
 from haruka.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from haruka.modules.helper_funcs.string_handling import markdown_parser
+from haruka.modules.disable import DisableAbleCommandHandler
 
 import haruka.modules.sql.feds_sql as sql
 
@@ -655,7 +656,7 @@ LEAVE_FED_HANDLER = CommandHandler("leavefed", leave_fed, pass_args=True)
 PROMOTE_FED_HANDLER = CommandHandler("fpromote", user_join_fed, pass_args=True)
 DEMOTE_FED_HANDLER = CommandHandler("fdemote", user_demote_fed, pass_args=True)
 INFO_FED_HANDLER = CommandHandler("fedinfo", fed_info, pass_args=True)
-BAN_FED_HANDLER = CommandHandler("fban", fed_ban, pass_args=True)
+BAN_FED_HANDLER = DisableAbleCommandHandler("fban", fed_ban, pass_args=True)
 UN_BAN_FED_HANDLER = CommandHandler("unfban", unfban, pass_args=True)
 FED_BROADCAST_HANDLER = CommandHandler("fbroadcast", broadcast, pass_args=True)
 FED_SET_RULES_HANDLER = CommandHandler("setfrules", set_frules, pass_args=True)

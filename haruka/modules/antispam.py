@@ -159,27 +159,27 @@ def gban(bot: Bot, update: Update, args: List[str]):
 
     sql.gban_user(user_id, user_chat.username or user_chat.first_name, reason)
 
-    chats = get_all_chats()
-    for chat in chats:
-        chat_id = chat.chat_id
+    #chats = get_all_chats()
+    #for chat in chats:
+    #    chat_id = chat.chat_id
 
-        # Check if this group has disabled gbans
-        if not sql.does_chat_gban(chat_id):
-            continue
+        #Check if this group has disabled gbans
+        #if not sql.does_chat_gban(chat_id):
+        #    continue
 
-        try:
-            bot.kick_chat_member(chat_id, user_id)
-        except BadRequest as excp:
-            if excp.message in GBAN_ERRORS:
-                pass
-            else:
-                message.reply_text("Could not gban due to: {}".format(excp.message))
-                bot.send_message(MESSAGE_DUMP, "Could not gban due to: {}".format(excp.message))
-                sql.ungban_user(user_id)
-                os.environ['GPROCESS'] = '0'
-                return
-        except TelegramError:
-            pass
+        #try:
+        #    bot.kick_chat_member(chat_id, user_id)
+        #except BadRequest as excp:
+        #    if excp.message in GBAN_ERRORS:
+        #        pass
+        #    else:
+        #        message.reply_text("Could not gban due to: {}".format(excp.message))
+        #        bot.send_message(MESSAGE_DUMP, "Could not gban due to: {}".format(excp.message))
+        #        sql.ungban_user(user_id)
+        #        os.environ['GPROCESS'] = '0'
+        #        return
+        #except TelegramError:
+        #    pass
 
     os.environ['GPROCESS'] = '0'
 
@@ -354,47 +354,47 @@ def gmute(bot: Bot, update: Update, args: List[str]):
     sql.gmute_user(user_id, user_chat.username or user_chat.first_name, reason)
 
 
-    chats = get_all_chats()
-    for chat in chats:
-        chat_id = chat.chat_id
+    #chats = get_all_chats()
+    #for chat in chats:
+    #    chat_id = chat.chat_id
 
         # Check if this group has disabled gmutes
-        if not sql.does_chat_gban(chat_id):
-            continue
+        #if not sql.does_chat_gban(chat_id):
+        #    continue
 
-        try:
-            bot.restrict_chat_member(chat_id, user_id, can_send_messages=False)
-        except BadRequest as excp:
-            if excp.message == "User is an administrator of the chat":
-                pass
-            elif excp.message == "Chat not found":
-                pass
-            elif excp.message == "Not enough rights to restrict/unrestrict chat member":
-                pass
-            elif excp.message == "User_not_participant":
-                pass
-            elif excp.message == "Peer_id_invalid":  # Suspect this happens when a group is suspended by telegram.
-                pass
-            elif excp.message == "Group chat was deactivated":
-                pass
-            elif excp.message == "Need to be inviter of a user to kick it from a basic group":
-                pass
-            elif excp.message == "Chat_admin_required":
-                pass
-            elif excp.message == "Only the creator of a basic group can kick group administrators":
-                pass
-            elif excp.message == "Method is available only for supergroups":
-                pass
-            elif excp.message == "Can't demote chat creator":
-                pass
-            else:
-                message.reply_text("Could not gmute due to: {}".format(excp.message))
-                bot.send_message(MESSAGE_DUMP, "Could not gmute due to: {}".format(excp.message))
-                sql.ungmute_user(user_id)
-                os.environ['GPROCESS'] = '0'
-                return
-        except TelegramError:
-            pass
+        #try:
+        #    bot.restrict_chat_member(chat_id, user_id, can_send_messages=False)
+        #except BadRequest as excp:
+        #    if excp.message == "User is an administrator of the chat":
+        #        pass
+        #    elif excp.message == "Chat not found":
+        #        pass
+        #    elif excp.message == "Not enough rights to restrict/unrestrict chat member":
+        #        pass
+        #    elif excp.message == "User_not_participant":
+        #        pass
+        #    elif excp.message == "Peer_id_invalid":  # Suspect this happens when a group is suspended by telegram.
+        #        pass
+        #    elif excp.message == "Group chat was deactivated":
+        #        pass
+        #    elif excp.message == "Need to be inviter of a user to kick it from a basic group":
+        #        pass
+        #    elif excp.message == "Chat_admin_required":
+        #        pass
+        #    elif excp.message == "Only the creator of a basic group can kick group administrators":
+        #        pass
+        #    elif excp.message == "Method is available only for supergroups":
+        #        pass
+        #    elif excp.message == "Can't demote chat creator":
+        #        pass
+        #    else:
+        #        message.reply_text("Could not gmute due to: {}".format(excp.message))
+        #        bot.send_message(MESSAGE_DUMP, "Could not gmute due to: {}".format(excp.message))
+        #        sql.ungmute_user(user_id)
+        #        os.environ['GPROCESS'] = '0'
+        #        return
+        #except TelegramError:
+        #    pass
 
     os.environ['GPROCESS'] = '0'
     bot.send_message(MESSAGE_DUMP, "gmute complete!")
@@ -710,7 +710,7 @@ __mod_name__ = "Antispam security"
 
 ANTISPAM_STATUS = CommandHandler("antispam", antispam, pass_args=True, filters=Filters.group)
 
-GBAN_HANDLER = CommandHandler("gban", gban, pass_args=True,
+GBAN_HANDLER = CommandHandler(["gban", "fban"], gban, pass_args=True,
                               filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
 UNGBAN_HANDLER = CommandHandler("ungban", ungban, pass_args=True,
                                 filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
