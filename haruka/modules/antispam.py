@@ -269,6 +269,10 @@ def gmute(bot: Bot, update: Update, args: List[str]):
         message.reply_text("-_- So funny, lets gmute myself why don't I? Nice try.")
         return
 
+    if user_chat.first_name == '':
+        message.reply_text("That's a deleted account! Why even bother gmuting them?")
+        return
+
     try:
         user_chat = bot.get_chat(user_id)
     except BadRequest as excp:
@@ -547,22 +551,25 @@ def gkick(bot: Bot, update: Update, args: List[str]):
     except TelegramError:
             pass
 
+
     if not user_id:
         message.reply_text("You do not seems to be referring to a user")
         return
+
     if int(user_id) in SUDO_USERS or int(user_id) in SUPPORT_USERS:
         message.reply_text("OHHH! Someone's trying to gkick a sudo/support user! *Grabs popcorn*")
         return
+
     if int(user_id) == OWNER_ID:
         message.reply_text("Wow! Some's trying to gkick my owner! *Grabs Potato Chips*")
         return
-        
+
     if user_id == bot.id:
         message.reply_text("Welp, I'm not gonna gkick myself!")
         return
 
-    if int(user_id) in SUDO_USERS:
-        message.reply_text("")
+    if user_chat.first_name == '':
+        message.reply_text("That's a deleted account! Why u even bother gkicking dem")
         return
 
     chats = get_all_chats()
@@ -582,7 +589,6 @@ def gkick(bot: Bot, update: Update, args: List[str]):
 
 def __stats__():
     return "{} gbanned users.\n{} gmuted users.".format(sql.num_gbanned_users(), sql.num_gmuted_users())
-    
 
 
 def __user_info__(user_id, chat_id):
@@ -599,7 +605,7 @@ def __user_info__(user_id, chat_id):
                 text += tld(chat_id, "\nReason: {}").format(html.escape(user.reason))
         else:
             text = text.format(tld(chat_id, "No"))
-        
+
         text += tld(chat_id, "\nGlobally muted: <b>{}</b>")
         if is_gmuted:
             text = text.format(tld(chat_id, "Yes"))
