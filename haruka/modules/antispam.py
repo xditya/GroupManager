@@ -124,6 +124,8 @@ def gban(bot: Bot, update: Update, args: List[str]):
                                "<code>{}</code>\n"
                                "I've gone and updated it with your new reason!".format(html.escape(old_reason)),
                                parse_mode=ParseMode.HTML)
+            os.environ['GPROCESS'] = '0'
+
         else:
             banner = update.effective_user  # type: Optional[User]
             bot.send_message(
@@ -152,6 +154,8 @@ def gban(bot: Bot, update: Update, args: List[str]):
                                        mention_html(user_chat.id, user_chat.first_name), reason or "No reason given"),
                   parse_mode=ParseMode.HTML
         )
+
+    os.environ['GPROCESS'] = '1'
 
     sql.gban_user(user_id, user_chat.username or user_chat.first_name, reason)
 
