@@ -17,7 +17,7 @@ from haruka.modules.helper_funcs.string_handling import markdown_parser, \
     escape_invalid_curly_brackets
 from haruka.modules.log_channel import loggable
 
-from haruka.modules.feds import welcome_fed
+#from haruka.modules.feds import welcome_fed
 
 
 VALID_WELCOME_FORMATTERS = ['first', 'last', 'fullname', 'username', 'id', 'count', 'chatname', 'mention']
@@ -140,8 +140,8 @@ def new_member(bot: Bot, update: Update):
                             sql.DEFAULT_WELCOME.format(first=first_name))  # type: Optional[Message]
 
                 #feds
-                if welcome_fed(bot, update) == True:
-                    continue
+                #if welcome_fed(bot, update) == True:
+                #    continue
 
                 #Clean service welcome
                 if sql.clean_service(chat.id) == True:
