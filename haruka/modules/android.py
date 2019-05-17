@@ -252,6 +252,23 @@ def evo(bot: Bot, update: Update):
         message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         return
 
+    if device == 'gsi':
+        reply_text = """
+*Evolution X Official GSI*
+
+*Downloads:* [Click here!](https://sourceforge.net/projects/evolution-x/files/GSI/)
+*Supported Arch/Partition:* `ARM A, ARM64 A, ARM64 A/B`
+*Android Version:* `Pie`
+
+Built in March. Based on Phh v111
+*Maintainer:* [アキト ミズキト](https://t.me/peaktogoo)
+
+Q : Why the GSI is so outdated?
+A : Joey is reworking on the source.
+"""
+        message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        return
+
     if fetch.status_code == 200:
         try:
             usr = fetch.json()
