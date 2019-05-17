@@ -198,20 +198,23 @@ def evo(bot: Bot, update: Update):
     device = message.text[len('/evo '):]
     fetch = get(f'https://raw.githubusercontent.com/Evolution-X-Devices/official_devices/master/builds/{device}.json')
     if fetch.status_code == 200:
-        usr = fetch.json()
-        filename = usr['filename']
-        url = usr['url']
-        buildsize = usr['size']
-        version = usr['version']
-        maintainer = usr['maintainer']
-        maintainer_url = usr['maintainer_url']
-        xda = usr['forum_url']
+        try:
+            usr = fetch.json()
+            filename = usr['filename']
+            url = usr['url']
+            buildsize = usr['size']
+            version = usr['version']
+            maintainer = usr['maintainer']
+            maintainer_url = usr['maintainer_url']
+            xda = usr['forum_url']
+            reply_text = (f"*Download:* [{filename}]({url})\n"
+                          f"*Build size:* `{buildsize}`\n"
+                          f"*Android Version:* `{version}`\n"
+                          f"*Maintainer:* [{maintainer}]({maintainer_url})\n"
+                          f"*XDA Thread:* [Link]({xda})")
+        except ValueError:
+            reply_text = "Tell the rom maintainer to fix their OTA json. I'm sure this won't work with OTA and it won't work with this bot too :P"
 
-        reply_text = (f"*Download:* [{filename}]({url})\n"
-                      f"*Build size:* `{buildsize}`\n"
-                      f"*Android Version:* `{version}`\n"
-                      f"*Maintainer:* [{maintainer}]({maintainer_url})\n"
-                      f"*XDA Thread:* [Link]({xda})")
     elif fetch.status_code == 404:
         reply_text = "Device not found!"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
