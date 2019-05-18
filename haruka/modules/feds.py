@@ -25,11 +25,12 @@ from haruka.modules.translations.strings import tld
 
 from haruka.modules.connection import connected
 
-# Hello bot owner, I spended for feds many hours of my life, i beg don't remove MrYacha from sudo to apprecate his work
+# Hello bot owner, I spended for feds many hours of my life, Please don't remove this if you still respect MrYacha and peaktogoo
 # Federation by MrYacha 2018-2019
 # Federation rework in process by Mizukito Akito 2019
-# Thanks to @peaktogoo for /fbroadcast
-# Time spended on feds = 10h
+# Time spended on feds = 10h by #MrYacha
+# Time spended on reworking on the whole feds = 20+ hours by @peaktogoo
+
 LOGGER.info("Original federation module by MrYacha, reworked by Mizukito Akito (@peaktogoo) on Telegram.")
 
 FBAN_ERRORS = {
@@ -57,19 +58,26 @@ UNFBAN_ERRORS = {
     "Chat_admin_required",
 }
 
-def new_fed(bot: Bot, update: Update, args: List[str]):
+def new_fed(bot: Bot, update: Update):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
-    if len(args) >= 1:
+    message = update.effective_message
+    fednam = message.text[len('/newfed '):]
+    if not fednam == '':
         fed_id = str(uuid.uuid4())
-        fed_name = args[0]
+        fed_name = fednam
 
         #if sql.search_fed_by_name(fed_name):
         #    update.effective_message.reply_text(tld(chat.id, "There is existing federation with this name, change name!"))
         #    return
 
-        print(fed_id)
-        sql.new_fed(user.id, fed_name, fed_id)
+        LOGGER.info(fed_id)
+
+        x = sql.new_fed(user.id, fed_name, fed_id)
+        if not x:
+            update.effective_message.reply_text(tld(chat.id, "Big F! There is an error while creating Federations, Kindly get into my support group and ask what is going on!"))
+            return
+
         update.effective_message.reply_text("*You have successfully created a new federation!*"\
                         "\nName: `{}`"\
                         "\nID: `{}`"
@@ -100,6 +108,7 @@ def del_fed(bot: Bot, update: Update, args: List[str]):
 
         sql.del_fed(fed_id, chat.id)
         update.effective_message.reply_text(tld(chat.id, "Deleted!"))
+
 
 def fed_chat(bot: Bot, update: Update, args: List[str]):
         chat = update.effective_chat  # type: Optional[Chat]
@@ -152,7 +161,11 @@ def join_fed(bot: Bot, update: Update, args: List[str]):
             message.reply_text(tld(chat.id, "Please enter valid federation id."))
             return
 
-        sql.chat_join_fed(fedd, chat.id)
+        x = sql.chat_join_fed(fedd, chat.id)
+        if not res:
+                message.reply_text(tld(chat.id, "Failed to join to federation! Due to some errors that basically I have no idea, try reporting it in support group!"))
+                return
+
         message.reply_text(tld(chat.id, "Chat joined to federation!"))
 
 
@@ -177,7 +190,7 @@ def leave_fed(bot: Bot, update: Update, args: List[str]):
                     return
 
     if sql.chat_leave_fed(chat.id) == True:
-        update.effective_message.reply_text(tld(chat.id, "Leaved from fed!"))
+        update.effective_message.reply_text(tld(chat.id, "Left from fed!"))
     else:
         update.effective_message.reply_text(tld(chat.id, "Why you are leaving feds when you have not join any!"))
 
@@ -228,6 +241,10 @@ def user_join_fed(bot: Bot, update: Update, args: List[str]):
         #        return
 
         res = sql.user_join_fed(fed_id, user_id)
+        if not res:
+                update.effective_message.reply_text(tld(chat.id, "Failed to promoted! It might be because you are admin in another federation! Our code is still buggy, We are sorry for that!"))
+                return
+
         update.effective_message.reply_text(tld(chat.id, "Promoted Successfully!"))
 
 
@@ -270,7 +287,6 @@ def user_demote_fed(bot: Bot, update: Update, args: List[str]):
                 update.effective_message.reply_text(tld(chat.id, "Get out of here!"))
         else:
                 update.effective_message.reply_text(tld(chat.id, "I can not remove him, I am powerless!"))
-        
 
 
 def fed_info(bot: Bot, update: Update, args: List[str]):
@@ -410,7 +426,10 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
         message.reply_text(tld(chat.id, "You have entered no reason, fbanning without reason!"))
         reason = "No Reason have been given"
 
-    sql.fban_user(fed_id, user_id, reason)
+    x = sql.fban_user(fed_id, user_id, reason)
+    if not x:
+        message.reply_text(tld(chat.id, "Failed to fban, This user is probably fbanned!"))
+        return
 
     h = sql.all_fed_chats(fed_id)
     for O in h:
@@ -477,7 +496,7 @@ def unfban(bot: Bot, update: Update, args: List[str]):
             if member.status == 'kicked':
                 bot.unban_chat_member(O, user_id)
 
-        
+
         except BadRequest as excp:
 
             if excp.message in UNFBAN_ERRORS:
@@ -488,9 +507,12 @@ def unfban(bot: Bot, update: Update, args: List[str]):
 
         except TelegramError:
             pass
-        
+
         try:
-            sql.un_fban_user(fed_id, user_id)
+            x = sql.un_fban_user(fed_id, user_id)
+            if not x:
+                message.reply_text(tld(chat.id, "Failed to fban, This user is probably fbanned!"))
+                return
         except:
             pass
 
@@ -649,14 +671,14 @@ Commands:
  - /fedadmins: Show the federation admins
 """
 
-NEW_FED_HANDLER = CommandHandler("newfed", new_fed, pass_args=True)
+NEW_FED_HANDLER = CommandHandler("newfed", new_fed)
 DEL_FED_HANDLER = CommandHandler("delfed", del_fed, pass_args=True)
 JOIN_FED_HANDLER = CommandHandler("joinfed", join_fed, pass_args=True)
 LEAVE_FED_HANDLER = CommandHandler("leavefed", leave_fed, pass_args=True)
 PROMOTE_FED_HANDLER = CommandHandler("fpromote", user_join_fed, pass_args=True)
 DEMOTE_FED_HANDLER = CommandHandler("fdemote", user_demote_fed, pass_args=True)
 INFO_FED_HANDLER = CommandHandler("fedinfo", fed_info, pass_args=True)
-BAN_FED_HANDLER = DisableAbleCommandHandler("fban", fed_ban, pass_args=True)
+BAN_FED_HANDLER = DisableAbleCommandHandler(["fban", "fedban"], fed_ban, pass_args=True)
 UN_BAN_FED_HANDLER = CommandHandler("unfban", unfban, pass_args=True)
 FED_BROADCAST_HANDLER = CommandHandler("fbroadcast", broadcast, pass_args=True)
 FED_SET_RULES_HANDLER = CommandHandler("setfrules", set_frules, pass_args=True)

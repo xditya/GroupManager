@@ -85,9 +85,14 @@ def new_fed(owner_id, fed_id, fed_name):
     with FEDS_LOCK:
         r = Federations(str(owner_id), fed_id, fed_name)
         SESSION.add(r)
-        SESSION.commit()
-        return r
-
+        try:
+            SESSION.commit()
+            return r
+        except:
+            SESSION.rollback()
+            return False
+        finally:
+            SESSION.commit()
 
 def del_fed(fed_id, chat_id):
     with FEDS_LOCK:
@@ -142,8 +147,14 @@ def chat_join_fed(fed_id, chat_id):
     with FEDS_LOCK:
         r = ChatF(chat_id, fed_id)
         SESSION.add(r)
-        SESSION.commit()
-        return r
+        try:
+            SESSION.commit()
+            return r
+        except:
+            SESSION.rollback()
+            return False
+        finally:
+            SESSION.commit()
 
 
 def user_demote_fed(fed_id, user_id):
@@ -168,8 +179,14 @@ def user_join_fed(fed_id, user_id):
     with FEDS_LOCK:
         r = UserF(user_id, fed_id)
         SESSION.add(r)
-        SESSION.commit()
-        return r
+        try:
+            SESSION.commit()
+            return r
+        except:
+            SESSION.rollback()
+            return False
+        finally:
+            SESSION.commit()
 
 
 def chat_leave_fed(chat_id):
@@ -245,8 +262,14 @@ def fban_user(fed_id, user_id, reason):
         r = BansF(str(fed_id), user_id, reason)
 
         SESSION.add(r)
-        SESSION.commit()
-        return r
+        try:
+            SESSION.commit()
+            return r
+        except:
+            SESSION.rollback()
+            return False
+        finally:
+            SESSION.commit()
 
 
 def un_fban_user(fed_id, user_id):
@@ -260,8 +283,14 @@ def un_fban_user(fed_id, user_id):
                         if int(I.user_id) == int(user_id):
                                 print("fund prev")
                                 SESSION.delete(I)
-        SESSION.commit()
-        return I
+        try:
+            SESSION.commit()
+            return I
+        except:
+            SESSION.rollback()
+            return False
+        finally:
+            SESSION.commit()
 
 def get_fban_user(fed_id, user_id):
         r = SESSION.query(BansF).all()
