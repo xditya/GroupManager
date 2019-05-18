@@ -1,13 +1,7 @@
-import subprocess
 import html
 import json
-import random
 import time
-import pyowm
-from pyowm import timeutils, exceptions
 from datetime import datetime
-from typing import Optional, List
-from pythonping import ping as ping3
 from typing import Optional, List
 from hurry.filesize import size as sizee
 
@@ -16,16 +10,12 @@ from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from haruka import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, LOGGER
+from haruka import dispatcher, LOGGER
 from haruka.__main__ import GDPR
 from haruka.__main__ import STATS, USER_INFO
 from haruka.modules.disable import DisableAbleCommandHandler
 from haruka.modules.helper_funcs.extraction import extract_user
 from haruka.modules.helper_funcs.filters import CustomFilters
-
-from haruka.modules.sql.translation import prev_locale
-
-from haruka.modules.translations.strings import tld
 
 from requests import get
 
