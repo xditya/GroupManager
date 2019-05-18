@@ -45,8 +45,7 @@ def locale_button(bot, update):
         else:
             query.answer(text="Error!", show_alert=True)
 
-                                                                           
-    try: 
+    try:
         LANGUAGE = prev_locale(chat.id)
         locale = LANGUAGE.locale_name
         curr_lang = list_locales[locale]
@@ -54,15 +53,15 @@ def locale_button(bot, update):
         curr_lang = "English"
 
     text = "*Select language* \n"
-    text += "User language : `{}`".format(curr_lang) 
+    text += "User language : `{}`".format(curr_lang)
 
     conn = connected(bot, update, chat, user.id, need_admin=False)
 
     if not conn == False:
-        try: 
+        try:
             chatlng = prev_locale(conn).locale_name
             chatlng = list_locales[chatlng]
-            text += "\nConnected chat language : `{}`".format(chatlng) 
+            text += "\nConnected chat language : `{}`".format(chatlng)
         except:
             chatlng = "English"
 
@@ -71,7 +70,7 @@ def locale_button(bot, update):
     query.message.reply_text(text, parse_mode=ParseMode.MARKDOWN,
                                             reply_markup=InlineKeyboardMarkup([[
                                             InlineKeyboardButton("English 🇺🇸", callback_data="set_lang_en")]] + [[
-                                            InlineKeyboardButton("Russian 🇷🇺", callback_data="set_lang_ru"), 
+                                            InlineKeyboardButton("Russian 🇷🇺", callback_data="set_lang_ru"),
                                             InlineKeyboardButton("Ukrainian 🇺🇦", callback_data="set_lang_ua")]] + [[
                                             InlineKeyboardButton("Spanish 🇪🇸", callback_data="set_lang_es"),
                                             InlineKeyboardButton("Turkish 🇹🇷", callback_data="set_lang_tr")]] + [[
