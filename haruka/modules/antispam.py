@@ -144,7 +144,8 @@ def gban(bot: Bot, update: Update, args: List[str]):
         os.environ['GPROCESS'] = '0'
         return
 
-    message.reply_text("*Blows dust off of banhammer* 😉")
+    starting = "Initiating global ban for {}...".format(mention_html(user_chat.id, user_chat.first_name or "Deleted Account"))
+    message.reply_text(starting, parse_mode=ParseMode.HTML)
 
     banner = update.effective_user  # type: Optional[User]
     bot.send_message(
@@ -182,8 +183,6 @@ def gban(bot: Bot, update: Update, args: List[str]):
         #    pass
 
     os.environ['GPROCESS'] = '0'
-
-    message.reply_text("User have been global banned!")
 
     bot.send_message(MESSAGE_DUMP,
                    "{} has been successfully gbanned!".format(mention_html(user_chat.id, user_chat.first_name)),
