@@ -634,7 +634,13 @@ def __user_info__(user_id, chat_id):
     fed_id = sql.get_fed_id(chat_id)
     if fed_id:
         fban = sql.get_fban_user(fed_id, user_id)
-        if not fban == False:
+        info = sql.get_fed_info(fed_id)
+        infoname = info.fed_name
+
+        if is_user_fed_admin(fed_id, user_id) == True:
+            text = f"This user is a fed admin in the current federation, <code>{infoname}</code>."
+
+        elif not fban == False:
             text = "Banned in current federation - <b>Yes</b>"
             text += "\n<b>Reason:</b> {}".format(fban)
         else:
@@ -669,6 +675,8 @@ Commands:
  - /frules: Show federation rules
  - /chatfed: Show the federation the chat is in
  - /fedadmins: Show the federation admins
+
+Federations originally by @MrYacha, 75% Reworked by @peaktogoo
 """
 
 NEW_FED_HANDLER = CommandHandler("newfed", new_fed)
