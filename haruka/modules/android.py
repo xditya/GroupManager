@@ -12,7 +12,7 @@ from typing import Optional, List
 from hurry.filesize import size as sizee
 
 from telegram import Message, Chat, Update, Bot, MessageEntity
-from telegram import ParseMode
+from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
 
@@ -60,6 +60,11 @@ def havoc(bot: Bot, update: Update):
         reply_text = (f"*Download:* [{filename}]({url})\n"
                       f"*Build size:* `{buildsize_b}`\n"
                       f"*Version:* `{version}`")
+
+        keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
+        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        return
+
     elif fetch.status_code == 404:
         reply_text = "Device not found."
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -90,6 +95,11 @@ def pixys(bot: Bot, update: Update):
                       f"*Build size:* `{buildsize_b}`\n"
                       f"*Version:* `{version}`\n"
                       f"*Rom Type:* `{romtype}`")
+
+        keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
+        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        return
+
     elif fetch.status_code == 404:
         reply_text = "Device not found."
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -124,6 +134,11 @@ def pearl(bot: Bot, update: Update):
                       f"*Maintainer:* `{maintainer}`\n"
                       f"*ROM Type:* `{romtype}`\n"
                       f"*XDA Thread:* [Link]({xda})")
+
+        keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
+        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        return
+
     elif fetch.status_code == 404:
         reply_text = "Device not found."
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -152,6 +167,11 @@ def posp(bot: Bot, update: Update):
         reply_text = (f"*Download:* [{filename}]({url})\n"
                       f"*Build size:* `{buildsize_b}`\n"
                       f"*Version:* `{version}`")
+
+        keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
+        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        return
+
     else:
         reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -180,6 +200,11 @@ def los(bot: Bot, update: Update):
         reply_text = (f"*Download:* [{filename}]({url})\n"
                       f"*Build size:* `{buildsize_b}`\n"
                       f"*Version:* `{version}`")
+
+        keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
+        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        return
+
     else:
         reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -210,6 +235,11 @@ def dotos(bot: Bot, update: Update):
                       f"*Build size:* `{buildsize_b}`\n"
                       f"*Version:* `{version}`\n"
                       f"*Device Changelog:* `{changelog}`")
+
+        keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
+        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        return
+
     elif fetch.status_code == 404:
         reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -237,6 +267,11 @@ def viper(bot: Bot, update: Update):
         reply_text = (f"*Download:* [{filename}]({url})\n"
                       f"*Build size:* `{buildsize_b}`\n"
                       f"*Version:* `{version}`")
+
+        keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
+        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        return
+
     elif fetch.status_code == 404:
         reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -266,7 +301,8 @@ Built in March. Based on Phh v111
 Q : Why the GSI is so outdated?
 A : Joey is reworking on the source.
 """
-        message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        keyboard = [[InlineKeyboardButton(text="Click to Download", url="https://sourceforge.net/projects/evolution-x/files/GSI/")]]
+        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         return
 
     if fetch.status_code == 200:
@@ -285,12 +321,19 @@ A : Joey is reworking on the source.
                           f"*Android Version:* `{version}`\n"
                           f"*Maintainer:* [{maintainer}](https://t.me/{maintainer_url})\n")
 
+            keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
+            message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+            return
+
         except ValueError:
             reply_text = "Tell the rom maintainer to fix their OTA json. I'm sure this won't work with OTA and it won't work with this bot too :P"
+            message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+            return
 
     elif fetch.status_code == 404:
         reply_text = "Device not found!"
-    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        return
 
 def enesrelease(bot: Bot, update: Update, args: List[str]):
     message = update.effective_message
