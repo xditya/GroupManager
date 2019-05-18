@@ -128,6 +128,17 @@ def pearl(bot: Bot, update: Update):
         version = response['version']
         xda = response['xda']
 
+        if xda == '':
+            reply_text = (f"*Download:* [{filename}]({url})\n"
+                          f"*Build size:* `{buildsize_b}`\n"
+                          f"*Version:* `{version}`\n"
+                          f"*Maintainer:* `{maintainer}`\n"
+                          f"*ROM Type:* `{romtype}`")
+
+            keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
+            message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+            return
+
         reply_text = (f"*Download:* [{filename}]({url})\n"
                       f"*Build size:* `{buildsize_b}`\n"
                       f"*Version:* `{version}`\n"
