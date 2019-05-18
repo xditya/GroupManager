@@ -8,7 +8,7 @@ from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import mention_html
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, User, CallbackQuery
 
-from haruka import dispatcher, LOGGER
+from haruka import dispatcher, LOGGER, SUDO_USERS
 from haruka.modules.helper_funcs.chat_status import bot_admin, user_admin, is_user_admin, can_restrict
 from haruka.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from haruka.modules.helper_funcs.string_handling import extract_time
@@ -27,7 +27,7 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     message = update.effective_message  # type: Optional[Message]
-    
+
     conn = connected(bot, update, chat, user.id)
     if not conn == False:
         chatD = dispatcher.bot.getChat(conn)
@@ -49,8 +49,12 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
     member = chatD.get_member(int(user_id))
 
     if member:
-        if is_user_admin(chatD, user_id, member=member):
-            message.reply_text(tld(chat.id, "Afraid I can't stop an admin from talking!"))
+
+        if user_id in SUDO_USERS:
+            message.reply_text(tld(chat.id, "No! I'm not muting bot sudoers! That would be a pretty dumb idea."))
+
+        elif is_user_admin(chatD, user_id, member=member):
+            message.reply_text(tld(chat.id, "No! I'm not muting chat administrator! That would be a pretty dumb idea."))
 
         elif member.can_send_messages is None or member.can_send_messages:
             bot.restrict_chat_member(chatD.id, user_id, can_send_messages=False)
