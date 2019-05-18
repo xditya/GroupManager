@@ -281,6 +281,17 @@ def viper(bot: Bot, update: Update):
 def evo(bot: Bot, update: Update):
     message = update.effective_message
     device = message.text[len('/evo '):]
+    if device == "example":
+        reply_text = "Why are you trying to execute a example json?"
+        message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        return
+
+    if device == "x00t":
+        device = "X00T"
+
+    if device == "x01bd":
+        device = "X01BD"
+
     fetch = get(f'https://raw.githubusercontent.com/Evolution-X-Devices/official_devices/master/builds/{device}.json')
 
     if device == '':
