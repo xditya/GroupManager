@@ -407,6 +407,8 @@ def miui(bot: Bot, update: Update):
 @run_async
 def getaex(bot: Bot, update: Update, args: List[str]):
     AEX_OTA_API = "https://api.aospextended.com/ota/"
+    message = update.effective_message
+
     if len(args) != 2:
         reply_text = "Please type your device **codename** and **Android Version** into it!\nFor example, `/aex jason pie`"
         message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -418,7 +420,7 @@ def getaex(bot: Bot, update: Update, args: List[str]):
     if res.status_code == 200:
         apidata = json.loads(res.text)
         if apidata.get('error'):
-            update.effective_message.reply_text("Sadly there isn't any build available for " + device)
+            message.reply_text("Sadly there isn't any build available for " + device)
             return
         else:
             developer = apidata.get('developer')
@@ -428,20 +430,17 @@ def getaex(bot: Bot, update: Update, args: List[str]):
             url = "https://downloads.aospextended.com/download/" + device + "/" + version + "/" + apidata.get('filename')
             builddate = datetime.strptime(apidata.get('build_date'), "%Y%m%d-%H%M").strftime("%d %B %Y")
             buildsize = sizee(int(apidata.get('filesize')))
-            md5 = apidata.get('md5')
 
-            message = (f"*AOSP EXTENDED for {device}*\n"
-                       f"*By:* [{developer}]({developer_url})\n"
-                       f"*XDA Thread:* [Link]({xda})\n\n\n"
-                       f"*Latest build:* [{filename}]({url})\n"
+            message = (f"*Download:* [{filename}]({url})\n"
                        f"*Build date:* `{builddate}`\n"
                        f"*Build size:* `{buildsize}`\n"
-                       f"*MD5:* `{md5}`")
-            update.effective_message.reply_text(
-                message, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+                       f"*By:* [{developer}]({developer_url})\n")
+
+            keyboard = [[InlineKeyboardButton(text="Click here to download", url=f"{url}")]]
+            update.effective_message.reply_text(message, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
             return
     else:
-        update.effective_message.reply_text("No builds found for the provided device-version combo.")
+        message.reply_text("No builds found for the provided device-version combo.")
 
 @run_async
 def bootleggers(bot: Bot, update: Update):
