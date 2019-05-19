@@ -7,7 +7,7 @@ from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import escape_markdown
 
 import haruka.modules.sql.userinfo_sql as sql
-from haruka import dispatcher, SUDO_USERS
+from haruka import dispatcher, SUDO_USERS, OWNER_ID
 from haruka.modules.disable import DisableAbleCommandHandler
 from haruka.modules.helper_funcs.extraction import extract_user
 
@@ -86,6 +86,9 @@ def set_about_bio(bot: Bot, update: Update):
             return
         elif user_id in SUDO_USERS and sender.id not in SUDO_USERS:
             message.reply_text("Erm... yeah, I only trust sudo users to set sudo users bio LMAO.")
+            return
+        elif user_id == OWNER_ID:
+            message.reply_text("You ain't setting my master bio LMAO.")
             return
 
         text = message.text
