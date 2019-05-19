@@ -204,6 +204,7 @@ def left_member(bot: Bot, update: Update):
     if should_goodbye:
         left_mem = update.effective_message.left_chat_member
         if left_mem:
+
             # Ignore bot being kicked
             if left_mem.id == bot.id:
                 return
@@ -246,6 +247,10 @@ def left_member(bot: Bot, update: Update):
             keyboard = InlineKeyboardMarkup(keyb)
 
             send(update, res, keyboard, sql.DEFAULT_GOODBYE)
+
+            #Clean service goodbye
+            if sql.clean_service(chat.id) == True:
+                bot.delete_message(chat.id, update.message.message_id)
 
 
 @run_async
