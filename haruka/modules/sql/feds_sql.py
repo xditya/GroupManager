@@ -236,8 +236,15 @@ def set_frules(fed_id, rules):
         r = RulesF(str(fed_id), rules)
 
         SESSION.add(r)
-        SESSION.commit()
-        return r
+        try:
+            SESSION.commit()
+            return r
+        except:
+            SESSION.rollback()
+            return False
+        finally:
+            SESSION.commit()
+
 
 def get_frules(fed_id):
     with FEDS_LOCK:
