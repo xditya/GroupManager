@@ -13,8 +13,8 @@ from telegram.utils.helpers import escape_markdown, mention_html
 
 from haruka import dispatcher, OWNER_ID, SUDO_USERS, WHITELIST_USERS, MESSAGE_DUMP, LOGGER
 from haruka.modules.helper_funcs.handlers import CMD_STARTERS
-from haruka.modules.helper_funcs.misc import is_module_loaded
-from haruka.modules.helper_funcs.misc import send_to_list
+from haruka.modules.helper_funcs.misc import is_module_loaded, send_to_list
+from haruka.modules.helper_funcs.chat_status import is_user_admin
 from haruka.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from haruka.modules.helper_funcs.string_handling import markdown_parser
 from haruka.modules.disable import DisableAbleCommandHandler
@@ -114,6 +114,11 @@ def fed_chat(bot: Bot, update: Update, args: List[str]):
         chat = update.effective_chat  # type: Optional[Chat]
         user = update.effective_user  # type: Optional[User]
         fed_id = sql.get_fed_id(chat.id)
+
+        user_id = update.effective_message.from_user.id
+        if not is_user_admin(update.effective_chat, user_id):
+            update.effective_message.reply_text("You must be chat administrator to run this command :P")
+            return
 
         if not fed_id:
             update.effective_message.reply_text(tld(chat.id, "This group not in any federation!"))
@@ -367,6 +372,11 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     fed_id = sql.get_fed_id(chat.id)
+
+    if not fed_id:
+        update.effective_message.reply_text(tld(chat.id, "This group not in any federation!"))
+        return
+
     info = sql.get_fed_info(fed_id)
     OW = bot.get_chat(info.owner_id)
     HAHA = OW.id
@@ -464,6 +474,11 @@ def unfban(bot: Bot, update: Update, args: List[str]):
     user = update.effective_user  # type: Optional[User]
     message = update.effective_message  # type: Optional[Message]
     fed_id = sql.get_fed_id(chat.id)
+
+    if not fed_id:
+        update.effective_message.reply_text(tld(chat.id, "This group not in any federation!"))
+        return
+
     info = sql.get_fed_info(fed_id)
 
     if is_user_fed_admin(fed_id, user.id) == False:
