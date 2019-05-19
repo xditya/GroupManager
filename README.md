@@ -16,8 +16,3 @@ You can also join our support group [here!](https://t.me/HarukaAyaBot)
 * Paul Larsen - marie creator, inspiration to do many things
 * FFBot - for translations functions
 And much more that we couldn't list it here!
-
-
-## Getting start with this bot
-
-Read the [wiki!](https://github.com/peaktogoo/HarukaAya/wiki/Getting-Start)

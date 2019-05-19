@@ -566,6 +566,10 @@ def set_frules(bot: Bot, update: Update, args: List[str]):
     user = update.effective_user  # type: Optional[User]
     fed_id = sql.get_fed_id(chat.id)
 
+    if not fed_id:
+        update.effective_message.reply_text(tld(chat.id, "This chat is not in any federation!"))
+        return
+
     if is_user_fed_admin(fed_id, user.id) == False:
         update.effective_message.reply_text(tld(chat.id, "Only fed admins can do this!"))
         return
@@ -579,21 +583,35 @@ def set_frules(bot: Bot, update: Update, args: List[str]):
             txt = args[1]
             offset = len(txt) - len(raw_text)  # set correct offset relative to command
             markdown_rules = markdown_parser(txt, entities=msg.parse_entities(), offset=offset)
-        sql.set_frules(fed_id, markdown_rules)
-        update.effective_message.reply_text(tld(chat.id, "Rules setuped for this fed!"))
+        x = sql.set_frules(fed_id, markdown_rules)
+        if not x:
+            update.effective_message.reply_text(tld(chat.id, "Big F! There is an error while setting federation rules! If you wondered why please ask it in support group!"))
+            return
+
+        rules = sql.get_fed_info(fed_id).fed_name
+        update.effective_message.reply_text(tld(chat.id, f"Rules setuped for {rules}!"))
     else:
-        update.effective_message.reply_text(tld(chat.id, "Please write rules!"))
+        update.effective_message.reply_text(tld(chat.id, "Please write rules to set it up!"))
 
 
 def get_frules(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat  # type: Optional[Chat]
     fed_id = sql.get_fed_id(chat.id)
-    rules = sql.get_frules(fed_id).rules
-    print(rules)
-    text = "*Rules in this fed:*\n"
-    text += rules
-    update.effective_message.reply_text(tld(chat.id, text), parse_mode=ParseMode.MARKDOWN)
+    if not fed_id:
+        update.effective_message.reply_text(tld(chat.id, "This chat is not in any federation!"))
+        return
 
+    ruless = sql.get_frules(fed_id)
+    try:
+        rules = ruless.rules
+        print(rules)
+        text = "*Rules in this fed:*\n"
+        text += rules
+        update.effective_message.reply_text(tld(chat.id, text), parse_mode=ParseMode.MARKDOWN)
+        return
+    except AttributeError:
+        update.effective_message.reply_text(tld(chat.id, "There is no rules setup-ed in this federation!"))
+        return
 
 @run_async
 def broadcast(bot: Bot, update: Update, args: List[str]):
