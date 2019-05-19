@@ -162,7 +162,7 @@ def join_fed(bot: Bot, update: Update, args: List[str]):
             return
 
         x = sql.chat_join_fed(fedd, chat.id)
-        if not res:
+        if not x:
                 message.reply_text(tld(chat.id, "Failed to join to federation! Due to some errors that basically I have no idea, try reporting it in support group!"))
                 return
 
