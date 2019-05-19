@@ -391,6 +391,11 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
 
     user_id, reason = extract_user_and_text(message, args)
 
+    fban = sql.get_fban_user(fed_id, user_id)
+    if not fban == False:
+        update.effective_message.reply_text(tld(chat.id, "*Cough* This user is already fbanned!"))
+        return
+
     if not user_id:
         message.reply_text(tld(chat.id, "You don't seem to be referring to a user."))
         return
@@ -429,23 +434,25 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
         message.reply_text(tld(chat.id, "That's not a user!"))
         return
 
+    ok123 = mention_html(user_chat.id, user_chat.first_name)
+    ok1234 = info.fed_name
 
-    message.reply_text(tld(chat.id, "Start fbanning!"))
+    text12 = f"Beginning federation ban of {ok123} in {ok1234}."
+    update.effective_message.reply_text(text12, parse_mode=ParseMode.HTML)
 
     if reason == "":
-        message.reply_text(tld(chat.id, "You have entered no reason, fbanning without reason!"))
-        reason = "No Reason have been given"
+        reason = "No Reason."
 
     x = sql.fban_user(fed_id, user_id, reason)
     if not x:
-        message.reply_text(tld(chat.id, "Failed to fban, This user is probably fbanned!"))
+        message.reply_text("Failed to federation ban! Probably this bug is not fixed yet due to the developer is lazy as fuck.")
         return
 
     h = sql.all_fed_chats(fed_id)
     for O in h:
         try:
             bot.kick_chat_member(O, user_id)
-            #text = tld(chat.id, "I should gban {}, but it's only test fban, right? So i let him live.").format(O)
+            #text = tld(chat.id, "I should fban {}, but it's only test fban, right? So i let him live.").format(O)
             text = "Fbanning {}".format(user_id)
             #message.reply_text(text)
         except BadRequest as excp:
