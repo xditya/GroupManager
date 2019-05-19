@@ -227,12 +227,19 @@ def user_join_fed(bot: Bot, update: Update, args: List[str]):
 
         print(sql.search_user_in_fed(fed_id, user_id))
 
-        if is_user_fed_owner(fed_id, user.id) == True:
-                update.effective_message.reply_text(tld(chat.id, "Are you gonna promote yourself?"))
+        #if user_id == user_id:
+        #        update.effective_message.reply_text(tld(chat.id, "Are you gonna promote yourself?"))
+        #        return
+
+        fed_id = sql.get_fed_id(chat.id)
+        info = sql.get_fed_info(fed_id)
+        OW = bot.get_chat(info.owner_id)
+        HAHA = OW.id
+        if user_id == HAHA:
+                update.effective_message.reply_text(tld(chat.id, "Why are you trying to promote federation owner!?"))
                 return
 
-
-        elif not sql.search_user_in_fed(fed_id, user_id) == False:
+        if not sql.search_user_in_fed(fed_id, user_id) == False:
                 update.effective_message.reply_text(tld(chat.id, "I can't promote user which is already a fed admin! But I can demote them."))
                 return
 
