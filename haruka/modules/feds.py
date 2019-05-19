@@ -66,12 +66,10 @@ def new_fed(bot: Bot, update: Update):
     if not fednam == '':
         fed_id = str(uuid.uuid4())
         fed_name = fednam
-
-        #if sql.search_fed_by_name(fed_name):
-        #    update.effective_message.reply_text(tld(chat.id, "There is existing federation with this name, change name!"))
-        #    return
-
         LOGGER.info(fed_id)
+
+        #if fednam == 'Name':
+        #     fed_id = "Name"
 
         x = sql.new_fed(user.id, fed_name, fed_id)
         if not x:
