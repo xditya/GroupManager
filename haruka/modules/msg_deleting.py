@@ -69,6 +69,7 @@ def purge(bot: Bot, update: Update, args: List[str]) -> str:
 @user_admin
 @loggable
 def del_message(bot: Bot, update: Update) -> str:
+    chat = update.effective_chat  # type: Optional[Chat]
     if update.effective_message.reply_to_message:
         user = update.effective_user  # type: Optional[User]
         chat = update.effective_chat  # type: Optional[Chat]

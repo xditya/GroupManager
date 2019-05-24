@@ -309,6 +309,7 @@ def unban(bot: Bot, update: Update, args: List[str]) -> str:
 
     return log
 
+
 @run_async
 @bot_admin
 @can_restrict
@@ -360,6 +361,7 @@ def sban(bot: Bot, update: Update, args: List[str]) -> str:
             LOGGER.warning(update)
             LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id, excp.message)       
     return ""
+
 
 __help__ = """
 Some people need to be publicly banned; spammers, annoyances, or just trolls.
