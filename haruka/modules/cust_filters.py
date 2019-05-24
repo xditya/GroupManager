@@ -219,14 +219,14 @@ def reply_filter(bot: Bot, update: Update):
                     if excp.message == "Unsupported url protocol":
                         message.reply_text("You seem to be trying to use an unsupported url protocol. Telegram "
                                            "doesn't support buttons for some protocols, such as tg://. Please try "
-                                           "again, or ask in @YanaBotGroup for help.")
+                                           "again, or ask in @HarukaAyaGroup for help.")
                     elif excp.message == "Reply message not found":
                         bot.send_message(chat.id, filt.reply, parse_mode=ParseMode.MARKDOWN,
                                          disable_web_page_preview=True,
                                          reply_markup=keyboard)
                     else:
                         message.reply_text("This note could not be sent, as it is incorrectly formatted. Ask in "
-                                           "@YanaBotGroup if you can't figure out why!")
+                                           "@HarukaAyaGroup if you can't figure out why!")
                         LOGGER.warning("Message %s could not be parsed", str(filt.reply))
                         LOGGER.exception("Could not parse filter %s in chat %s", str(filt.keyword), str(chat.id))
 
@@ -249,7 +249,7 @@ def __chat_settings__(bot, update, chat, chatP, user):
     return "There are `{}` custom filters here.".format(len(cust_filters))
 
 
-__help__ = __help__ = """
+__help__ = """
 Make your chat more lively with filters; The bot will reply to certain words!
 Filters are case insensitive; every time someone says your trigger words, {} will reply something else! can be used to create your own commands, if desired.
  - /filters: list all active filters in this chat.

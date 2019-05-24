@@ -17,6 +17,7 @@ from haruka.modules.translations.strings import tld
 
 from haruka.modules.keyboard import keyboard
 
+
 @user_admin
 @run_async
 def allow_connections(bot: Bot, update: Update, args: List[str]) -> str:
@@ -25,10 +26,10 @@ def allow_connections(bot: Bot, update: Update, args: List[str]) -> str:
         if len(args) >= 1:
             var = args[0]
             print(var)
-            if (var == "no"):
+            if var == "no":
                 sql.set_allow_connect_to_chat(chat.id, False)
                 update.effective_message.reply_text(tld(chat.id, "Disabled connections to this chat for users"))
-            elif(var == "yes"):
+            elif var == "yes":
                 sql.set_allow_connect_to_chat(chat.id, True)
                 update.effective_message.reply_text(tld(chat.id, "Enabled connections to this chat for users"))
             else:
@@ -104,8 +105,22 @@ def connect_chat(bot, update, args):
             history = sql.get_history(user.id)
             print(history.user_id, history.chat_id1, history.chat_id2, history.chat_id3, history.updated)
 
+    elif update.effective_chat.type == 'supergroup':
+        connect_chat = chat.id
+        if (bot.get_chat_member(connect_chat, update.effective_message.from_user.id).status in ('administrator', 'creator') or (sql.allow_connect_to_chat(connect_chat) == True) and bot.get_chat_member(connect_chat, update.effective_message.from_user.id).status in'member') or (user.id in SUDO_USERS):
+
+            connection_status = sql.connect(update.effective_message.from_user.id, connect_chat)
+            if connection_status:
+                update.effective_message.reply_text(tld(chat.id, "Succesfully connected to *{}*").format(chat.id),
+                                                    parse_mode=ParseMode.MARKDOWN)
+            else:
+                update.effective_message.reply_text(tld(chat.id, "Failed to connect to *{}*").format(chat.id),
+                                                    parse_mode=ParseMode.MARKDOWN)
+        else:
+            update.effective_message.reply_text(tld(chat.id, "You are not admin!"))
+
     else:
-        update.effective_message.reply_text(tld(chat.id, "Usage limited to PMs only!"))
+        update.effective_message.reply_text(tld(chat.id, "Usage is limited to PMs only!"))
 
 
 def disconnect_chat(bot, update):
@@ -117,8 +132,16 @@ def disconnect_chat(bot, update):
             keyboard(bot, update)
         else:
            update.effective_message.reply_text("Disconnection unsuccessfull!")
+    elif update.effective_chat.type == 'supergroup':
+        disconnection_status = sql.disconnect(update.effective_message.from_user.id)
+        if disconnection_status:
+            sql.disconnected_chat = update.effective_message.reply_text("Disconnected from chat!")
+            # Rebuild user's keyboard
+            keyboard(bot, update)
+        else:
+            update.effective_message.reply_text("Disconnection unsuccessfull!")
     else:
-        update.effective_message.reply_text("Usage restricted to PMs only")
+        update.effective_message.reply_text("Usage is restricted to PMs only")
 
 
 def connected(bot, update, chat, user_id, need_admin=True):
@@ -142,7 +165,6 @@ def connected(bot, update, chat, user_id, need_admin=True):
             exit(1)
     else:
         return False
-
 
 
 __help__ = """

@@ -245,6 +245,7 @@ def dotos(bot: Bot, update: Update):
         reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
+
 @run_async
 def viper(bot: Bot, update: Update):
     message = update.effective_message
@@ -276,6 +277,7 @@ def viper(bot: Bot, update: Update):
     elif fetch.status_code == 404:
         reply_text="Device not found"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+
 
 @run_async
 def evo(bot: Bot, update: Update):
@@ -347,6 +349,7 @@ A : Joey is reworking on the source.
         message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         return
 
+
 def enesrelease(bot: Bot, update: Update, args: List[str]):
     message = update.effective_message
     usr = get(f'https://api.github.com/repos/EnesSastim/Downloads/releases/latest').json()
@@ -360,6 +363,7 @@ def enesrelease(bot: Bot, update: Update, args: List[str]):
             continue
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
 
+
 def phh(bot: Bot, update: Update, args: List[str]):
     message = update.effective_message
     usr = get(f'https://api.github.com/repos/phhusson/treble_experimentations/releases/latest').json()
@@ -372,6 +376,7 @@ def phh(bot: Bot, update: Update, args: List[str]):
         except IndexError:
             continue
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
+
 
 def descendant(bot: Bot, update: Update, args: List[str]):
     message = update.effective_message
@@ -387,6 +392,7 @@ def descendant(bot: Bot, update: Update, args: List[str]):
             continue
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
 
+
 def miui(bot: Bot, update: Update):
     giturl = "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/"
     message = update.effective_message
@@ -396,7 +402,6 @@ def miui(bot: Bot, update: Update):
         reply_text = "Please type your device **codename** into it!\nFor example, `/miui whyred`!"
         message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         return
-
 
     result = "*Recovery ROM*\n\n"
     result += "*Stable*\n"
@@ -415,6 +420,7 @@ def miui(bot: Bot, update: Update):
         result = "Couldn't find any device matching your query."
 
     message.reply_text(result, parse_mode=ParseMode.MARKDOWN)
+
 
 @run_async
 def getaex(bot: Bot, update: Update, args: List[str]):
@@ -454,12 +460,13 @@ def getaex(bot: Bot, update: Update, args: List[str]):
     else:
         message.reply_text("No builds found for the provided device-version combo.")
 
+
 @run_async
 def bootleggers(bot: Bot, update: Update):
     message = update.effective_message
     codename = message.text[len('/bootleggers '):]
 
-    if device == '':
+    if codename == '':
         reply_text = "Please type your device **codename** into it!\nFor example, `/bootleggers tissot`"
         message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         return

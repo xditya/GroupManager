@@ -26,6 +26,7 @@ WIDE_MAP[0x20] = 0x3000
 
 # D A N K modules by @deletescape vvv
 
+
 @run_async
 def owo(bot: Bot, update: Update):
     message = update.effective_message
@@ -83,6 +84,7 @@ def vapor(bot: Bot, update: Update, args: List[str]):
 
 # D A N K modules by @deletescape ^^^
 # Less D A N K modules by @skittles9823 # holi fugg I did some maymays vvv
+
 
 @run_async
 def mafiatext(bot: Bot, update: Update):
@@ -152,6 +154,7 @@ def kimtext(bot: Bot, update: Update):
         message.reply_to_message.reply_photo(photo=mockedphoto, reply=message.reply_to_message)
     os.remove('kimed{}.jpg'.format(randint))
 
+
 @run_async
 def hitlertext(bot: Bot, update: Update):
     message = update.effective_message
@@ -173,7 +176,8 @@ def hitlertext(bot: Bot, update: Update):
     with open('hitlered{}.jpg'.format(randint), 'rb') as mockedphoto:
         message.reply_to_message.reply_photo(photo=mockedphoto, reply=message.reply_to_message)
     os.remove('hitlered{}.jpg'.format(randint))
-	
+
+
 @run_async
 def spongemocktext(bot: Bot, update: Update):
     message = update.effective_message
@@ -195,6 +199,7 @@ def spongemocktext(bot: Bot, update: Update):
     with open('mocked{}.jpg'.format(randint), 'rb') as mockedphoto:
         message.reply_to_message.reply_photo(photo=mockedphoto, reply=message.reply_to_message)
     os.remove('mocked{}.jpg'.format(randint))
+
 
 @run_async
 def zalgotext(bot: Bot, update: Update):
@@ -267,6 +272,7 @@ def deepfryer(bot: Bot, update: Update):
     loop.run_until_complete(process_deepfry(image, message.reply_to_message, bot))
     loop.close()
 
+
 async def process_deepfry(image: Image, reply: Message, bot: Bot):
     # DEEPFRY IT
     image = await deepfry(
@@ -287,6 +293,7 @@ async def process_deepfry(image: Image, reply: Message, bot: Bot):
 
 # shitty maymay modules made by @divadsn ^^^
 
+
 @run_async
 def shout(bot: Bot, update: Update, args):
     if len(args) == 0:
@@ -304,6 +311,7 @@ def shout(bot: Bot, update: Update, args):
     result = "".join(result)
     msg = "```\n" + result + "```"
     return update.effective_message.reply_text(msg, parse_mode="MARKDOWN")
+
 
 # no help string
 __help__ = """

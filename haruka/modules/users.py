@@ -177,6 +177,7 @@ def getlink(bot: Bot, update: Update, args: List[int]):
 
     message.reply_text(links)
 
+
 @bot_admin
 def leavechat(bot: Bot, update: Update, args: List[int]):
     if args:
@@ -186,9 +187,9 @@ def leavechat(bot: Bot, update: Update, args: List[int]):
     try:
         chat = bot.getChat(chat_id)
         titlechat = bot.get_chat(chat_id).title
-        bot.sendMessage(chat_id, "`I Go Away!`")
+        bot.sendMessage(chat_id, "`I'll Go Away!`")
         bot.leaveChat(chat_id)
-        update.effective_message.reply_text("I left group {}".format(titlechat))
+        update.effective_message.reply_text("I'll left group {}".format(titlechat))
 
     except BadRequest as excp:
         if excp.message == "Chat not found":
@@ -224,7 +225,6 @@ def slist(bot: Bot, update: Update):
                 text2 += "\n - ({}) - not found".format(user_id)
     message.reply_text(text1 + "\n" + text2 + "\n", parse_mode=ParseMode.MARKDOWN)
     #message.reply_text(text2 + "\n", parse_mode=ParseMode.MARKDOWN)
-
 
 
 def __user_info__(user_id, chat_id):

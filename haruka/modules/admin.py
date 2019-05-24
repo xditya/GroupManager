@@ -185,7 +185,7 @@ def unpin(bot: Bot, update: Update) -> str:
             raise
 
     return f"<b>{html.escape(chat.title)}:</b>" \
-            "\n#UNPINNED" \
+           "\n#UNPINNED" \
            f"\n<b>Admin:</b> {mention_html(user.id, user.first_name)}"
 
 
@@ -254,10 +254,10 @@ def reaction(bot: Bot, update: Update, args: List[str]) -> str:
     if len(args) >= 1:
         var = args[0]
         print(var)
-        if (var == "False"):
+        if var == "False":
             sql.set_command_reaction(chat.id, False)
             update.effective_message.reply_text("Disabled reaction on admin commands for users")
-        elif(var == "True"):
+        elif var == "True":
             sql.set_command_reaction(chat.id, True)
             update.effective_message.reply_text("Enabled reaction on admin commands for users")
         else:
@@ -269,7 +269,6 @@ def reaction(bot: Bot, update: Update, args: List[str]) -> str:
         else:
             update.effective_message.reply_text("Reaction on admin commands for users now `enabled`!", parse_mode=ParseMode.MARKDOWN)
         
-
 
 __help__ = """
  - /adminlist | /admins: list of admins in the chat

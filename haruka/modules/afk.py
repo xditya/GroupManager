@@ -1,8 +1,7 @@
 from typing import Optional
 
 from telegram import Message, Update, Bot, User
-from telegram import ParseMode
-from telegram import MessageEntity
+from telegram import MessageEntity, ParseMode
 from telegram.ext import Filters, MessageHandler, run_async
 
 from haruka import dispatcher
@@ -72,6 +71,7 @@ def reply_afk(bot: Bot, update: Update):
         fst_name = message.reply_to_message.from_user.first_name
         check_afk(bot, update, user_id, fst_name)
 
+
 def check_afk(bot, update, user_id, fst_name):
     chat = update.effective_chat  # type: Optional[Chat]
     if sql.is_afk(user_id):
@@ -83,20 +83,19 @@ def check_afk(bot, update, user_id, fst_name):
         update.effective_message.reply_text(res)
 
 
-
 __help__ = """
  - /afk <reason>: mark yourself as AFK.
  - brb <reason>: same as the afk command - but not a command.
 
-When marked as AFK, any mentions will be replied to with a message to say you're not available!
+When marked as AFK, any mentions will be replied to with a message to say that you're not available!
 """
 
 __mod_name__ = "AFK"
 
 AFK_HANDLER = DisableAbleCommandHandler("afk", afk)
 AFK_REGEX_HANDLER = DisableAbleRegexHandler("(?i)brb", afk, friendly="afk")
-NO_AFK_HANDLER = MessageHandler(Filters.all & Filters.group , no_longer_afk)
-AFK_REPLY_HANDLER = MessageHandler(Filters.all & Filters.group , reply_afk)
+NO_AFK_HANDLER = MessageHandler(Filters.all & Filters.group, no_longer_afk)
+AFK_REPLY_HANDLER = MessageHandler(Filters.all & Filters.group, reply_afk)
 
 dispatcher.add_handler(AFK_HANDLER, AFK_GROUP)
 dispatcher.add_handler(AFK_REGEX_HANDLER, AFK_GROUP)

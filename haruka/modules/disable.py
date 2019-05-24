@@ -83,7 +83,6 @@ if is_module_loaded(FILENAME):
             else:
                 chatD = update.effective_chat
 
-
         if len(args) >= 1:
             disable_cmd = args[0]
             if disable_cmd.startswith(CMD_STARTERS):
@@ -114,7 +113,6 @@ if is_module_loaded(FILENAME):
                 exit(1)
             else:
                 chatD = update.effective_chat
-
 
         if len(args) >= 1:
             enable_cmd = args[0]

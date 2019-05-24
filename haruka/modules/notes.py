@@ -206,7 +206,7 @@ def clear(bot: Bot, update: Update, args: List[str]):
         notename = args[0]
 
         if sql.rm_note(chat_id, notename):
-            update.effective_message.reply_text("Successfully removed note from *{}*.".format(chat_name), parse_mode=ParseMode.MARKDOWN)
+            update.effective_message.reply_text("Note succesfully removed from *{}*.".format(chat_name), parse_mode=ParseMode.MARKDOWN)
         else:
             update.effective_message.reply_text("That's not a note in my database!")
 

@@ -4,6 +4,7 @@ import json
 import random
 import time
 import pyowm
+import wikipedia
 import re
 from pyowm import timeutils, exceptions
 from datetime import datetime
@@ -15,9 +16,10 @@ from hurry.filesize import size
 
 import requests
 from telegram import Message, Chat, Update, Bot, MessageEntity
-from telegram import ParseMode, ReplyKeyboardRemove, ReplyKeyboardMarkup
+from telegram import ParseMode, ReplyKeyboardRemove, ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
+from telegram.error import BadRequest
 
 from haruka import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER
 from haruka.__main__ import GDPR
@@ -40,6 +42,7 @@ def insults(bot: Bot, update: Update):
     chat = update.effective_chat  # type: Optional[Chat]
     text = random.choice(tld(chat.id, "INSULTS-K"))
     update.effective_message.reply_text(text)
+
 
 @run_async
 def runs(bot: Bot, update: Update):
@@ -176,7 +179,6 @@ def info(bot: Bot, update: Update, args: List[str]):
                 text += tld(chat.id, "\nThis person has been whitelisted! " \
                         "That means I'm not allowed to ban/kick them.")
 
-
     for mod in USER_INFO:
         mod_info = mod.__user_info__(user.id, chat.id).strip()
         if mod_info:
@@ -194,6 +196,7 @@ def echo(bot: Bot, update: Update):
         message.reply_to_message.reply_text(args[1])
     else:
         message.reply_text(args[1], quote=False)
+
 
 @run_async
 def reply_keyboard_remove(bot: Bot, update: Update):
@@ -261,6 +264,7 @@ def ping(bot: Bot, update: Update):
 #        result = str(result_.stdout.decode())
 #        update.effective_message.reply_text('*Searching:*\n`' + str(query[1]) + '`\n\n*RESULTS:*\n' + result, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
+
 @run_async
 def github(bot: Bot, update: Update):
     message = update.effective_message
@@ -301,6 +305,7 @@ def github(bot: Bot, update: Update):
         reply_text = "User not found. Make sure you entered valid username!"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
+
 def repo(bot: Bot, update: Update, args: List[str]):
     message = update.effective_message
     text = message.text[len('/repo '):]
@@ -310,7 +315,9 @@ def repo(bot: Bot, update: Update, args: List[str]):
         reply_text += f"[{usr[i]['name']}]({usr[i]['html_url']})\n"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
+
 LYRICSINFO = "\n[Full Lyrics](http://lyrics.wikia.com/wiki/%s:%s)"
+
 
 @run_async
 def lyrics(bot: Bot, update: Update, args: List[str]):
@@ -340,7 +347,9 @@ def lyrics(bot: Bot, update: Update, args: List[str]):
     else:
         return update.effective_message.reply_text("Invalid syntax! Try Artist - Song name .For example, Luis Fonsi - Despacito", failed=True)
 
+
 BASE_URL = 'https://del.dog'
+
 
 @run_async
 def paste(bot: Bot, update: Update, args: List[str]):
@@ -372,6 +381,7 @@ def paste(bot: Bot, update: Update, args: List[str]):
     else:
         reply = f'{BASE_URL}/{key}'
     update.effective_message.reply_text(reply, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+
 
 @run_async
 def get_paste_content(bot: Bot, update: Update, args: List[str]):
@@ -405,6 +415,7 @@ def get_paste_content(bot: Bot, update: Update, args: List[str]):
         r.raise_for_status()
 
     update.effective_message.reply_text('```' + escape_markdown(r.text) + '```', parse_mode=ParseMode.MARKDOWN)
+
 
 @run_async
 def get_paste_stats(bot: Bot, update: Update, args: List[str]):
@@ -442,6 +453,7 @@ def get_paste_stats(bot: Bot, update: Update, args: List[str]):
     views = document['viewCount']
     reply = f'Stats for **[/{key}]({BASE_URL}/{key})**:\nViews: `{views}`'
     update.effective_message.reply_text(reply, parse_mode=ParseMode.MARKDOWN)
+
 
 @run_async
 def ud(bot: Bot, update: Update):
@@ -489,6 +501,22 @@ def execute(bot: Bot, update: Update, args: List[str]):
     message.reply_text(output, parse_mode=ParseMode.MARKDOWN)
 
 
+def wiki(bot: Bot, update: Update):
+    kueri = re.split(pattern="wiki", string=update.effective_message.text)
+    wikipedia.set_lang("en")
+    if len(str(kueri[1])) == 0:
+        update.effective_message.reply_text("Enter keywords!")
+    else:
+        try:
+            pertama = update.effective_message.reply_text("🔄 Loading...")
+            keyboard = InlineKeyboardMarkup([[InlineKeyboardButton(text="🔧 More Info...", url=wikipedia.page(kueri).url)]])
+            bot.editMessageText(chat_id=update.effective_chat.id, message_id=pertama.message_id, text=wikipedia.summary(kueri, sentences=10), reply_markup=keyboard)
+        except wikipedia.PageError as e:
+            update.effective_message.reply_text(f"⚠ Error: {e}")
+        except BadRequest as et :
+            update.effective_message.reply_text(f"⚠ Error: {et}")
+
+
 __help__ = """
  - /id: get the current group id. If used by replying to a message, gets that user's id.
  - /runs: reply a random string from an array of replies.
@@ -508,7 +536,8 @@ __help__ = """
  - /pastestats: Get stats of a paste or shortened url from [dogbin](https://del.dog)
  - /ud: Type the word or expression you want to search. For example /ud Gay
  - /removebotkeyboard: Got a nasty bot keyboard stuck in your group?
- - /exec <language> <code> [/stdin <stdin>]: Execute a code in a specified language. Send an empty command to get the suppoerted languages.
+ - /exec <language> <code> [/stdin <stdin>]: Execute a code in a specified language. Send an empty command to get the supported languages.
+ - /wiki <keywords>: Get wikipedia articles just using this bot!
 """
 
 __mod_name__ = "Misc"
@@ -538,6 +567,7 @@ PASTE_HANDLER = DisableAbleCommandHandler("paste", paste, pass_args=True)
 GET_PASTE_HANDLER = DisableAbleCommandHandler("getpaste", get_paste_content, pass_args=True)
 PASTE_STATS_HANDLER = DisableAbleCommandHandler("pastestats", get_paste_stats, pass_args=True)
 UD_HANDLER = DisableAbleCommandHandler("ud", ud)
+WIKI_HANDLER = DisableAbleCommandHandler("wiki", wiki)
 
 
 dispatcher.add_handler(UD_HANDLER)
@@ -561,3 +591,4 @@ dispatcher.add_handler(LYRICS_HANDLER)
 dispatcher.add_handler(REPO_HANDLER)
 dispatcher.add_handler(DisableAbleCommandHandler("removebotkeyboard", reply_keyboard_remove))
 dispatcher.add_handler(EXECUTE_HANDLER)
+dispatcher.add_handler(WIKI_HANDLER)

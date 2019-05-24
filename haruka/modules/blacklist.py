@@ -90,7 +90,7 @@ def add_blacklist(bot: Bot, update: Update):
              "Added <code>{}</code> to the blacklist in <b>{}</b>!").format(len(to_blacklist)), chat_name, parse_mode=ParseMode.HTML)
 
     else:
-        msg.reply_text(tld(chat.id, "Tell me which words you would like to add to the blacklist."))
+        msg.reply_text(tld(chat.id, "Tell me what words you would like to add to the blacklist."))
 
 
 @run_async
@@ -111,7 +111,6 @@ def unblacklist(bot: Bot, update: Update):
             exit(1)
         else:
             chat_name = chat.title
-
 
     if len(words) > 1:
         text = words[1]
@@ -136,7 +135,7 @@ def unblacklist(bot: Bot, update: Update):
 
         elif not successful:
             msg.reply_text(tld(chat.id, 
-                "None of these triggers exist, so they weren't removed.").format(
+                "None of these triggers were exist, so they weren't removed.").format(
                     successful, len(to_unblacklist) - successful), parse_mode=ParseMode.HTML)
 
         else:
@@ -145,7 +144,7 @@ def unblacklist(bot: Bot, update: Update):
                 "so were not removed.").format(successful, chat_name, len(to_unblacklist) - successful),
                 parse_mode=ParseMode.HTML)
     else:
-        msg.reply_text(tld(chat.id, "Tell me which words you would like to remove from the blacklist."))
+        msg.reply_text(tld(chat.id, "Tell me what words you would like to remove from the blacklist."))
 
 
 @run_async
@@ -208,8 +207,7 @@ If you wanted to only match bit.ly/ links followed by three characters, you coul
 This would match bit.ly/abc, but not bit.ly/abcd.
 """
 
-BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", blacklist, pass_args=True,
-                                              admin_ok=True)
+BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", blacklist, pass_args=True, admin_ok=True)
 ADD_BLACKLIST_HANDLER = CommandHandler("addblacklist", add_blacklist)
 UNBLACKLIST_HANDLER = CommandHandler(["unblacklist", "rmblacklist"], unblacklist)
 BLACKLIST_DEL_HANDLER = MessageHandler(

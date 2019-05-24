@@ -93,7 +93,7 @@ def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
                                                                     mention_html(user.id, user.first_name), amount)
 
         else:
-            message.reply_text(tld(chat.id, "Unrecognised argument - please use a number, 'off', or 'no'."))
+            message.reply_text(tld(chat.id, "Unrecognized argument - please use a number, 'off', or 'no'."))
 
     return ""
 

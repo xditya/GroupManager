@@ -10,6 +10,7 @@ from telegram.ext import CommandHandler, Filters, MessageHandler, CallbackQueryH
 
 import haruka.modules.sql.connection_sql as con_sql
 
+
 def keyboard(bot, update):
     user = update.effective_user  # type: Optional[User]
     conn_id = con_sql.get_connected_chat(user.id)

@@ -218,6 +218,7 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
 
     return ""
 
+
 @run_async
 @bot_admin
 @user_admin
@@ -274,6 +275,7 @@ def nomedia(bot: Bot, update: Update, args: List[str]) -> str:
 
     return ""
 
+
 @run_async
 @bot_admin
 @user_admin
@@ -324,6 +326,7 @@ def media(bot: Bot, update: Update, args: List[str]) -> str:
                            "already do!"))
 
     return ""
+
 
 @run_async
 @bot_admin
@@ -418,6 +421,7 @@ def temp_nomedia(bot: Bot, update: Update, args: List[str]) -> str:
 
     return ""
 
+
 @run_async
 @bot_admin
 @can_restrict
@@ -441,6 +445,7 @@ def muteme(bot: Bot, update: Update, args: List[str]) -> str:
 
     else:
         update.effective_message.reply_text("Huh? I can't :/")
+
 
 MUTE_HANDLER = DisableAbleCommandHandler("mute", mute, pass_args=True, admin_ok=True)
 UNMUTE_HANDLER = DisableAbleCommandHandler("unmute", unmute, pass_args=True, admin_ok=True)

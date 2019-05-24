@@ -22,8 +22,8 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
         src_lang = translated.src
         translated_text = translated.text
         msg.reply_text("Translated from {} to {}.\n {}".format(src_lang, lan, translated_text))
-    except exc:
-        msg.reply_text(str(exc))
+    except :
+        msg.reply_text("Error")
 
 
 __help__ = """- /tr (language code) as reply to a long message.

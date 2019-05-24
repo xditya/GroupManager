@@ -10,17 +10,18 @@ import re
 
 from haruka.modules.connection import connected
 
+
 @user_admin
 def locale(bot, update, args):
     chat = update.effective_chat
     if len(args) > 0:
         locale = args[0].lower()
         if locale in list_locales:
-            if locale in  ('en', 'ru', 'ua', 'es', 'tr', 'id', 'it'):
+            if locale in ('en', 'ru', 'ua', 'es', 'tr', 'id', 'it'):
                 switch_to_locale(chat.id, locale)
                 update.message.reply_text(tld(chat.id, 'Switched to {} successfully!').format(list_locales[locale]))
             else:
-                update.message.reply_text("{} not supported yet!".format(list_locales[locale]))
+                update.message.reply_text("{} is not supported yet!".format(list_locales[locale]))
         else:
             update.message.reply_text("Is that even a valid language code? Use an internationally accepted ISO code!")
     else:
@@ -30,7 +31,7 @@ def locale(bot, update, args):
             native_lang = list_locales[locale]
             update.message.reply_text("Current locale for this chat is: *{}*".format(native_lang), parse_mode = ParseMode.MARKDOWN)
         else:
-            update.message.reply_text("Current locale for this chat is: *English*", parse_mode = ParseMode.MARKDOWN)
+            update.message.reply_text("Current locale for this chat is: *English*", parse_mode=ParseMode.MARKDOWN)
 
 @user_admin
 def locale_button(bot, update):
@@ -81,6 +82,7 @@ def locale_button(bot, update):
     print(lang_match)
     query.message.delete()
     bot.answer_callback_query(query.id)
+
 
 LOCALE_HANDLER = CommandHandler(["set_locale", "locale", "lang", "setlang"], locale, pass_args=True)
 locale_handler = CallbackQueryHandler(locale_button, pattern="chng_lang")

@@ -188,6 +188,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
                    "{} has been successfully gbanned!".format(mention_html(user_chat.id, user_chat.first_name)),
                    parse_mode=ParseMode.HTML)
 
+
 @run_async
 def ungban(bot: Bot, update: Update, args: List[str]):
     message = update.effective_message  # type: Optional[Message]
@@ -285,6 +286,7 @@ def check_and_ban(update, user_id, should_message=True):
             update.effective_message.reply_text("This is a bad person, they shouldn't be here!")
 
 #GMUTE
+
 
 @run_async
 def gmute(bot: Bot, update: Update, args: List[str]):
@@ -564,11 +566,11 @@ def antispam(bot: Bot, update: Update, args: List[str]):
     if len(args) > 0:
         if args[0].lower() in ["on", "yes"]:
             sql.enable_antispam(chat.id)
-            update.effective_message.reply_text(tld(chat.id, "I've enabled antispam security in this group. This will help protect you "
+            update.effective_message.reply_text(tld(chat.id, "I've enabled antispam security in this group. This will help to protect you "
                                                 "from spammers, unsavoury characters, and the biggest trolls."))
         elif args[0].lower() in ["off", "no"]:
             sql.disable_antispam(chat.id)
-            update.effective_message.reply_text(tld(chat.id, "I've disabled antispam security in this group. GBans wont affect your users "
+            update.effective_message.reply_text(tld(chat.id, "I've disabled antispam security in this group. GBans won't affect your users "
                                                 "anymore. You'll be less protected from any trolls and spammers "
                                                 "though!"))
     else:
@@ -709,25 +711,17 @@ __mod_name__ = "Antispam security"
 
 ANTISPAM_STATUS = CommandHandler("antispam", antispam, pass_args=True, filters=Filters.group)
 
-GBAN_HANDLER = CommandHandler(["gban", "fban"], gban, pass_args=True,
-                              filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
-UNGBAN_HANDLER = CommandHandler("ungban", ungban, pass_args=True,
-                                filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
-GBAN_LIST = CommandHandler("gbanlist", gbanlist,
-                           filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
+GBAN_HANDLER = CommandHandler(["gban", "fban"], gban, pass_args=True, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
+UNGBAN_HANDLER = CommandHandler("ungban", ungban, pass_args=True, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
+GBAN_LIST = CommandHandler("gbanlist", gbanlist, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
 GBAN_ENFORCER = MessageHandler(Filters.all & Filters.group, enforce_gban)
 
 
-GMUTE_HANDLER = CommandHandler("gmute", gmute, pass_args=True,
-                              filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
-UNGMUTE_HANDLER = CommandHandler("ungmute", ungmute, pass_args=True,
-                                filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
-GMUTE_LIST = CommandHandler("gmutelist", gmutelist,
-                           filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
+GMUTE_HANDLER = CommandHandler("gmute", gmute, pass_args=True, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
+UNGMUTE_HANDLER = CommandHandler("ungmute", ungmute, pass_args=True, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
+GMUTE_LIST = CommandHandler("gmutelist", gmutelist, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
 
-
-GKICK_HANDLER = CommandHandler("gkick", gkick, pass_args=True,
-                              filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
+GKICK_HANDLER = CommandHandler("gkick", gkick, pass_args=True, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
 
 dispatcher.add_handler(ANTISPAM_STATUS)
 
