@@ -113,3 +113,14 @@ def revert_buttons(buttons):
 
 def is_module_loaded(name):
     return (not LOAD or name in LOAD) and name not in NO_LOAD
+
+
+def user_bot_owner(func):
+    @wraps(func)
+    def is_user_bot_owner(bot: Bot, update: Update, *args, **kwargs):
+        user = update.effective_user
+        if user and user.id == OWNER_ID:
+            return func(bot, update, *args, **kwargs)
+        else:
+            pass
+    return is_user_bot_owner

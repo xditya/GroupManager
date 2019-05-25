@@ -2,8 +2,6 @@ import logging
 import os
 import sys
 
-import redis
-
 import telegram.ext as tg
 
 #Enable logging
@@ -90,7 +88,3 @@ tg.RegexHandler = CustomRegexHandler
 
 if ALLOW_EXCL:
     tg.CommandHandler = CustomCommandHandler
-
-#Redis yeye
-redis = redis.StrictRedis(
-    host='localhost', port=6379, db='1')  # decode_respone=True

@@ -105,6 +105,12 @@ def gban(bot: Bot, update: Update, args: List[str]):
 
         old_reason = sql.update_gban_reason(user_id, user_chat.username or user_chat.first_name, reason)
         user_id, new_reason = extract_user_and_text(message, args)
+
+        if old_reason == new_reason:
+            message.reply_text("Haha yes, That user is already gbanned with the exact reason")
+            os.environ['GPROCESS'] = '0'
+            return
+
         if old_reason:
             banner = update.effective_user  # type: Optional[User]
             bot.send_message(
