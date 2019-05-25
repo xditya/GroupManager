@@ -106,13 +106,12 @@ def gban(bot: Bot, update: Update, args: List[str]):
         old_reason = sql.update_gban_reason(user_id, user_chat.username or user_chat.first_name, reason)
         user_id, new_reason = extract_user_and_text(message, args)
 
-        if old_reason == new_reason:
-            message.reply_text("Haha yes, That user is already gbanned with the exact reason")
-            os.environ['GPROCESS'] = '0'
-            return
-
         if old_reason:
             banner = update.effective_user  # type: Optional[User]
+            bannerid = banner.id
+            bannername = banner.first_name
+            new_reason = f"{new_reason} // GBanned by {bannername} id {bannerid}"
+
             bot.send_message(
                 MESSAGE_DUMP,
                      "<b>New Reason of Global Ban</b>" \
@@ -134,6 +133,10 @@ def gban(bot: Bot, update: Update, args: List[str]):
 
         else:
             banner = update.effective_user  # type: Optional[User]
+            bannerid = banner.id
+            bannername = banner.first_name
+            new_reason = f"{new_reason} // GBanned by {bannername} id {bannerid}"
+
             bot.send_message(
                 MESSAGE_DUMP,
                      "<b>New reason of Global Ban</b>" \
@@ -154,6 +157,10 @@ def gban(bot: Bot, update: Update, args: List[str]):
     message.reply_text(starting, parse_mode=ParseMode.HTML)
 
     banner = update.effective_user  # type: Optional[User]
+    bannerid = banner.id
+    bannername = banner.first_name
+    reason = f"{reason} // GBanned by {bannername} id {bannerid}"
+
     bot.send_message(
         MESSAGE_DUMP,
                  "{} is gbanning user {} "

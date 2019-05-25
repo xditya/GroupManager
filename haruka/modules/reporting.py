@@ -81,7 +81,7 @@ def report(bot: Bot, update: Update) -> str:
             link = "\n<b>Link:</b> " \
                    "<a href=\"http://telegram.me/{}/{}\">click here</a>".format(chat.username, message.message_id)
 
-            should_forward = False
+            should_forward = True
             keyboard = [
                 [InlineKeyboardButton(u"➡ Message", url="https://t.me/{}/{}".format(chat.username, str(
                     message.reply_to_message.message_id)))],
