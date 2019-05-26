@@ -390,6 +390,10 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
         update.effective_message.reply_text(tld(chat.id, "Only fed admins can do this!"))
         return
 
+    if len(args) == 0:
+        update.effective_message.reply_text(tld(chat.id, "Quote someone message or quote his/her message to Federation Ban"))
+        return
+
     message = update.effective_message  # type: Optional[Message]
 
     user_id, reason = extract_user_and_text(message, args)
