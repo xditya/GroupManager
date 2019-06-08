@@ -183,6 +183,12 @@ def __stats__():
     return "{} blacklist triggers, across {} chats.".format(sql.num_blacklist_filters(),
                                                             sql.num_blacklist_filter_chats())
 
+def __import_data__(chat_id, data):
+    # set chat blacklist
+    blacklist = data.get('blacklist', {})
+    for trigger in blacklist:
+        sql.add_to_blacklist(chat_id, trigger)
+
 
 __mod_name__ = "Word Blacklists"
 
