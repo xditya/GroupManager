@@ -85,17 +85,17 @@ def connect_chat(bot, update, args):
                             number = 1
                         else:
                             print("Error")
-                    
+
                         print(history.updated)
                         print(number)
 
                         sql.add_history(user.id, history1, history2, history3, number)
-                        print(history.user_id, history.chat_id1, history.chat_id2, history.chat_id3, history.updated)
+                        # print(history.user_id, history.chat_id1, history.chat_id2, history.chat_id3, history.updated)
                     else:
                         sql.add_history(user.id, connect_chat, "0", "0", 2)
-                    #Rebuild user's keyboard
+                    # Rebuild user's keyboard
                     keyboard(bot, update)
-                    
+
                 else:
                     update.effective_message.reply_text(tld(chat.id, "Connection failed!"))
             else:
@@ -103,7 +103,7 @@ def connect_chat(bot, update, args):
         else:
             update.effective_message.reply_text(tld(chat.id, "Input chat ID to connect!"))
             history = sql.get_history(user.id)
-            print(history.user_id, history.chat_id1, history.chat_id2, history.chat_id3, history.updated)
+            # print(history.user_id, history.chat_id1, history.chat_id2, history.chat_id3, history.updated)
 
     elif update.effective_chat.type == 'supergroup':
         connect_chat = chat.id

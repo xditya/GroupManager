@@ -2,6 +2,7 @@ from typing import Optional
 
 from telegram import Message, Update, Bot, User
 from telegram import MessageEntity, ParseMode
+from telegram.error import BadRequest
 from telegram.ext import Filters, MessageHandler, run_async
 
 from haruka import dispatcher
@@ -40,7 +41,10 @@ def no_longer_afk(bot: Bot, update: Update):
     res = sql.rm_afk(user.id)
     if res:
         firstname = update.effective_user.first_name
-        update.effective_message.reply_text(tld(chat.id, f"{firstname} is no longer AFK!"))
+        try:
+            update.effective_message.reply_text(tld(chat.id, f"{firstname} is no longer AFK!"))
+        except:
+            return
 
 
 @run_async
@@ -58,7 +62,11 @@ def reply_afk(bot: Bot, update: Update):
                 if not user_id:
                     # Should never happen, since for a user to become AFK they must have spoken. Maybe changed username?
                     return
-                chat = bot.get_chat(user_id)
+                try:
+                    chat = bot.get_chat(user_id)
+                except BadRequest:
+                    print("Error: Could not fetch userid {} for AFK module".format(user_id))
+                    return
                 fst_name = chat.first_name
 
             else:

@@ -11,33 +11,31 @@ from haruka import dispatcher, LOGGER
 from haruka.modules.helper_funcs.chat_status import user_admin, can_delete
 from haruka.modules.log_channel import loggable
 
-from haruka.modules.translations.strings import tld
-
 
 @run_async
 @user_admin
 @loggable
 def purge(bot: Bot, update: Update, args: List[str]) -> str:
     msg = update.effective_message  # type: Optional[Message]
-    chat = update.effective_chat  # type: Optional[Chat]
     if msg.reply_to_message:
         user = update.effective_user  # type: Optional[User]
         chat = update.effective_chat  # type: Optional[Chat]
         if can_delete(chat, bot.id):
             message_id = msg.reply_to_message.message_id
-            delete_to = msg.message_id - 1
             if args and args[0].isdigit():
-                new_del = message_id + int(args[0])
-                # No point deleting messages which haven't been written yet.
-                if new_del < delete_to:
-                    delete_to = new_del
+                if int(args[0]) < int(1):
+                     return
 
+                delete_to = message_id + int(args[0])
+            else:
+                delete_to = msg.message_id - 1
             for m_id in range(delete_to, message_id - 1, -1):  # Reverse iteration over message ids
                 try:
                     bot.deleteMessage(chat.id, m_id)
                 except BadRequest as err:
                     if err.message == "Message can't be deleted":
-                        LOGGER.exception("Error while purging chat messages.")
+                        bot.send_message(chat.id, "Cannot delete all messages. The messages may be too old, I might "
+                                                  "not have delete rights, or this might not be a supergroup.")
 
                     elif err.message != "Message to delete not found":
                         LOGGER.exception("Error while purging chat messages.")
@@ -46,21 +44,22 @@ def purge(bot: Bot, update: Update, args: List[str]) -> str:
                 msg.delete()
             except BadRequest as err:
                 if err.message == "Message can't be deleted":
-                    LOGGER.exception("Error while purging chat messages.")
+                    bot.send_message(chat.id, "Cannot delete all messages. The messages may be too old, I might "
+                                              "not have delete rights, or this might not be a supergroup.")
 
                 elif err.message != "Message to delete not found":
                     LOGGER.exception("Error while purging chat messages.")
 
-            bot.send_message(chat.id, tld(chat.id, "Purge complete."))
+            bot.send_message(chat.id, "Purge complete.")
             return "<b>{}:</b>" \
                    "\n#PURGE" \
-                   "\n<b>Admin:</b> {}" \
+                   "\n<b>• Admin:</b> {}" \
                    "\nPurged <code>{}</code> messages.".format(html.escape(chat.title),
                                                                mention_html(user.id, user.first_name),
                                                                delete_to - message_id)
 
     else:
-        msg.reply_text(tld(chat.id, "Reply to a message to select where to start purging from."))
+        msg.reply_text("Reply to a message to select where to start purging from.")
 
     return ""
 
@@ -69,7 +68,6 @@ def purge(bot: Bot, update: Update, args: List[str]) -> str:
 @user_admin
 @loggable
 def del_message(bot: Bot, update: Update) -> str:
-    chat = update.effective_chat  # type: Optional[Chat]
     if update.effective_message.reply_to_message:
         user = update.effective_user  # type: Optional[User]
         chat = update.effective_chat  # type: Optional[Chat]
@@ -78,22 +76,23 @@ def del_message(bot: Bot, update: Update) -> str:
             update.effective_message.delete()
             return "<b>{}:</b>" \
                    "\n#DEL" \
-                   "\n<b>Admin:</b> {}" \
+                   "\n<b>• Admin:</b> {}" \
                    "\nMessage deleted.".format(html.escape(chat.title),
                                                mention_html(user.id, user.first_name))
     else:
-        update.effective_message.reply_text(tld(chat.id, "Whadya want to delete?"))
+        update.effective_message.reply_text("Whadya want to delete?")
 
     return ""
 
 
 __help__ = """
-Need to delete lots of messages? That's what purges are for!
+Deleting messages made easy with this command. Bot purges \
+messages all together or individually.
 
-Available commands are:
- - /purge: deletes all messages from the message you replied to, to the current message.
- - /purge X: deletes X messages after the message you replied to (including the replied message)
- - /del: deletes the message you replied to.
+*Admin only:*
+ - /del: deletes the message you replied to
+ - /purge: deletes all messages between this and the replied to message.
+ - /purge <integer X>: deletes the replied message, and X messages following it.
 """
 
 __mod_name__ = "Purges"

@@ -249,6 +249,13 @@ def __chat_settings__(bot, update, chat, chatP, user):
     return "There are `{}` custom filters here.".format(len(cust_filters))
 
 
+def __import_data__(chat_id, data):
+    # set chat filters
+    filters = data.get('filters', {})
+    for trigger in filters:
+        sql.add_to_blacklist(chat_id, trigger)
+
+
 __help__ = """
 Make your chat more lively with filters; The bot will reply to certain words!
 Filters are case insensitive; every time someone says your trigger words, {} will reply something else! can be used to create your own commands, if desired.

@@ -7,12 +7,11 @@ from telegram.ext import Filters, MessageHandler, run_async
 from haruka import dispatcher, LOGGER
 from haruka.modules.disable import DisableAbleCommandHandler
 
-from py_translator import Translator
+from googletrans import Translator
 
 
 @run_async
 def do_translate(bot: Bot, update: Update, args: List[str]):
-    short_name = "Created By @MidukkiBot 😬"
     msg = update.effective_message # type: Optional[Message]
     lan = " ".join(args)
     to_translate_text = msg.reply_to_message.text

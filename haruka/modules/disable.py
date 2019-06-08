@@ -146,6 +146,12 @@ if is_module_loaded(FILENAME):
         return build_curr_disabled(chat_id)
 
 
+    def __import_data__(chat_id, data):
+        disabled = data.get('disabled', {})
+        for disable_cmd in disabled:
+            sql.disable_command(chat_id, disable_cmd)
+
+
     __mod_name__ = "Command disabling"
 
     __help__ = """

@@ -108,7 +108,7 @@ INSULTS_STRINGS = (
     "Launch yourself into outer space while forgetting oxygen on Earth.",
     "You should try playing snake and ladders, with real snakes and no ladders.",
     "Dance naked on a couple of HT wires.",
-    "Active Volcano is the best swimming pool for you.",
+    "True Volcano is the best swimming pool for you.",
     "You should try hot bath in a volcano.",
     "Try to spend one day in a coffin and it will be yours forever.",
     "Hit Uranium with a slow moving neutron in your presence. It will be a worthwhile experience.",
