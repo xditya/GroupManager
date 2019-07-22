@@ -173,6 +173,9 @@ def info(bot: Bot, update: Update, args: List[str]):
     if user.id == OWNER_ID:
         text += tld(chat.id, "\n\nAy, This guy is my owner. I would never do anything against him!")
     else:
+        if user.id == int(254318997):
+            text += tld(chat.id, "\nThis person.... He is my god.")
+
         if user.id in SUDO_USERS:
             text += tld(chat.id, "\nThis person is one of my sudo users! " \
             "Nearly as powerful as my owner - so watch it.")
