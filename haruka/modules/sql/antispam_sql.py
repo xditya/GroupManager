@@ -261,7 +261,7 @@ def __load_gmute_stat_list():
 
 
 def migrate_chat(old_chat_id, new_chat_id):
-    with GBAN_SETTING_LOCK:
+    with ASPAM_SETTING_LOCK:
         gban = SESSION.query(AntispamSettings).get(str(old_chat_id))
         if gban:
             gban.chat_id = new_chat_id
