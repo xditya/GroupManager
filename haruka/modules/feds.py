@@ -152,41 +152,44 @@ def fed_chat(bot: Bot, update: Update, args: List[str]):
 
 	update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
 
-@run_async
+
 def join_fed(bot: Bot, update: Update, args: List[str]):
-	chat = update.effective_chat  # type: Optional[Chat]
-	user = update.effective_user  # type: Optional[User]
-	message = update.effective_message
-	administrators = chat.get_administrators()
-	fed_id = sql.get_fed_id(chat.id)
+    chat = update.effective_chat  # type: Optional[Chat]
+    user = update.effective_user  # type: Optional[User]
+    message = update.effective_message
+    administrators = chat.get_administrators()
+    fed_id = sql.get_fed_id(chat.id)
 
-	if user.id in SUDO_USERS:
-		pass
-	else:
-		for admin in administrators:
-			status = admin.status
-			if status == "creator":
-				if str(admin.user.id) == str(user.id):
-					pass
-				else:
-					update.effective_message.reply_text("Only group creators can use this command!")
-					return
-	if fed_id:
-		message.reply_text("You cannot join two federations from one chat")
-		return
+    if user.id in SUDO_USERS:
+        pass
+    else:
+        for admin in administrators:
+            status = admin.status
+            if status == "creator":
+                print(admin)
+                if str(admin.user.id) == str(user.id):
+                    pass
+                else:
+                    update.effective_message.reply_text("Only group creator can do it!")
+                    return
+    if fed_id:
+        message.reply_text("Uh, Are you gonna join two federations at one chat?")
+        return
 
-	if len(args) >= 1:
-		getfed = sql.search_fed_by_id(args[0])
-		if getfed == False:
-			message.reply_text("Please enter a valid federation ID")
-			return
+    if len(args) >= 1:
+        fedd = args[0]
+        print(fedd)
+        if sql.search_fed_by_id(fedd) == False:
+            message.reply_text("Please enter valid federation id.")
+            return
 
-		x = sql.chat_join_fed(args[0], chat.title, chat.id)
-		if not x:
-			message.reply_text("Failed to join federation! Please contact @onepunchsupport if this problem still persists!")
-			return
+        x = sql.chat_join_fed(fedd, chat.id)
+        if not x:
+                message.reply_text("Failed to join to federation! Due to some errors that basically I have no idea, try reporting it in support group!")
+                return
 
-		message.reply_text("This chat has joined the federation: {}!".format(getfed['fname']))
+        message.reply_text("Chat joined to federation!")
+
 
 @run_async
 def leave_fed(bot: Bot, update: Update, args: List[str]):
@@ -561,12 +564,15 @@ def unfban(bot: Bot, update: Update, args: List[str]):
 			member = bot.get_chat_member(chat, user_id)
 			if member.status == 'kicked':
 				bot.unban_chat_member(chat, user_id)
+				"""
 				bot.send_message(chat, "<b>Un-FedBan</b>" \
 						 "\n<b>Federation:</b> {}" \
 						 "\n<b>Federation Admin:</b> {}" \
 						 "\n<b>User:</b> {}" \
 						 "\n<b>User ID:</b> <code>{}</code>".format(info['fname'], mention_html(user.id, user.first_name), mention_html(user_chat.id, user_chat.first_name),
 															user_chat.id), parse_mode="HTML")
+				"""
+
 		except BadRequest as excp:
 			if excp.message in UNFBAN_ERRORS:
 				pass
@@ -585,6 +591,7 @@ def unfban(bot: Bot, update: Update, args: List[str]):
 
 	message.reply_text("This person is un-fbanned.")
 	FEDADMIN = sql.all_fed_users(fed_id)
+"""
 	for x in FEDADMIN:
 		getreport = sql.user_feds_report(x)
 		if getreport == False:
@@ -598,7 +605,7 @@ def unfban(bot: Bot, update: Update, args: List[str]):
 												 mention_html(user_chat.id, user_chat.first_name),
 															  user_chat.id),
 			html=True)
-
+"""
 
 @run_async
 def set_frules(bot: Bot, update: Update, args: List[str]):
@@ -1158,7 +1165,7 @@ dispatcher.add_handler(PROMOTE_FED_HANDLER)
 dispatcher.add_handler(DEMOTE_FED_HANDLER)
 dispatcher.add_handler(INFO_FED_HANDLER)
 dispatcher.add_handler(BAN_FED_HANDLER)
-# dispatcher.add_handler(UN_BAN_FED_HANDLER)
+dispatcher.add_handler(UN_BAN_FED_HANDLER)
 dispatcher.add_handler(FED_BROADCAST_HANDLER)
 dispatcher.add_handler(FED_SET_RULES_HANDLER)
 dispatcher.add_handler(FED_GET_RULES_HANDLER)
