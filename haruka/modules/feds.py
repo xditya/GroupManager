@@ -78,6 +78,8 @@ def new_fed(bot: Bot, update: Update):
 		fed_id = str(uuid.uuid4())
 		fed_name = fednam
 		LOGGER.info(fed_id)
+		if user.id == int(OWNER_ID):
+			fed_id = fed_name
 
 		x = sql.new_fed(user.id, fed_name, fed_id)
 		if not x:

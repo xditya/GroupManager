@@ -1,4 +1,4 @@
-import html, os
+import html
 from io import BytesIO
 from typing import Optional, List
 
@@ -16,9 +16,6 @@ from haruka.modules.helper_funcs.filters import CustomFilters
 from haruka.modules.sql.users_sql import get_all_chats
 
 from haruka.modules.translations.strings import tld
-
-if os.environ.get('GPROCESS') == None:
-    os.environ['GPROCESS'] = '0'
 
 GBAN_ENFORCE_GROUP = 6
 
@@ -54,53 +51,39 @@ def gban(bot: Bot, update: Update, args: List[str]):
     user = update.effective_user  # type: Optional[User]
     user_id, reason = extract_user_and_text(message, args)
 
-    if os.environ['GPROCESS'] == '1':
-        message.reply_text("Leave me alone, I'm busy, Someone is using global stuff.")
-        return
-
-    os.environ['GPROCESS'] = '1'
-
     if not user_id:
         message.reply_text("You don't seem to be referring to a user.")
-        os.environ['GPROCESS'] = '0'
         return
 
     if int(user_id) in SUDO_USERS:
         message.reply_text("I spy, with my little eye... a sudo user war! Why are you guys turning on each other?")
-        os.environ['GPROCESS'] = '0'
         return
 
     if int(user_id) in SUPPORT_USERS:
         message.reply_text("OOOH someone's trying to gban a support user! *grabs popcorn*")
-        os.environ['GPROCESS'] = '0'
         return
 
     if user_id == bot.id:
         message.reply_text("-_- So funny, lets gban myself why don't I? Nice try.")
-        os.environ['GPROCESS'] = '0'
         return
 
     try:
         user_chat = bot.get_chat(user_id)
     except BadRequest as excp:
         message.reply_text(excp.message)
-        os.environ['GPROCESS'] = '0'
         return
 
     if user_chat.type != 'private':
         message.reply_text("That's not a user!")
-        os.environ['GPROCESS'] = '0'
         return
 
     if user_chat.first_name == '':
         message.reply_text("That's a deleted account! Why even bother gbanning them?")
-        os.environ['GPROCESS'] = '0'
         return
 
     if sql.is_user_gbanned(user_id):
         if not reason:
             message.reply_text("This user is already gbanned; I'd change the reason, but you haven't given me one...")
-            os.environ['GPROCESS'] = '0'
             return
 
         old_reason = sql.update_gban_reason(user_id, user_chat.username or user_chat.first_name, reason)
@@ -129,8 +112,6 @@ def gban(bot: Bot, update: Update, args: List[str]):
                                "<code>{}</code>\n"
                                "I've gone and updated it with your new reason!".format(html.escape(old_reason)),
                                parse_mode=ParseMode.HTML)
-            os.environ['GPROCESS'] = '0'
-
         else:
             banner = update.effective_user  # type: Optional[User]
             bannerid = banner.id
@@ -150,7 +131,6 @@ def gban(bot: Bot, update: Update, args: List[str]):
             )
             message.reply_text("This user is already gbanned, but had no reason set; I've gone and updated it!")
 
-        os.environ['GPROCESS'] = '0'
         return
 
     starting = "Initiating global ban for {}...".format(mention_html(user_chat.id, user_chat.first_name or "Deleted Account"))
@@ -168,8 +148,6 @@ def gban(bot: Bot, update: Update, args: List[str]):
                                        mention_html(user_chat.id, user_chat.first_name), reason or "No reason given"),
                   parse_mode=ParseMode.HTML
         )
-
-    os.environ['GPROCESS'] = '1'
 
     sql.gban_user(user_id, user_chat.username or user_chat.first_name, reason)
 
@@ -195,8 +173,6 @@ def gban(bot: Bot, update: Update, args: List[str]):
         #except TelegramError:
         #    pass
 
-    os.environ['GPROCESS'] = '0'
-
     bot.send_message(MESSAGE_DUMP,
                    "{} has been successfully gbanned!".format(mention_html(user_chat.id, user_chat.first_name)),
                    parse_mode=ParseMode.HTML)
@@ -220,15 +196,6 @@ def ungban(bot: Bot, update: Update, args: List[str]):
         message.reply_text("This user is not gbanned!")
         return
 
-    if user_chat.first_name == '':
-        message.reply_text("That's a deleted account!")
-        return
-
-    if os.environ['GPROCESS'] == '1':
-        message.reply_text("Leave me alone, I'm busy, Someone is using global stuff.")
-        return
-
-
     banner = update.effective_user  # type: Optional[User]
 
     message.reply_text("I'll give {} a second chance, globally.".format(user_chat.first_name))
@@ -238,7 +205,6 @@ def ungban(bot: Bot, update: Update, args: List[str]):
                                                    mention_html(user_chat.id, user_chat.first_name)),
                  parse_mode=ParseMode.HTML)
 
-    os.environ['GPROCESS'] = '1'
     chats = get_all_chats()
     for chat in chats:
         chat_id = chat.chat_id
@@ -257,15 +223,12 @@ def ungban(bot: Bot, update: Update, args: List[str]):
                 pass
             else:
                 message.reply_text("Could not un-gban due to: {}".format(excp.message))
-                bot.send_message(MESSAGE_DUMP, "Could not un-gban due to: {}".format(excp.message))
-                os.environ['GPROCESS'] = '0'
+                bot.send_message(OWNER_ID, "Could not un-gban due to: {}".format(excp.message))
                 return
         except TelegramError:
             pass
 
     sql.ungban_user(user_id)
-
-    os.environ['GPROCESS'] = '0'
 
     bot.send_message(MESSAGE_DUMP, "un-gban complete!")
 
@@ -337,10 +300,6 @@ def gmute(bot: Bot, update: Update, args: List[str]):
         message.reply_text("That's not a user!")
         return
 
-    if os.environ['GPROCESS'] == '1':
-        message.reply_text("Leave me alone, I'm busy, Someone is using global stuff.")
-        return
-
     if sql.is_user_gmuted(user_id):
         if not reason:
             message.reply_text("This user is already gmuted; I'd change the reason, but you haven't given me one...")
@@ -364,9 +323,7 @@ def gmute(bot: Bot, update: Update, args: List[str]):
                                        mention_html(user_chat.id, user_chat.first_name), reason or "No reason given"),
                  parse_mode=ParseMode.HTML)
 
-    os.environ['GPROCESS'] = '1'
     sql.gmute_user(user_id, user_chat.username or user_chat.first_name, reason)
-
 
     #chats = get_all_chats()
     #for chat in chats:
@@ -410,7 +367,6 @@ def gmute(bot: Bot, update: Update, args: List[str]):
         #except TelegramError:
         #    pass
 
-    os.environ['GPROCESS'] = '0'
     bot.send_message(MESSAGE_DUMP, "gmute complete!")
     message.reply_text("Person has been gmuted.")
 
@@ -433,14 +389,6 @@ def ungmute(bot: Bot, update: Update, args: List[str]):
         message.reply_text("This user is not gmuted!")
         return
 
-    if user_chat.first_name == '':
-        message.reply_text("That's a deleted account!")
-        return
-
-    if os.environ['GPROCESS'] == '1':
-        message.reply_text("Leave me alone, I'm busy, Someone is using global stuff.")
-        return
-
     muter = update.effective_user  # type: Optional[User]
 
     message.reply_text("I'll let {} speak again, globally.".format(user_chat.first_name))
@@ -450,8 +398,6 @@ def ungmute(bot: Bot, update: Update, args: List[str]):
                                                    mention_html(user_chat.id, user_chat.first_name)),
                  parse_mode=ParseMode.HTML)
 
-
-    os.environ['GPROCESS'] = '1'
     chats = get_all_chats()
     for chat in chats:
         chat_id = chat.chat_id
@@ -489,14 +435,11 @@ def ungmute(bot: Bot, update: Update, args: List[str]):
             else:
                 message.reply_text("Could not un-gmute due to: {}".format(excp.message))
                 bot.send_message(OWNER_ID, "Could not un-gmute due to: {}".format(excp.message))
-                os.environ['GPROCESS'] = '0'
                 return
         except TelegramError:
             pass
 
     sql.ungmute_user(user_id)
-
-    os.environ['GPROCESS'] = '0'
 
     bot.send_message(MESSAGE_DUMP, "un-gmute complete!")
 
@@ -647,11 +590,6 @@ def gkick(bot: Bot, update: Update, args: List[str]):
         message.reply_text("That's a deleted account! Why u even bother gkicking dem")
         return
 
-    if os.environ['GPROCESS'] == '1':
-        message.reply_text("Leave me alone, I'm busy, Someone is using global stuff.")
-        return
-
-    os.environ['GPROCESS'] = '1'
     chats = get_all_chats()
     message.reply_text("Globally kicking user @{}".format(user_chat.username))
     for chat in chats:
@@ -662,11 +600,9 @@ def gkick(bot: Bot, update: Update, args: List[str]):
                 pass
             else:
                 message.reply_text("User cannot be Globally kicked because: {}".format(excp.message))
-                os.environ['GPROCESS'] = '0'
                 return
         except TelegramError:
             pass
-    os.environ['GPROCESS'] = '0'
 
 
 def __stats__():
