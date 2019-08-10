@@ -183,7 +183,8 @@ Actions are available with connected groups:
  • Restrict/unrestrict users in chat
  • More in future!
 
- - /connection <chatid>: Connect to remote chat
+ - Type /connect or /connection in the group you want to connect to.
+ - /connection or /connect <chatid>: Connect to remote chat
  - /disconnect: Disconnect from chat
  - /allowconnect on/yes/off/no: Allow connect users to group
 
@@ -192,7 +193,7 @@ Actions are available with connected groups:
 
 __mod_name__ = "Connections"
 
-CONNECT_CHAT_HANDLER = CommandHandler("connect", connect_chat, allow_edited=True, pass_args=True)
+CONNECT_CHAT_HANDLER = CommandHandler(["connect", "connection"], connect_chat, allow_edited=True, pass_args=True)
 DISCONNECT_CHAT_HANDLER = CommandHandler("disconnect", disconnect_chat, allow_edited=True)
 ALLOW_CONNECTIONS_HANDLER = CommandHandler("allowconnect", allow_connections, allow_edited=True, pass_args=True)
 
