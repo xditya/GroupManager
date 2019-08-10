@@ -111,21 +111,8 @@ def new_member(bot: Bot, update: Update):
         sent = None
         new_members = update.effective_message.new_chat_members
         for new_mem in new_members:
-            # Give the owner a special welcome
-            if new_mem.id == OWNER_ID:
-                cleanserv = sql.clean_service(chat.id)
-                if cleanserv:
-                    try:
-                        dispatcher.bot.delete_message(chat.id, update.message.message_id)
-                    except BadRequest:
-                        pass
-                    bot.send_message(chat.id, "Ay Master just joined the group! Let get the party started!")
-                else:
-                    update.effective_message.reply_text("Ay Master just joined the group! Let get the party started!")
-                continue
-
             # Give start information when add bot to group
-            elif new_mem.id == bot.id:
+            if new_mem.id == bot.id:
                 bot.send_message(
                     MESSAGE_DUMP,
                     "I have been added to {} with ID: <pre>{}</pre>".format(chat.title, chat.id),
