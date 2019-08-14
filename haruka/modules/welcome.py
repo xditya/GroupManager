@@ -17,8 +17,6 @@ from haruka.modules.helper_funcs.string_handling import markdown_parser, \
     escape_invalid_curly_brackets, extract_time
 from haruka.modules.log_channel import loggable
 
-import haruka.modules.sql.feds_sql as fedsql
-
 
 VALID_WELCOME_FORMATTERS = ['first', 'last', 'fullname', 'username', 'id', 'count', 'chatname', 'mention']
 
@@ -97,16 +95,7 @@ def new_member(bot: Bot, update: Update):
     chat = update.effective_chat  # type: Optional[Chat]
 
     should_welc, cust_welcome, cust_content, welc_type = sql.get_welc_pref(chat.id)
-    # Federation security
-    fed_id = fedsql.get_fed_id(chat.id)
-    if fed_id:
-        new_members = update.effective_message.new_chat_members
-        for new_mem in new_members:
-            fban, fbanreason = fedsql.get_fban_user(fed_id, new_mem.id)
-            if fban:
-                update.effective_message.reply_text("This user is fbanned in the current federation, *{}*.\n*Reason*: {}".format(fedinfo.fed_name, fbanreason))
-                bot.kick_chat_member(chat.id, new_mem.id)
-                return
+
     if should_welc:
         sent = None
         new_members = update.effective_message.new_chat_members
@@ -153,6 +142,7 @@ def new_member(bot: Bot, update: Update):
                     keyb = build_keyboard(buttons)
                     getsec, mutetime, custom_text = sql.welcome_security(chat.id)
 
+                    member = chat.get_member(new_mem.id)
                     # If user ban protected don't apply security on him
                     if is_user_ban_protected(chat, new_mem.id, chat.get_member(new_mem.id)):
                         pass
@@ -160,18 +150,29 @@ def new_member(bot: Bot, update: Update):
                         # If mute time is turned on
                         if mutetime:
                             if mutetime[:1] == "0":
-                                try:
-                                    bot.restrict_chat_member(chat.id, new_mem.id, can_send_messages=False)
-                                    canrest = True
-                                except BadRequest:
+                                if member.can_send_messages is None or member.can_send_messages:
+                                    try:
+                                       bot.restrict_chat_member(chat.id, new_mem.id, can_send_messages=False)
+                                       canrest = True
+                                    except BadRequest:
+                                       canrest = False
+                                else:
                                     canrest = False
+
+
                             else:
                                 mutetime = extract_time(update.effective_message, mutetime)
-                                try:
-                                    bot.restrict_chat_member(chat.id, new_mem.id, until_date=mutetime, can_send_messages=False)
-                                    canrest = True
-                                except BadRequest:
+
+                                if member.can_send_messages is None or member.can_send_messages:
+                                    try:
+                                        bot.restrict_chat_member(chat.id, new_mem.id, until_date=mutetime, can_send_messages=False)
+                                        canrest = True
+                                    except BadRequest:
+                                        canrest = False
+                                else:
                                     canrest = False
+
+
                         # If security welcome is turned on
                         if canrest:
                             sql.add_to_userlist(chat.id, new_mem.id)
@@ -207,25 +208,35 @@ def new_member(bot: Bot, update: Update):
                     keyb = []
 
                 getsec, mutetime, custom_text = sql.welcome_security(chat.id)
-                
+                member = chat.get_member(new_mem.id)
                 # If user ban protected don't apply security on him
                 if is_user_ban_protected(chat, new_mem.id, chat.get_member(new_mem.id)):
                     pass
                 elif getsec:
                     if mutetime:
                         if mutetime[:1] == "0":
-                            try:
-                                bot.restrict_chat_member(chat.id, new_mem.id, can_send_messages=False)
-                                canrest = True
-                            except BadRequest:
+
+                            if member.can_send_messages is None or member.can_send_messages:
+                                try:
+                                    bot.restrict_chat_member(chat.id, new_mem.id, can_send_messages=False)
+                                    canrest = True
+                                except BadRequest:
+                                    canrest = False
+                            else:
                                 canrest = False
+
                         else:
                             mutetime = extract_time(update.effective_message, mutetime)
-                            try:
-                                bot.restrict_chat_member(chat.id, new_mem.id, until_date=mutetime, can_send_messages=False)
-                                canrest = True
-                            except BadRequest:
+
+                            if member.can_send_messages is None or member.can_send_messages:
+                                try:
+                                    bot.restrict_chat_member(chat.id, new_mem.id, until_date=mutetime, can_send_messages=False)
+                                    canrest = True
+                                except BadRequest:
+                                    canrest = False
+                            else:
                                 canrest = False
+
                     if canrest:
                         sql.add_to_userlist(chat.id, new_mem.id)
                         keyb.append([InlineKeyboardButton(text=str(custom_text), callback_data="check_bot_({})".format(new_mem.id))])
@@ -234,7 +245,7 @@ def new_member(bot: Bot, update: Update):
                 sent = send(update, res, keyboard,
                             sql.DEFAULT_WELCOME.format(first=first_name))  # type: Optional[Message]
 
-                
+
             prev_welc = sql.get_clean_pref(chat.id)
             if prev_welc:
                 try:
