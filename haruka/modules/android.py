@@ -1,6 +1,7 @@
 import html
 import json
 import time
+import yaml
 from datetime import datetime
 from typing import Optional, List
 from hurry.filesize import size as sizee
@@ -395,14 +396,14 @@ def miui(bot: Bot, update: Update):
 
     result = "*Recovery ROM*\n\n"
     result += "*Stable*\n"
-    stable_all = json.loads(get(giturl + "stable_recovery/stable_recovery.json").content)
+    stable_all = yaml.load(get(giturl + "stable_recovery/stable_recovery.yml").content, Loader=yaml.FullLoader)
     data = [i for i in stable_all if device == i['codename']]
     if len(data) != 0:
         for i in data:
             result += "[" + i['filename'] + "](" + i['download'] + ")\n\n"
 
         result += "*Weekly*\n"
-        weekly_all = json.loads(get(giturl + "weekly_recovery/weekly_recovery.json").content)
+        weekly_all = yaml.load(get(giturl + "weekly_recovery/weekly_recovery.yml").content, Loader=yaml.FullLoader)
         data = [i for i in weekly_all if device == i['codename']]
         for i in data:
             result += "[" + i['filename'] + "](" + i['download'] + ")"
