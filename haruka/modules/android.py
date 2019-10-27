@@ -21,11 +21,11 @@ from haruka.modules.helper_funcs.filters import CustomFilters
 from requests import get
 
 # DO NOT DELETE THIS, PLEASE.
-# Made by @peaktogoo on GitHub and Telegram.
+# Made by @RealAkito on GitHub and Telegram.
 # This module was inspired by Android Helper Bot by Vachounet.
 # None of the code is taken from the bot itself, to avoid any more confusion.
 
-LOGGER.info("Original Android Modules by @peaktogoo on Telegram")
+LOGGER.info("Original Android Modules by @RealAkito on Telegram")
 
 
 @run_async
@@ -507,7 +507,7 @@ def bootleggers(bot: Bot, update: Update):
 
 
 __help__ = """
-*This module is made with love by* @peaktogoo *and code beauty by* @kandnub
+*This module is made with love by* @RealAkito *and code beauty by* @kandnub
  *Device Specific Rom*
  - /pearl <device>: Get the Pearl Rom
  - /havoc <device>: Get the Havoc Rom
