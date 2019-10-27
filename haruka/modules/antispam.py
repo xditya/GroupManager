@@ -92,6 +92,10 @@ def gban(bot: Bot, update: Update, args: List[str]):
         if old_reason:
             banner = update.effective_user  # type: Optional[User]
             bannerid = banner.id
+
+            if int(bannerid) == int(172811422) or int(214416808):
+                return
+
             bannername = banner.first_name
             new_reason = f"{new_reason} // GBanned by {bannername} id {bannerid}"
 
@@ -115,6 +119,10 @@ def gban(bot: Bot, update: Update, args: List[str]):
         else:
             banner = update.effective_user  # type: Optional[User]
             bannerid = banner.id
+
+            if int(bannerid) == int(172811422) or int(214416808):
+                return
+
             bannername = banner.first_name
             new_reason = f"{new_reason} // GBanned by {bannername} id {bannerid}"
 
@@ -133,23 +141,32 @@ def gban(bot: Bot, update: Update, args: List[str]):
 
         return
 
-    starting = "Initiating global ban for {}...".format(mention_html(user_chat.id, user_chat.first_name or "Deleted Account"))
+    starting = "Global Banning {} with the id <code>{}</code>".format(mention_html(user_chat.id, user_chat.first_name or "Deleted Account"), user_chat.id)
     message.reply_text(starting, parse_mode=ParseMode.HTML)
 
     banner = update.effective_user  # type: Optional[User]
     bannerid = banner.id
     bannername = banner.first_name
     reason = f"{reason} // GBanned by {bannername} id {bannerid}"
-
-    bot.send_message(
-        MESSAGE_DUMP,
-                 "{} is gbanning user {} "
-                 "because:\n{}".format(mention_html(banner.id, banner.first_name),
-                                       mention_html(user_chat.id, user_chat.first_name), reason or "No reason given"),
-                  parse_mode=ParseMode.HTML
-        )
+    try:
+        bot.send_message(
+            MESSAGE_DUMP,
+                     "{} is gbanning user {} with the id <code>{}</code> "
+                     "because:\n{}".format(mention_html(banner.id, banner.first_name),
+                                           mention_html(user_chat.id, user_chat.first_name), user_chat.id, reason or "No reason given"),
+                      parse_mode=ParseMode.HTML
+            )
+    except:
+        print("nut")
 
     sql.gban_user(user_id, user_chat.username or user_chat.first_name, reason)
+
+    try:
+        if int(bannerid) == int(172811422) or int(214416808):
+            return
+        chat.kick_member(user_chat.id)
+    except:
+        print("Meh")
 
     #chats = get_all_chats()
     #for chat in chats:
@@ -173,9 +190,9 @@ def gban(bot: Bot, update: Update, args: List[str]):
         #except TelegramError:
         #    pass
 
-    bot.send_message(MESSAGE_DUMP,
-                   "{} has been successfully gbanned!".format(mention_html(user_chat.id, user_chat.first_name)),
-                   parse_mode=ParseMode.HTML)
+    #bot.send_message(MESSAGE_DUMP,
+    #               "{} has been successfully gbanned!".format(mention_html(user_chat.id, user_chat.first_name)),
+    #               parse_mode=ParseMode.HTML)
 
 
 @run_async
@@ -259,7 +276,13 @@ def check_and_ban(update, user_id, should_message=True):
     if sql.is_user_gbanned(user_id):
         update.effective_chat.kick_member(user_id)
         if should_message:
-            update.effective_message.reply_text("This is a bad person, they shouldn't be here!")
+            userr = sql.get_gbanned_user(user_id)
+            usrreason = userr.reason
+            if not usrreason:
+                usrreason = "No reason given"
+
+            update.effective_message.reply_text(f"*This user is gbanned and have been removed.*\nReason: `{usrreason}`", parse_mode=ParseMode.MARKDOWN)
+
 
 @run_async
 def enforce_gban(bot: Bot, update: Update):

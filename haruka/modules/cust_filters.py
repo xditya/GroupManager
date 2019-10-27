@@ -197,7 +197,10 @@ def reply_filter(bot: Bot, update: Update):
             if filt.is_sticker:
                 message.reply_sticker(filt.reply)
             elif filt.is_document:
-                message.reply_document(filt.reply)
+                try:
+                    message.reply_document(filt.reply)
+                except:
+                    print("L")
             elif filt.is_image:
                 message.reply_photo(filt.reply)
             elif filt.is_audio:
