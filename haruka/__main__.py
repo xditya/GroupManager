@@ -94,7 +94,6 @@ def test(bot: Bot, update: Update):
 
 @run_async
 def start(bot: Bot, update: Update, args: List[str]):
-    LOGGER.info("Start")
     chat = update.effective_chat  # type: Optional[Chat]
     #query = update.callback_query #Unused variable
     if update.effective_chat.type == "private":
@@ -122,8 +121,10 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             send_start(bot, update)
     else:
-        update.effective_message.reply_text("Hey there! I'm alive :3")
-
+        try:
+            update.effective_message.reply_text("Hey there! I'm alive :3")
+        except:
+            print("Nut")
 
 def send_start(bot, update):
     #Try to remove old message
@@ -151,7 +152,6 @@ Made with love by @RealAkito\n\nWant to add me to your group? [Click here!](t.me
 
 
 def control_panel(bot, update):
-    LOGGER.info("Control panel")
     chat = update.effective_chat
     user = update.effective_user
 
@@ -535,11 +535,9 @@ def migrate_chats(bot: Bot, update: Update):
     else:
         return
 
-    LOGGER.info("Migrating from %s, to %s", str(old_chat), str(new_chat))
     for mod in MIGRATEABLE:
         mod.__migrate__(old_chat, new_chat)
 
-    LOGGER.info("Successfully migrated!")
     raise DispatcherHandlerStop
 
 
