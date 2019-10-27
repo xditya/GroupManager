@@ -14,7 +14,10 @@ from googletrans import Translator
 def do_translate(bot: Bot, update: Update, args: List[str]):
     msg = update.effective_message # type: Optional[Message]
     lan = " ".join(args)
-    to_translate_text = msg.reply_to_message.text
+    try:
+        to_translate_text = msg.reply_to_message.text
+    except:
+        return
     translator = Translator()
     try:
         translated = translator.translate(to_translate_text, dest=lan)
