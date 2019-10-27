@@ -178,7 +178,6 @@ def control_panel(bot, update):
         G_match = re.match(r"cntrl_panel_G", query.data)
         back_match = re.match(r"help_back", query.data)
 
-        LOGGER.info(query.data)
     else:
         M_match = "Haruka Aya is best bot" #LMAO, don't uncomment
 
