@@ -10,6 +10,7 @@ from telegram.ext import MessageHandler, Filters, CommandHandler, run_async, Cal
 from telegram.utils.helpers import mention_html
 
 import haruka.modules.sql.welcome_sql as sql
+from haruka.modules.sql.antispam_sql import is_user_gbanned
 from haruka import dispatcher, OWNER_ID, LOGGER, MESSAGE_DUMP
 from haruka.modules.helper_funcs.chat_status import user_admin, is_user_ban_protected
 from haruka.modules.helper_funcs.misc import build_keyboard, revert_buttons
@@ -87,7 +88,6 @@ def send(update, message, keyboard, backup_message):
                                                       reply_to_message_id=reply, 
                                                       parse_mode=ParseMode.MARKDOWN)
             except BadRequest:
-                print("Cannot send welcome msg, bot is muted!")
                 return ""
     return msg
 
@@ -103,6 +103,10 @@ def new_member(bot: Bot, update: Update):
         new_members = update.effective_message.new_chat_members
         for new_mem in new_members:
             # Give start information when add bot to group
+
+            if is_user_gbanned(new_mem.id):
+                return
+
             if new_mem.id == bot.id:
                 bot.send_message(
                     MESSAGE_DUMP,
