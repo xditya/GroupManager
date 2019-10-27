@@ -30,12 +30,12 @@ import haruka.modules.sql.feds_sql as sql
 # Federation update v2 by Ayra Hikari 2019
 #
 # Time spended on feds = 10h by #MrYacha
-# Time spended on reworking on the whole feds = 22+ hours by @peaktogoo
+# Time spended on reworking on the whole feds = 22+ hours by @RealAkito
 # Time spended on updating version to v2 = 26+ hours by @AyraHikari
 #
 # Total spended for making this features is 68+ hours
 
-LOGGER.info("Original federation module by MrYacha, reworked by Mizukito Akito (@peaktogoo) on Telegram.")
+LOGGER.info("Original federation module by MrYacha, reworked by Mizukito Akito (@RealAkito) on Telegram.")
 
 
 FBAN_ERRORS = {
