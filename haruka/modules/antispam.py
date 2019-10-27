@@ -287,23 +287,26 @@ def check_and_ban(update, user_id, should_message=True):
 @run_async
 def enforce_gban(bot: Bot, update: Update):
     # Not using @restrict handler to avoid spamming - just ignore if cant gban.
-    if sql.does_chat_gban(update.effective_chat.id) and update.effective_chat.get_member(bot.id).can_restrict_members:
-        user = update.effective_user  # type: Optional[User]
-        chat = update.effective_chat  # type: Optional[Chat]
-        msg = update.effective_message  # type: Optional[Message]
+    try:
+        if sql.does_chat_gban(update.effective_chat.id) and update.effective_chat.get_member(bot.id).can_restrict_members:
+            user = update.effective_user  # type: Optional[User]
+            chat = update.effective_chat  # type: Optional[Chat]
+            msg = update.effective_message  # type: Optional[Message]
 
-        if user and not is_user_admin(chat, user.id):
-            check_and_ban(update, user.id)
-
-        if msg.new_chat_members:
-            new_members = update.effective_message.new_chat_members
-            for mem in new_members:
-                check_and_ban(update, mem.id)
-
-        if msg.reply_to_message:
-            user = msg.reply_to_message.from_user  # type: Optional[User]
             if user and not is_user_admin(chat, user.id):
-                check_and_ban(update, user.id, should_message=False)
+                check_and_ban(update, user.id)
+
+            if msg.new_chat_members:
+                new_members = update.effective_message.new_chat_members
+                for mem in new_members:
+                    check_and_ban(update, mem.id)
+
+            if msg.reply_to_message:
+                user = msg.reply_to_message.from_user  # type: Optional[User]
+                if user and not is_user_admin(chat, user.id):
+                    check_and_ban(update, user.id, should_message=False)
+    except:
+        print("Nut")
 
 
 @run_async

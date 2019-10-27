@@ -208,7 +208,10 @@ def reply_filter(bot: Bot, update: Update):
             elif filt.is_voice:
                 message.reply_voice(filt.reply)
             elif filt.is_video:
-                message.reply_video(filt.reply)
+                try:
+                    message.reply_video(filt.reply)
+                except:
+                    print("Nut")
             elif filt.has_markdown:
                 buttons = sql.get_buttons(chat.id, filt.keyword)
                 keyb = build_keyboard(buttons)

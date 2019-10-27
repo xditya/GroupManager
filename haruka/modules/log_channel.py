@@ -65,12 +65,14 @@ if is_module_loaded(FILENAME):
 
         log_channel = sql.get_chat_log_channel(chat.id)
         if log_channel:
-            log_channel_info = bot.get_chat(log_channel)
-            message.reply_text(
-                "This group has all it's logs sent to: {} (`{}`)".format(escape_markdown(log_channel_info.title),
-                                                                         log_channel),
-                parse_mode=ParseMode.MARKDOWN)
-
+            try:
+                log_channel_info = bot.get_chat(log_channel)
+                message.reply_text(
+                    "This group has all it's logs sent to: {} (`{}`)".format(escape_markdown(log_channel_info.title),
+                                                                             log_channel),
+                    parse_mode=ParseMode.MARKDOWN)
+            except:
+                print("Nut")
         else:
             message.reply_text("No log channel has been set for this group!")
 
@@ -120,9 +122,11 @@ if is_module_loaded(FILENAME):
 
         log_channel = sql.stop_chat_logging(chat.id)
         if log_channel:
-            bot.send_message(log_channel, tld(chat.id, "Channel has been unlinked from {}").format(chat.title))
-            message.reply_text(tld(chat.id, "Log channel has been un-set."))
-
+            try:
+                bot.send_message(log_channel, tld(chat.id, "Channel has been unlinked from {}").format(chat.title))
+                message.reply_text(tld(chat.id, "Log channel has been un-set."))
+            except:
+                print("Nut")
         else:
             message.reply_text(tld(chat.id, "No log channel has been set yet!"))
 

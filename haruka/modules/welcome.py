@@ -278,9 +278,10 @@ def check_bot_button(bot: Bot, update: Update):
         bot.restrict_chat_member(chat.id, user.id, can_send_messages=True, can_send_media_messages=True, can_send_other_messages=True, can_add_web_page_previews=True)
         sql.rm_from_userlist(chat.id, user.id)
     else:
-        query.answer(text="You're not a new user!")
-    #TODO need kick users after 2 hours and remove message 
-
+        try:
+            query.answer(text="You're not a new user!")
+        except:
+            print("Nut")
 
 @run_async
 def left_member(bot: Bot, update: Update):
@@ -585,7 +586,10 @@ def goodbye(bot: Bot, update: Update, args: List[str]):
     elif len(args) >= 1:
         if args[0].lower() in ("on", "yes"):
             sql.set_gdbye_preference(str(chat.id), True)
-            update.effective_message.reply_text("I'll be sorry when people leave!")
+            try:
+                update.effective_message.reply_text("I'll be sorry when people leave!")
+            except:
+                print("Nut")
 
         elif args[0].lower() in ("off", "no"):
             sql.set_gdbye_preference(str(chat.id), False)
