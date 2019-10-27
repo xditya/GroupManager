@@ -291,6 +291,9 @@ def left_member(bot: Bot, update: Update):
     if should_goodbye:
         left_mem = update.effective_message.left_chat_member
         if left_mem:
+
+            if is_user_gbanned(left_mem.id):
+                return
             # Ignore bot being kicked
             if left_mem.id == bot.id:
                 return
