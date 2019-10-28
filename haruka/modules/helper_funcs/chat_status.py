@@ -116,7 +116,10 @@ def user_admin(func):
         user = update.effective_user  # type: Optional[User]
         chat = update.effective_chat  # type: Optional[Chat]
         if user and is_user_admin(update.effective_chat, user.id):
-            return func(bot, update, *args, **kwargs)
+            try:
+                return func(bot, update, *args, **kwargs)
+            except:
+                return
 
         elif not user:
             pass

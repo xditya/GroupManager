@@ -144,6 +144,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
     starting = "Global Banning {} with the id <code>{}</code>".format(mention_html(user_chat.id, user_chat.first_name or "Deleted Account"), user_chat.id)
     message.reply_text(starting, parse_mode=ParseMode.HTML)
 
+    chat = update.effective_chat  # type: Optional[Chat]
     banner = update.effective_user  # type: Optional[User]
     bannerid = banner.id
     bannername = banner.first_name

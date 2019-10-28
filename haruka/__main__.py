@@ -297,12 +297,9 @@ def error_callback(bot, update, error):
     try:
         raise error
     except Unauthorized:
-        LOGGER.warning("NO NONO1")
         LOGGER.warning(error)
         # remove update.message.chat_id from conversation list
     except BadRequest:
-        LOGGER.warning("NO NONO2")
-        LOGGER.warning("BadRequest caught")
         LOGGER.warning(error)
 
         # handle malformed requests - read more below!
@@ -313,7 +310,6 @@ def error_callback(bot, update, error):
         LOGGER.warning("NO NONO4")
         # handle other connection problems
     except ChatMigrated as err:
-        LOGGER.warning("NO NONO5")
         LOGGER.warning(err)
         # the chat_id of a group has changed, use e.new_chat_id instead
     except TelegramError:
