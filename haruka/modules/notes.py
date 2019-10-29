@@ -143,9 +143,9 @@ def get(bot, update, notename, show_none=True, no_format=False):
 @run_async
 def cmd_get(bot: Bot, update: Update, args: List[str]):
 	if len(args) >= 2 and args[1].lower() == "noformat":
-		get(bot, update, args[0], show_none=True, no_format=True)
+		get(bot, update, args[0].lower(), show_none=True, no_format=True)
 	elif len(args) >= 1:
-		get(bot, update, args[0], show_none=True)
+		get(bot, update, args[0].lower(), show_none=True)
 	else:
 		update.effective_message.reply_text("Get rekt")
 
@@ -154,7 +154,7 @@ def cmd_get(bot: Bot, update: Update, args: List[str]):
 def hash_get(bot: Bot, update: Update):
 	message = update.effective_message.text
 	fst_word = message.split()[0]
-	no_hash = fst_word[1:]
+	no_hash = fst_word[1:].lower()
 	get(bot, update, no_hash, show_none=False)
 
 
@@ -178,6 +178,7 @@ def save(bot: Bot, update: Update):
 	msg = update.effective_message  # type: Optional[Message]
 
 	note_name, text, data_type, content, buttons = get_note_type(msg)
+	note_name = note_name.lower()
 
 	if data_type is None:
 		msg.reply_text("Dude, there's no note!")
@@ -211,7 +212,7 @@ def clear(bot: Bot, update: Update, args: List[str]):
             chat_name = chat.title
 
     if len(args) >= 1:
-        notename = args[0]
+        notename = args[0].lower()
 
         if sql.rm_note(chat_id, notename):
             update.effective_message.reply_text("Note succesfully removed from *{}*.".format(chat_name), parse_mode=ParseMode.MARKDOWN)
@@ -240,7 +241,7 @@ def list_notes(bot: Bot, update: Update):
     note_list = sql.get_all_chat_notes(chat_id)
 
     for note in note_list:
-        note_name = " • `#{}`\n".format(note.name)
+        note_name = " • `#{}`\n".format(note.name.lower())
         if len(msg) + len(note_name) > MAX_MESSAGE_LENGTH:
             update.effective_message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
             msg = ""
@@ -353,6 +354,7 @@ def __chat_settings__(chat_id, user_id):
 __help__ = """
 Save data for future users with notes!
 Notes are great to save random tidbits of information; a phone number, a nice gif, a funny picture - anything!
+
 Available commands are:
  - /save <word> <sentence>: Save that sentence to the note called "word". Replying to a message will save that message. Even works on media!
  - /get <word>: get the note registered to that word.
@@ -360,13 +362,17 @@ Available commands are:
  - /clear <word>: delete the note called "word"
  - /notes: List all notes in the current chat
  - /saved: same as /notes
+
 An example of how to save a note would be via:
 /save data This is some data!
 Now, anyone using "/get data", or "#data" will be replied to with "This is some data!".
 If you want to save an image, gif, or sticker, or any other data, do the following:
 /save word while replying to a sticker or whatever data you'd like. Now, the note at "#word" contains a sticker which will be sent as a reply.
+
 Tip: to retrieve a note without the formatting, use /get <notename> noformat
 This will retrieve the note and send it without formatting it; getting you the raw markdown, allowing you to make easy edits
+
+Note: Note names are case-insensitive, and they are automatically converted to lowercase before getting saved.
 """
 
 __mod_name__ = "Notes"
