@@ -57,87 +57,94 @@ def get(bot, update, notename, show_none=True, no_format=False):
 	message = update.effective_message  # type: Optional[Message]
 
 	if note:
-		# If we're replying to a message, reply to that message (unless it's an error)
-		if message.reply_to_message:
-			reply_id = message.reply_to_message.message_id
-		else:
-			reply_id = message.message_id
+		pass
+	elif notename[0] == "#":
+		hashnote = sql.get_note(chat_id, notename[1:])
+		if hashnote:
+			note = hashnote
+	elif show_none:
+		message.reply_text("This note doesn't exist")
+		return
 
-		if note.is_reply:
-			if MESSAGE_DUMP:
-				try:
-					bot.forward_message(chat_id=chat_id, from_chat_id=MESSAGE_DUMP, message_id=note.value)
-				except BadRequest as excp:
-					if excp.message == "Message to forward not found":
-                                                message.reply_text("This message seems to have been lost - I'll remove it "
-                                                                                   "from your notes list.")
-                                                sql.rm_note(chat_id, notename)
-					else:
-						raise
-			else:
-				try:
-					bot.forward_message(chat_id=chat_id, from_chat_id=chat_id, message_id=note.value)
+	# If we're replying to a message, reply to that message (unless it's an error)
+	if message.reply_to_message:
+		reply_id = message.reply_to_message.message_id
+	else:
+		reply_id = message.message_id
 
-				except BadRequest as excp:
-					if excp.message == "Message to forward not found":
-						message.reply_text("Looks like the original sender of this note has deleted "
-										   "their message - sorry! Get your bot admin to start using a "
-										   "message dump to avoid this. I'll remove this note from "
-										   "your saved notes.")
-					sql.rm_note(chat_id, notename)
-
+	if note.is_reply:
+		if MESSAGE_DUMP:
+			try:
+				bot.forward_message(chat_id=chat_id, from_chat_id=MESSAGE_DUMP, message_id=note.value)
+			except BadRequest as excp:
+				if excp.message == "Message to forward not found":
+											message.reply_text("This message seems to have been lost - I'll remove it "
+																				"from your notes list.")
+											sql.rm_note(chat_id, notename)
 				else:
 					raise
 		else:
-			text = note.value
-			keyb = []
-			parseMode = ParseMode.MARKDOWN
-			buttons = sql.get_buttons(chat_id, notename)
-			if no_format:
-				parseMode = None
-				text += revert_buttons(buttons)
-			else:
-				keyb = build_keyboard(buttons)
-
-			keyboard = InlineKeyboardMarkup(keyb)
-
 			try:
-				if note.msgtype in (sql.Types.BUTTON_TEXT, sql.Types.TEXT):
-					try:
-						bot.send_message(send_id, text, reply_to_message_id=reply_id,
-										 parse_mode=parseMode, disable_web_page_preview=True,
-										 reply_markup=keyboard)
-					except BadRequest as excp:
-						if excp.message == "Wrong http url":
-							failtext = "The URL on the button is invalid! Please update this note!"
-							failtext += "\n\n```\n{}```".format(note.value + revert_buttons(buttons))
-							message.reply_text(failtext, parse_mode="markdown")
-						print("Gagal mengirim catatan: " + excp.message)
-						pass
-				else:
-					ENUM_FUNC_MAP[note.msgtype](send_id, note.file, caption=text, reply_to_message_id=reply_id,
-												parse_mode=parseMode, disable_web_page_preview=True,
-												reply_markup=keyboard)
+				bot.forward_message(chat_id=chat_id, from_chat_id=chat_id, message_id=note.value)
 
 			except BadRequest as excp:
-				if excp.message == "Entity_mention_user_invalid":
-					message.reply_text("Looks like you tried to mention someone I've never seen before. If you really "
-									   "want to mention them, forward one of their messages to me, and I'll be able "
-									   "to tag them!")
+				if excp.message == "Message to forward not found":
+					message.reply_text("Looks like the original sender of this note has deleted "
+										"their message - sorry! Get your bot admin to start using a "
+										"message dump to avoid this. I'll remove this note from "
+										"your saved notes.")
+				sql.rm_note(chat_id, notename)
 
-				elif FILE_MATCHER.match(note.value):
-					message.reply_text("This note was an incorrectly imported file from another bot - I can't use "
-									   "it. If you really need it, you'll have to save it again. In "
-									   "the meantime, I'll remove it from your notes list.")
-					sql.rm_note(chat_id, notename)
-				else:
-					message.reply_text("This note could not be sent, as it is incorrectly formatted, Please ask in @HarukaAyaGroup if you can't figure out why!")
-					LOGGER.exception("Could not parse message #%s in chat %s", notename, str(chat_id))
-					LOGGER.warning("Message was: %s", str(note.value))
+			else:
+				raise
+	else:
+		text = note.value
+		keyb = []
+		parseMode = ParseMode.MARKDOWN
+		buttons = sql.get_buttons(chat_id, notename)
+		if no_format:
+			parseMode = None
+			text += revert_buttons(buttons)
+		else:
+			keyb = build_keyboard(buttons)
 
-		return
-	elif show_none:
-		message.reply_text("This note doesn't exist")
+		keyboard = InlineKeyboardMarkup(keyb)
+
+		try:
+			if note.msgtype in (sql.Types.BUTTON_TEXT, sql.Types.TEXT):
+				try:
+					bot.send_message(send_id, text, reply_to_message_id=reply_id,
+										parse_mode=parseMode, disable_web_page_preview=True,
+										reply_markup=keyboard)
+				except BadRequest as excp:
+					if excp.message == "Wrong http url":
+						failtext = "The URL on the button is invalid! Please update this note!"
+						failtext += "\n\n```\n{}```".format(note.value + revert_buttons(buttons))
+						message.reply_text(failtext, parse_mode="markdown")
+					print("Gagal mengirim catatan: " + excp.message)
+					pass
+			else:
+				ENUM_FUNC_MAP[note.msgtype](send_id, note.file, caption=text, reply_to_message_id=reply_id,
+											parse_mode=parseMode, disable_web_page_preview=True,
+											reply_markup=keyboard)
+
+		except BadRequest as excp:
+			if excp.message == "Entity_mention_user_invalid":
+				message.reply_text("Looks like you tried to mention someone I've never seen before. If you really "
+									"want to mention them, forward one of their messages to me, and I'll be able "
+									"to tag them!")
+
+			elif FILE_MATCHER.match(note.value):
+				message.reply_text("This note was an incorrectly imported file from another bot - I can't use "
+									"it. If you really need it, you'll have to save it again. In "
+									"the meantime, I'll remove it from your notes list.")
+				sql.rm_note(chat_id, notename)
+			else:
+				message.reply_text("This note could not be sent, as it is incorrectly formatted, Please ask in @HarukaAyaGroup if you can't figure out why!")
+				LOGGER.exception("Could not parse message #%s in chat %s", notename, str(chat_id))
+				LOGGER.warning("Message was: %s", str(note.value))
+
+	return
 
 
 @run_async
