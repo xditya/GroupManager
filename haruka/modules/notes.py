@@ -201,7 +201,7 @@ def clear(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     conn = connected(bot, update, chat, user.id)
-    if not conn == False:
+    if conn:
         chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
     else:
@@ -225,7 +225,7 @@ def list_notes(bot: Bot, update: Update):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     conn = connected(bot, update, chat, user.id, need_admin=False)
-    if not conn == False:
+    if conn:
         chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
         msg = "*Notes in {}:*\n"

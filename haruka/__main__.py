@@ -244,7 +244,7 @@ def control_panel(bot, update):
         chatP = chat
         conn = connected(bot, update, chat, user.id)
 
-        if not conn == False:
+        if conn:
             chat = bot.getChat(conn)
         else:
             query.message.reply_text(text="Error with connection to chat")

@@ -27,7 +27,7 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
     user = update.effective_user  # type: Optional[User]
     chat = update.effective_chat  # type: Optional[Chat]
     conn = connected(bot, update, chat, user.id)
-    if not conn == False:
+    if conn:
         chatD = dispatcher.bot.getChat(conn)
     else:
         chatD = update.effective_chat
@@ -82,7 +82,7 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
     message = update.effective_message  # type: Optional[Message]
     user = update.effective_user  # type: Optional[User]
     conn = connected(bot, update, chat, user.id)
-    if not conn == False:
+    if conn:
         chatD = dispatcher.bot.getChat(conn)
     else:
         chatD = update.effective_chat
@@ -196,7 +196,7 @@ def invite(bot: Bot, update: Update):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     conn = connected(bot, update, chat, user.id, need_admin=False)
-    if not conn == False:
+    if conn:
         chatP = dispatcher.bot.getChat(conn)
     else:
         chatP = update.effective_chat
@@ -225,7 +225,7 @@ def adminlist(bot, update):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     conn = connected(bot, update, chat, user.id, need_admin=False)
-    if not conn == False:
+    if conn:
         chatP = dispatcher.bot.getChat(conn)
     else:
         chatP = update.effective_chat

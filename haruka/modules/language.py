@@ -58,7 +58,7 @@ def locale_button(bot, update):
 
     conn = connected(bot, update, chat, user.id, need_admin=False)
 
-    if not conn == False:
+    if conn:
         try:
             chatlng = prev_locale(conn).locale_name
             chatlng = list_locales[chatlng]
