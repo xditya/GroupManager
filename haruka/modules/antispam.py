@@ -93,7 +93,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
             banner = update.effective_user  # type: Optional[User]
             bannerid = banner.id
 
-            if int(bannerid) == int(172811422) or int(214416808):
+            if int(bannerid) in [172811422, 214416808]:
                 return
 
             bannername = banner.first_name
@@ -120,7 +120,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
             banner = update.effective_user  # type: Optional[User]
             bannerid = banner.id
 
-            if int(bannerid) == int(172811422) or int(214416808):
+            if int(bannerid) in [172811422, 214416808]:
                 return
 
             bannername = banner.first_name
@@ -163,7 +163,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
     sql.gban_user(user_id, user_chat.username or user_chat.first_name, reason)
 
     try:
-        if int(bannerid) == int(172811422) or int(214416808):
+        if int(bannerid) in [172811422, 214416808]:
             return
         chat.kick_member(user_chat.id)
     except:
@@ -296,16 +296,19 @@ def enforce_gban(bot: Bot, update: Update):
 
             if user and not is_user_admin(chat, user.id):
                 check_and_ban(update, user.id)
+                return
 
             if msg.new_chat_members:
                 new_members = update.effective_message.new_chat_members
                 for mem in new_members:
                     check_and_ban(update, mem.id)
+                    return
 
             if msg.reply_to_message:
                 user = msg.reply_to_message.from_user  # type: Optional[User]
                 if user and not is_user_admin(chat, user.id):
                     check_and_ban(update, user.id, should_message=False)
+                    return
     except:
         print("Nut")
 

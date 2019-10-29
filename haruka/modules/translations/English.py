@@ -177,7 +177,7 @@ HIT = (
 )
 
 MARKDOWN_HELP = """
-Markdown is a very powerful formatting tool supported by telegram. {} has some enhancements, to make sure that \
+Markdown is a very powerful formatting tool supported by telegram. Haruka Aya has some enhancements, to make sure that \
 saved messages are correctly parsed, and to allow you to create buttons.
 
 - <code>_italic_</code>: wrapping text with '_' will produce italic text

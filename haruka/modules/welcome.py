@@ -121,6 +121,8 @@ def new_member(bot: Bot, update: Update):
                 bot.send_message(chat.id, "Thanks for adding me into your group! Don't forgot to checkout our news channel!")
 
             else:
+                if is_user_gbanned(new_mem.id):
+                    return
                 # If welcome message is media, send with appropriate function
                 if welc_type != sql.Types.TEXT and welc_type != sql.Types.BUTTON_TEXT:
                     reply = update.message.message_id
@@ -616,7 +618,7 @@ def set_welcome(bot: Bot, update: Update) -> str:
     # If user is not set text and not reply a message
     if not msg.reply_to_message:
         if len(msg.text.split()) == 1:
-            msg.reply_text("You must provide the contents in a welcome message!/n Type `/welcomehelp` for some help at welcome!", parse_mode="markdown")
+            msg.reply_text("You must provide the contents in a welcome message! Type `/help greetings` for some help at welcome in my PM! You can also `/markdownhelp` in my PM for markdown help!", parse_mode="markdown")
             return ""
 
     text, data_type, content, buttons = get_welcome_type(msg)
