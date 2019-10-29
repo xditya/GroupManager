@@ -36,7 +36,7 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
 
     if not chatD.get_member(bot.id).can_promote_members:
         update.effective_message.reply_text("I can't promote/demote people here! "
-                                            "Make sure I'm admin and can appoint new admins.")
+                                            "Make sure I'm an admin and can appoint new admins.")
         exit(1)
 
     user_id = extract_user(message, args)
@@ -46,7 +46,7 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_member = chatD.get_member(user_id)
     if user_member.status == 'administrator' or user_member.status == 'creator':
-        message.reply_text(tld(chat.id, "How am I meant to promote someone that's already an admin?"))
+        message.reply_text(tld(chat.id, "How am I meant to promote someone who's already an admin?"))
         return ""
 
     if user_id == bot.id:
@@ -91,7 +91,7 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
 
     if not chatD.get_member(bot.id).can_promote_members:
         update.effective_message.reply_text("I can't promote/demote people here! "
-                                            "Make sure I'm admin and can appoint new admins.")
+                                            "Make sure I'm an admin and can appoint new admins.")
         exit(1)
 
     user_id = extract_user(message, args)
@@ -101,11 +101,11 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_member = chatD.get_member(user_id)
     if user_member.status == 'creator':
-        message.reply_text(tld(chat.id, "This person CREATED the chat, how would I demote them?"))
+        message.reply_text(tld(chat.id, "This person is the CREATOR of the chat, how would I demote them?"))
         return ""
 
     if not user_member.status == 'administrator':
-        message.reply_text(tld(chat.id, "Can't demote what wasn't promoted!"))
+        message.reply_text(tld(chat.id, "Can't demote those who weren't promoted!"))
         return ""
 
     if user_id == bot.id:
@@ -217,7 +217,7 @@ def invite(bot: Bot, update: Update):
         else:
             update.effective_message.reply_text(tld(chat.id, "I don't have access to the invite link, try changing my permissions!"))
     else:
-        update.effective_message.reply_text(tld(chat.id, "I can only give you invite links for supergroups and channels, sorry!"))
+        update.effective_message.reply_text(tld(chat.id, "Sorry, but I can give invite links only for supergroups and channels!"))
 
 
 @run_async
@@ -247,6 +247,7 @@ def adminlist(bot, update):
     update.effective_message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
 
 
+# TODO: Finalize this command, add automatic message deleting
 @user_admin
 @run_async
 def reaction(bot: Bot, update: Update, args: List[str]) -> str:
@@ -256,29 +257,30 @@ def reaction(bot: Bot, update: Update, args: List[str]) -> str:
         print(var)
         if var == "False":
             sql.set_command_reaction(chat.id, False)
-            update.effective_message.reply_text("Disabled reaction on admin commands for users")
+            update.effective_message.reply_text("Disabled response to user-triggered admin commands.")
         elif var == "True":
             sql.set_command_reaction(chat.id, True)
-            update.effective_message.reply_text("Enabled reaction on admin commands for users")
+            update.effective_message.reply_text("Enabled response to user-triggered admin commands.")
         else:
             update.effective_message.reply_text("Please enter True or False!", parse_mode=ParseMode.MARKDOWN)
     else:
         status = sql.command_reaction(chat.id)
-        if status == False:
-            update.effective_message.reply_text("Reaction on admin commands for users now `disabled`!", parse_mode=ParseMode.MARKDOWN)
-        else:
-            update.effective_message.reply_text("Reaction on admin commands for users now `enabled`!", parse_mode=ParseMode.MARKDOWN)
+        update.effective_message.reply_text(
+            "Response for user-triggered admin commands is currently "
+            f"`{'enabled' if status==True else 'disabled'}`!",
+            parse_mode=ParseMode.MARKDOWN
+        )
         
 
 __help__ = """
- - /adminlist | /admins: list of admins in the chat
+ - /adminlist | /admins: Lists the admins in the chat
 
 *Admin only:*
- - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.
- - /unpin: unpins the currently pinned message
- - /invitelink: gets invitelink
- - /promote: promotes the user replied to
- - /demote: demotes the user replied to
+ - /pin: Silently pins the message replied to. Add 'loud','notify' or 'violent' to send a notification to users.
+ - /unpin: Unpins the currently pinned message
+ - /invitelink: Gets the invite link of the group
+ - /promote: Promotes a user Reply to the user or use their username.
+ - /demote: Demotes a user. Reply to the user or use their username.
 """
 
 __mod_name__ = "Admin"

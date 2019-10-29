@@ -97,7 +97,7 @@ if is_module_loaded(FILENAME):
                 update.effective_message.reply_text("Enabled the use of `{}`".format(enable_cmd),
                                                     parse_mode=ParseMode.MARKDOWN)
             else:
-                update.effective_message.reply_text("Is that even disabled?")
+                update.effective_message.reply_text("Is that command even disabled?")
 
         else:
             update.effective_message.reply_text("What should I enable?")
@@ -125,7 +125,7 @@ if is_module_loaded(FILENAME):
         result = ""
         for cmd in disabled:
             result += " - `{}`\n".format(escape_markdown(cmd))
-        return "The following commands are currently restricted:\n{}".format(result)
+        return "The following commands are currently disabled for non-admins:\n{}".format(result)
 
 
     @run_async
@@ -156,17 +156,17 @@ if is_module_loaded(FILENAME):
 
     __help__ = """
 Not everyone wants every feature that the bot offers. Some commands are best \
-left unused; to avoid spam and abuse.
+when left unused to avoid spam and abuse.
 
-This allows you to disable some commonly used commands, so noone can use them. \
+This allows you to disable some commonly used commands, so non-admins can't use them. \
 It'll also allow you to autodelete them, stopping people from bluetexting.
 
  - /cmds: check the current status of disabled commands
 
 *Admin only:*
- - /enable <cmd name>: enable that command
- - /disable <cmd name>: disable that command
- - /listcmds: list all possible toggleable commands
+ - /enable <cmd name>: Enable a command
+ - /disable <cmd name>: Disable a command
+ - /listcmds: List all toggleable commands
     """
 
     DISABLE_HANDLER = CommandHandler("disable", disable, pass_args=True, filters=Filters.group)

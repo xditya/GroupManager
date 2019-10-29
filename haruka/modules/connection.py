@@ -26,18 +26,18 @@ def allow_connections(bot: Bot, update: Update, args: List[str]) -> str:
         if len(args) >= 1:
             var = args[0]
             print(var)
-            if var == "no":
+            if var == "no" or var == "off":
                 sql.set_allow_connect_to_chat(chat.id, False)
-                update.effective_message.reply_text(tld(chat.id, "Disabled connections to this chat for users"))
-            elif var == "yes":
+                update.effective_message.reply_text(tld(chat.id, "Disabled connections to this chat for users."))
+            elif var == "yes" or var == "on":
                 sql.set_allow_connect_to_chat(chat.id, True)
-                update.effective_message.reply_text(tld(chat.id, "Enabled connections to this chat for users"))
+                update.effective_message.reply_text(tld(chat.id, "Enabled connections to this chat for users."))
             else:
-                update.effective_message.reply_text(tld(chat.id, "Please enter on/yes/off/no in group!"))
+                update.effective_message.reply_text(tld(chat.id, "Please enter on/yes/off/no as an argument!"))
         else:
-            update.effective_message.reply_text(tld(chat.id, "Please enter on/yes/off/no in group!"))
+            update.effective_message.reply_text(tld(chat.id, "Please enter on/yes/off/no as an argument!"))
     else:
-        update.effective_message.reply_text(tld(chat.id, "Please enter on/yes/off/no in group!"))
+        update.effective_message.reply_text(tld(chat.id, "Please enter on/yes/off/no as an argument!"))
 
 
 @run_async
@@ -49,7 +49,7 @@ def connect_chat(bot, update, args):
             try:
                 connect_chat = int(args[0])
             except ValueError:
-                update.effective_message.reply_text(tld(chat.id, "Invalid Chat ID provided!"))
+                update.effective_message.reply_text(tld(chat.id, "Invalid Chat ID!"))
                 return
             if (bot.get_chat_member(connect_chat, update.effective_message.from_user.id).status in ('administrator', 'creator') or 
                                      (sql.allow_connect_to_chat(connect_chat) == True) and 
@@ -99,7 +99,7 @@ def connect_chat(bot, update, args):
                 else:
                     update.effective_message.reply_text(tld(chat.id, "Connection failed!"))
             else:
-                update.effective_message.reply_text(tld(chat.id, "Connections to this chat not allowed!"))
+                update.effective_message.reply_text(tld(chat.id, "Connections to this chat are not allowed!"))
         else:
             update.effective_message.reply_text(tld(chat.id, "Input chat ID to connect!"))
             history = sql.get_history(user.id)
@@ -117,7 +117,7 @@ def connect_chat(bot, update, args):
                 update.effective_message.reply_text(tld(chat.id, "Failed to connect to *{}*").format(chat.id),
                                                     parse_mode=ParseMode.MARKDOWN)
         else:
-            update.effective_message.reply_text(tld(chat.id, "You are not admin!"))
+            update.effective_message.reply_text(tld(chat.id, "You are not an admin!"))
 
     else:
         update.effective_message.reply_text(tld(chat.id, "Usage is limited to PMs only!"))
@@ -127,19 +127,19 @@ def disconnect_chat(bot, update):
     if update.effective_chat.type == 'private':
         disconnection_status = sql.disconnect(update.effective_message.from_user.id)
         if disconnection_status:
-            sql.disconnected_chat = update.effective_message.reply_text("Disconnected from chat!")
+            sql.disconnected_chat = update.effective_message.reply_text("Disconnected from chat successfully!")
             #Rebuild user's keyboard
             keyboard(bot, update)
         else:
-           update.effective_message.reply_text("Disconnection unsuccessfull!")
+           update.effective_message.reply_text("Disconnecting failed!")
     elif update.effective_chat.type == 'supergroup':
         disconnection_status = sql.disconnect(update.effective_message.from_user.id)
         if disconnection_status:
-            sql.disconnected_chat = update.effective_message.reply_text("Disconnected from chat!")
+            sql.disconnected_chat = update.effective_message.reply_text("Disconnected from chat successfully!")
             # Rebuild user's keyboard
             keyboard(bot, update)
         else:
-            update.effective_message.reply_text("Disconnection unsuccessfull!")
+            update.effective_message.reply_text("Disconnecting failed!")
     else:
         update.effective_message.reply_text("Usage is restricted to PMs only")
 
@@ -155,12 +155,12 @@ def connected(bot, update, chat, user_id, need_admin=True):
                 if bot.get_chat_member(conn_id, update.effective_message.from_user.id).status in ('administrator', 'creator') or user_id in SUDO_USERS:
                     return conn_id
                 else:
-                    update.effective_message.reply_text("You need to be a admin in a connected group!")
+                    update.effective_message.reply_text("You need to be an admin in the connected group!")
                     exit(1)
             else:
                 return conn_id
         else:
-            update.effective_message.reply_text("Group changed rights connection or you are not admin anymore.\nI'll disconnect you.")
+            update.effective_message.reply_text("Group has changed connection rights or you are not an admin anymore.\nI'll disconnect you.")
             disconnect_chat(bot, update)
             exit(1)
     else:
@@ -170,7 +170,7 @@ def connected(bot, update, chat, user_id, need_admin=True):
 __help__ = """
 Sometimes, you just want to add some notes and filters to a group chat, but you don't want everyone to see; This is where connections come in...
 
-This allows you to connect to a chat's database, and add things to it without the chat knowing about it! For obvious reasons, you need to be an admin to add things; but any member can view your data. (banned/kicked users can't!)
+This allows you to connect to a chat's database, and add things to it without the commands appearing in chat! For obvious reasons, you need to be an admin to add things; but any member in the group can view your data.
 
 Actions are available with connected groups:
  • View and edit notes
@@ -181,7 +181,7 @@ Actions are available with connected groups:
  • Disable/enable commands in chat
  • Mute/unmute users in chat
  • Restrict/unrestrict users in chat
- • More in future!
+ • More in the future!
 
  - Type /connect or /connection in the group you want to connect to.
  - /connection or /connect <chatid>: Connect to remote chat

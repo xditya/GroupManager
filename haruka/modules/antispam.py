@@ -56,15 +56,15 @@ def gban(bot: Bot, update: Update, args: List[str]):
         return
 
     if int(user_id) in SUDO_USERS:
-        message.reply_text("I spy, with my little eye... a sudo user war! Why are you guys turning on each other?")
+        message.reply_text("I spy with my little eyes... a sudo user war! Why are you guys turning on each other?")
         return
 
     if int(user_id) in SUPPORT_USERS:
-        message.reply_text("OOOH someone's trying to gban a support user! *grabs popcorn*")
+        message.reply_text("OOOH, someone's trying to gban a support user! *grabs popcorn*")
         return
 
     if user_id == bot.id:
-        message.reply_text("-_- So funny, lets gban myself why don't I? Nice try.")
+        message.reply_text("-_- So funny, let me gban myself, why don't I? Nice try.")
         return
 
     try:
@@ -114,7 +114,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
 
             message.reply_text("This user is already gbanned, for the following reason:\n"
                                "<code>{}</code>\n"
-                               "I've gone and updated it with your new reason!".format(html.escape(old_reason)),
+                               "I've gone and updated it with the new reason!".format(html.escape(old_reason)),
                                parse_mode=ParseMode.HTML)
         else:
             banner = update.effective_user  # type: Optional[User]
@@ -282,7 +282,7 @@ def check_and_ban(update, user_id, should_message=True):
             if not usrreason:
                 usrreason = "No reason given"
 
-            update.effective_message.reply_text(f"*This user is gbanned and have been removed.*\nReason: `{usrreason}`", parse_mode=ParseMode.MARKDOWN)
+            update.effective_message.reply_text(f"*This user is gbanned and has been removed.*\nReason: `{usrreason}`", parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
@@ -367,11 +367,12 @@ def __chat_settings__(bot, update, chat, chatP, user):
 
 __help__ = """
 *Admin only:*
- - /antispam <on/off/yes/no>: Will disable antispam security in group, or return your current settings.
+ - /antispam <on/off/yes/no>: Change antispam security settings in the group, or return your \
+current settings(when no arguments).
 
-Antispam are used by the bot owners to ban spammers across all groups. This helps protect \
-you and your groups by removing spam flooders as quickly as possible. They can be disabled for you group by calling \
-/antispam
+Antispam is used by the bot owners to ban spammers across all groups. This helps protect \
+you and your groups by removing spam flooders as quickly as possible. This is enabled by \
+default, but you can change this by using the command.
 """
 
 __mod_name__ = "Antispam security"

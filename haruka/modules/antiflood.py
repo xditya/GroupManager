@@ -37,7 +37,7 @@ def check_flood(bot: Bot, update: Update) -> str:
 
     try:
         bot.restrict_chat_member(chat.id, user.id, can_send_messages=False)
-        msg.reply_text(tld(chat.id, "I like to leave the flooding to natural disasters. But you, you were just a "
+        msg.reply_text(tld(chat.id, "I would like to leave the flooding to natural disasters. But you, you were just a "
                        "disappointment. *Muted*!"))
 
         return "<b>{}:</b>" \
@@ -124,14 +124,16 @@ def __chat_settings__(bot, update, chat, chatP, user):
 
 
 __help__ = """
- You know how sometimes, people join, send 100 messages, and ruin your chat? With antiflood, that happens no more!
+ You know how sometimes people join, send 100 messages, and ruin your chat? With antiflood, that happens no more!
 
-Antiflood allows you to take action on users that send more than x messages in a row. Actions are: ban/kick/mute/tban/tmute
+Antiflood allows you to take action on users that send more than **x** messages in a row.
 
 Available commands are:
  - /flood: gets the current antiflood settings.
  - /setflood <number/off>: sets the number of messages at which to take action on a user.
 """
+
+# TODO: Add actions: ban/kick/mute/tban/tmute
 
 __mod_name__ = "AntiFlood"
 

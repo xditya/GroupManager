@@ -39,7 +39,7 @@ def import_data(bot: Bot, update):
 		chat_name = dispatcher.bot.getChat(conn).title
 	else:
 		if update.effective_message.chat.type == "private":
-			update.effective_message.reply_text("This command can only be runned on group, not PM.")
+			update.effective_message.reply_text("This command can only be used in a group, not PM.")
 			return ""
 
 		chat = update.effective_chat
@@ -60,7 +60,7 @@ def import_data(bot: Bot, update):
 
 		# only import one group
 		if len(data) > 1 and str(chat.id) not in data:
-			msg.reply_text("There are more than one group in this file and the chat.id is not same! How am i supposed to import it?")
+			msg.reply_text("There is more than one group in this file and the chat.id is not the same! How am I supposed to import it?")
 			return
 
 		# Check if backup is this chat
@@ -76,7 +76,7 @@ def import_data(bot: Bot, update):
 		# Check if backup is from self
 		try:
 			if str(bot.id) != str(data[str(chat.id)]['bot']):
-				return msg.reply_text("Backup from another bot that is not suggested might cause the problem, documents, photos, videos, audios, records might not work as it should be. However, You can still request a feature regarding this in @HarukaAyaGroup !")
+				return msg.reply_text("Restoring a backup from another bot is not suggested and might cause problems. Documents, photos, videos, audios, records might not be restored as they should have been. However, You can still request a feature regarding this in @HarukaAyaGroup!")
 		except:
 			pass
 		# Select data source
@@ -89,7 +89,7 @@ def import_data(bot: Bot, update):
 			for mod in DATA_IMPORT:
 				mod.__import_data__(str(chat.id), data)
 		except Exception:
-			msg.reply_text("An error occurred while recovering your data. The process failed. If you experience a problem with this, please ask in @HarukaAyaGroup . My owner and community will be happy to help. Also, bugs report makes me even better!\nThank you!")
+			msg.reply_text("An error occurred while recovering the data. The process failed. If you experience a problem with this, please ask in @HarukaAyaGroup. My owner and the community will be happy to help. Also, bug report makes me even better!\nThank you!")
 
 			LOGGER.exception("Imprt for the chat %s with the name %s failed.", str(chat.id), str(chat.title))
 			return
@@ -193,7 +193,7 @@ def export_data(bot: Bot, update: Update, chat_data):
 	bl = list(blacklistsql.get_chat_blacklist(chat_id))
 	# Disabled command
 	disabledcmd = list(disabledsql.get_all_disabled(chat_id))
-	# Filters (TODO)
+	# TODO: Filters
 	"""
 	all_filters = list(filtersql.get_chat_triggers(chat_id))
 	export_filters = {}
@@ -226,7 +226,7 @@ def export_data(bot: Bot, update: Update, chat_data):
 		export_filters[filters] = content
 	print(export_filters)
 	"""
-	# Welcome (TODO)
+	# TODO: Greetings
 	# welc = welcsql.get_welc_pref(chat_id)
 	# Locked
 	locks = locksql.get_locks(chat_id)
@@ -267,7 +267,7 @@ def export_data(bot: Bot, update: Update, chat_data):
 			locked.append('preview')
 		if restr.media:
 			locked.append('media')
-	# Warns (TODO)
+	# TODO: Warnings
 	# warns = warnssql.get_warns(chat_id)
 	# Backing up
 	backup[chat_id] = {'bot': bot.id, 'hashes': {'info': {'rules': rules}, 'extra': notes, 'blacklist': bl, 'disabled': disabledcmd, 'locks': locked}}
@@ -278,10 +278,10 @@ def export_data(bot: Bot, update: Update, chat_data):
 	bot.sendChatAction(current_chat_id, "upload_document")
 	tgl = time.strftime("%H:%M:%S - %d/%m/%Y", time.localtime(time.time()))
 	try:
-		bot.sendMessage(MESSAGE_DUMP, "*Successfully imported backup:*\nChat: `{}`\nChat ID: `{}`\nOn: `{}`".format(chat.title, chat_id, tgl), parse_mode=ParseMode.MARKDOWN)
+		bot.sendMessage(MESSAGE_DUMP, "*Successfully exported backup:*\nChat: `{}`\nChat ID: `{}`\nOn: `{}`".format(chat.title, chat_id, tgl), parse_mode=ParseMode.MARKDOWN)
 	except BadRequest:
 		pass
-	bot.sendDocument(current_chat_id, document=open('harukab{}.backup'.format(chat_id), 'rb'), caption="*Successfully imported backup:*\nChat: `{}`\nChat ID: `{}`\nOn: `{}`\n\nNote: This `harukab` is specially made for notes.".format(chat.title, chat_id, tgl), timeout=360, reply_to_message_id=msg.message_id, parse_mode=ParseMode.MARKDOWN)
+	bot.sendDocument(current_chat_id, document=open('harukab{}.backup'.format(chat_id), 'rb'), caption="*Successfully exported backup:*\nChat: `{}`\nChat ID: `{}`\nOn: `{}`\n\nNote: Keep .".format(chat.title, chat_id, tgl), timeout=360, reply_to_message_id=msg.message_id, parse_mode=ParseMode.MARKDOWN)
 	os.remove("harukab{}.backup".format(chat_id)) # Cleaning file
 
 
@@ -311,7 +311,8 @@ __help__ = """
  - /import: reply to the backup file for the butler / emilia group to import as much as possible, making transfers very easy! \
  Note that files / photos cannot be imported due to telegram restrictions.
 
- - /export: export group data, which will be exported are: rules, notes (documents, images, music, video, audio, voice, text, text buttons) \
+ - /export: export group data. Exported data will include rules, notes (documents, images, music, video, audio, voice, text, text buttons), \
+blacklists, disabled commands and locks. More will come gradually!
 
 This module is still in beta! Report bugs in @HarukaAyaGroup !
 """

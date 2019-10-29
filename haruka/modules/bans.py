@@ -36,8 +36,8 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
-            message.reply_text(tld(chat.id, "I can't seem to find this user"))
+        if excp.message == "User not found.":
+            message.reply_text(tld(chat.id, "I can't seem to find this user."))
             return ""
         else:
             raise
@@ -102,8 +102,8 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
-            message.reply_text(tld(chat.id, "I can't seem to find this user"))
+        if excp.message == "User not found.":
+            message.reply_text(tld(chat.id, "I can't seem to find this user."))
             return ""
         else:
             raise
@@ -184,8 +184,8 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
-            message.reply_text("I can't seem to find this user")
+        if excp.message == "User not found.":
+            message.reply_text("I can't seem to find this user.")
             return ""
         else:
             raise
@@ -369,16 +369,18 @@ Some people need to be publicly banned; spammers, annoyances, or just trolls.
 This module allows you to do that easily, by exposing some common actions, so everyone will see!
 
 Available commands are:
- - /ban: bans a user from your chat.
- - /banme: ban yourself
- - /tban: temporarily bans a user from your chat. set time using int<d/h/m> (days hours minutes)
- - /unban: unbans a user from your chat.
- - /sban: silently bans a user. (via handle, or reply)
- - /mute: mute a user in your chat.
- - /tmute: temporarily mute a user in your chat. set time using int<d/h/m> (days hours minutes)
- - /unmute: unmutes a user from your chat.
- - /kick: kicks a user from your chat.
- - /kickme: users who use this, kick themselves!
+ - /ban: Bans a user in the chat.
+ - /banme: Ban yourself.
+ - /tban: Temporarily bans a user in the chat, set time using int<d/h/m> (days, hours or minutes)
+ - /unban: Unbans a user in the chat.
+ - /sban: Silently bans a user in the chat.
+ - /mute: Mute a user in the chat.
+ - /tmute: Temporarily mute a user in the chat. set time using int<d/h/m> (days, hours or minutes)
+ - /unmute: Unmutes a user in the chat.
+ - /kick: Kicks a user from the chat.
+ - /kickme: Kick yourself.
+
+ All commands work via handle or reply, except banme and kickme(which require no arguments).
 
  An example of temporarily muting someone:
 /tmute @username 2h; this mutes a user for 2 hours.

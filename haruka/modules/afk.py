@@ -87,15 +87,15 @@ def check_afk(bot, update, user_id, fst_name):
         if not user.reason:
             res = tld(chat.id, f"{fst_name} is AFK!")
         else:
-            res = tld(chat.id, f"{fst_name} is AFK! says its because of:\n{user.reason}")
+            res = tld(chat.id, f"{fst_name} is AFK! Says it's because of:\n{user.reason}")
         update.effective_message.reply_text(res)
 
 
 __help__ = """
- - /afk <reason>: mark yourself as AFK.
- - brb <reason>: same as the afk command - but not a command.
+ - /afk <reason>: Mark yourself as AFK.
+ - brb <reason>: Same as the afk command, but not a command.
 
-When marked as AFK, any mentions will be replied to with a message to say that you're not available!
+When marked as AFK, any mentions will be replied to with a message telling that you're not available!
 """
 
 __mod_name__ = "AFK"

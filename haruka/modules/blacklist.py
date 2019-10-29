@@ -37,7 +37,7 @@ def blacklist(bot: Bot, update: Update, args: List[str]):
             chat_id = update.effective_chat.id
             chat_name = chat.title
     
-    filter_list = tld(chat.id, "<b>Current blacklisted words in {}:</b>\n").format(chat_name)
+    filter_list = tld(chat.id, "<b>Blacklist filters active in {}:</b>\n").format(chat_name)
 
     all_blacklisted = sql.get_chat_blacklist(chat_id)
 
@@ -50,8 +50,8 @@ def blacklist(bot: Bot, update: Update, args: List[str]):
 
     split_text = split_message(filter_list)
     for text in split_text:
-        if filter_list == tld(chat.id, "<b>Current blacklisted words in {}:</b>\n").format(chat_name): #We need to translate
-            msg.reply_text(tld(chat.id, "There are no blacklisted messages in <b>{}</b>!").format(chat_name), parse_mode=ParseMode.HTML)
+        if filter_list == tld(chat.id, "<b>Blacklist filters active in {}:</b>\n").format(chat_name): #We need to translate
+            msg.reply_text(tld(chat.id, "There are no blacklist filters in <b>{}</b>!").format(chat_name), parse_mode=ParseMode.HTML)
             return
         msg.reply_text(text, parse_mode=ParseMode.HTML)
 
@@ -135,7 +135,7 @@ def unblacklist(bot: Bot, update: Update):
 
         elif not successful:
             msg.reply_text(tld(chat.id, 
-                "None of these triggers were exist, so they weren't removed.").format(
+                "None of those trigger existed, so nothing was removed from blacklist.").format(
                     successful, len(to_unblacklist) - successful), parse_mode=ParseMode.HTML)
 
         else:
@@ -201,17 +201,18 @@ You can set blacklist filters to take automatic action on people when they say c
 
 /addblacklist "the admins suck" Respect your admins!
 This would delete any message containing 'the admins suck'.
-If you've enabled an alternative blacklist mode, it will warn, ban, kick, or mute a user with a message specifying the reason.
 
-Top tip:
+Pro tip:
 Blacklists allow you to use some modifiers to match "unknown" characters. For example, you can use the ? character to match a single occurence of any non-whitespace character.
 You could also use the * modifier, which matches any number of any character. If you want to blacklist urls, this will allow you to match the full thing. It matches every character except spaces. This is cool if you want to stop, for example, url shorteners.
 For example, the following will ban any bit.ly link:
 /addblacklist "bit.ly/*" We dont like shorteners!
-If you wanted to only match bit.ly/ links followed by three characters, you could use:
+If you want to only match bit.ly/ links followed by three characters, you could use:
 /addblacklist "bit.ly/???" We dont like shorteners!
 This would match bit.ly/abc, but not bit.ly/abcd.
 """
+
+#TODO: Add blacklist alternative modes: warn, ban, kick, or mute.
 
 BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", blacklist, pass_args=True, admin_ok=True)
 ADD_BLACKLIST_HANDLER = CommandHandler("addblacklist", add_blacklist)
