@@ -18,7 +18,9 @@ from haruka.modules.helper_funcs.filters import CustomFilters
 from haruka.modules.helper_funcs.misc import split_message
 from haruka.modules.helper_funcs.string_handling import split_quotes
 from haruka.modules.log_channel import loggable
+from haruka.modules.rules import send_rules
 from haruka.modules.sql import warns_sql as sql
+import haruka.modules.sql.rules_sql as rules_sql
 
 WARN_HANDLER_GROUP = 9
 CURRENT_WARNING_FILTER_STRING = "<b>Current warning filters in this chat:</b>\n"
@@ -62,13 +64,18 @@ def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = N
                                                                   user.id, reason, num_warns, limit)
 
     else:
-        keyboard = InlineKeyboardMarkup(
-            [[InlineKeyboardButton("Remove warn (admin only)", callback_data="rm_warn({})".format(user.id))]])
+        keyboard = [[
+            InlineKeyboardButton("Remove warn", callback_data="rm_warn({})".format(user.id))
+        ]]
+        rules = rules_sql.get_rules(chat.id)
 
-        reply = "{} <b>has been warned!</b>\nTotal warn that this user have {}/{}".format(mention_html(user.id, user.first_name), num_warns,
+        if rules:
+            keyboard[0].append(InlineKeyboardButton("Rules", callback_data="send_rules({})".format(chat.id)))
+
+        reply = "{} <b>has been warned!</b>\nThey have {}/{} warnings.".format(mention_html(user.id, user.first_name), num_warns,
                                                              limit)
         if reason:
-            reply += "\nReason for the warn:\n<code>{}</code>".format(html.escape(reason))
+            reply += "\nThe latest warning was because:\n<code>{}</code>".format(html.escape(reason))
 
         log_reason = "<b>{}:</b>" \
                      "\n#WARN" \
@@ -81,11 +88,11 @@ def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = N
                                                                   user.id, reason, num_warns, limit)
 
     try:
-        message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
+        message.reply_text(reply, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.HTML)
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
-            message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML, quote=False)
+            message.reply_text(reply, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.HTML, quote=False)
         else:
             raise
     return log_reason
@@ -94,7 +101,7 @@ def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = N
 @run_async
 @bot_admin
 @loggable
-def button(bot: Bot, update: Update) -> str:
+def rmwarn_handler(bot: Bot, update: Update) -> str:
     query = update.callback_query  # type: Optional[CallbackQuery]
     user = update.effective_user  # type: Optional[User]
     match = re.match(r"rm_warn\((.+?)\)", query.data)
@@ -121,6 +128,21 @@ def button(bot: Bot, update: Update) -> str:
             update.effective_message.edit_text(
                 "User has already has no warns.".format(mention_html(user.id, user.first_name)),
                 parse_mode=ParseMode.HTML)
+
+    return ""
+
+@run_async
+@bot_admin
+@loggable
+def sendrules_handler(bot: Bot, update: Update) -> str:
+    query = update.callback_query  # type: Optional[CallbackQuery]
+    user = update.effective_user  # type: Optional[User]
+    print(query)
+    print(query.data)
+    match = re.match(r"send_rules\((.+?)\)", query.data)
+    if match:
+        chat_id = match.group(1)
+        send_rules(update, chat_id, True)
 
     return ""
 
@@ -442,7 +464,8 @@ __mod_name__ = "Warnings"
 
 WARN_HANDLER = DisableAbleCommandHandler("warn", warn_user, pass_args=True, filters=Filters.group, admin_ok=True)
 RESET_WARN_HANDLER = DisableAbleCommandHandler(["resetwarn", "resetwarns"], reset_warns, pass_args=True, filters=Filters.group)
-CALLBACK_QUERY_HANDLER = CallbackQueryHandler(button, pattern=r"rm_warn")
+RMWARN_QUERY_HANDLER = CallbackQueryHandler(rmwarn_handler, pattern=r"rm_warn")
+SENDRULES_QUERY_HANDLER = CallbackQueryHandler(sendrules_handler, pattern=r"send_rules")
 MYWARNS_HANDLER = DisableAbleCommandHandler("warns", warns, pass_args=True, filters=Filters.group, admin_ok=True)
 ADD_WARN_HANDLER = DisableAbleCommandHandler("addwarn", add_warn_filter, filters=Filters.group, admin_ok=True)
 RM_WARN_HANDLER = DisableAbleCommandHandler(["nowarn", "stopwarn"], remove_warn_filter, filters=Filters.group, admin_ok=True)
@@ -453,7 +476,8 @@ WARN_STRENGTH_HANDLER = CommandHandler("strongwarn", set_warn_strength, pass_arg
 REMOVE_WARNS_HANDLER = CommandHandler(["rmwarn", "unwarn"], remove_warns, pass_args=True, filters=Filters.group, admin_ok=True)
 
 dispatcher.add_handler(WARN_HANDLER)
-dispatcher.add_handler(CALLBACK_QUERY_HANDLER)
+dispatcher.add_handler(RMWARN_QUERY_HANDLER)
+dispatcher.add_handler(SENDRULES_QUERY_HANDLER)
 dispatcher.add_handler(RESET_WARN_HANDLER)
 dispatcher.add_handler(MYWARNS_HANDLER)
 dispatcher.add_handler(ADD_WARN_HANDLER)
