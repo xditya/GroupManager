@@ -18,7 +18,6 @@ from haruka.modules.helper_funcs.filters import CustomFilters
 from haruka.modules.helper_funcs.misc import split_message
 from haruka.modules.helper_funcs.string_handling import split_quotes
 from haruka.modules.log_channel import loggable
-from haruka.modules.rules import send_rules
 from haruka.modules.sql import warns_sql as sql
 import haruka.modules.sql.rules_sql as rules_sql
 
@@ -28,6 +27,8 @@ CURRENT_WARNING_FILTER_STRING = "<b>Current warning filters in this chat:</b>\n"
 
 # Not async
 def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = None) -> str:
+    bot = dispatcher.bot
+
     if is_user_admin(chat, user.id):
         message.reply_text("I'm not going to warn an admin!")
         return ""
@@ -70,7 +71,7 @@ def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = N
         rules = rules_sql.get_rules(chat.id)
 
         if rules:
-            keyboard[0].append(InlineKeyboardButton("Rules", callback_data="send_rules({})".format(chat.id)))
+            keyboard[0].append(InlineKeyboardButton("Rules", url="t.me/{}?start={}".format(bot.username, chat.id)))
 
         reply = "{} <b>has been warned!</b>\nThey have {}/{} warnings.".format(mention_html(user.id, user.first_name), num_warns,
                                                              limit)
