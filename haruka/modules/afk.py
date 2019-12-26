@@ -53,6 +53,8 @@ def no_longer_afk(bot: Bot, update: Update):
 @run_async
 def reply_afk(bot: Bot, update: Update):
     message = update.effective_message  # type: Optional[Message]
+    userc = update.effective_user  # type: Optional[User]
+    userc_id = userc.id
     if message.entities and message.parse_entities([MessageEntity.TEXT_MENTION, MessageEntity.MENTION]):
         entities = message.parse_entities([MessageEntity.TEXT_MENTION, MessageEntity.MENTION])
 
@@ -75,7 +77,7 @@ def reply_afk(bot: Bot, update: Update):
                 if user_id in chk_users:
                     return
                 chk_users.append(user_id)
-                
+
                 try:
                     chat = bot.get_chat(user_id)
                 except BadRequest:
@@ -86,23 +88,28 @@ def reply_afk(bot: Bot, update: Update):
             else:
                 return
 
-            check_afk(bot, update, user_id, fst_name)
+            check_afk(bot, update, user_id, fst_name, userc_id)
 
     elif message.reply_to_message:
         user_id = message.reply_to_message.from_user.id
         fst_name = message.reply_to_message.from_user.first_name
-        check_afk(bot, update, user_id, fst_name)
+        check_afk(bot, update, user_id, fst_name, userc_id)
 
 
-def check_afk(bot, update, user_id, fst_name):
+def check_afk(bot, update, user_id, fst_name, userc_id):
     chat = update.effective_chat  # type: Optional[Chat]
     if sql.is_afk(user_id):
         user = sql.check_afk_status(user_id)
         if not user.reason:
+            if int(userc_id) == int(user_id):
+                return
             res = tld(chat.id, f"{fst_name} is AFK!")
+            update.effective_message.reply_text(res)
         else:
+            if int(userc_id) == int(user_id):
+                return
             res = tld(chat.id, f"{fst_name} is AFK! Says it's because of:\n{user.reason}")
-        update.effective_message.reply_text(res)
+            update.effective_message.reply_text(res)
 
 
 __help__ = """

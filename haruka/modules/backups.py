@@ -277,10 +277,6 @@ def export_data(bot: Bot, update: Update, chat_data):
 	f.close()
 	bot.sendChatAction(current_chat_id, "upload_document")
 	tgl = time.strftime("%H:%M:%S - %d/%m/%Y", time.localtime(time.time()))
-	try:
-		bot.sendMessage(MESSAGE_DUMP, "*Successfully exported backup:*\nChat: `{}`\nChat ID: `{}`\nOn: `{}`".format(chat.title, chat_id, tgl), parse_mode=ParseMode.MARKDOWN)
-	except BadRequest:
-		pass
 	bot.sendDocument(current_chat_id, document=open('harukab{}.backup'.format(chat_id), 'rb'), caption="*Successfully exported backup:*\nChat: `{}`\nChat ID: `{}`\nOn: `{}`\n\nNote: Keep .".format(chat.title, chat_id, tgl), timeout=360, reply_to_message_id=msg.message_id, parse_mode=ParseMode.MARKDOWN)
 	os.remove("harukab{}.backup".format(chat_id)) # Cleaning file
 
