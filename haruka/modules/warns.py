@@ -473,8 +473,8 @@ RM_WARN_HANDLER = DisableAbleCommandHandler(["nowarn", "stopwarn"], remove_warn_
 LIST_WARN_HANDLER = DisableAbleCommandHandler(["warnlist", "warnfilters"], list_warn_filters, filters=Filters.group, admin_ok=True)
 WARN_FILTER_HANDLER = MessageHandler(CustomFilters.has_text & Filters.group, reply_filter)
 WARN_LIMIT_HANDLER = DisableAbleCommandHandler("warnlimit", set_warn_limit, pass_args=True, filters=Filters.group, admin_ok=True)
-WARN_STRENGTH_HANDLER = CommandHandler("strongwarn", set_warn_strength, pass_args=True, filters=Filters.group, admin_ok=True)
-REMOVE_WARNS_HANDLER = CommandHandler(["rmwarn", "unwarn"], remove_warns, pass_args=True, filters=Filters.group, admin_ok=True)
+WARN_STRENGTH_HANDLER = CommandHandler("strongwarn", set_warn_strength, pass_args=True, filters=Filters.group)
+REMOVE_WARNS_HANDLER = CommandHandler(["rmwarn", "unwarn"], remove_warns, pass_args=True, filters=Filters.group)
 
 dispatcher.add_handler(WARN_HANDLER)
 dispatcher.add_handler(RMWARN_QUERY_HANDLER)
