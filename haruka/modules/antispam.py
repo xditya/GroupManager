@@ -311,17 +311,17 @@ def enforce_gban(bot: Bot, update: Update):
 
 @run_async
 @user_admin
-def antispam(bot: Bot, update: Update, args: List[str]):
+def antiscam(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat  # type: Optional[Chat]
     if len(args) > 0:
         if args[0].lower() in ["on", "yes"]:
             sql.enable_antispam(chat.id)
-            update.effective_message.reply_text(tld(chat.id, "I've enabled antispam security in this group. This will help to protect you "
-                                                "from spammers, unsavoury characters, and the biggest trolls."))
+            update.effective_message.reply_text(tld(chat.id, "I've enabled antiscam security in this group. This will help to protect you "
+                                                "from scammers, unsavoury characters, and the biggest trolls."))
         elif args[0].lower() in ["off", "no"]:
-            sql.disable_antispam(chat.id)
-            update.effective_message.reply_text(tld(chat.id, "I've disabled antispam security in this group. GBans won't affect your users "
-                                                "anymore. You'll be less protected from any trolls and spammers "
+            sql.disable_antiscam(chat.id)
+            update.effective_message.reply_text(tld(chat.id, "I've disabled antiscam security in this group. GBans won't affect your users "
+                                                "anymore. You'll be less protected from any trolls and scammers "
                                                 "though!"))
     else:
         update.effective_message.reply_text(tld(chat.id, "Give me some arguments to choose a setting! on/off, yes/no!\n\n"
@@ -366,7 +366,7 @@ def __chat_settings__(bot, update, chat, chatP, user):
 
 __help__ = """
 *Admin only:*
- - /antispam <on/off/yes/no>: Will disable antispam security in group, or return your current settings.
+ - /antiscam <on/off/yes/no>: Will disable antispam security in group, or return your current settings.
 
 Antispam are used by the bot owners to ban scammers across all groups. This helps protect \
 you and your groups by removing scammers as quickly as possible. They can be disabled for you group by calling \
@@ -375,7 +375,7 @@ you and your groups by removing scammers as quickly as possible. They can be dis
 
 __mod_name__ = "Antiscam security"
 
-ANTISPAM_STATUS = CommandHandler("antispam", antispam, pass_args=True, filters=Filters.group)
+ANTISPAM_STATUS = CommandHandler("antiscam", antiscam, pass_args=True, filters=Filters.group)
 
 GBAN_HANDLER = CommandHandler(["gban", "fban"], gban, pass_args=True, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
 UNGBAN_HANDLER = CommandHandler("ungban", ungban, pass_args=True, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
