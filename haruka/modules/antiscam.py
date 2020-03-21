@@ -375,7 +375,7 @@ you and your groups by removing spam flooders as quickly as possible. They can b
 
 __mod_name__ = "Antiscam security"
 
-ANTISCAM_STATUS = CommandHandler("antiscm", antiscam, pass_args=True, filters=Filters.group)
+ANTISCAM_STATUS = CommandHandler("antiscam", antiscam, pass_args=True, filters=Filters.group)
 
 GBAN_HANDLER = CommandHandler(["gban", "fban"], gban, pass_args=True, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
 UNGBAN_HANDLER = CommandHandler("ungban", ungban, pass_args=True, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
