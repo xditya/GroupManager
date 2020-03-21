@@ -370,7 +370,7 @@ __help__ = """
 
 Antispam are used by the bot owners to ban scammers across all groups. This helps protect \
 you and your groups by removing scammers as quickly as possible. They can be disabled for you group by calling \
-/antispam
+/antiscam
 """
 
 __mod_name__ = "Antiscam security"
