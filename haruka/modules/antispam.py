@@ -368,25 +368,25 @@ __help__ = """
 *Admin only:*
  - /antispam <on/off/yes/no>: Will disable antispam security in group, or return your current settings.
 
-Antispam are used by the bot owners to ban spammers across all groups. This helps protect \
+Antiscam are used by the bot owners to ban scammers across all groups. This helps protect \
 you and your groups by removing spam flooders as quickly as possible. They can be disabled for you group by calling \
-/antispam
+/antiscam
 """
 
-__mod_name__ = "Antispam security"
+__mod_name__ = "Antiscam security"
 
-ANTISPAM_STATUS = CommandHandler("antispam", antispam, pass_args=True, filters=Filters.group)
+ANTISCAM_STATUS = CommandHandler("antiscm", antiscam, pass_args=True, filters=Filters.group)
 
 GBAN_HANDLER = CommandHandler(["gban", "fban"], gban, pass_args=True, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
 UNGBAN_HANDLER = CommandHandler("ungban", ungban, pass_args=True, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
 GBAN_LIST = CommandHandler("gbanlist", gbanlist, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
 GBAN_ENFORCER = MessageHandler(Filters.all & Filters.group, enforce_gban)
 
-dispatcher.add_handler(ANTISPAM_STATUS)
+dispatcher.add_handler(ANTISCAM_STATUS)
 
 dispatcher.add_handler(GBAN_HANDLER)
 dispatcher.add_handler(UNGBAN_HANDLER)
 #dispatcher.add_handler(GBAN_LIST)
 
-if STRICT_ANTISPAM:  # enforce GBANS if this is set
+if STRICT_ANTISCAM:  # enforce GBANS if this is set
     dispatcher.add_handler(GBAN_ENFORCER, GBAN_ENFORCE_GROUP)
