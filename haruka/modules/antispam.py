@@ -7,8 +7,8 @@ from telegram.error import BadRequest, TelegramError
 from telegram.ext import run_async, CommandHandler, MessageHandler, Filters
 from telegram.utils.helpers import mention_html
 
-import haruka.modules.sql.antiscam_sql as sql
-from haruka import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, MESSAGE_DUMP, STRICT_ANTISCAM
+import haruka.modules.sql.antispam_sql as sql
+from haruka import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, MESSAGE_DUMP, STRICT_ANTISPAM
 from haruka.modules.helper_funcs.chat_status import user_admin, is_user_admin
 from haruka.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from haruka.modules.helper_funcs.filters import CustomFilters
@@ -311,16 +311,16 @@ def enforce_gban(bot: Bot, update: Update):
 
 @run_async
 @user_admin
-def antiscam(bot: Bot, update: Update, args: List[str]):
+def antispam(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat  # type: Optional[Chat]
     if len(args) > 0:
         if args[0].lower() in ["on", "yes"]:
-            sql.enable_antiscam(chat.id)
-            update.effective_message.reply_text(tld(chat.id, "I've enabled antiscam security in this group. This will help to protect you "
+            sql.enable_antispam(chat.id)
+            update.effective_message.reply_text(tld(chat.id, "I've enabled antispam security in this group. This will help to protect you "
                                                 "from spammers, unsavoury characters, and the biggest trolls."))
         elif args[0].lower() in ["off", "no"]:
-            sql.disable_antiscam(chat.id)
-            update.effective_message.reply_text(tld(chat.id, "I've disabled antiscam security in this group. GBans won't affect your users "
+            sql.disable_antispam(chat.id)
+            update.effective_message.reply_text(tld(chat.id, "I've disabled antispam security in this group. GBans won't affect your users "
                                                 "anymore. You'll be less protected from any trolls and spammers "
                                                 "though!"))
     else:
@@ -366,27 +366,27 @@ def __chat_settings__(bot, update, chat, chatP, user):
 
 __help__ = """
 *Admin only:*
- - /antiscam <on/off/yes/no>: Will disable antiscam security in group, or return your current settings.
+ - /antispam <on/off/yes/no>: Will disable antispam security in group, or return your current settings.
 
-Antiscam are used by the bot owners to ban spammers across all groups. This helps protect \
+Antispam are used by the bot owners to ban scammers across all groups. This helps protect \
 you and your groups by removing scammers as quickly as possible. They can be disabled for you group by calling \
-/antiscam
+/antispam
 """
 
 __mod_name__ = "Antiscam security"
 
-ANTISCAM_STATUS = CommandHandler("antiscam", antiscam, pass_args=True, filters=Filters.group)
+ANTISPAM_STATUS = CommandHandler("antispam", antispam, pass_args=True, filters=Filters.group)
 
 GBAN_HANDLER = CommandHandler(["gban", "fban"], gban, pass_args=True, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
 UNGBAN_HANDLER = CommandHandler("ungban", ungban, pass_args=True, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
 GBAN_LIST = CommandHandler("gbanlist", gbanlist, filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
 GBAN_ENFORCER = MessageHandler(Filters.all & Filters.group, enforce_gban)
 
-dispatcher.add_handler(ANTISCAM_STATUS)
+dispatcher.add_handler(ANTISPAM_STATUS)
 
 dispatcher.add_handler(GBAN_HANDLER)
 dispatcher.add_handler(UNGBAN_HANDLER)
 #dispatcher.add_handler(GBAN_LIST)
 
-if STRICT_ANTISCAM:  # enforce GBANS if this is set
+if STRICT_ANTISPAM:  # enforce GBANS if this is set
     dispatcher.add_handler(GBAN_ENFORCER, GBAN_ENFORCE_GROUP)
