@@ -1,5 +1,5 @@
 # Group
-[Join Discuss Group](t.me/giveaways_24hrs)
+[Join Discuss Group](https://t.me/giveaways_24hrs)
 
 # GroupManager
 
