@@ -31,6 +31,8 @@ Active Anti-scam protection in your BM by this command :
 
 My owner is [Aditya 🇮🇳](t.me/xditya)
 
+Special thanks to [this person](t.me/denver02) for helping me.
+
 Deploy a bot like me [now](www.github.com/xditya/GroupManager)
 
 Click /help or Help button below to find out more about how to use me to my full potential.
