@@ -1,5 +1,9 @@
-[JOIN](t.me/giveaways_24hrs)
+#Group
+[Join Discuss Group](t.me/giveaways_24hrs)
+
 # GroupManager
+
+[![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 A modular Telegram Python bot running on python3 with an sqlalchemy database.
 
