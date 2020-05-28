@@ -29,11 +29,9 @@ I'm group manager bot and Anti-scam for RR Players🃏
 Active Anti-scam protection in your BM by this command : 
 /antiscam on 
 
-My owner is [Aditya 🇮🇳](t.me/xditya)
+My owner is [Ryu](t.me/ryyu0)
 
-Special thanks to [this person](t.me/denver02) for helping me.
 
-Deploy a bot like me [now](www.github.com/xditya/GroupManager)
 
 Click /help or Help button below to find out more about how to use me to my full potential.
 """
@@ -153,8 +151,8 @@ def send_start(bot, update):
     first_name = update.effective_user.first_name 
     text = PM_START
 
-    keyboard = [[InlineKeyboardButton(text="🇮🇳 Language", callback_data="set_lang_")]]
-    keyboard += [[InlineKeyboardButton(text="🛠 Reporting", callback_data="cntrl_panel_M"), 
+    keyboard = [[InlineKeyboardButton(text="🇹🇷 Language", callback_data="set_lang_")]]
+    keyboard += [[InlineKeyboardButton(text="🛠 Ayarlar", callback_data="cntrl_panel_M"), 
         InlineKeyboardButton(text="❔ Help", callback_data="help_back")]]
 
     update.effective_message.reply_text(PM_START.format(escape_markdown(first_name), bot.first_name), reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True, parse_mode=ParseMode.MARKDOWN)
