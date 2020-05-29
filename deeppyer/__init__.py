@@ -10,7 +10,7 @@ class DeepfryTypes(Enum):
     RED = 1
     BLUE = 2
 
-
+ 
 class Colours:
     RED = (254, 0, 2)
     YELLOW = (255, 255, 15)
