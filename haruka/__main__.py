@@ -26,8 +26,7 @@ You know how hard it is sometimes to manage group so here is the solution for yo
 
 I'm group manager bot and Anti-scam for RR Players🃏
 
-Active Anti-scam protection in your BM by this command : 
-/antiscam on 
+
 
 My owner is [N I K H I L](t.me/NGYNY)
 
@@ -48,7 +47,8 @@ USER_INFO = []
 DATA_IMPORT = []
 DATA_EXPORT = []
 
-CHAT_SETTINGS = {}
+CHAT_SETTINGS = {} 
+
 USER_SETTINGS = {}
 
 GDPR = []
@@ -195,7 +195,7 @@ def control_panel(bot, update):
     if M_match:
         text = "*Control panel* 🛠"
 
-        keyboard = [[InlineKeyboardButton(text="👤 My settings", callback_data="cntrl_panel_U(1)")]]
+        keyboard = [[InlineKeyboardButton(text="👤 My settings", callback_data="t.me/ALL_MOVIES_LIABRARY")]]
 
         #Show connected chat and add chat settings button
         conn = connected(bot, update, chat, user.id, need_admin=False)
