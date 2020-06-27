@@ -22,7 +22,7 @@ from haruka.modules.connection import connected
 
 PM_START = """Hello {}, my name is {}!
 
- This is Official Bot Of Mgearn.money
+ This is Official Bot Of Finiko World Team.
 """
 
 
