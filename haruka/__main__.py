@@ -29,13 +29,7 @@ I'm group manager bot and Anti-spam for RR Players🃏
 Activate Anti-spam protection in your BM by this command : 
 /antispam on 
 
-My owner is [Aditya 🇮🇳](t.me/xditya)
-
-Special thanks to [this person](t.me/denver02) for helping me.
-
-Deploy a bot like me [now](www.github.com/xditya/GroupManager)
-
-Watch [video tutorial](https://www.youtube.com/watch?v=gXXFpTAk6Vo&feature=youtu.be) on deploying me.
+My owner is [RAPTOR🇵🇰](t.me/Shadow1274)
 
 Click /help or Help button below to find out more about how to use me to my full potential.
 
@@ -157,7 +151,7 @@ def send_start(bot, update):
     first_name = update.effective_user.first_name 
     text = PM_START
 
-    keyboard = [[InlineKeyboardButton(text="🇮🇳 Language", callback_data="set_lang_")]]
+    keyboard = [[InlineKeyboardButton(text="🇵🇰 Language", callback_data="set_lang_")]]
     keyboard += [[InlineKeyboardButton(text="🛠 Reporting", callback_data="cntrl_panel_M"), 
         InlineKeyboardButton(text="❔ Help", callback_data="help_back")]]
 
