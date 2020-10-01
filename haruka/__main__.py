@@ -24,7 +24,7 @@ PM_START = """Hi {}, my name is {}!
 
 You know i am the bestest bot than all other bots i work on python4.
 
-I am Life And Group Manager Bot 😁
+I am Life And Group Manager Bot 
 
 Just do some simple steps to keep safe from spam
 /antispam on 
@@ -39,7 +39,8 @@ Click /help or Help button below to find out more about how to use me to my full
  Add me to a group by clicking [here](http://t.me/criminal786bot?startgroup=true).
 """
 
-
+Your Friendly Bot
+Criminal boT
 
 
 
