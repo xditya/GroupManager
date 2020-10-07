@@ -37,7 +37,8 @@ Click /help or Help button below to find out more about how to use me to my full
 Now add me to your group [here](http://t.me/criminal786bot?startgroup=true).
 
 Support group is [here](t.me/criminal786botsupport)
-"""
+
+Deploy Your Own BoT like Me Just Click [here](https://github.com/amaan110/GroupManager)
 
 IMPORTED = {}
 MIGRATEABLE = []
