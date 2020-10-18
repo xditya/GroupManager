@@ -29,7 +29,9 @@ I'm group manager bot and Anti-spam.
 Activate Anti-spam protection in your BM by this command : 
 /antispam on 
 
-Made from the source code of [Divyansh](t.me/divyansh_choudhary) 
+Made from the source code of [Divyansh](t.me/divyansh_choudhary)
+
+Deploy a bot like me [now](www.github.com/xditya/GroupManager)
 
 Click /help or Help button below to find out more about how to use me to my full potential.
 
@@ -151,8 +153,6 @@ def send_start(bot, update):
     first_name = update.effective_user.first_name 
     text = PM_START
 
-   
-    keyboard = [[InlineKeyboardButton(text="Join Support Group", t.me/groupzoidsupport")]]
     keyboard = [[InlineKeyboardButton(text="🇮🇳 Language", callback_data="set_lang_")]]
     keyboard += [[InlineKeyboardButton(text="🛠 Reporting", callback_data="cntrl_panel_M"), 
         InlineKeyboardButton(text="❔ Help", callback_data="help_back")]]
