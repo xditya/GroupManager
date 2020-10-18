@@ -7,14 +7,14 @@
 
 A modular Telegram Python bot running on python3 with an sqlalchemy database.
 
-Can be found on telegram as [GroupManager](https://t.me/tg_groupmanagerbot).
+Can be found on telegram as [GroupZoid](https://t.me/groupzoidbot).
 
-Alternatively, [find me on telegram](https://t.me/xditya)! (Keep all support questions in the support chat, where more people can help you.)
+Alternatively, [find me on telegram](https://t.me/divyansh_choudhary)! (Keep all support questions in the support chat, where more people can help you.)
 
-You can also join our support group [here!](https://t.me/tg_groupmanagerbot)
+You can also join our support group [here!](https://t.me/groupzoidbot)
 
 # Group
-[Join Discuss Group](https://t.me/giveaways_24hrs)
+[Join Discuss Group](https://t.me/groupzoidsupport)
 
 # Report error
-Report your problem along with your name to [this person](https://t.me/xditya)
+Report your problem along with your name to [this person](https://t.me/divyansh_choudhary)
