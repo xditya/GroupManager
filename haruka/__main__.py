@@ -35,6 +35,8 @@ Deploy a bot like me [now](www.github.com/xditya/GroupManager)
 
 Click /help or Help button below to find out more about how to use me to my full potential.
 
+Join Support [Group](t.me/groupzoidsupport) 
+Join [Channel](t.me/igroupzoid) 
  Add me to a group by clicking [here](http://t.me/GroupzoidBot?startgroup=true).
 """
 
@@ -152,6 +154,9 @@ def send_start(bot, update):
     chat = update.effective_chat  # type: Optional[Chat]
     first_name = update.effective_user.first_name 
     text = PM_START
+  
+    keyboard += [[InlineKeyboardButton{text=[Join Group👥](t.me/groupzoidsupport)}]]
+    keyboard = [[InlineKeyboardButton{text=[Join Channel📣](t.me/igroupzoid)}]]
 
     keyboard = [[InlineKeyboardButton(text="🇮🇳 Language", callback_data="set_lang_")]]
     keyboard += [[InlineKeyboardButton(text="🛠 Reporting", callback_data="cntrl_panel_M"), 
