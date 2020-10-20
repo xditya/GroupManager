@@ -154,9 +154,9 @@ def send_start(bot, update):
     chat = update.effective_chat  # type: Optional[Chat]
     first_name = update.effective_user.first_name 
     text = PM_START
-  
-    keyboard += [[InlineKeyboardButton{text=[Join Group👥](t.me/groupzoidsupport)}]]
-    keyboard = [[InlineKeyboardButton{text=[Join Channel📣](t.me/igroupzoid)}]]
+
+
+
 
     keyboard = [[InlineKeyboardButton(text="🇮🇳 Language", callback_data="set_lang_")]]
     keyboard += [[InlineKeyboardButton(text="🛠 Reporting", callback_data="cntrl_panel_M"), 
