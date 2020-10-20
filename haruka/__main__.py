@@ -31,12 +31,13 @@ Activate Anti-spam protection in your BM by this command :
 
 Made from the source code of [Divyansh](t.me/divyansh_choudhary)
 
-Deploy a bot like me [now](www.github.com/xditya/GroupManager)
+Deploy a bot like me [now](www.github.com/divyansh4377/GroupManager)
 
 Click /help or Help button below to find out more about how to use me to my full potential.
 
 👥Join Support [Group👥](t.me/groupzoidsupport) 
 📣Join Updates [Channel📣](t.me/igroupzoid) 
+
  Add me to a group by clicking [here](http://t.me/GroupzoidBot?startgroup=true).
 """
 
