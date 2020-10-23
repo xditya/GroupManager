@@ -14,7 +14,7 @@ Alternatively, [find me on telegram](https://t.me/xditya)! (Keep all support que
 You can also join our support group [here!](https://t.me/tg_groupmanagerbot)
 
 # Group
-[Join Discuss Group](https://t.me/giveaways_24hrs)
+[Join Channel](https://t.me/giveaways_24hrs)
 
 # Report error
 Report your problem along with your name to [this person](https://t.me/xditya)
