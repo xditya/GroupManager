@@ -42,6 +42,10 @@ Click /help or Help button below to find out more about how to use me to my full
  Add me to a group by clicking [here](http://t.me/GroupzoidBot?startgroup=true).
 """
 
+DONATE_STRING = """Heya, glad to hear you want to donate! 👇🏻
+It took lots of work for [my creator](t.me/Divyansh_choudhary) to get me to where I am now, and every donation helps \
+motivate him to make me even better. All the donation money will go to a better VPS to host me. He's just a poor student, so every little helps!
+The way of paying him is, Go to [GZ Donate Bot](t.me/GZDonateBot) by clicking [here](t.me/GZDonateBot) and you will find the way of paying.; [Telegram](t.me/divyansh_choudhary)."""
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -575,7 +579,8 @@ def main():
 
     settings_handler = CommandHandler("settings", get_settings)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
-
+    
+    donate_handler = CommandHandler("donate", donate)
     migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
 
     # dispatcher.add_handler(test_handler)
