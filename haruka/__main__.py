@@ -37,7 +37,6 @@ Click /help or Help button below to find out more about how to use me to my full
 
 👥Join Support [Group👥](http://t.me/groupzoidsupport) 
 📣Join Updates [Channel📣](http://t.me/igroupzoid)
-🤖Support [Bot🤖](http://t.me/groupzoidsupportbot) 
 
  Add me to a group by clicking [here](http://t.me/GroupzoidBot?startgroup=true).
 """
