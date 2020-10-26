@@ -35,9 +35,9 @@ Deploy a bot like me [now](www.github.com/divyansh4377/GroupManager)
 
 Click /help or Help button below to find out more about how to use me to my full potential.
 
-👥Join Support [Group👥](t.me/groupzoidsupport) 
-📣Join Updates [Channel📣](t.me/igroupzoid)
-🤖Support [Bot🤖](t.me/groupzoidsupportbot) 
+👥Join Support [Group👥](http://t.me/groupzoidsupport) 
+📣Join Updates [Channel📣](http://t.me/igroupzoid)
+🤖Support [Bot🤖](http://t.me/groupzoidsupportbot) 
 
  Add me to a group by clicking [here](http://t.me/GroupzoidBot?startgroup=true).
 """
