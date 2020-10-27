@@ -24,24 +24,22 @@ PM_START = """Hello {}, my name is {}!
 
 You know how hard it is sometimes to manage group so here is the solution for you
 
-I'm group manager bot and Anti-spam for RR Players🃏
+I'm group manager bot and Anti-spam. 
 
 Activate Anti-spam protection in your BM by this command : 
 /antispam on 
 
-Made from the source code of [Aditya 🇮🇳](t.me/xditya)
-
-Special thanks to [this person](t.me/denver02) for helping me.
-
-Deploy a bot like me [now](www.github.com/xditya/GroupManager)
-
-Watch [video tutorial](https://www.youtube.com/watch?v=gXXFpTAk6Vo&feature=youtu.be) on deploying me.
+Made from the source code of [Divyansh 🇮🇳](t.me/Divyansh_Choudhary)
 
 Click /help or Help button below to find out more about how to use me to my full potential.
 
- Add me to a group by clicking [here](http://t.me/tg_GroupManagerBot?startgroup=true).
+ Add me to a group by clicking [here](http://t.me/GroupZoidBot?startgroup=true).
 """
 
+DONATE_STRING = """Heya, glad to hear you want to donate! 👇🏻
+It took lots of work for [my creator](t.me/Divyansh_choudhary) to get me to where I am now, and every donation helps \
+motivate him to make me even better. All the donation money will go to a better VPS to host me. He's just a poor student, so every little helps!
+The way of paying him is, Go to [GZ Donate Bot](t.me/GZDonateBot) by clicking [here](t.me/GZDonateBot) and you will find the way of paying.; [Telegram](t.me/divyansh_choudhary)."""
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -573,6 +571,7 @@ def main():
     settings_handler = CommandHandler("settings", get_settings)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
 
+    donate_handler = CommandHandler("donate", donate)
     migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
 
     # dispatcher.add_handler(test_handler)
