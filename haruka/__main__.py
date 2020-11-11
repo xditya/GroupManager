@@ -24,24 +24,22 @@ PM_START = """Hello {}, my name is {}!
 
 You know how hard it is sometimes to manage group so here is the solution for you
 
-I'm group manager bot and Anti-spam for RR Players🃏
+I'm group manager bot and Anti-spam. 
 
 Activate Anti-spam protection in your BM by this command : 
 /antispam on 
 
-Made from the source code of [Aditya 🇮🇳](t.me/xditya)
+Made from the source code of [Divyansh](t.me/divyansh_choudhary)
 
-Special thanks to [this person](t.me/denver02) for helping me.
-
-Deploy a bot like me [now](www.github.com/xditya/GroupManager)
-
-Watch [video tutorial](https://www.youtube.com/watch?v=gXXFpTAk6Vo&feature=youtu.be) on deploying me.
+Deploy a bot like me [now](www.github.com/divyansh4377/GroupManager)
 
 Click /help or Help button below to find out more about how to use me to my full potential.
 
- Add me to a group by clicking [here](http://t.me/tg_GroupManagerBot?startgroup=true).
-"""
+👥Join Support [Group👥](http://t.me/groupzoidsupport) 
+📣Join Updates [Channel📣](http://t.me/igroupzoid)
 
+ Add me to a group by clicking [here](http://t.me/GroupzoidBot?startgroup=true).
+"""
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -157,11 +155,14 @@ def send_start(bot, update):
     first_name = update.effective_user.first_name 
     text = PM_START
 
+
+
+
     keyboard = [[InlineKeyboardButton(text="🇮🇳 Language", callback_data="set_lang_")]]
     keyboard += [[InlineKeyboardButton(text="🛠 Reporting", callback_data="cntrl_panel_M"), 
         InlineKeyboardButton(text="❔ Help", callback_data="help_back")]]
-
-    update.effective_message.reply_text(PM_START.format(escape_markdown(first_name), bot.first_name), reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True, parse_mode=ParseMode.MARKDOWN)
+ 
+update.effective_message.reply_text(PM_START.format(escape_markdown(first_name), bot.first_name), reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True, parse_mode=ParseMode.MARKDOWN)
 
 
 def control_panel(bot, update):
@@ -572,7 +573,7 @@ def main():
 
     settings_handler = CommandHandler("settings", get_settings)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
-
+    
     migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
 
     # dispatcher.add_handler(test_handler)
