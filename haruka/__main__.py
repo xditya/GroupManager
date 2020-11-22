@@ -162,7 +162,8 @@ def send_start(bot, update):
     text = PM_START
 
     keyboard = [[InlineKeyboardButton(text="🇮🇳 Language", callback_data="set_lang_")]]
-    keyboard += [[InlineKeyboardButton(text="🛠 Reporting", callback_data="cntrl_panel_M"), 
+    keyboard += [[InlineKeyboardButton(text="🛠 Reporting", callback_data="cntrl_panel_M"),
+                  InlineKeyboardButton(text="❔ Help", callback_data="help_back")]]
         InlineKeyboardButton(text="❔ Help", callback_data="help_back")
         InlineKeyboardButton(text="🤖Add Me To Your Group",
                              url="t.me/{}?startgroup=true".format(
