@@ -18,3 +18,8 @@ You can also join our support group [here!](https://t.me/tg_groupmanagerbot)
 
 # Report error
 Report your problem along with your name to [this person](https://t.me/xditya)
+
+# Credits
+This repo is just a custom fork of [HarukaAya](https://gitlab.com/HarukaNetwork/OSS/HarukaAya)
+
+Thanks to the [real developer](https://t.me/RealAkito)!
