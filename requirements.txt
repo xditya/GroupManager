@@ -19,7 +19,7 @@ PyLyrics
 #AEX
 hurry.filesize
 #translator
-googletrans
+googletrans==3.1.0a0
 
 tldextract
 PyYAML
