@@ -6,7 +6,7 @@ import time
 import pyowm
 import wikipedia
 import re
-from pyowm import timeutils, exceptions
+from pyowm import exceptions
 from datetime import datetime
 from typing import Optional, List
 from pythonping import ping as ping3
