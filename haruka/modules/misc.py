@@ -3,10 +3,10 @@ import html
 import json
 import random
 import time
-import pyowm
+# import pyowm
 import wikipedia
 import re
-from pyowm import exceptions
+# from pyowm import exceptions
 from datetime import datetime
 from typing import Optional, List
 from pythonping import ping as ping3
@@ -540,9 +540,10 @@ def wiki(bot: Bot, update: Update):
             update.effective_message.reply_text(f"⚠ Error: {e}")
         except BadRequest as et :
             update.effective_message.reply_text(f"⚠ Error: {et}")
-        except wikipedia.exceptions.DisambiguationError as eet:
-            update.effective_message.reply_text(f"⚠ Error\n There are too many query! Express it more!\nPossible query result:\n{eet}")
-
+        #except wikipedia.exceptions.DisambiguationError as eet:
+            #update.effective_message.reply_text(f"⚠ Error\n There are too many query! Express it more!\nPossible query result:\n{eet}")
+        except Exception as e:
+            update.effective_message.reply_text(f"⚠ Error: {e}")
 
 __help__ = """
  - /id: get the current group id. If used by replying to a message, gets that user's id.
