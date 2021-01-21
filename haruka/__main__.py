@@ -29,21 +29,17 @@ I'm group manager bot and Anti-spam for RR Players🃏
 Activate Anti-spam protection in your BM by this command : 
 /antispam on 
 
-Made from the source code of [Aditya 🇮🇳](t.me/xditya)
+Made from the source code of [hirusha Keeth](t.me/matheeshaofficial)
 
-Special thanks to [this person](t.me/denver02) for helping me.
-
-Deploy a bot like me [now](www.github.com/xditya/GroupManager)
-
-Watch [video tutorial](https://www.youtube.com/watch?v=gXXFpTAk6Vo&feature=youtu.be) on deploying me.
+Follow me on instagram [follw](www.instagram.com/mr.matheesha_official?r=nametag)
 
 Click /help or Help button below to find out more about how to use me to my full potential.
 
- Add me to a group by clicking [here](http://t.me/tg_GroupManagerBot?startgroup=true).
+ Add me to a group by clicking [here](http://t.me/hirushasbot?startgroup=true).
 """
 
 
-IMPORTED = {}
+IMPORTED = {}.
 MIGRATEABLE = []
 HELPABLE = {}
 STATS = []
@@ -143,7 +139,7 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             send_start(bot, update)
     else:
-        update.effective_message.reply_text("I'm alive")
+        update.effective_message.reply_text("මං මෙහ ඉන්නො")
 
 def send_start(bot, update):
     #Try to remove old message
@@ -157,7 +153,7 @@ def send_start(bot, update):
     first_name = update.effective_user.first_name 
     text = PM_START
 
-    keyboard = [[InlineKeyboardButton(text="🇮🇳 Language", callback_data="set_lang_")]]
+    keyboard = [[InlineKeyboardButton(text="🇱🇰 Language", callback_data="set_lang_")]]
     keyboard += [[InlineKeyboardButton(text="🛠 Reporting", callback_data="cntrl_panel_M"), 
         InlineKeyboardButton(text="❔ Help", callback_data="help_back")]]
 
@@ -206,6 +202,7 @@ def control_panel(bot, update):
 
             #If user admin
             member = chatG.get_member(user.id)
+            if user matheeshaofficial= chatG.get_member(user.id)
             if member.status in ('administrator', 'creator'):
                 text += f"\nConnected chat - *{chatG.title}* (you {member.status})"
                 keyboard += [[InlineKeyboardButton(text="👥 Group settings", callback_data="cntrl_panel_G_back")]]
