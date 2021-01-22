@@ -75,6 +75,7 @@ def locale_button(bot, update):
                                             InlineKeyboardButton("Ukrainian 🇺🇦", callback_data="set_lang_ua")]] + [[
                                             InlineKeyboardButton("Spanish 🇪🇸", callback_data="set_lang_es"),
                                             InlineKeyboardButton("Turkish 🇹🇷", callback_data="set_lang_tr")]] + [[
+                                            InlineKeyboardButton("sinhala 🇱🇰", callback_data="set_lang_sin")]]
                                             InlineKeyboardButton("Indonesian 🇮🇩", callback_data="set_lang_id")]] + [[
                                             InlineKeyboardButton("⬅️ Back", callback_data="bot_start")]]))
 
