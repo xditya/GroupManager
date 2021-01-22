@@ -69,8 +69,9 @@ def locale_button(bot, update):
     text += "*\n\nSelect new user language:*"
 
     query.message.reply_text(text, parse_mode=ParseMode.MARKDOWN,
-                                            InlineKeyboardButton("sinhala 🇱🇰", callback_data="set_lang_sn")]]+[[
+                                            
                                             reply_markup=InlineKeyboardMarkup([[
+                                            InlineKeyboardButton("sinhala 🇱🇰", callback_data="set_lang_sn")]]+[[
                                             InlineKeyboardButton("English 🇺🇸", callback_data="set_lang_en")]] + [[
                                             InlineKeyboardButton("Russian 🇷🇺", callback_data="set_lang_ru"),
                                             InlineKeyboardButton("Ukrainian 🇺🇦", callback_data="set_lang_ua")]] + [[
