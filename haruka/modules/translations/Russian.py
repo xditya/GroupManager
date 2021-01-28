@@ -1,5 +1,5 @@
 RUN_STRINGS = (
-    "ඔයා කොහෙද යන්නේ කියලා ඔයා හිතන්නේ?",
+     "ඔයා කොහෙද යන්නේ කියලා ඔයා හිතන්නේ?",
      "හහ්? මොකක්ද? ඔවුන් පැනලා ගියාද?",
      "ZZzzZZzz ... හහ්? මොකක්ද? ඔහ්, ඔවුන් නැවත වරක්, කමක් නැහැ.",
      "නැවත මෙහි එන්න!",
@@ -9,7 +9,7 @@ RUN_STRINGS = (
      "ඔයා දුවනවා, ඔයා මැරෙනවා.",
      "ඔබට විහිළු, මම සෑම තැනකම සිටිමි",
      "ඔයා ඒ ගැන පසුතැවෙනවා ...",
-     "ඔබටත් උත්සාහ කළ හැකිය / පයින් ගසන්න, එය විනෝදජනක බව මට අසන්නට ලැබේ."
+     "ඔබටත් උත්සාහ කළ හැකිය / පයින් ගසන්න, එය විනෝදජනක බව මට අසන්නට ලැබේ.",
      "වෙනත් කෙනෙකුට කරදර කරන්න, මෙහි කිසිවෙකු ගණන් ගන්නේ නැත.",
      "ඔබට දුවන්න පුළුවන්, නමුත් ඔබට සැඟවිය නොහැක.",
      "ඔබට ලැබී ඇත්තේ එපමණක්ද?",
@@ -50,9 +50,8 @@ RUN_STRINGS = (
      "වෛද්‍යවරයා පවසන පරිදි ... ධාවනය කරන්න!",
  )
 
-INSULTS_STRINGS = (
-    
-"අපොයි ... එවැනි මෝඩ මෝඩයෙක්.",
+ INSULTS_STRINGS = (
+     "අපොයි ... එවැනි මෝඩ මෝඩයෙක්.",
      "බොන්න සහ ටයිප් නොකරන්න.",
      "මම හිතන්නේ ඔබ ගෙදර යා යුතුයි, නැත්නම් මානසික රැකවරණයක් ලබා ගත යුතුයි.",
      "විධානය හමු නොවීය. ඔබේ මොළය මෙන්.",
@@ -91,7 +90,7 @@ INSULTS_STRINGS = (
      "ජලය වෙනුවට හයිඩ්‍රොක්ලෝරික් අම්ලය සමඟ ස්නානය කිරීමට උත්සාහ කරන්න.",
      "මෙය උත්සාහ කරන්න: ඔබ ඔබේ හුස්ම පැයක් පමණ දිය යට තබා ගන්නේ නම්, ඔබට එය සදහටම රඳවා ගත හැකිය.",
      "කොළ පාටට යන්න! ඔක්සිජන් ආශ්වාස කිරීම නවත්වන්න.",
-     "දෙවියන් වහන්සේ ඔබව සොයමින් සිටියේය. ඔබ ඔහුව හමුවීමට පිටවිය යුතුය.",
+     "දෙවියන් වහන්සේ ඔබව සොයමින් සිටියේය. ඔබ ඔහුව හමුවීමට පිටත්ව යා යුතුය.",
      "ඔබේ 100% දෙන්න. දැන් ගිහින් ලේ දන් දෙන්න.",
      "මහල් සියයක ගොඩනැගිල්ලකින් පැනීමට උත්සාහ කරන්න, නමුත් ඔබට එය කළ හැක්කේ එක් වරක් පමණි.",
      "ඔබ කිසි විටෙකත් එය භාවිතා නොකළ බව දැක ඔබේ මොළය පරිත්යාග කළ යුතුය.",
@@ -115,139 +114,140 @@ INSULTS_STRINGS = (
      "ඔබ ඉදිරියේ සෙමින් චලනය වන නියුට්‍රෝනයකින් යුරේනියම් පහර දෙන්න. එය වටිනා අත්දැකීමක් වනු ඇත.",
      "ඔබ හිරු මතට පය තැබූ පළමු පුද්ගලයා විය හැකිය. උත්සාහ කර බලන්න.",
  )
-SLAP_TEMPLATES = (
-    "{user1} {hits} {user2} with a {item}.",
-    "{user1} {hits} {user2} in the face with a {item}.",
-    "{user1} {hits} {user2} around a bit with a {item}.",
-    "{user1} {throws} a {item} at {user2}.",
-    "{user1} grabs a {item} and {throws} it at {user2}'s face.",
-    "{user1} launches a {item} in {user2}'s general direction.",
-    "{user1} starts slapping {user2} silly with a {item}.",
-    "{user1} pins {user2} down and repeatedly {hits} them with a {item}.",
-    "{user1} grabs up a {item} and {hits} {user2} with it.",
-    "{user1} ties {user2} to a chair and {throws} a {item} at them.",
-    "{user1} gave a friendly push to help {user2} learn to swim in lava."
-)
 
-ITEMS = (
-    "cast iron skillet",
-    "large trout",
-    "baseball bat",
-    "cricket bat",
-    "wooden cane",
-    "nail",
-    "printer",
-    "shovel",
-    "CRT monitor",
-    "physics textbook",
-    "toaster",
-    "portrait of Richard Stallman",
-    "television",
-    "five ton truck",
-    "roll of duct tape",
-    "book",
-    "laptop",
-    "old television",
-    "sack of rocks",
-    "rainbow trout",
-    "rubber chicken",
-    "spiked bat",
-    "fire extinguisher",
-    "heavy rock",
-    "chunk of dirt",
-    "beehive",
-    "piece of rotten meat",
-    "bear",
-    "ton of bricks",
-)
+ SLAP_TEMPLATES = (
+     "{අයිතමය} සමඟ {user1} {පහර} {පරිශීලක 2}.",
+     "{අයිතමය with සමඟ මුහුණේ {{user1} {පහර} {පරිශීලක 2}.",
+     "{අයිතමය with සමඟ මඳක් around {user1} {පහර} {user2}.",
+     "{user1} {{user {}}} අයිතමයක්} විසි කරයි.",
+     "{user1} {අයිතමයක්} අල්ලා {පරිශීලක 2 ගේ මුහුණට {විසි කරයි.",
+     "{user1} {user2 general හි සාමාන්‍ය දිශාවට {අයිතමයක් දියත් කරයි.",
+     "{user1} {අයිතමය with සමඟ {user2} මෝඩකමට පහර දීම ආරම්භ කරයි.",
+     "{user1} pins {user2} පහළට ගොස් {අයිතමය with සමඟ නැවත නැවත {පහර}.",
+     "{user1} {අයිතමයක්} අල්ලාගෙන {{user2 its සමඟ එය පහර දෙයි.",
+     "{user1} {user2 a පුටුවකට බැඳ {{අයිතමයක්} ඔවුන් වෙතට විසි කරයි.",
+     "{user1 la ලාවා තුළ පිහිනීමට ඉගෙන ගැනීමට {user2 help සඳහා සුහද තල්ලුවක් ලබා දුන්නේය."
+ )
 
-THROW = (
-    "throws",
-    "flings",
-    "chucks",
-    "hurls",
-)
+ ITEMS = (
+     "වාත්තු යකඩ සායක්",
+     "විශාල තුරුම්පුව",
+     "බේස්බෝල් පිත්ත",
+     "ක්රිකට් පිත්ත",
+     "ලී වේවැල්",
+     "නිය",
+     "මුද්‍රණ යන්ත්‍රය",
+     "සවල",
+     "CRT මොනිටරය",
+     "භෞතික විද්‍යා පෙළ පොත",
+     "ටෝස්ටර්",
+     "රිචඩ් ස්ටෝල්මන්ගේ ආලේඛ්‍ය චිත්‍රය",
+     "රූපවාහිනිය",
+     "ටොන් පහක ට්‍රක්",
+     "ඩක් ටේප් රෝල්",
+     "පොත",
+     "ලැප්ටොප්",
+     "පැරණි රූපවාහිනිය",
+     "පාෂාණ මල්ල",
+     "දේදුන්න තුරුම්පුව",
+     "රබර් චිකන්",
+     "ස්පයික් බැට්",
+     "ගිනි නිවනය",
+     "බර පාෂාණය",
+     "කුණු කැබැල්ල",
+     "මී මැසි",
+     "කුණු වූ මස් කැබැල්ලක්",
+     "වලහා",
+     "ගඩොල් ටොන්",
+ )
 
-HIT = (
-    "hits",
-    "whacks",
-    "slaps",
-    "smacks",
-    "bashes",
-)
+ THROW = (
+     "විසි",
+     "පියාඹන",
+     "චක්ස්",
+     "හර්ස්",
+ )
 
-MARKDOWN_HELP = """
-Markdown is a very powerful formatting tool supported by telegram. {} has some enhancements, to make sure that \
-saved messages are correctly parsed, and to allow you to create buttons.
+ HIT = (
+     "පහර",
+     "whacks",
+     "කම්මුල්",
+     "ස්මාක්ස්",
+     "බාෂ්",
+ )
 
-- <code>_italic_</code>: wrapping text with '_' will produce italic text
-- <code>*bold*</code>: wrapping text with '*' will produce bold text
-- <code>`code`</code>: wrapping text with '`' will produce monospaced text, also known as 'code'
-- <code>[sometext](someURL)</code>: this will create a link - the message will just show <code>sometext</code>, \
-and tapping on it will open the page at <code>someURL</code>.
-EG: <code>[test](example.com)</code>
+ MARKDOWN_HELP = "" "
+ මාර්ක්ඩවුන් යනු විදුලි පණිවුඩ මඟින් සහාය දක්වන ඉතා ප්‍රබල හැඩතල ගැන්වීමේ මෙවලමකි.  that that සමහර වැඩි දියුණු කිරීම් ඇත, එය තහවුරු කර ගැනීම සඳහා \
+ සුරකින ලද පණිවිඩ නිවැරදිව විග්‍රහ කර ඇති අතර බොත්තම් සෑදීමට ඔබට ඉඩ සලසයි.
 
-- <code>[buttontext](buttonurl:someURL)</code>: this is a special enhancement to allow users to have telegram \
-buttons in their markdown. <code>buttontext</code> will be what is displayed on the button, and <code>someurl</code> \
-will be the url which is opened.
-EG: <code>[This is a button](buttonurl:example.com)</code>
+ - <code> _italic_ </code>: '_' සමඟ පෙළ එතීමෙන් ඇල අකුරු නිපදවනු ඇත
+ - <code> * bold * </code>: '*' සමඟ පෙළ එතීමෙන් තද අකුරු ලැබෙනු ඇත
+ - <code> `කේතය` </code>: '' 'සමඟ පෙළ එතීමෙන් ඒකවර්ණ පෙළ නිපදවනු ඇත, එය' කේතය 'ලෙසද හැඳින්වේ.
+ - <code> [යම්කිසි පෙළක්)
+ එය තට්ටු කිරීමෙන් <code> someURL </code> හි පිටුව විවෘත වේ.
+ EG: <code> [test] (example.com) </code>
 
-If you want multiple buttons on the same line, use :same, as such:
-<code>[one](buttonurl://example.com)
-[two](buttonurl://google.com:same)</code>
-This will create two buttons on a single line, instead of one button per line.
-"""
+ - <code> [buttontext] (buttonurl: someURL) </code>: මෙය පරිශීලකයින්ට විදුලි පණිවුඩ ලබා ගැනීමට ඉඩ දීම සඳහා විශේෂ වැඩි දියුණු කිරීමකි \
+ ඒවායේ සලකුණු කිරීමේ බොත්තම්.  <code> buttontext </code> යනු බොත්තම මත දිස්වන දෙය වන අතර <code> someurl </code> \
+ විවෘත කරන ලද url එක වනු ඇත.
+ EG: <code> [මෙය බොත්තමක්] (buttonurl: example.com) </code>
 
-EnglishStrings = {
-    "send-start": """Hi {}, my name {}! If you have any questions on how to use me, read /help - and then head to @YanaBotGroup.
+ ඔබට එකම පේළියේ බොත්තම් කිහිපයක් අවශ්‍ය නම්, භාවිතා කරන්න: එකම, වැනි:
+ <code> [එකක්] (buttonurl: //example.com)
+ [two] (buttonurl: //google.com: same) </code>
+ මෙය එක් පේළියකට එක් බොත්තමක් වෙනුවට තනි පේළියක බොත්තම් දෙකක් නිර්මාණය කරයි.
+ "" "
 
-I'm a group manager bot maintained by [this person](tg://user?id={654839744}). I'm a [Marie](https://github.com/PaulSonOfLars/tgbot) fork.
-I'm built in python3, using the \
-python-telegram-bot library, and am fully opensource - you can find what makes me tick\
-[here](https://github.com/peaktogoo/HarukaAya))!
+ EnglishStrings = {
+     "send-start": "" "හායි {}, මගේ නම {}! මා භාවිතා කරන්නේ කෙසේද යන්න පිළිබඳව ඔබට කිසියම් ප්‍රශ්නයක් ඇත්නම්, කියවන්න / උදව් කරන්න - ඉන්පසු ana YanaBotGroup වෙත යන්න.
 
-Feel free to submit pull requests on github, or to contact my support group, @EchelonTeam, with any bugs, questions \
-or feature requests you might have :)
+ මම [මෙම පුද්ගලයා] විසින් නඩත්තු කරනු ලබන කණ්ඩායම් කළමනාකරු බොට් (tg: // user? Id = {654839744}).  මම [මාරි] (https://github.com/PaulSonOfLars/tgbot) දෙබලක.
+ මම පයිතන් 3 හි ඉදිකර ඇත, using භාවිතා කරමින්
+ python-telegram-bot පුස්තකාලය, සහ මම සම්පූර්ණයෙන්ම විවෘත මූලාශ්‍රයක් - මට ටික් කිරීමට හේතුව කුමක්දැයි ඔබට සොයාගත හැකිය \
+ [මෙහි] (https://github.com/peaktogoo/HarukaAya))!
 
-If you enjoying using me and/or would like to help me survive in the wild, hit /donate to help fund/upgrade my VPS!
-""",
+ ගිතුබ් වෙතින් ඉල්ලීම් ඉදිරිපත් කිරීමට නිදහස් වන්න, නැතහොත් මගේ ආධාරක කණ්ඩායම වන chEchelonTeam, ඕනෑම දෝෂ, ප්‍රශ්න සමඟ සම්බන්ධ කර ගන්න.
+ හෝ ඔබට තිබිය හැකි විශේෂාංග ඉල්ලීම් :)
 
-    "send-help": """Hey there! My name is *{}*.
-I'm a modular group management bot with a few fun extras! Have a look at the following for an idea of some of the things I can help you with.
+ ඔබ මා භාවිතා කිරීමෙන් සතුටක් ලබනවා නම් සහ / හෝ වනයේ ජීවත් වීමට මට උදව් කිරීමට කැමති නම්, මගේ වීපීඑස් අරමුදල් / වැඩිදියුණු කිරීමට උදව් කිරීමට පහර දෙන්න / පරිත්‍යාග කරන්න!
+ "" ",
 
-Main commands available:
- - /start: Cool command to check if the bot is alive or not
- - /help: PM's you this message.
- - /help <module name>: PM's you info about that module.
- - /donate: information about how to donate!
- - /lang: Change bot language
- - /settings:
-   - in PM: will send you your settings for all supported modules.
-   - in a group: will redirect you to pm, with all that chat's settings.
-   {}
-   """,
+     "send-help": "" "හේයි! මගේ නම * {} *.
+ මම විනෝදජනක අමතර කිහිපයක් සහිත මොඩියුලර් කණ්ඩායම් කළමනාකරණ බොට්!  මට ඔබට උදව් කළ හැකි කරුණු කිහිපයක් පිළිබඳ අදහසක් සඳහා පහත සඳහන් කරුණු දෙස බලන්න.
 
-    "send-group-settings": """Hi there! There are quite a few settings for *{}* - go ahead and pick what
-you're interested in.""",
+ ලබා ගත හැකි ප්‍රධාන විධාන:
+  - / start: බොට් ජීවතුන් අතර සිටීද යන්න පරීක්ෂා කිරීමට සිසිල් විධානය
+  - / help: අගමැති ඔබ මෙම පණිවිඩයයි.
+  - / help <මොඩියුලයේ නම>: එම මොඩියුලය පිළිබඳ අගමැතිගේ තොරතුරු.
+  - / පරිත්යාග කරන්න: පරිත්යාග කරන්නේ කෙසේද යන්න පිළිබඳ තොරතුරු!
+  - / lang: බොට් භාෂාව වෙනස් කරන්න
+  - /සැකසුම්:
+    - PM හි: සහාය දක්වන සියලුම මොඩියුල සඳහා ඔබගේ සැකසුම් ඔබට එවනු ඇත.
+    - කණ්ඩායමක: චැට් හි සියලු සැකසුම් සමඟ ඔබව ප.ව.
+    {}
+    "" ",
 
-#Misc
-"RUNS-K": RUN_STRINGS,
-"SLAP_TEMPLATES-K": SLAP_TEMPLATES,
-"ITEMS-K": ITEMS,
-"HIT-K": HIT,
-"THROW-K": THROW,
-"ITEMP-K": ITEMS,
-"ITEMR-K": ITEMS,
-"MARKDOWN_HELP-K": MARKDOWN_HELP,
-"INSULTS-K": INSULTS_STRINGS,
+     "send-group-settings": "" "ආයුබෝවන්! * {} * සඳහා සැකසුම් කිහිපයක් තිබේ - ඉදිරියට ගොස් කුමක් තෝරා ගන්න
+ ඔබ කැමති. "" ",
 
-#GDPR
-"send-gdpr": """Your personal data has been deleted.\n\nNote that this will not unban \
-you from any chats, as that is telegram data, not YanaBot data.
-Flooding, warns, and gbans are also preserved, as of \
-[this](https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-erasure/), "
-which clearly states that the right to erasure does not apply \
-\"for the performance of a task carried out in the public interest\", as is \
-the case for the aforementioned pieces of data."""
+ # වැරදි
+ "RUNS-K": RUN_STRINGS,
+ "SLAP_TEMPLATES-K": SLAP_TEMPLATES,
+ "ITEMS-K": ITEMS,
+ "HIT-K": HIT,
+ "THROW-K": විසි කරන්න,
+ "ITEMP-K": ITEMS,
+ "ITEMR-K": ITEMS,
+ "MARKDOWN_HELP-K": MARKDOWN_HELP,
+ "INSULTS-K": INSULTS_STRINGS,
 
-}
+ #GDPR
+ "send-gdpr": "" "ඔබගේ පුද්ගලික දත්ත මකා දමා ඇත. \ n \ n මෙය තහනම් නොවන බව සලකන්න \
+ ඔබ ඕනෑම කතාබස් වලින්, එය විදුලි පණිවුඩ දත්ත මිස යනාබොට් දත්ත නොවේ.
+ \ ලෙස ගංවතුර, අනතුරු ඇඟවීම් සහ ග්බාන්ස් ද ආරක්ෂා වේ.
+ [මෙය] (https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-erasure/), "
+ මකාදැමීමේ අයිතිය අදාළ නොවන බව පැහැදිලිව සඳහන් කරයි \
+ interest "මහජන යහපත උදෙසා ඉටු කරන ලද කාර්යයක් ඉටු කිරීම සඳහා \"
+ ඉහත දත්ත කැබලි සඳහා නඩුව. "" "
+
+ }
