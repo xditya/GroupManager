@@ -1,253 +1,253 @@
 RUN_STRINGS = (
-     "ඔයා කොහෙද යන්නේ කියලා ඔයා හිතන්නේ?",
-     "හහ්? මොකක්ද? ඔවුන් පැනලා ගියාද?",
-     "ZZzzZZzz ... හහ්? මොකක්ද? ඔහ්, ඔවුන් නැවත වරක්, කමක් නැහැ.",
-     "නැවත මෙහි එන්න!",
-     "එතරම් වේගවත් නොවේ ...",
-     "බිත්තිය දෙස බලන්න!",
-     "මාව ඔවුන් සමඟ තනි නොකරන්න !!",
-     "ඔයා දුවනවා, ඔයා මැරෙනවා.",
-     "ඔබට විහිළු, මම සෑම තැනකම සිටිමි",
-     "ඔයා ඒ ගැන පසුතැවෙනවා ...",
-     "ඔබටත් උත්සාහ කළ හැකිය / පයින් ගසන්න, එය විනෝදජනක බව මට අසන්නට ලැබේ.",
-     "වෙනත් කෙනෙකුට කරදර කරන්න, මෙහි කිසිවෙකු ගණන් ගන්නේ නැත.",
-     "ඔබට දුවන්න පුළුවන්, නමුත් ඔබට සැඟවිය නොහැක.",
-     "ඔබට ලැබී ඇත්තේ එපමණක්ද?",
-     "මම ඔබ පිටුපස සිටිමි ...",
-     "ඔබට සමාගමක් ඇත!",
-     "අපට මෙය පහසුම ක්‍රමය හෝ දුෂ්කර ක්‍රමය කළ හැකිය.",
-     "ඔබට එය තේරෙන්නේ නැහැ නේද?",
-     "ඔව්, ඔබ දුවනවා නම් හොඳයි!",
-     "කරුණාකර, මට කොතරම් සැලකිල්ලක් දක්වනවාදැයි මට මතක් කරන්න?",
-     "මම ඔබ නම් මම වේගයෙන් දුවමි.",
-     "එය අනිවාර්යයෙන්ම අපි සොයන ඩ්‍රොයිඩ් ය.",
-     "අවාසි ඔබට වාසිදායක වේවා.",
-     "ප්රසිද්ධ අවසන් වදන්.",
-     "ඔවුන් සදහටම අතුරුදහන් විය, නැවත කිසිදිනෙක නොපෙනේ.",
-     "\"Oh, look at me! I'm so cool, I can run from a bot!\" - this person",
-     "ඔව් ඔව්, දැනටමත් තට්ටු කරන්න / පයින් ගසන්න.",
-     "මෙන්න, මෙම මුද්ද රැගෙන ඔබ එහි සිටින විට මොර්ඩෝර් වෙත යන්න.",
-     "පුරාවෘත්තය සතුව ඇත, ඒවා තවමත් ක්‍රියාත්මක වේ ...",
-     "හැරී පොටර් මෙන් නොව, ඔබේ දෙමාපියන්ට මා වෙතින් ඔබව ආරක්ෂා කළ නොහැක.",
-     "බිය කෝපයට තුඩු දෙයි. කෝපය වෛරයට තුඩු දෙයි. වෛරය දුක් වේදනා වලට තුඩු දෙයි. ඔබ දිගටම බියෙන් දුවන්නේ නම්, ඔබට එය කළ හැකිය."
-     "ඊළඟ වඩර් වන්න.",
-     "බහුවිධ ගණනය කිරීම් පසුව, ඔබේ ෂෙනානිගන් පිළිබඳ මගේ උනන්දුව හරියටම 0 බව මම තීරණය කර ඇත්තෙමි.",
-     "පුරාවෘත්තය සතුව ඇත, ඒවා තවමත් ක්‍රියාත්මක වේ.",
-     "එය දිගටම කරගෙන යන්න, කෙසේ හෝ අපට ඔබව මෙහි අවශ්‍ය බව විශ්වාස නැත.",
-     "ඔයා විශාරදයෙක්- ඔහ්, ඉන්න. ඔයා හැරී නෙවෙයි, දිගටම ඉදිරියට යන්න.",
-     "හැල්වේස් හි ධාවනය නොවේ!",
-     "හස්ටා ලා විස්ටා, බබා.",
-     "කවුද බල්ලන්ට එළියට දුන්නේ?",
-     "එය විහිළුවක්, කිසිවෙකු ගණන් නොගන්නා නිසා.",
-     "ආහ්, මොනතරම් නාස්තියක්ද, මම එයට කැමතියි.",
-     "අවංකවම, මගේ ආදරණීය, මම නරකක් දෙන්නේ නැහැ.",
-     "මගේ මිල්ක්ෂේක් සියලුම පිරිමි ළමයින් මිදුලට ගෙන එයි ... එබැවින් වේගයෙන් දුවන්න!",
-     "ඔබට සත්‍යය හසුරුවා ගත නොහැක!",
-     "බොහෝ කලකට පෙර, මන්දාකිනියක බොහෝ away තින් ... කවුරුහරි ඒ ගැන සැලකිලිමත් වනු ඇත. තවදුරටත් එසේ නොවේ.",
-     "හේයි, ඔවුන් දෙස බලන්න! ඔවුන් දුවන්නේ නොවැළැක්විය හැකි බැන්හම්මර් වලින් ... හුරුබුහුටි.",
-     "හැන් මුලින්ම වෙඩි තැබුවා. මමත් එහෙමයි",
-     "සුදු හාවෙකු ඔබ පසුපස දුවන්නේ කුමක් ද?",
-     "වෛද්‍යවරයා පවසන පරිදි ... ධාවනය කරන්න!",
- )
+    "Where do you think you're going?",
+    "Huh? what? did they get away?",
+    "ZZzzZZzz... Huh? what? oh, just them again, nevermind.",
+    "Get back here!",
+    "Not so fast...",
+    "Look out for the wall!",
+    "Don't leave me alone with them!!",
+    "You run, you die.",
+    "Jokes on you, I'm everywhere",
+    "You're gonna regret that...",
+    "You could also try /kickme, I hear that's fun.",
+    "Go bother someone else, no-one here cares.",
+    "You can run, but you can't hide.",
+    "Is that all you've got?",
+    "I'm behind you...",
+    "You've got company!",
+    "We can do this the easy way, or the hard way.",
+    "You just don't get it, do you?",
+    "Yeah, you better run!",
+    "Please, remind me how much I care?",
+    "I'd run faster if I were you.",
+    "That's definitely the droid we're looking for.",
+    "May the odds be ever in your favour.",
+    "Famous last words.",
+    "And they disappeared forever, never to be seen again.",
+    "\"Oh, look at me! I'm so cool, I can run from a bot!\" - this person",
+    "Yeah yeah, just tap /kickme already.",
+    "Here, take this ring and head to Mordor while you're at it.",
+    "Legend has it, they're still running...",
+    "Unlike Harry Potter, your parents can't protect you from me.",
+    "Fear leads to anger. Anger leads to hate. Hate leads to suffering. If you keep running in fear, you might "
+    "be the next Vader.",
+    "Multiple calculations later, I have decided my interest in your shenanigans is exactly 0.",
+    "Legend has it, they're still running.",
+    "Keep it up, not sure we want you here anyway.",
+    "You're a wiza- Oh. Wait. You're not Harry, keep moving.",
+    "NO RUNNING IN THE HALLWAYS!",
+    "Hasta la vista, baby.",
+    "Who let the dogs out?",
+    "It's funny, because no one cares.",
+    "Ah, what a waste. I liked that one.",
+    "Frankly, my dear, I don't give a damn.",
+    "My milkshake brings all the boys to yard... So run faster!",
+    "You can't HANDLE the truth!",
+    "A long time ago, in a galaxy far far away... Someone would've cared about that. Not anymore though.",
+    "Hey, look at them! They're running from the inevitable banhammer... Cute.",
+    "Han shot first. So will I.",
+    "What are you running after, a white rabbit?",
+    "As The Doctor would say... RUN!",
+)
 
- INSULTS_STRINGS = (
-     "අපොයි ... එවැනි මෝඩ මෝඩයෙක්.",
-     "බොන්න සහ ටයිප් නොකරන්න.",
-     "මම හිතන්නේ ඔබ ගෙදර යා යුතුයි, නැත්නම් මානසික රැකවරණයක් ලබා ගත යුතුයි.",
-     "විධානය හමු නොවීය. ඔබේ මොළය මෙන්.",
-     "ඔබ ඔබව මෝඩයෙකු කරන බව ඔබට වැටහෙනවාද? පෙනෙන හැටියට එසේ නොවේ.",
-     "ඔබට ඊට වඩා හොඳින් ටයිප් කළ හැකිය.",
-     "බොට් රීතිය 544 9 වන වගන්තිය ඔබ වැනි මෝඩ මිනිසුන්ට පිළිතුරු දීම වළක්වයි.",
-     "කණගාටුයි, අපි මොළය විකුණන්නේ නැත.",
-     "මාව විශ්වාස කරන්න ඔබ සාමාන්‍ය කෙනෙක් නොවේ.",
-     "මම හිතනවා ඔයාගේ මොළය අලුත් දෙයක් වගේ දැනෙනවා, ඔබ එය කිසි විටෙකත් භාවිතා නොකරන බව."
-     "මට මාව මරා දැමීමට අවශ්‍ය නම් මම ඔබේ ඊගෝව තරණය කර ඔබගේ IQ වෙත පනින්නෙමි.",
-     "Zombies මොළය කනවා ... ඔබ ආරක්ෂිතයි",
-     "ඔබ පරිණාමය වූයේ වානරයන්ගෙන් නොවේ, ඔවුන් ඔබෙන් පරිණාමය විය.",
-     "ඔබගේ වයස ඉක්මවා යන විට නැවත පැමිණ මා සමඟ කතා කරන්න.",
-     "මම කියන්නේ නැහැ ඔයා මෝඩයෙක් කියලා, මම කියන්නේ හිතනකොට ඔයාට නරක වාසනාවක් ලැබුණා කියලයි.",
-     "ඔබ කතා කරන්නේ කුමන භාෂාවද? එය ගොන් කතා වගේ.",
-     "මෝඩකම අපරාධයක් නොවේ, එබැවින් ඔබට යාමට නිදහස තිබේ.",
-     "පරිණාමය ආපසු හැරවිය හැකි බවට ඔබ සාක්ෂි දරයි.",
-     "ඔබේ වයස කීයදැයි මම ඔබෙන් අසමි. නමුත් මම දන්නවා ඔබට එතරම් ඉහළ අගයක් ගත නොහැකි බව."
-     "පිටස්තරයෙකු ලෙස, මිනිස් සංහතිය ගැන ඔබ සිතන්නේ කුමක්ද?",
-     "මොළය සියල්ලම නොවේ. ඔබේ නඩුවේ ඒවා කිසිවක් නැත.",
-     "සාමාන්‍යයෙන් මිනිස්සු ජීවත් වෙලා ඉගෙන ගන්නවා. ඔයා ජීවත් වෙන්න.",
-     "ඔබ මෙතරම් මෝඩ වන්නේ කුමක් දැයි මම නොදනිමි, නමුත් එය සැබවින්ම ක්‍රියාත්මක වේ.",
-     "දිගටම කතා කරන්න, කවදාහරි ඔබ බුද්ධිමත් දෙයක් කියයි! (මට එය සැකයි)",
-     "මට කම්පනය කරන්න, බුද්ධිමත් යමක් කියන්න.",
-     "ඔබේ IQ ඔබේ සපත්තු ප්‍රමාණයට වඩා අඩුයි.",
-     "අහෝ! ඔබේ ස්නායු සම්ප්‍රේෂක තවදුරටත් ක්‍රියාත්මක නොවේ.",
-     "ඔයාට පිස්සුද මෝඩයා.",
-     "සෑම කෙනෙකුම මෝඩ වීමට අයිතියක් ඇත. නමුත් ඔබ වරප්‍රසාදය අනිසි ලෙස භාවිතා කරයි."
-     "මට කණගාටුයි, මම ඔබව මෝඩයෙකු ලෙස හැඳින්වූ විට ඔබේ හැඟීම් රිදෙව්වා. මම හිතුවේ ඔබ දැනටමත් එය දන්නා බවයි.",
-     "ඔබ සයනයිඩ් රස බැලීමට උත්සාහ කළ යුතුයි.",
-     "ඔබේ එන්සයිම මීයන්ගේ විෂ ජීර්ණය කිරීමට අදහස් කරයි.",
-     "ඔබ සදහටම නිදා ගැනීමට උත්සාහ කළ යුතුයි.",
-     "තුවක්කුවක් අරගෙන ඔබටම වෙඩි තියන්න.",
-     "පැරෂුට් නොමැතිව ගුවන් යානයකින් පැනීමෙන් ඔබට ලෝක වාර්තාවක් තැබිය හැකිය.",
-     "බීඑස් කතා කිරීම නවතා දුවන බුලට් දුම්රියක් ඉදිරිපිට පනින්න.",
-     "ජලය වෙනුවට හයිඩ්‍රොක්ලෝරික් අම්ලය සමඟ ස්නානය කිරීමට උත්සාහ කරන්න.",
-     "මෙය උත්සාහ කරන්න: ඔබ ඔබේ හුස්ම පැයක් පමණ දිය යට තබා ගන්නේ නම්, ඔබට එය සදහටම රඳවා ගත හැකිය.",
-     "කොළ පාටට යන්න! ඔක්සිජන් ආශ්වාස කිරීම නවත්වන්න.",
-     "දෙවියන් වහන්සේ ඔබව සොයමින් සිටියේය. ඔබ ඔහුව හමුවීමට පිටත්ව යා යුතුය.",
-     "ඔබේ 100% දෙන්න. දැන් ගිහින් ලේ දන් දෙන්න.",
-     "මහල් සියයක ගොඩනැගිල්ලකින් පැනීමට උත්සාහ කරන්න, නමුත් ඔබට එය කළ හැක්කේ එක් වරක් පමණි.",
-     "ඔබ කිසි විටෙකත් එය භාවිතා නොකළ බව දැක ඔබේ මොළය පරිත්යාග කළ යුතුය.",
-     "වෙඩි තැබීමේ පරාසයක ඉලක්කය සඳහා ස්වේච්ඡාවෙන් ඉදිරිපත් වන්න.",
-     "හිස වෙඩි තැබීම විනෝදජනකයි. ඔබම එකක් ගන්න.",
-     "ඔබ විශාල සුදු මෝරුන් සමඟ පිහිනීමට උත්සාහ කළ යුතුයි.",
-     "ඔබ රතු පාටින් පින්තාරු කර ගොන් මැරතන් ධාවන තරඟයක යෙදිය යුතුය.",
-     "නැවත ඉහළට නොගොස් ඔබේ ජීවිත කාලය පුරාම දිය යට රැඳී සිටිය හැකිය.",
-     "ඔබ දින 1 ක් වැනි කාලයක් හුස්ම ගැනීම නවත්වන්නේ කෙසේද? එය විශිෂ්ට වනු ඇත.",
-     "ඔබ දෙදෙනාම කූඩුවක සිටියදී කොටියෙකු කුපිත කිරීමට උත්සාහ කරන්න.",
-     "ඔබ කැනනයකින් මීටර් 100 ක් තරම් ඉහළට වෙඩි තැබීමට උත්සාහ කර තිබේද?",
-     "ඔබ ඔබේ කටේ ටීඑන්ටී අල්ලාගෙන එය දැල්වීමට උත්සාහ කළ යුතුයි.",
-     "RDX සමඟ විනෝද වීමට උත්සාහ කරන්න.",
-     "ෆොජින් විෂ සහිත බව මට දැනගන්නට ලැබුණි. නමුත් මම හිතන්නේ ඔබ එය විනෝදය සඳහා ආශ්වාස නොකරනු ඇත.",
-     "පෘථිවියේ ඔක්සිජන් අමතක කර අභ්‍යවකාශයට පිවිසෙන්න.",
-     "ඔබ සර්පයන් සහ ඉණිමඟ සෙල්ලම් කිරීමට උත්සාහ කළ යුතුයි. සැබෑ සර්පයන් සහ ඉණිමඟක් නොමැතිව.",
-     "HT වයර් කිහිපයක් මත නිරුවතින් නටන්න.",
-     "සැබෑ ගිනි කන්ද ඔබට හොඳම පිහිනුම් තටාකයයි.",
-     "ඔබ ගිනි කන්දක උණුසුම් ස්නානය කිරීමට උත්සාහ කළ යුතුයි.",
-     "මිනී පෙට්ටියක එක් දිනක් ගත කිරීමට උත්සාහ කරන්න. එය සදහටම ඔබට අයිති වනු ඇත.",
-     "ඔබ ඉදිරියේ සෙමින් චලනය වන නියුට්‍රෝනයකින් යුරේනියම් පහර දෙන්න. එය වටිනා අත්දැකීමක් වනු ඇත.",
-     "ඔබ හිරු මතට පය තැබූ පළමු පුද්ගලයා විය හැකිය. උත්සාහ කර බලන්න.",
- )
+INSULTS_STRINGS = (
+    "Owww ... Such a stupid idiot.",
+    "Don't drink and type.",
+    "I think you should go home or better a mental asylum.",
+    "Command not found. Just like your brain.",
+    "Do you realize you are making a fool of yourself? Apparently not.",
+    "You can type better than that.",
+    "Bot rule 544 section 9 prevents me from replying to stupid humans like you.",
+    "Sorry, we do not sell brains.",
+    "Believe me you are not normal.",
+    "I bet your brain feels as good as new, seeing that you never use it.",
+    "If I wanted to kill myself I'd climb your ego and jump to your IQ.",
+    "Zombies eat brains... you're safe.",
+    "You didn't evolve from apes, they evolved from you.",
+    "Come back and talk to me when your I.Q. exceeds your age.",
+    "I'm not saying you're stupid, I'm just saying you've got bad luck when it comes to thinking.",
+    "What language are you speaking? Cause it sounds like bullshit.",
+    "Stupidity is not a crime so you are free to go.",
+    "You are proof that evolution CAN go in reverse.",
+    "I would ask you how old you are but I know you can't count that high.",
+    "As an outsider, what do you think of the human race?",
+    "Brains aren't everything. In your case they're nothing.",
+    "Ordinarily people live and learn. You just live.",
+    "I don't know what makes you so stupid, but it really works.",
+    "Keep talking, someday you'll say something intelligent! (I doubt it though)",
+    "Shock me, say something intelligent.",
+    "Your IQ's lower than your shoe size.",
+    "Alas! Your neurotransmitters are no more working.",
+    "Are you crazy you fool.",
+    "Everyone has the right to be stupid but you are abusing the privilege.",
+    "I'm sorry I hurt your feelings when I called you stupid. I thought you already knew that.",
+    "You should try tasting cyanide.",
+    "Your enzymes are meant to digest rat poison.",
+    "You should try sleeping forever.",
+    "Pick up a gun and shoot yourself.",
+    "You could make a world record by jumping from a plane without parachute.",
+    "Stop talking BS and jump in front of a running bullet train.",
+    "Try bathing with Hydrochloric Acid instead of water.",
+    "Try this: if you hold your breath underwater for an hour, you can then hold it forever.",
+    "Go Green! Stop inhaling Oxygen.",
+    "God was searching for you. You should leave to meet him.",
+    "give your 100%. Now, go donate blood.",
+    "Try jumping from a hundred story building but you can do it only once.",
+    "You should donate your brain seeing that you never used it.",
+    "Volunteer for target in an firing range.",
+    "Head shots are fun. Get yourself one.",
+    "You should try swimming with great white sharks.",
+    "You should paint yourself red and run in a bull marathon.",
+    "You can stay underwater for the rest of your life without coming back up.",
+    "How about you stop breathing for like 1 day? That'll be great.",
+    "Try provoking a tiger while you both are in a cage.",
+    "Have you tried shooting yourself as high as 100m using a canon.",
+    "You should try holding TNT in your mouth and igniting it.",
+    "Try playing catch and throw with RDX its fun.",
+    "I heard phogine is poisonous but i guess you wont mind inhaling it for fun.",
+    "Launch yourself into outer space while forgetting oxygen on Earth.",
+    "You should try playing snake and ladders, with real snakes and no ladders.",
+    "Dance naked on a couple of HT wires.",
+    "True Volcano is the best swimming pool for you.",
+    "You should try hot bath in a volcano.",
+    "Try to spend one day in a coffin and it will be yours forever.",
+    "Hit Uranium with a slow moving neutron in your presence. It will be a worthwhile experience.",
+    "You can be the first person to step on sun. Have a try.",
+)
 
- SLAP_TEMPLATES = (
-     "{අයිතමය} සමඟ {user1} {පහර} {පරිශීලක 2}.",
-     "{අයිතමය with සමඟ මුහුණේ {{user1} {පහර} {පරිශීලක 2}.",
-     "{අයිතමය with සමඟ මඳක් around {user1} {පහර} {user2}.",
-     "{user1} {{user {}}} අයිතමයක්} විසි කරයි.",
-     "{user1} {අයිතමයක්} අල්ලා {පරිශීලක 2 ගේ මුහුණට {විසි කරයි.",
-     "{user1} {user2 general හි සාමාන්‍ය දිශාවට {අයිතමයක් දියත් කරයි.",
-     "{user1} {අයිතමය with සමඟ {user2} මෝඩකමට පහර දීම ආරම්භ කරයි.",
-     "{user1} pins {user2} පහළට ගොස් {අයිතමය with සමඟ නැවත නැවත {පහර}.",
-     "{user1} {අයිතමයක්} අල්ලාගෙන {{user2 its සමඟ එය පහර දෙයි.",
-     "{user1} {user2 a පුටුවකට බැඳ {{අයිතමයක්} ඔවුන් වෙතට විසි කරයි.",
-     "{user1 la ලාවා තුළ පිහිනීමට ඉගෙන ගැනීමට {user2 help සඳහා සුහද තල්ලුවක් ලබා දුන්නේය."
- )
+SLAP_TEMPLATES = (
+    "{user1} {hits} {user2} with a {item}.",
+    "{user1} {hits} {user2} in the face with a {item}.",
+    "{user1} {hits} {user2} around a bit with a {item}.",
+    "{user1} {throws} a {item} at {user2}.",
+    "{user1} grabs a {item} and {throws} it at {user2}'s face.",
+    "{user1} launches a {item} in {user2}'s general direction.",
+    "{user1} starts slapping {user2} silly with a {item}.",
+    "{user1} pins {user2} down and repeatedly {hits} them with a {item}.",
+    "{user1} grabs up a {item} and {hits} {user2} with it.",
+    "{user1} ties {user2} to a chair and {throws} a {item} at them.",
+    "{user1} gave a friendly push to help {user2} learn to swim in lava."
+)
 
- ITEMS = (
-     "වාත්තු යකඩ සායක්",
-     "විශාල තුරුම්පුව",
-     "බේස්බෝල් පිත්ත",
-     "ක්රිකට් පිත්ත",
-     "ලී වේවැල්",
-     "නිය",
-     "මුද්‍රණ යන්ත්‍රය",
-     "සවල",
-     "CRT මොනිටරය",
-     "භෞතික විද්‍යා පෙළ පොත",
-     "ටෝස්ටර්",
-     "රිචඩ් ස්ටෝල්මන්ගේ ආලේඛ්‍ය චිත්‍රය",
-     "රූපවාහිනිය",
-     "ටොන් පහක ට්‍රක්",
-     "ඩක් ටේප් රෝල්",
-     "පොත",
-     "ලැප්ටොප්",
-     "පැරණි රූපවාහිනිය",
-     "පාෂාණ මල්ල",
-     "දේදුන්න තුරුම්පුව",
-     "රබර් චිකන්",
-     "ස්පයික් බැට්",
-     "ගිනි නිවනය",
-     "බර පාෂාණය",
-     "කුණු කැබැල්ල",
-     "මී මැසි",
-     "කුණු වූ මස් කැබැල්ලක්",
-     "වලහා",
-     "ගඩොල් ටොන්",
- )
+ITEMS = (
+    "cast iron skillet",
+    "large trout",
+    "baseball bat",
+    "cricket bat",
+    "wooden cane",
+    "nail",
+    "printer",
+    "shovel",
+    "CRT monitor",
+    "physics textbook",
+    "toaster",
+    "portrait of Richard Stallman",
+    "television",
+    "five ton truck",
+    "roll of duct tape",
+    "book",
+    "laptop",
+    "old television",
+    "sack of rocks",
+    "rainbow trout",
+    "rubber chicken",
+    "spiked bat",
+    "fire extinguisher",
+    "heavy rock",
+    "chunk of dirt",
+    "beehive",
+    "piece of rotten meat",
+    "bear",
+    "ton of bricks",
+)
 
- THROW = (
-     "විසි",
-     "පියාඹන",
-     "චක්ස්",
-     "හර්ස්",
- )
+THROW = (
+    "throws",
+    "flings",
+    "chucks",
+    "hurls",
+)
 
- HIT = (
-     "පහර",
-     "whacks",
-     "කම්මුල්",
-     "ස්මාක්ස්",
-     "බාෂ්",
- )
+HIT = (
+    "hits",
+    "whacks",
+    "slaps",
+    "smacks",
+    "bashes",
+)
 
- MARKDOWN_HELP = "" "
- මාර්ක්ඩවුන් යනු විදුලි පණිවුඩ මඟින් සහාය දක්වන ඉතා ප්‍රබල හැඩතල ගැන්වීමේ මෙවලමකි.  that that සමහර වැඩි දියුණු කිරීම් ඇත, එය තහවුරු කර ගැනීම සඳහා \
- සුරකින ලද පණිවිඩ නිවැරදිව විග්‍රහ කර ඇති අතර බොත්තම් සෑදීමට ඔබට ඉඩ සලසයි.
+MARKDOWN_HELP = """
+Markdown is a very powerful formatting tool supported by telegram. {} has some enhancements, to make sure that \
+saved messages are correctly parsed, and to allow you to create buttons.
 
- - <code> _italic_ </code>: '_' සමඟ පෙළ එතීමෙන් ඇල අකුරු නිපදවනු ඇත
- - <code> * bold * </code>: '*' සමඟ පෙළ එතීමෙන් තද අකුරු ලැබෙනු ඇත
- - <code> `කේතය` </code>: '' 'සමඟ පෙළ එතීමෙන් ඒකවර්ණ පෙළ නිපදවනු ඇත, එය' කේතය 'ලෙසද හැඳින්වේ.
- - <code> [යම්කිසි පෙළක්)
- එය තට්ටු කිරීමෙන් <code> someURL </code> හි පිටුව විවෘත වේ.
- EG: <code> [test] (example.com) </code>
+- <code>_italic_</code>: wrapping text with '_' will produce italic text
+- <code>*bold*</code>: wrapping text with '*' will produce bold text
+- <code>`code`</code>: wrapping text with '`' will produce monospaced text, also known as 'code'
+- <code>[sometext](someURL)</code>: this will create a link - the message will just show <code>sometext</code>, \
+and tapping on it will open the page at <code>someURL</code>.
+EG: <code>[test](example.com)</code>
 
- - <code> [buttontext] (buttonurl: someURL) </code>: මෙය පරිශීලකයින්ට විදුලි පණිවුඩ ලබා ගැනීමට ඉඩ දීම සඳහා විශේෂ වැඩි දියුණු කිරීමකි \
- ඒවායේ සලකුණු කිරීමේ බොත්තම්.  <code> buttontext </code> යනු බොත්තම මත දිස්වන දෙය වන අතර <code> someurl </code> \
- විවෘත කරන ලද url එක වනු ඇත.
- EG: <code> [මෙය බොත්තමක්] (buttonurl: example.com) </code>
+- <code>[buttontext](buttonurl:someURL)</code>: this is a special enhancement to allow users to have telegram \
+buttons in their markdown. <code>buttontext</code> will be what is displayed on the button, and <code>someurl</code> \
+will be the url which is opened.
+EG: <code>[This is a button](buttonurl:example.com)</code>
 
- ඔබට එකම පේළියේ බොත්තම් කිහිපයක් අවශ්‍ය නම්, භාවිතා කරන්න: එකම, වැනි:
- <code> [එකක්] (buttonurl: //example.com)
- [two] (buttonurl: //google.com: same) </code>
- මෙය එක් පේළියකට එක් බොත්තමක් වෙනුවට තනි පේළියක බොත්තම් දෙකක් නිර්මාණය කරයි.
- "" "
+If you want multiple buttons on the same line, use :same, as such:
+<code>[one](buttonurl://example.com)
+[two](buttonurl://google.com:same)</code>
+This will create two buttons on a single line, instead of one button per line.
+"""
 
- EnglishStrings = {
-     "send-start": "" "හායි {}, මගේ නම {}! මා භාවිතා කරන්නේ කෙසේද යන්න පිළිබඳව ඔබට කිසියම් ප්‍රශ්නයක් ඇත්නම්, කියවන්න / උදව් කරන්න - ඉන්පසු ana YanaBotGroup වෙත යන්න.
+EnglishStrings = {
+    "send-start": """Hi {}, my name {}! If you have any questions on how to use me, read /help - and then head to @YanaBotGroup.
 
- මම [මෙම පුද්ගලයා] විසින් නඩත්තු කරනු ලබන කණ්ඩායම් කළමනාකරු බොට් (tg: // user? Id = {654839744}).  මම [මාරි] (https://github.com/PaulSonOfLars/tgbot) දෙබලක.
- මම පයිතන් 3 හි ඉදිකර ඇත, using භාවිතා කරමින්
- python-telegram-bot පුස්තකාලය, සහ මම සම්පූර්ණයෙන්ම විවෘත මූලාශ්‍රයක් - මට ටික් කිරීමට හේතුව කුමක්දැයි ඔබට සොයාගත හැකිය \
- [මෙහි] (https://github.com/peaktogoo/HarukaAya))!
+I'm a group manager bot maintained by [this person](tg://user?id={654839744}). I'm a [Marie](https://github.com/PaulSonOfLars/tgbot) fork.
+I'm built in python3, using the \
+python-telegram-bot library, and am fully opensource - you can find what makes me tick\
+[here](https://github.com/peaktogoo/HarukaAya))!
 
- ගිතුබ් වෙතින් ඉල්ලීම් ඉදිරිපත් කිරීමට නිදහස් වන්න, නැතහොත් මගේ ආධාරක කණ්ඩායම වන chEchelonTeam, ඕනෑම දෝෂ, ප්‍රශ්න සමඟ සම්බන්ධ කර ගන්න.
- හෝ ඔබට තිබිය හැකි විශේෂාංග ඉල්ලීම් :)
+Feel free to submit pull requests on github, or to contact my support group, @EchelonTeam, with any bugs, questions \
+or feature requests you might have :)
 
- ඔබ මා භාවිතා කිරීමෙන් සතුටක් ලබනවා නම් සහ / හෝ වනයේ ජීවත් වීමට මට උදව් කිරීමට කැමති නම්, මගේ වීපීඑස් අරමුදල් / වැඩිදියුණු කිරීමට උදව් කිරීමට පහර දෙන්න / පරිත්‍යාග කරන්න!
- "" ",
+If you enjoying using me and/or would like to help me survive in the wild, hit /donate to help fund/upgrade my VPS!
+""",
 
-     "send-help": "" "හේයි! මගේ නම * {} *.
- මම විනෝදජනක අමතර කිහිපයක් සහිත මොඩියුලර් කණ්ඩායම් කළමනාකරණ බොට්!  මට ඔබට උදව් කළ හැකි කරුණු කිහිපයක් පිළිබඳ අදහසක් සඳහා පහත සඳහන් කරුණු දෙස බලන්න.
+    "send-help": """Hey there! My name is *{}*.
+I'm a modular group management bot with a few fun extras! Have a look at the following for an idea of some of the things I can help you with.
 
- ලබා ගත හැකි ප්‍රධාන විධාන:
-  - / start: බොට් ජීවතුන් අතර සිටීද යන්න පරීක්ෂා කිරීමට සිසිල් විධානය
-  - / help: අගමැති ඔබ මෙම පණිවිඩයයි.
-  - / help <මොඩියුලයේ නම>: එම මොඩියුලය පිළිබඳ අගමැතිගේ තොරතුරු.
-  - / පරිත්යාග කරන්න: පරිත්යාග කරන්නේ කෙසේද යන්න පිළිබඳ තොරතුරු!
-  - / lang: බොට් භාෂාව වෙනස් කරන්න
-  - /සැකසුම්:
-    - PM හි: සහාය දක්වන සියලුම මොඩියුල සඳහා ඔබගේ සැකසුම් ඔබට එවනු ඇත.
-    - කණ්ඩායමක: චැට් හි සියලු සැකසුම් සමඟ ඔබව ප.ව.
-    {}
-    "" ",
+Main commands available:
+ - /start: Cool command to check if the bot is alive or not
+ - /help: PM's you this message.
+ - /help <module name>: PM's you info about that module.
+ - /donate: information about how to donate!
+ - /lang: Change bot language
+ - /settings:
+   - in PM: will send you your settings for all supported modules.
+   - in a group: will redirect you to pm, with all that chat's settings.
+   {}
+   """,
 
-     "send-group-settings": "" "ආයුබෝවන්! * {} * සඳහා සැකසුම් කිහිපයක් තිබේ - ඉදිරියට ගොස් කුමක් තෝරා ගන්න
- ඔබ කැමති. "" ",
+    "send-group-settings": """Hi there! There are quite a few settings for *{}* - go ahead and pick what
+you're interested in.""",
 
- # වැරදි
- "RUNS-K": RUN_STRINGS,
- "SLAP_TEMPLATES-K": SLAP_TEMPLATES,
- "ITEMS-K": ITEMS,
- "HIT-K": HIT,
- "THROW-K": විසි කරන්න,
- "ITEMP-K": ITEMS,
- "ITEMR-K": ITEMS,
- "MARKDOWN_HELP-K": MARKDOWN_HELP,
- "INSULTS-K": INSULTS_STRINGS,
+#Misc
+"RUNS-K": RUN_STRINGS,
+"SLAP_TEMPLATES-K": SLAP_TEMPLATES,
+"ITEMS-K": ITEMS,
+"HIT-K": HIT,
+"THROW-K": THROW,
+"ITEMP-K": ITEMS,
+"ITEMR-K": ITEMS,
+"MARKDOWN_HELP-K": MARKDOWN_HELP,
+"INSULTS-K": INSULTS_STRINGS,
 
- #GDPR
- "send-gdpr": "" "ඔබගේ පුද්ගලික දත්ත මකා දමා ඇත. \ n \ n මෙය තහනම් නොවන බව සලකන්න \
- ඔබ ඕනෑම කතාබස් වලින්, එය විදුලි පණිවුඩ දත්ත මිස යනාබොට් දත්ත නොවේ.
- \ ලෙස ගංවතුර, අනතුරු ඇඟවීම් සහ ග්බාන්ස් ද ආරක්ෂා වේ.
- [මෙය] (https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-erasure/), "
- මකාදැමීමේ අයිතිය අදාළ නොවන බව පැහැදිලිව සඳහන් කරයි \
- interest "මහජන යහපත උදෙසා ඉටු කරන ලද කාර්යයක් ඉටු කිරීම සඳහා \"
- ඉහත දත්ත කැබලි සඳහා නඩුව. "" "
+#GDPR
+"send-gdpr": """Your personal data has been deleted.\n\nNote that this will not unban \
+you from any chats, as that is telegram data, not YanaBot data.
+Flooding, warns, and gbans are also preserved, as of \
+[this](https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-erasure/), "
+which clearly states that the right to erasure does not apply \
+\"for the performance of a task carried out in the public interest\", as is \
+the case for the aforementioned pieces of data."""
 
- }
+}
