@@ -299,7 +299,11 @@ def fed_info(bot: Bot, update: Update, args: List[str]):
 	user = update.effective_user  # type: Optional[User]
 	fed_id = sql.get_fed_id(chat.id)
 	info = sql.get_fed_info(fed_id)
-
+	
+	if chat.type == "private":
+		update.effective_message.reply_text("You can only check federation info where it is connected and not in my PM!")
+		return
+	
 	if not fed_id:
 		update.effective_message.reply_text("This group is not in any federation!")
 		return
@@ -377,7 +381,11 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
 	chat = update.effective_chat  # type: Optional[Chat]
 	user = update.effective_user  # type: Optional[User]
 	fed_id = sql.get_fed_id(chat.id)
-
+	
+	if chat.type == "private":
+		update.effective_message.reply_text("This command is not to be used in my PM!")
+		return 
+	
 	if not fed_id:
 		update.effective_message.reply_text("This group is not a part of any federation!")
 		return
