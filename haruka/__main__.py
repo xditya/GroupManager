@@ -20,26 +20,17 @@ from haruka.modules.helper_funcs.misc import paginate_modules
 from haruka.modules.translations.strings import tld, tld_help 
 from haruka.modules.connection import connected
 
-PM_START = """Hello {}, my name is {}!
+PM_START = """𝐇𝐞𝐲 𝐓𝐡𝐞𝐫𝐞 {}, 𝐌𝐲 𝐍𝐚𝐦𝐞 𝐈𝐬 {}!
 
-You know how hard it is sometimes to manage group so here is the solution for you
+𝐈 𝐀𝐦 𝐀𝐧 𝐀𝐝𝐯𝐚𝐧𝐜𝐞𝐝 𝐆𝐫𝐨𝐮𝐩 𝐌𝐚𝐧𝐚𝐠𝐞𝐫 𝐁𝐨𝐭 𝐓𝐨 𝐇𝐞𝐥𝐩 𝐘𝐨𝐮 𝐌𝐚𝐧𝐚𝐠𝐞 𝐘𝐨𝐮𝐫 𝐆𝐫𝐨𝐮𝐩𝐬 𝐒𝐚𝐟𝐞𝐥𝐲 🥰
 
-I'm group manager bot and Anti-spam for RR Players🃏
+𝐀𝐝𝐝 𝐌𝐞 𝐓𝐨 𝐘𝐨𝐮𝐫 𝐆𝐫𝐨𝐮𝐩 𝐀𝐧𝐝 𝐏𝐫𝐨𝐦𝐨𝐭𝐞 𝐌𝐞 𝐀𝐬 𝐀𝐧 𝐀𝐝𝐦𝐢𝐧 𝐓𝐨 𝐔𝐬𝐞 𝐌𝐞 🙂
 
-Activate Anti-spam protection in your BM by this command : 
-/antispam on 
+𝐂𝐥𝐢𝐜𝐤 /𝐡𝐞𝐥𝐩 𝐎𝐫 𝐓𝐡𝐞 𝐇𝐞𝐥𝐩 𝐁𝐮𝐭𝐭𝐨𝐧 𝐁𝐞𝐥𝐨𝐰 𝐓𝐨 𝐒𝐞𝐞 𝐀𝐥𝐥 𝐓𝐡𝐞 𝐂𝐨𝐦𝐦𝐚𝐧𝐝𝐬 𝐀𝐧𝐝 𝐇𝐨𝐰 𝐓𝐡𝐞𝐲 𝐖𝐨𝐫𝐤 😊
 
-Made from the source code of [Aditya 🇮🇳](t.me/xditya)
 
-Special thanks to [this person](t.me/denver02) for helping me.
 
-Deploy a bot like me [now](www.github.com/xditya/GroupManager)
 
-Watch [video tutorial](https://www.youtube.com/watch?v=gXXFpTAk6Vo&feature=youtu.be) on deploying me.
-
-Click /help or Help button below to find out more about how to use me to my full potential.
-
- Add me to a group by clicking [here](http://t.me/tg_GroupManagerBot?startgroup=true).
 """
 
 
@@ -157,9 +148,9 @@ def send_start(bot, update):
     first_name = update.effective_user.first_name 
     text = PM_START
 
-    keyboard = [[InlineKeyboardButton(text="🇮🇳 Language", callback_data="set_lang_")]]
-    keyboard += [[InlineKeyboardButton(text="🛠 Reporting", callback_data="cntrl_panel_M"), 
-        InlineKeyboardButton(text="❔ Help", callback_data="help_back")]]
+    keyboard = [[InlineKeyboardButton(text="♻️ Add me to your group ♻️", callback_data="t.me/{}?startgroup=true")]]
+    keyboard += [[InlineKeyboardButton(text="📢 Change language 📢", callback_data="set_lang_"), 
+        InlineKeyboardButton(text="🛠️ HELP ⚒️", callback_data="help_back")]]
 
     update.effective_message.reply_text(PM_START.format(escape_markdown(first_name), bot.first_name), reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True, parse_mode=ParseMode.MARKDOWN)
 
